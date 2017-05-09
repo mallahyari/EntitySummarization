@@ -18,7 +18,7 @@ public class EsumMain {
 	 * @param args
 	 * @throws IOException 
 	 */
-	public static void main(String[] args) throws IOException {
+	public static void main(String[] args) throws IOException { 
 //		EntityProc readWriteEnt =new EntityProc();
 //		readWriteEnt.readWriteEntity();
 		
