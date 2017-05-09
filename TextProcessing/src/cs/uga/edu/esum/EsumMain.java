@@ -12,7 +12,7 @@ import cs.uga.edu.enttopicmodel.EntLDA;
  * @author mehdi
  *
  */
-public class EsumMain {
+public class EsumMain { 
 
 	/**
 	 * @param args
