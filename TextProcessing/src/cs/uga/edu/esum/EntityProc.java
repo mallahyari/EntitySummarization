@@ -66,7 +66,7 @@ import virtuoso.jena.driver.VirtuosoQueryExecutionFactory;
 
 
 
-public class EntityProc {
+public class EntityProc { 
 	
 	private final String uriPrefix = "http://dbpedia.org/resource/"; 
 	private VirtGraph virtGraph = null;
