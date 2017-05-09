@@ -1,0 +1,45 @@
+<?xml version="1.0"?>
+<!-- ======================================================================
+     Text Processing Project        
+     ====================================================================== -->
+<project name="TextProcessing" default="compile" basedir=".">
+	<property name="app.name" value="TextProcessing" />
+
+	<!-- EDIT PATHS -->
+	<property name="build.home"     value="${basedir}/classes"/>
+	<property name="src.home"       value="${basedir}/src"/>
+	<property name="lib.home"       value="${basedir}/lib"/>
+	
+	<property name="main-class" value="${basedir}/classes/cs/uga/edu/enttopicmodel/EntLDA_Main"/>
+	
+	
+	<!-- ======================== Compilation Classpath ========================== -->
+	<path id="project-classpath">
+		
+		<!-- Include all JAR files that will be included in /lib -->
+		
+		<fileset dir="${lib.home}" includes="*.jar" />
+		
+	</path>
+	
+   <!-- ========================== target: Clean ================================= -->
+	<target name="clean">
+		<delete dir="${build.home}"/>
+		<mkdir dir="${build.home}"/>
+	</target>
+	
+	<target name="compile" depends="clean">
+	     <javac  srcdir="${src.home}" destdir="${build.home}" debug="true" 
+	     	 classpathref="project-classpath" includeantruntime="false">
+         </javac>
+    </target>
+	
+	<target name="run">
+		<java classname="cs.uga.edu.enttopicmodel.entlda_main" classpathref="project-classpath" maxmemory="20g" fork="true" spawn="false">
+			<classpath path="${build.home}"></classpath>
+		</java>
+	</target>
+	
+	
+	
+</project>

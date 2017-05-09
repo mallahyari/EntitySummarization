@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Configuration status="INFO">
+	<Appenders>
+		<File name="FileLogger" fileName="log/mylog.log" append="false">
+			<PatternLayout pattern="%d %t %-5p %c{2} - %m%n" />
+		</File>
+		<Console name="Console" target="SYSTEM_OUT">
+			<PatternLayout pattern="%d{HH:mm:ss.SSS} [%t] %-5level %logger{36} - %msg%n" />
+		</Console>
+	</Appenders>
+	<Loggers>
+		<logger name="cs.uga.edu" level="info" additivity="false">
+			<AppenderRef ref="FileLogger" />
+			<AppenderRef ref="Console" />
+		</logger>
+		<Root level="error">
+			<AppenderRef ref="FileLogger" />
+			<AppenderRef ref="Console" />
+		</Root>
+	</Loggers>
+</Configuration>

@@ -1,0 +1,101 @@
+select count(distinct ?s) from <http://dbpedia.org>
+where {
+?s <http://www.w3.org/2000/01/rdf-schema#label> ?o.
+filter regex(?s,"%","i")
+}
+
+
+
+select ?s ?o from <http://dbpedia.org>
+where {
+?s <http://www.w3.org/2000/01/rdf-schema#label> ?o.
+filter not exists {
+ ?s <http://www.w3.org/2000/01/rdf-schema#label> ?o.
+ filter regex(?s,"%","i")
+}
+
+} limit 1000
+
+
+
+select ?s ?l ?redirectTo ?rl ?disambiguate from <http://dbpedia.org>
+where {
+?s <http://www.w3.org/2000/01/rdf-schema#label> ?l.
+optional {
+?s <http://dbpedia.org/ontology/wikiPageRedirects> ?redirectTo .
+?redirectTo <http://www.w3.org/2000/01/rdf-schema#label> ?rl.
+}
+optional {
+?s <http://dbpedia.org/ontology/wikiPageDisambiguates> ?disambiguate .
+?disambiguate ?p ?o.
+
+}
+
+} limit 1000 
+
+
+
+
+===============================================================================================================
+
+
+prefix lsdis: <http://lsdis.cs.uga.edu/wiki#>
+select distinct ?s ?o1 ?o2 ?o3 ?o4 ?o5 ?o6 from <http://enwiki.com#>
+where {
+?s lsdis:wiki_name ?o1 .
+?s lsdis:wiki_redirect_name ?o2.
+?s lsdis:wiki_redirect_name_short ?o3.
+?s lsdis:wiki_name_short ?o4.
+?s lsdis:wiki_disambiguation_name ?o5.
+?s lsdis:wiki_disambiguation_name_short ?o6.
+filter regex(?s,"united","i")
+} 
+
+
+
+prefix lsdis: <http://lsdis.cs.uga.edu/wiki#>
+select  ?s ?name ?redirect_name ?redirect_name_short ?name_short ?disambiguation_name ?disambiguation_name_short from <http://enwiki.com#>
+where {
+?s lsdis:wiki_name "Australia" .
+OPTIONAL {
+?s lsdis:wiki_redirect_name ?redirect_name.}
+OPTIONAL {
+?s lsdis:wiki_redirect_name_short ?redirect_name_short.}
+OPTIONAL {
+?s lsdis:wiki_name_short ?name_short.}
+OPTIONAL {
+?s lsdis:wiki_disambiguation_name ?disambiguation_name.}
+OPTIONAL {
+?s lsdis:wiki_disambiguation_name_short ?disambiguation_name_short.
+}
+
+}limit 10000
+
+
+prefix lsdis: <http://lsdis.cs.uga.edu/wiki#>
+select  ?s ?name ?redirect_name ?redirect_name_short ?name_short ?disambiguation_name ?disambiguation_name_short from <http://enwiki.com#>
+where {
+dbpedia:Federal_Aviation_Administration lsdis:wiki_name ?name .
+OPTIONAL {
+?s lsdis:wiki_redirect_name ?redirect_name.}
+OPTIONAL {
+?s lsdis:wiki_redirect_name_short ?redirect_name_short.}
+OPTIONAL {
+?s lsdis:wiki_name_short ?name_short.}
+OPTIONAL {
+?s lsdis:wiki_disambiguation_name ?disambiguation_name.}
+OPTIONAL {
+?s lsdis:wiki_disambiguation_name_short ?disambiguation_name_short.
+}
+
+}limit 2000000
+
+
+
+prefix lsdis: <http://lsdis.cs.uga.edu/wiki#>
+select ?s ?p ?o from <http://enwiki.com#>
+where {
+<http://dbpedia.org/resource/Philadelphia> ?p ?o.
+
+
+}

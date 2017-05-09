@@ -1,0 +1,125 @@
+K 25
+svn:wc:ra_dav:version-url
+V 66
+/svn/semtext/!svn/ver/2/TextProcessing/src/cs/uga/edu/dicgenerator
+END
+SentParDetector.java
+K 25
+svn:wc:ra_dav:version-url
+V 87
+/svn/semtext/!svn/ver/2/TextProcessing/src/cs/uga/edu/dicgenerator/SentParDetector.java
+END
+VirtuosoAccess.java
+K 25
+svn:wc:ra_dav:version-url
+V 86
+/svn/semtext/!svn/ver/2/TextProcessing/src/cs/uga/edu/dicgenerator/VirtuosoAccess.java
+END
+DbAccessLayer.java
+K 25
+svn:wc:ra_dav:version-url
+V 86
+/svn/semtext/!svn/ver/42/TextProcessing/src/cs/uga/edu/dicgenerator/DbAccessLayer.java
+END
+CategoryNameMapperClass.java
+K 25
+svn:wc:ra_dav:version-url
+V 96
+/svn/semtext/!svn/ver/53/TextProcessing/src/cs/uga/edu/dicgenerator/CategoryNameMapperClass.java
+END
+WordToIntMapperClass.java
+K 25
+svn:wc:ra_dav:version-url
+V 92
+/svn/semtext/!svn/ver/2/TextProcessing/src/cs/uga/edu/dicgenerator/WordToIntMapperClass.java
+END
+EntityManagerImpl.java
+K 25
+svn:wc:ra_dav:version-url
+V 90
+/svn/semtext/!svn/ver/19/TextProcessing/src/cs/uga/edu/dicgenerator/EntityManagerImpl.java
+END
+SentenceDetector.java
+K 25
+svn:wc:ra_dav:version-url
+V 90
+/svn/semtext/!svn/ver/368/TextProcessing/src/cs/uga/edu/dicgenerator/SentenceDetector.java
+END
+EntityFinder.java
+K 25
+svn:wc:ra_dav:version-url
+V 86
+/svn/semtext/!svn/ver/251/TextProcessing/src/cs/uga/edu/dicgenerator/EntityFinder.java
+END
+SemanticGraph.java
+K 25
+svn:wc:ra_dav:version-url
+V 85
+/svn/semtext/!svn/ver/2/TextProcessing/src/cs/uga/edu/dicgenerator/SemanticGraph.java
+END
+MyComparable.java
+K 25
+svn:wc:ra_dav:version-url
+V 84
+/svn/semtext/!svn/ver/2/TextProcessing/src/cs/uga/edu/dicgenerator/MyComparable.java
+END
+TextProcessor.java
+K 25
+svn:wc:ra_dav:version-url
+V 87
+/svn/semtext/!svn/ver/384/TextProcessing/src/cs/uga/edu/dicgenerator/TextProcessor.java
+END
+Entity_Old_Version.java
+K 25
+svn:wc:ra_dav:version-url
+V 90
+/svn/semtext/!svn/ver/2/TextProcessing/src/cs/uga/edu/dicgenerator/Entity_Old_Version.java
+END
+Entity.java
+K 25
+svn:wc:ra_dav:version-url
+V 78
+/svn/semtext/!svn/ver/2/TextProcessing/src/cs/uga/edu/dicgenerator/Entity.java
+END
+DbAccess.java
+K 25
+svn:wc:ra_dav:version-url
+V 81
+/svn/semtext/!svn/ver/19/TextProcessing/src/cs/uga/edu/dicgenerator/DbAccess.java
+END
+LocalNameMapperClass.java
+K 25
+svn:wc:ra_dav:version-url
+V 92
+/svn/semtext/!svn/ver/2/TextProcessing/src/cs/uga/edu/dicgenerator/LocalNameMapperClass.java
+END
+Indexer.java
+K 25
+svn:wc:ra_dav:version-url
+V 81
+/svn/semtext/!svn/ver/128/TextProcessing/src/cs/uga/edu/dicgenerator/Indexer.java
+END
+DictionaryGenerator.java
+K 25
+svn:wc:ra_dav:version-url
+V 93
+/svn/semtext/!svn/ver/187/TextProcessing/src/cs/uga/edu/dicgenerator/DictionaryGenerator.java
+END
+PatternMatchingMachine.java
+K 25
+svn:wc:ra_dav:version-url
+V 96
+/svn/semtext/!svn/ver/391/TextProcessing/src/cs/uga/edu/dicgenerator/PatternMatchingMachine.java
+END
+CategoryProcessor.java
+K 25
+svn:wc:ra_dav:version-url
+V 91
+/svn/semtext/!svn/ver/243/TextProcessing/src/cs/uga/edu/dicgenerator/CategoryProcessor.java
+END
+State.java
+K 25
+svn:wc:ra_dav:version-url
+V 77
+/svn/semtext/!svn/ver/2/TextProcessing/src/cs/uga/edu/dicgenerator/State.java
+END

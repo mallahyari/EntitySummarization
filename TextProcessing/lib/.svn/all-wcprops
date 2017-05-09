@@ -1,0 +1,401 @@
+K 25
+svn:wc:ra_dav:version-url
+V 42
+/svn/semtext/!svn/ver/2/TextProcessing/lib
+END
+postgresql-9.3-1100.jdbc4.jar
+K 25
+svn:wc:ra_dav:version-url
+V 73
+/svn/semtext/!svn/ver/21/TextProcessing/lib/postgresql-9.3-1100.jdbc4.jar
+END
+xom.jar
+K 25
+svn:wc:ra_dav:version-url
+V 50
+/svn/semtext/!svn/ver/2/TextProcessing/lib/xom.jar
+END
+javafarm.jar
+K 25
+svn:wc:ra_dav:version-url
+V 55
+/svn/semtext/!svn/ver/2/TextProcessing/lib/javafarm.jar
+END
+stax.jar
+K 25
+svn:wc:ra_dav:version-url
+V 51
+/svn/semtext/!svn/ver/2/TextProcessing/lib/stax.jar
+END
+java4unix.jar
+K 25
+svn:wc:ra_dav:version-url
+V 56
+/svn/semtext/!svn/ver/2/TextProcessing/lib/java4unix.jar
+END
+xmlpull.jar
+K 25
+svn:wc:ra_dav:version-url
+V 54
+/svn/semtext/!svn/ver/2/TextProcessing/lib/xmlpull.jar
+END
+jline.jar
+K 25
+svn:wc:ra_dav:version-url
+V 52
+/svn/semtext/!svn/ver/2/TextProcessing/lib/jline.jar
+END
+arq.jar
+K 25
+svn:wc:ra_dav:version-url
+V 50
+/svn/semtext/!svn/ver/2/TextProcessing/lib/arq.jar
+END
+iri.jar
+K 25
+svn:wc:ra_dav:version-url
+V 50
+/svn/semtext/!svn/ver/2/TextProcessing/lib/iri.jar
+END
+castor.jar
+K 25
+svn:wc:ra_dav:version-url
+V 53
+/svn/semtext/!svn/ver/2/TextProcessing/lib/castor.jar
+END
+toools.jar
+K 25
+svn:wc:ra_dav:version-url
+V 53
+/svn/semtext/!svn/ver/2/TextProcessing/lib/toools.jar
+END
+lucene-highlighter-4.4.0.jar
+K 25
+svn:wc:ra_dav:version-url
+V 71
+/svn/semtext/!svn/ver/2/TextProcessing/lib/lucene-highlighter-4.4.0.jar
+END
+kxml2.jar
+K 25
+svn:wc:ra_dav:version-url
+V 52
+/svn/semtext/!svn/ver/2/TextProcessing/lib/kxml2.jar
+END
+json.jar
+K 25
+svn:wc:ra_dav:version-url
+V 51
+/svn/semtext/!svn/ver/2/TextProcessing/lib/json.jar
+END
+kxml2-min.jar
+K 25
+svn:wc:ra_dav:version-url
+V 56
+/svn/semtext/!svn/ver/2/TextProcessing/lib/kxml2-min.jar
+END
+lucene-queryparser-4.4.0.jar
+K 25
+svn:wc:ra_dav:version-url
+V 71
+/svn/semtext/!svn/ver/2/TextProcessing/lib/lucene-queryparser-4.4.0.jar
+END
+junit.jar
+K 25
+svn:wc:ra_dav:version-url
+V 52
+/svn/semtext/!svn/ver/2/TextProcessing/lib/junit.jar
+END
+Experiments.jar
+K 25
+svn:wc:ra_dav:version-url
+V 58
+/svn/semtext/!svn/ver/2/TextProcessing/lib/Experiments.jar
+END
+commons-logging-adapters.jar
+K 25
+svn:wc:ra_dav:version-url
+V 71
+/svn/semtext/!svn/ver/2/TextProcessing/lib/commons-logging-adapters.jar
+END
+dom4j.jar
+K 25
+svn:wc:ra_dav:version-url
+V 52
+/svn/semtext/!svn/ver/2/TextProcessing/lib/dom4j.jar
+END
+virt_jena.jar
+K 25
+svn:wc:ra_dav:version-url
+V 56
+/svn/semtext/!svn/ver/2/TextProcessing/lib/virt_jena.jar
+END
+xstream.jar
+K 25
+svn:wc:ra_dav:version-url
+V 54
+/svn/semtext/!svn/ver/2/TextProcessing/lib/xstream.jar
+END
+jalinopt.jar
+K 25
+svn:wc:ra_dav:version-url
+V 55
+/svn/semtext/!svn/ver/2/TextProcessing/lib/jalinopt.jar
+END
+commons-logging.jar
+K 25
+svn:wc:ra_dav:version-url
+V 62
+/svn/semtext/!svn/ver/2/TextProcessing/lib/commons-logging.jar
+END
+icu4j_3_4.jar
+K 25
+svn:wc:ra_dav:version-url
+V 56
+/svn/semtext/!svn/ver/2/TextProcessing/lib/icu4j_3_4.jar
+END
+hppc.jar
+K 25
+svn:wc:ra_dav:version-url
+V 51
+/svn/semtext/!svn/ver/2/TextProcessing/lib/hppc.jar
+END
+cglib-nodep.jar
+K 25
+svn:wc:ra_dav:version-url
+V 58
+/svn/semtext/!svn/ver/2/TextProcessing/lib/cglib-nodep.jar
+END
+virtjdbc3.jar
+K 25
+svn:wc:ra_dav:version-url
+V 56
+/svn/semtext/!svn/ver/2/TextProcessing/lib/virtjdbc3.jar
+END
+jaseto.jar
+K 25
+svn:wc:ra_dav:version-url
+V 53
+/svn/semtext/!svn/ver/2/TextProcessing/lib/jaseto.jar
+END
+jettison.jar
+K 25
+svn:wc:ra_dav:version-url
+V 55
+/svn/semtext/!svn/ver/2/TextProcessing/lib/jettison.jar
+END
+client-server.jar
+K 25
+svn:wc:ra_dav:version-url
+V 60
+/svn/semtext/!svn/ver/2/TextProcessing/lib/client-server.jar
+END
+graphstream.old.jar
+K 25
+svn:wc:ra_dav:version-url
+V 62
+/svn/semtext/!svn/ver/2/TextProcessing/lib/graphstream.old.jar
+END
+wstx-asl.jar
+K 25
+svn:wc:ra_dav:version-url
+V 55
+/svn/semtext/!svn/ver/2/TextProcessing/lib/wstx-asl.jar
+END
+drwin.jar
+K 25
+svn:wc:ra_dav:version-url
+V 52
+/svn/semtext/!svn/ver/2/TextProcessing/lib/drwin.jar
+END
+jsoup-1.7.2.jar
+K 25
+svn:wc:ra_dav:version-url
+V 60
+/svn/semtext/!svn/ver/300/TextProcessing/lib/jsoup-1.7.2.jar
+END
+drmsim-brite.jar
+K 25
+svn:wc:ra_dav:version-url
+V 59
+/svn/semtext/!svn/ver/2/TextProcessing/lib/drmsim-brite.jar
+END
+jdom.jar
+K 25
+svn:wc:ra_dav:version-url
+V 51
+/svn/semtext/!svn/ver/2/TextProcessing/lib/jdom.jar
+END
+lucene-core-4.4.0.jar
+K 25
+svn:wc:ra_dav:version-url
+V 64
+/svn/semtext/!svn/ver/2/TextProcessing/lib/lucene-core-4.4.0.jar
+END
+up.jar
+K 25
+svn:wc:ra_dav:version-url
+V 49
+/svn/semtext/!svn/ver/2/TextProcessing/lib/up.jar
+END
+axis.jar
+K 25
+svn:wc:ra_dav:version-url
+V 51
+/svn/semtext/!svn/ver/2/TextProcessing/lib/axis.jar
+END
+jython.jar
+K 25
+svn:wc:ra_dav:version-url
+V 53
+/svn/semtext/!svn/ver/2/TextProcessing/lib/jython.jar
+END
+grph.jar
+K 25
+svn:wc:ra_dav:version-url
+V 51
+/svn/semtext/!svn/ver/2/TextProcessing/lib/grph.jar
+END
+lucene-analyzers-common-4.4.0.jar
+K 25
+svn:wc:ra_dav:version-url
+V 76
+/svn/semtext/!svn/ver/2/TextProcessing/lib/lucene-analyzers-common-4.4.0.jar
+END
+stax-api.jar
+K 25
+svn:wc:ra_dav:version-url
+V 55
+/svn/semtext/!svn/ver/2/TextProcessing/lib/stax-api.jar
+END
+freemarker.jar
+K 25
+svn:wc:ra_dav:version-url
+V 57
+/svn/semtext/!svn/ver/2/TextProcessing/lib/freemarker.jar
+END
+jena.jar
+K 25
+svn:wc:ra_dav:version-url
+V 51
+/svn/semtext/!svn/ver/2/TextProcessing/lib/jena.jar
+END
+corese.jar
+K 25
+svn:wc:ra_dav:version-url
+V 53
+/svn/semtext/!svn/ver/2/TextProcessing/lib/corese.jar
+END
+oodes.jar
+K 25
+svn:wc:ra_dav:version-url
+V 52
+/svn/semtext/!svn/ver/2/TextProcessing/lib/oodes.jar
+END
+commons-collections4-4.0-alpha1.jar
+K 25
+svn:wc:ra_dav:version-url
+V 78
+/svn/semtext/!svn/ver/2/TextProcessing/lib/commons-collections4-4.0-alpha1.jar
+END
+commons-lang.jar
+K 25
+svn:wc:ra_dav:version-url
+V 59
+/svn/semtext/!svn/ver/2/TextProcessing/lib/commons-lang.jar
+END
+epsgraphics.jar
+K 25
+svn:wc:ra_dav:version-url
+V 58
+/svn/semtext/!svn/ver/2/TextProcessing/lib/epsgraphics.jar
+END
+PDFRenderer.jar
+K 25
+svn:wc:ra_dav:version-url
+V 58
+/svn/semtext/!svn/ver/2/TextProcessing/lib/PDFRenderer.jar
+END
+bsh.jar
+K 25
+svn:wc:ra_dav:version-url
+V 50
+/svn/semtext/!svn/ver/2/TextProcessing/lib/bsh.jar
+END
+guava-14.0.1.jar
+K 25
+svn:wc:ra_dav:version-url
+V 59
+/svn/semtext/!svn/ver/2/TextProcessing/lib/guava-14.0.1.jar
+END
+mail.jar
+K 25
+svn:wc:ra_dav:version-url
+V 51
+/svn/semtext/!svn/ver/2/TextProcessing/lib/mail.jar
+END
+gson-2.2.2.jar
+K 25
+svn:wc:ra_dav:version-url
+V 57
+/svn/semtext/!svn/ver/2/TextProcessing/lib/gson-2.2.2.jar
+END
+joda-time.jar
+K 25
+svn:wc:ra_dav:version-url
+V 56
+/svn/semtext/!svn/ver/2/TextProcessing/lib/joda-time.jar
+END
+lucene-memory-4.4.0.jar
+K 25
+svn:wc:ra_dav:version-url
+V 66
+/svn/semtext/!svn/ver/2/TextProcessing/lib/lucene-memory-4.4.0.jar
+END
+jfig-bean.jar
+K 25
+svn:wc:ra_dav:version-url
+V 56
+/svn/semtext/!svn/ver/2/TextProcessing/lib/jfig-bean.jar
+END
+jgrapht-jdk1.6.jar
+K 25
+svn:wc:ra_dav:version-url
+V 61
+/svn/semtext/!svn/ver/2/TextProcessing/lib/jgrapht-jdk1.6.jar
+END
+Google-KShortestPath.jar
+K 25
+svn:wc:ra_dav:version-url
+V 67
+/svn/semtext/!svn/ver/2/TextProcessing/lib/Google-KShortestPath.jar
+END
+commons-logging-api.jar
+K 25
+svn:wc:ra_dav:version-url
+V 66
+/svn/semtext/!svn/ver/2/TextProcessing/lib/commons-logging-api.jar
+END
+javailp.jar
+K 25
+svn:wc:ra_dav:version-url
+V 54
+/svn/semtext/!svn/ver/2/TextProcessing/lib/javailp.jar
+END
+xercesImpl.jar
+K 25
+svn:wc:ra_dav:version-url
+V 57
+/svn/semtext/!svn/ver/2/TextProcessing/lib/xercesImpl.jar
+END
+commons-math.jar
+K 25
+svn:wc:ra_dav:version-url
+V 59
+/svn/semtext/!svn/ver/2/TextProcessing/lib/commons-math.jar
+END
+xpp3_min.jar
+K 25
+svn:wc:ra_dav:version-url
+V 55
+/svn/semtext/!svn/ver/2/TextProcessing/lib/xpp3_min.jar
+END

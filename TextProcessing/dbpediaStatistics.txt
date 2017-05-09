@@ -1,0 +1,2 @@
+Total number of DBpedia entities having "http://www.w3.org/2000/01/rdf-schema#label" property = 12,130,160
+Total number of DBpedia entities having "%" in the URIs = 849,517

@@ -1,0 +1,84 @@
+/**
+ * 
+ */
+package cs.uga.edu.dicgenerator;
+
+import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
+
+
+/**
+ * @author mehdi
+ *
+ */
+public class Entity_Old_Version implements Serializable{
+
+	private static final long serialVersionUID = 1L;
+	private ArrayList<Integer> completeEntities = new ArrayList<Integer>();
+	private ArrayList<Integer> partialEntities = new ArrayList<Integer>();
+	
+	
+	public Entity_Old_Version() {
+	}
+	
+	
+//	@Override
+//	public int hashCode() {
+//		StringBuffer sb = new StringBuffer();
+//		sb.append(this.);
+//		return sb.toString().hashCode();
+//	}
+	@Override
+	public boolean equals(Object o){
+		if (o == null) return false;
+		if (o == this) return true;	
+		if (this.getClass() != o.getClass()) return false;
+		Entity_Old_Version e = (Entity_Old_Version) o;
+		if (this.hashCode() == e.hashCode()) return true;
+		return false;
+		
+	}
+
+
+	/**
+	 * @return the completeEntities
+	 */
+	public ArrayList<Integer> getCompleteEntities() {
+		return completeEntities;
+	}
+
+
+
+
+
+	/**
+	 * @param completeEntities the completeEntities to set
+	 */
+	public void setCompleteEntities(ArrayList<Integer> completeEntities) {
+		this.completeEntities = completeEntities;
+	}
+
+
+
+
+
+	/**
+	 * @return the partialEntities
+	 */
+	public ArrayList<Integer> getPartialEntities() {
+		return partialEntities;
+	}
+
+
+
+
+
+	/**
+	 * @param partialEntities the partialEntities to set
+	 */
+	public void setPartialEntities(ArrayList<Integer> partialEntities) {
+		this.partialEntities = partialEntities;
+	}
+
+}
