@@ -28,7 +28,7 @@ import java.util.logging.Logger;
 import java.util.logging.SimpleFormatter;
 
 import cs.uga.edu.properties.Configuration;
-//hhhhghghg
+//hhhhghsalam
 /**
  * @author mehdi
  *
