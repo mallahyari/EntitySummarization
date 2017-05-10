@@ -82,6 +82,8 @@ public class EntityProc {
 	
 	private static final String corpus = "/home/mehdi/EntitySummarization/evaluation/corpus.txt"; 
 	
+	private static final String docPredicateDomainRange = "/home/mehdi/EntitySummarization/evaluation/predicateDomainRange.txt"; 
+	
 	//Holding all documents (Entities) in entityDocs folder
 	private static final String entityDocs = "/home/mehdi/EntitySummarization/evaluation/entityDocs/";
 	private static final String predicateList = "/home/mehdi/EntitySummarization/evaluation/";
@@ -91,6 +93,8 @@ public class EntityProc {
 	private Set<String> objectSet=new HashSet<String>();
 	private Set<String> domainSet =new HashSet<String>();
 	private Set<String> rangeSet=new HashSet<String>();
+	private Map<String, Integer>domainMap=new HashMap<String,Integer>();
+	private Map<String, Integer>rangeMap=new HashMap<String,Integer>();
 	
 	private Vector<String> predicateVector=new Vector<String>();
 	private Vector<String> objectVector =new Vector<String>();
@@ -511,6 +515,36 @@ public class EntityProc {
 		
 		/// Extract Domain and Range for each predicate
 		public void domainRangeExtractor() throws IOException{
+		// Create Map for Domain <domain name , domain ID>
+			BufferedReader brDomain = null;
+			FileReader frDomain = null;
+			String domainName=null;
+			int domainID=0;
+				brDomain = new BufferedReader(new FileReader(predicateList+ "domainList.txt"));
+				while ((domainName = brDomain.readLine()) != null) {
+					    String[] t = domainName.split("  ");
+					    domainMap.put(t[0], Integer.parseInt(t[1]));
+				}
+				
+			/*	for (String s : domainMap.keySet()) {
+				    System.out.println(s + " is " + domainMap.get(s));
+				}
+			*/
+		// Create Map for Range <Range name , Range ID>
+				BufferedReader brRange = null;
+				FileReader frRange = null;
+				String rangeName=null;
+				int rangeID=0;
+					brRange = new BufferedReader(new FileReader(predicateList+ "rangeList.txt"));
+					while ((rangeName = brRange.readLine()) != null) {
+						    String[] t = rangeName.split("  ");
+						    rangeMap.put(t[0], Integer.parseInt(t[1]));
+					}
+					
+		//// ******\\\\\\		
+				
+				
+				
 			String predicateName;
 			String exactPredicateName=null;
 			String upperPredicateName=null;
@@ -536,18 +570,17 @@ public class EntityProc {
 					upperPredicateName=purePredicateName.substring(0, purePredicateName.indexOf("/"));
 					
 					//Finding Predicate ID
-					int predicateIndexID = predicateName.toString().lastIndexOf(" ");
-					int predicateID=Integer.parseInt(predicateName.toString().substring(predicateIndexID+1));
+					 String[] t1 = predicateName.split("  ");
 					
-					System.out.println(predicateName + predicateID);
+					System.out.println(t1[0] + "  "+  t1[1] + "\n");
 					
 					
 					
 				
 		//Connecting to Virtuoso to extract Doamin and Range
-		System.out.println("Connecting to Virtuoso to extract domain and range ... ");
+		//System.out.println("Connecting to Virtuoso to extract domain and range ... ");
 		virtGraph = connectToVirtuoso();
-		System.out.println("Successfully Connected to Virtuoso!\n");
+		//System.out.println("Successfully Connected to Virtuoso!\n");
 		StringBuffer queryString = new StringBuffer();
 		queryString.append("SELECT ?dom ?ran FROM <" + GRAPH + "> WHERE { <http://dbpedia.org/"+upperPredicateName+"/"+ exactPredicateName+"> ");
 		queryString.append(" <http://www.w3.org/2000/01/rdf-schema#domain> ?dom . "+ " <http://dbpedia.org/"+upperPredicateName+"/"+ exactPredicateName+">" +"  <http://www.w3.org/2000/01/rdf-schema#range> ?ran . }  ");
@@ -568,7 +601,46 @@ public class EntityProc {
 			
 		//	System.out.println("Range of  "+ exactPredicateName+ " is "+ r.toString());
 			
-		
+			String domainStr1=null;
+			String rangeStr1=null;
+			if(d.toString()!=null){
+				int indexDomain = d.toString().lastIndexOf("/");
+				domainStr1=d.toString().substring(indexDomain+1);
+			//System.out.println(domainStr1);
+				}
+				if(r.toString()!=null){
+				int indexRange = r.toString().lastIndexOf("/");
+				rangeStr1=r.toString().substring(indexRange+1);
+				}
+			
+			
+			
+			
+			int domainID1=0;
+			int rangeID1=0;
+			if (domainMap.containsKey(domainStr1)){
+				domainID1 =domainMap.get(domainStr1);
+			}
+			if (rangeMap.containsKey(rangeStr1)){
+				rangeID1 =rangeMap.get(rangeStr1);
+			}
+			
+			
+		      
+		     // Writing Predicate Domain Range file
+			 BufferedWriter bw1 = null;
+			 	try {
+			      
+			         bw1 = new BufferedWriter(new FileWriter(docPredicateDomainRange, true));
+			         	bw1.write(t1[1] + " " + domainID1+" "+ rangeID1);
+						bw1.newLine();
+						
+					} catch (IOException e) {
+						
+						e.printStackTrace();
+					}
+					bw1.close();
+			
 			
 				//Finding the position of the last "/"	and take only domain name
 				if(d.toString()!=null){
@@ -594,7 +666,7 @@ public class EntityProc {
 
 		}
 		
-		//Creating Domain List
+	/*	//Creating Domain List
 			
 			File foutDomain = new File(predicateList+"domainList.txt");
 			FileOutputStream fosDomain = new FileOutputStream(foutDomain);
@@ -633,19 +705,12 @@ public class EntityProc {
 					bwRange.close();
 					fosRange.close();
 		/// End of Create Range List
-		
+		*/
 		}
 		
 		
 		
-		//Creating predicateID DomainID RangeID file
 		
-		public void createPredicateDomainRangeFile() throws IOException{
-			
-			
-			
-			
-		}
 		
 		
 		
