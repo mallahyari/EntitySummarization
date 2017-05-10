@@ -64,7 +64,7 @@ import virtuoso.jena.driver.VirtGraph;
 import virtuoso.jena.driver.VirtuosoQueryExecution;
 import virtuoso.jena.driver.VirtuosoQueryExecutionFactory;
 
-
+//
 
 
 public class EntityProc { 
