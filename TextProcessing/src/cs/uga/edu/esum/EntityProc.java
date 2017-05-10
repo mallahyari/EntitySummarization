@@ -85,7 +85,7 @@ public class EntityProc {
 	private static final String entityDocs = "/home/mehdi/EntitySummarization/evaluation/entityDocs/";
 	private static final String predicateList = "/home/mehdi/EntitySummarization/evaluation/";
 	
-	
+	//
 	private Set<String> predicateSet=new HashSet<String>();
 	private Set<String> objectSet=new HashSet<String>();
 	private Vector<String> predicateVector=new Vector<String>();
