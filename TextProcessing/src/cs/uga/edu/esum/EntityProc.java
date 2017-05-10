@@ -593,8 +593,6 @@ public class EntityProc {
 			File foutDomain = new File(predicateList+"domainList.txt");
 			FileOutputStream fosDomain = new FileOutputStream(foutDomain);
 			BufferedWriter bwDomain = new BufferedWriter(new OutputStreamWriter(fosDomain));
-					
-			
 				for(String d: domainSet){
 					try {
 						bwDomain.write(d + "  "+ domainNumber );
@@ -603,24 +601,18 @@ public class EntityProc {
 					} catch (IOException e) {
 						e.printStackTrace();
 					}
-					
 				}
 				System.out.println("Domain List has been created."  );
 				predicateSet.clear();
-			
 				bwDomain.close();
 				fosDomain.close();
-		
-				//END of Creating Domain List
-				
-				/// Create Range List
+		//END of Creating Domain List
 				
 				
+		/// Create Range List
 				File foutRange = new File(predicateList+"rangeList.txt");
 				FileOutputStream fosRange = new FileOutputStream(foutRange);
 				BufferedWriter bwRange = new BufferedWriter(new OutputStreamWriter(fosRange));
-						
-				
 					for(String r: rangeSet){
 						try {
 							bwRange.write(r + "  "+ rangeNumber );
@@ -629,16 +621,12 @@ public class EntityProc {
 						} catch (IOException e) {
 							e.printStackTrace();
 						}
-						
 					}
 					System.out.println("Range List has been created."  );
 					predicateSet.clear();
-				
 					bwRange.close();
 					fosRange.close();
-				
-				
-				
+		/// Create Range List
 		
 		}
 		
