@@ -65,7 +65,7 @@ import virtuoso.jena.driver.VirtuosoQueryExecution;
 import virtuoso.jena.driver.VirtuosoQueryExecutionFactory;
 
 
-// comment 2
+
 
 public class EntityProc { 
 	
