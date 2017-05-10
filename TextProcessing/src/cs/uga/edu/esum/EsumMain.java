@@ -23,10 +23,10 @@ public class EsumMain {
 //		readWriteEnt.readWriteEntity();
 		
 	
-		EntityProc predicCheck =new EntityProc();
+//		EntityProc predicCheck =new EntityProc();
 	//	predicCheck.predicateChecker();
 	//	predicCheck.makingPredicateList();
-		predicCheck.domainRangeExtractor();
+//		predicCheck.domainRangeExtractor();
 		
 		
 //		EntityProc corpusMaker =new EntityProc();
@@ -37,8 +37,8 @@ public class EsumMain {
 //******************************************************\\
 		
 		
-//		EntSum entSum = new EntSum();
-//		entSum.initializeMatrices();
+		EntSum entSum = new EntSum();
+		entSum.initializeMatrices();
 		
 		// Gibbs Sampling Initialization and Run //
 //		entSum.initializeGibbsSampling();
