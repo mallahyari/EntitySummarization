@@ -64,8 +64,8 @@ import virtuoso.jena.driver.VirtGraph;
 import virtuoso.jena.driver.VirtuosoQueryExecution;
 import virtuoso.jena.driver.VirtuosoQueryExecutionFactory;
 
-//
 
+// comment 2
 
 public class EntityProc { 
 	
@@ -95,6 +95,7 @@ public class EntityProc {
 	private Set<String> rangeSet=new HashSet<String>();
 	private Map<String, Integer>domainMap=new HashMap<String,Integer>();
 	private Map<String, Integer>rangeMap=new HashMap<String,Integer>();
+	
 	
 	private Vector<String> predicateVector=new Vector<String>();
 	private Vector<String> objectVector =new Vector<String>();
