@@ -65,6 +65,7 @@ import virtuoso.jena.driver.VirtuosoQueryExecution;
 import virtuoso.jena.driver.VirtuosoQueryExecutionFactory;
 
 
+// comment 2
 
 public class EntityProc { 
 	
@@ -88,6 +89,9 @@ public class EntityProc {
 	////
 	private Set<String> predicateSet=new HashSet<String>();
 	private Set<String> objectSet=new HashSet<String>();
+	private Set<String> domainSet =new HashSet<String>();
+	private Set<String> rangeSet=new HashSet<String>();
+	
 	private Vector<String> predicateVector=new Vector<String>();
 	private Vector<String> objectVector =new Vector<String>();
 	private Map<String, Integer> mapWordToID =new HashMap<String, Integer>();
@@ -96,6 +100,9 @@ public class EntityProc {
 	private int wordCount=0;
 	private int docCount=0;
 	private int predicateNumber=0;
+	private int domainNumber=0;
+	private int rangeNumber=0;
+	
 
 	public void readWriteEntity() throws FileNotFoundException{
 		/*
@@ -551,28 +558,26 @@ public class EntityProc {
 			RDFNode d = result.get("dom");
 			RDFNode r = result.get("ran");
 			
-			System.out.println("Domain "+ d.toString());
+			System.out.println("Domain of  "+ exactPredicateName+ " is "+ d.toString());
 			
+			System.out.println("Range of  "+ exactPredicateName+ " is "+ r.toString());
 			
 		
-			/*
-				//Finding the position of the last "/"	and take only predicate name
-				int index = p.toString().lastIndexOf("/");
-				String predicateName=p.toString().substring(index+1);
+			
+				//Finding the position of the last "/"	and take only domain name
+				if(d.toString()!=null){
+				int indexDomain = d.toString().lastIndexOf("/");
+				String domainStr=d.toString().substring(indexDomain+1);
+				System.out.println(domainStr);
+				domainSet.add(domainStr);
+				}
+				if(r.toString()!=null){
+				int indexRange = r.toString().lastIndexOf("/");
+				String rangeStr=r.toString().substring(indexRange+1);
+				rangeSet.add(rangeStr);
+				}
 				
-				if (predicateName.equals("subject")){
 					
-						int indexO = o.toString().lastIndexOf("/");
-						String objectName=o.toString().substring(indexO+10);
-						objectSet.add(objectName);
-						//Add to the Vector
-						objectVector.add(objectName);
-						
-						//predicateSet.add(predicateName);
-						
-						predicateSet.add(p.toString());
-				*/		
-						
 				} //end of the while loop for graph
 		
 		
@@ -583,8 +588,57 @@ public class EntityProc {
 
 		}
 		
+		//Creating Domain List
+			
+			File foutDomain = new File(predicateList+"domainList.txt");
+			FileOutputStream fosDomain = new FileOutputStream(foutDomain);
+			BufferedWriter bwDomain = new BufferedWriter(new OutputStreamWriter(fosDomain));
+					
+			
+				for(String d: domainSet){
+					try {
+						bwDomain.write(d + "  "+ domainNumber );
+						bwDomain.newLine();
+					domainNumber++;
+					} catch (IOException e) {
+						e.printStackTrace();
+					}
+					
+				}
+				System.out.println("Domain List has been created."  );
+				predicateSet.clear();
+			
+				bwDomain.close();
+				fosDomain.close();
 		
-		
+				//END of Creating Domain List
+				
+				/// Create Range List
+				
+				
+				File foutRange = new File(predicateList+"rangeList.txt");
+				FileOutputStream fosRange = new FileOutputStream(foutRange);
+				BufferedWriter bwRange = new BufferedWriter(new OutputStreamWriter(fosRange));
+						
+				
+					for(String r: rangeSet){
+						try {
+							bwRange.write(r + "  "+ rangeNumber );
+							bwRange.newLine();
+						rangeNumber++;
+						} catch (IOException e) {
+							e.printStackTrace();
+						}
+						
+					}
+					System.out.println("Range List has been created."  );
+					predicateSet.clear();
+				
+					bwRange.close();
+					fosRange.close();
+				
+				
+				
 		
 		}
 		
