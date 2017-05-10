@@ -24,8 +24,8 @@ public class EsumMain {
 		
 	
 		EntityProc predicCheck =new EntityProc();
-		predicCheck.predicateChecker();
-		predicCheck.makingPredicateList();
+	//	predicCheck.predicateChecker();
+	//	predicCheck.makingPredicateList();
 		predicCheck.domainRangeExtractor();
 		
 		
