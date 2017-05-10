@@ -524,17 +524,23 @@ public class EntityProc {
 				br = new BufferedReader(new FileReader(predicateList+ "predicateList.txt"));
 
 				while ((predicateName = br.readLine()) != null) {
+					
+					
 					int index = predicateName.toString().lastIndexOf(".org/");
 					String purePredicateName=predicateName.toString().substring(index+5);
-					System.out.println(purePredicateName);
 					
 					// extract Predicate Name only for example : ontology/owningCompany , we will receive owningCompany as exactPredicateName
 					exactPredicateName=purePredicateName.substring(purePredicateName.indexOf("/")+1, purePredicateName.indexOf(" "));
-					System.out.println(exactPredicateName);
 					
 					//upperPredicateName can be property or ontology for example property/title or ontology/owningCompany
 					upperPredicateName=purePredicateName.substring(0, purePredicateName.indexOf("/"));
-					System.out.println(upperPredicateName);
+					
+					//Finding Predicate ID
+					int predicateIndexID = predicateName.toString().lastIndexOf(" ");
+					int predicateID=Integer.parseInt(predicateName.toString().substring(predicateIndexID+1));
+					
+					System.out.println(predicateName + predicateID);
+					
 					
 					
 				
@@ -558,9 +564,9 @@ public class EntityProc {
 			RDFNode d = result.get("dom");
 			RDFNode r = result.get("ran");
 			
-			System.out.println("Domain of  "+ exactPredicateName+ " is "+ d.toString());
+		//	System.out.println("Domain of  "+ exactPredicateName+ " is "+ d.toString());
 			
-			System.out.println("Range of  "+ exactPredicateName+ " is "+ r.toString());
+		//	System.out.println("Range of  "+ exactPredicateName+ " is "+ r.toString());
 			
 		
 			
@@ -568,7 +574,7 @@ public class EntityProc {
 				if(d.toString()!=null){
 				int indexDomain = d.toString().lastIndexOf("/");
 				String domainStr=d.toString().substring(indexDomain+1);
-				System.out.println(domainStr);
+		//		System.out.println(domainStr);
 				domainSet.add(domainStr);
 				}
 				if(r.toString()!=null){
@@ -626,9 +632,22 @@ public class EntityProc {
 					predicateSet.clear();
 					bwRange.close();
 					fosRange.close();
-		/// Create Range List
+		/// End of Create Range List
 		
 		}
+		
+		
+		
+		//Creating predicateID DomainID RangeID file
+		
+		public void createPredicateDomainRangeFile() throws IOException{
+			
+			
+			
+			
+		}
+		
+		
 		
 		
 		
