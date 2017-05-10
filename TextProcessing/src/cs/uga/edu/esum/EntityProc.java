@@ -577,7 +577,7 @@ public class EntityProc {
 				}
 				
 					
-				} //end of the while loop for graph
+				} ///end of the while loop for graph
 		
 		
 				}
