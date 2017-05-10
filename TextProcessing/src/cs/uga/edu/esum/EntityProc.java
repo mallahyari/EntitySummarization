@@ -91,6 +91,9 @@ public class EntityProc {
 	private Set<String> objectSet=new HashSet<String>();
 	private Set<String> domainSet =new HashSet<String>();
 	private Set<String> rangeSet=new HashSet<String>();
+	private Map<String, Integer>domainMap=new HashMap<String,Integer>();
+	private Map<String, Integer>rangeMap=new HashMap<String,Integer>();
+	
 	
 	private Vector<String> predicateVector=new Vector<String>();
 	private Vector<String> objectVector =new Vector<String>();
@@ -511,6 +514,30 @@ public class EntityProc {
 		
 		/// Extract Domain and Range for each predicate
 		public void domainRangeExtractor() throws IOException{
+			// Create Map for Domain <domain name , domain ID>
+			
+			BufferedReader brDomain = null;
+			FileReader frDomain = null;
+			String domainName=null;
+			int domainID=0;
+			
+				
+				
+				brDomain = new BufferedReader(new FileReader(predicateList+ "domainList.txt"));
+
+				while ((domainName = brDomain.readLine()) != null) {
+					
+					
+					    String[] t = domainName.split(" ");
+					    domainMap.put(t[0], Integer.parseInt(t[1]));
+					
+				}
+				
+				for (String s : domainMap.keySet()) {
+				    System.out.println(s + " is " + domainMap.get(s));
+				}
+			
+			
 			String predicateName;
 			String exactPredicateName=null;
 			String upperPredicateName=null;
@@ -642,7 +669,18 @@ public class EntityProc {
 		
 		public void createPredicateDomainRangeFile() throws IOException{
 			
+			BufferedReader br = null;
+			FileReader fr = null;
+			String predicateName=null;
 			
+			br = new BufferedReader(new FileReader(predicateList+ "predicateList.txt"));
+
+				while ((predicateName = br.readLine()) != null) {
+					
+					
+					int index = predicateName.toString().lastIndexOf("/");
+					String purePredicateName=predicateName.toString().substring(index+5);
+				}
 			
 			
 		}
