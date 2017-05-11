@@ -172,7 +172,6 @@ public class EntityProc {
 		/*
 		 * Read entity Name only (entNameOnly.txt) as input and extract all useful predicates
 		 */
-			
 			//Reading from entityFile
 			BufferedReader br = null;
 			FileReader fr = null;
@@ -183,7 +182,6 @@ public class EntityProc {
 				while ((entityLine = br.readLine()) != null) {
 					//Calling predicateExtractor to extract all predicates and Objects for all entities in entNameOnly.txt
 					predicateExtractor(entityLine);
-					
 				}
 			} catch (IOException e) {
 
@@ -198,24 +196,15 @@ public class EntityProc {
 
 					if (fr != null)
 						fr.close();
-
 				} catch (IOException ex) {
-
 					ex.printStackTrace();
-
 				}
-
 			}
-			
-			
 			// Making Word to ID file
-			
 			File fout = new File(wordToID);
 			FileOutputStream fos = new FileOutputStream(fout);
 			BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(fos));
-			
 			 sortedMapWordToID = sortByValue(mapWordToID);
-		
 			for (Map.Entry<String,Integer> entry : sortedMapWordToID.entrySet()) {
 				  String key = entry.getKey();
 				  Integer value = entry.getValue();
@@ -223,17 +212,14 @@ public class EntityProc {
 				  try {
 					bw.write(key + "  " + value);
 					bw.newLine();
-					
 				} catch (IOException e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}
 				  
 				}
-			
 				bw.close();
 				fos.close();
-	
 		}
 	
 	////////////////////////////////////////////////////////
@@ -277,12 +263,15 @@ public class EntityProc {
 		//	RDFNode s = result.get("s");
 			RDFNode p = result.get("p");
 			RDFNode o = result.get("o");
-			
-		
-			
 				//Finding the position of the last "/"	and take only predicate name
 				int index = p.toString().lastIndexOf("/");
 				String predicateName=p.toString().substring(index+1);
+				
+				/* if predicate is subject or contains http://dbpedia.org/ontology/ and Object contains http://dbpedia.org/ we will keep that predicate
+				 * if predicate  contains http://dbpedia.org/property/ and Object contains http://dbpedia.org/ we will keep that predicate
+				 * if predicate is http://dbpedia.org/ontology/wikiPageWikiLink we will drop it
+				 */
+				
 				
 				if (predicateName.equals("subject")){
 					
@@ -331,21 +320,10 @@ public class EntityProc {
 					predicateSet.add(p.toString());
 			}
 		
-//				//Check if the predicate is stop predicate drop it
-//				
-//				if (!predicateStopWordsVec.contains(predicateName)){
-//			
-//					//System.out.println(predicateName.toLowerCase());
-//					//Add to the set
-//					predicateSet.add(predicateName.toLowerCase());
-//					//Add to the Vector
-//					predicateVector.add(predicateName);
-//					
-//					
-//					
-//				}
+
 			} //End of While 
 
+	     //	creating mapWordToID
 		for (String word: objectSet){
 			if (!mapWordToID.containsKey(word)){
 			mapWordToID.put(word, wordCount);
@@ -354,22 +332,19 @@ public class EntityProc {
 			}
 		}
 		
-	
-		//making doc using object for each entity
-		
-			File fout = new File(entityDocs+ entityName +".txt");
-			FileOutputStream fos = new FileOutputStream(fout);
-			BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(fos));
-					//Adding Objects
+				//making doc using object for each entity (Barack_Obama.txt)
+			
+				File fout = new File(entityDocs+ entityName +".txt");
+				FileOutputStream fos = new FileOutputStream(fout);
+				BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(fos));
+						//Adding Objects
 				for(String o: objectVector){
 					try {
-						
 						bw.write(o + " | ");
 						//bw.newLine();
 					} catch (IOException e) {
 						e.printStackTrace();
 					}
-					
 				}
 				System.out.println(entityName +".txt has been created."  );
 				objectVector.clear();
@@ -379,24 +354,19 @@ public class EntityProc {
 				// End of making doc
 				///////////////////////////////////////////
 				
-				// Making entity(doc) to ID file
+				// Making entity(doc) to ID file (entity  ID) Barack_Obama  0 
 				BufferedWriter bw1 = null;
-
-			      try {
+				try {
 			      
 			         bw1 = new BufferedWriter(new FileWriter(docToID, true));
 			         	bw1.write(entityName + "  " + docCount);
 						bw1.newLine();
-						
 					} catch (IOException e) {
 						// TODO Auto-generated catch block
 						e.printStackTrace();
 					}
-					  
-				  		docCount++;
-				
-				
-					bw1.close();
+				 		docCount++;
+				bw1.close();
 	
 	} // End of Entity Extractor Function
 		
@@ -421,27 +391,18 @@ public class EntityProc {
 					 String[] kvPair = strObject.split("  ");
 					    mapWordToID.put(kvPair[0], Integer.valueOf(kvPair[1]));
 				
-				
 				} //End While
-				
-				
 				BufferedReader br = null;
 				FileReader fr = null;
-
-			
-					String entityLine;
+				String entityLine;
 					br = new BufferedReader(new FileReader(entityNameOnly));
 					while ((entityLine = br.readLine()) != null) {
-						countEntity++;
+						
 						BufferedReader brEntity = null;
 						FileReader frEntity = null;
 						String entityDoc;
 						brEntity = new BufferedReader(new FileReader(entityDocs+entityLine+".txt"));
 					
-						System.out.println(countEntity + "HHHHHHHHHHHHHH");
-						
-						
-					//	////////////////////
 						String mystr=brEntity.readLine();
 						
 						String trimmed = mystr.trim().replaceAll(" | ", " ");
@@ -462,11 +423,8 @@ public class EntityProc {
 					        if(mapWordToID.containsKey(a[i])){
 					        value=mapWordToID.get(a[i]);
 					        System.out.println("Count of "+value+"  "+a[i]+" is:"+d);
-					        
-					        
-					        
-					        
-					     // Writing Corpus
+					     
+					        // Writing Corpus
 						 BufferedWriter bw1 = null;
 						 	try {
 						      
@@ -483,7 +441,7 @@ public class EntityProc {
 					        }
 					       
 					    }
-						
+					    countEntity++;
 					}
 			
 		}
@@ -494,8 +452,6 @@ public class EntityProc {
 			File foutPre = new File(predicateList+"predicateList.txt");
 			FileOutputStream fosPre = new FileOutputStream(foutPre);
 			BufferedWriter bwPre = new BufferedWriter(new OutputStreamWriter(fosPre));
-					
-			
 				for(String p: predicateSet){
 					try {
 						bwPre.write(p + "  "+ predicateNumber );
@@ -504,7 +460,6 @@ public class EntityProc {
 					} catch (IOException e) {
 						e.printStackTrace();
 					}
-					
 				}
 				System.out.println("Predicate List has been created."  );
 				predicateSet.clear();
@@ -512,7 +467,8 @@ public class EntityProc {
 				bwPre.close();
 				fosPre.close();
 		}
-		//
+		////END OF Making Predicate list text file
+		
 		
 		/// Extract Domain and Range for each predicate
 		public void domainRangeExtractor() throws IOException{
@@ -573,11 +529,6 @@ public class EntityProc {
 					//Finding Predicate ID
 					 String[] t1 = predicateName.split("  ");
 					
-					System.out.println(t1[0] + "  "+  t1[1] + "\n");
-					
-					
-					
-				
 		//Connecting to Virtuoso to extract Doamin and Range
 		//System.out.println("Connecting to Virtuoso to extract domain and range ... ");
 		virtGraph = connectToVirtuoso();
@@ -598,9 +549,6 @@ public class EntityProc {
 			RDFNode d = result.get("dom");
 			RDFNode r = result.get("ran");
 			
-		//	System.out.println("Domain of  "+ exactPredicateName+ " is "+ d.toString());
-			
-		//	System.out.println("Range of  "+ exactPredicateName+ " is "+ r.toString());
 			
 			String domainStr1=null;
 			String rangeStr1=null;
