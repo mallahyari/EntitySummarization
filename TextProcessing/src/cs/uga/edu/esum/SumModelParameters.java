@@ -31,7 +31,7 @@ public class SumModelParameters {
 	public int [] wordsCounts = null;
 	public int D = 0;
 	public int W = 0;
-	public int T = 0;
+	public int T = 22;
 	public int P = 0; //17355;//17356;
 	public int N = 0;
 	public int nIterations = 500;

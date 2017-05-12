@@ -601,6 +601,7 @@ public boolean hasValue(int[] arr, int val) {
 		} // end of for
 
 		for (int i = 0; i < N; i++) {
+			System.out.println(d[i] + " " + p[i] + " "+z[i] + "  " + w[i]);
 			Npd[d[i]][p[i]] = Npd[d[i]][p[i]] + 1;
 			Ntp[p[i]][z[i]] = Ntp[p[i]][z[i]] + 1;
 			Nwt[z[i]][w[i]] = Nwt[z[i]][w[i]] + 1;
