@@ -43,29 +43,29 @@ public class EsumMain {
 	//	EntityProc predicCheck =new EntityProc();
 	//	predicCheck.predicateChecker();
 	//	predicCheck.makingPredicateList();
+	
 		/*
 		 * Step 3 :  Extract Domain and Range for each predicate and make predicateDomainRange.txt
 		 */
-		
-	//	predicCheck.domainRangeExtractor();
+		//	predicCheck.domainRangeExtractor();
 		
 		/*
 		 * Step 4 :  create corpus.txt (entityID, wordID, frequency)
 		 */	
-		
-	//EntityProc corpusMaker =new EntityProc();
-	//corpusMaker.corpusMaker();
+		//EntityProc corpusMaker =new EntityProc();
+		//corpusMaker.corpusMaker();
 		
 //	SumModelParameters paramIniti =new SumModelParameters();
 		
 //******************************************************\\
 		
-		
+
 		EntSum entSum = new EntSum();
 		entSum.initializeMatrices();
 		
 		// Gibbs Sampling Initialization and Run //
 		entSum.initializeGibbsSampling();
+		
 //		entSum.run();
 		
 
