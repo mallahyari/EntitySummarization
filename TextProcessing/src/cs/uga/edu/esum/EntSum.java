@@ -178,8 +178,8 @@ public class EntSum {
 		pr = allocateMemory(pr, prSize);
 		updateCounts(did, pid, t1id, t2id, wid, -1);
 		for (int ctr = 0; ctr < P; ctr++) {
-			Set<Integer> predicateDomain = predicateDomainMap.get(ctr);
-			Set<Integer> predicateRange = predicateRangeMap.get(ctr);
+			Set<Integer> predicateDomain = predicateDomainMap.get(ctr) != null ? predicateDomainMap.get(ctr) : new HashSet<Integer>() ;
+			Set<Integer> predicateRange  = predicateRangeMap.get(ctr)  != null ? predicateRangeMap.get(ctr) : new HashSet<Integer>();
 			// probability of predicate
 			double pr_p = (Npd[did][ctr] + ALPHA) / (Nd[did] + P * ALPHA);
 			for (int t_i = 0; t_i < T1; t_i++) {
@@ -448,90 +448,94 @@ public boolean hasValue(int[] arr, int val) {
 //		
 //	}
 
-//	public void writeToCSV() {
-//		loadPosteriorDistribution();
-//		List<String> conceptNames = modelParameters.readFile("/home/mehdi/EntitySummarization/evaluation/corpusConceptsLookup.txt");
-//		List<String> wordNames = modelParameters.readFile("/home/mehdi/entlda/EntitySummarization/evaluation/vocabularyLookup.txt");
-//		double [] sumProb = null;
-//		sumProb = allocateMemory(sumProb, P);
-//		for (int e_i = 0; e_i < P; e_i++) {
-//			for (int t_i = 0; t_i < T; t_i++) {
-//				sumProb[e_i] += theta [e_i][t_i];
-//			} // end of for t_i
-//		} // end of for e_i
-//		try {
-//			FileWriter csvFile = new FileWriter("/home/mehdi/entlda/csv/theta.csv");
-//			for (int e_i = 0; e_i < P; e_i++) {
-//				String line = conceptNames.get(e_i) + " ";
-//				for (int t_i = 0; t_i < T; t_i++) {
-//					theta [e_i][t_i] = theta [e_i][t_i] / sumProb[e_i];
-//					line += theta [e_i][t_i] + " ";
-//				} // end of for t_i
-//				csvFile.write(line + "\n");
-//				csvFile.flush();
-//			} // end of for e_i
-//			csvFile.close();
-//			sumProb = null;
-//			sumProb = allocateMemory(sumProb, T);
-//			for (int t_i = 0; t_i < T; t_i++) {
-//				for (int w_i = 0; w_i < W; w_i++) {
-//					sumProb [t_i] += Math.round(phi [t_i][w_i] * 10000) / 10000.;
-//				} // end of for w_i
-//			} // end of for t_i
-//			
-//			csvFile = new FileWriter("/home/mehdi/entlda/csv/phi.csv");
-//			for (int w_i = 0; w_i < W; w_i++) {
-//				String line = "";
-//				for (int t_i = 0; t_i < T; t_i++) {
-//					phi [t_i][w_i] = (Math.round(phi [t_i][w_i] * 10000) / 10000.) / sumProb[t_i];
-//					line += wordNames.get(w_i).split("\t")[1] + " " + phi [t_i][w_i] + ",";
-//				} // end of for t_i
-//				csvFile.write(line + "\n");
-//				csvFile.flush();
-//			} // end of for w_i
-//			csvFile.close();
-//			
-//			sumProb = null;
-//			sumProb = allocateMemory(sumProb, D);
-//			csvFile = new FileWriter("/home/mehdi/entlda/csv/zeta.csv");
-//			for (int d_i = 0; d_i < D; d_i++) {
-//				for (int e_i = 0; e_i < P; e_i++) {
-//					sumProb[d_i] += zeta [d_i][e_i];
-//				} // end of for e_i
-//			} // end of for d_i
-//			for (int d_i = 0; d_i < D; d_i++) {
-//				String line = "";
-//				for (int e_i = 0; e_i < P; e_i++) {
-//					zeta [d_i][e_i] = zeta [d_i][e_i] / sumProb[d_i];
-//					line = conceptNames.get(e_i) + " ";
-//					line += zeta [d_i][e_i] + " ";
-//				} // end of for e_i
-//				csvFile.write(line + "\n");
-//				csvFile.flush();
-//			} // end of for d_i
-//			csvFile.close();
-//			double [][] topDoc = null;
-//			topDoc = allocateMemory(topDoc, D, T);
-//			csvFile = new FileWriter("/home/mehdi/entlda/csv/topicDoc.csv");
-//			for (int d_i = 0; d_i < D; d_i++) {
-//				String line = "";
-//				for (int t_i = 0; t_i < T; t_i++) {
-//					double prob = 0;
-//					for (int e_i = 0; e_i < P; e_i++) {
-//						prob += theta[e_i][t_i] * zeta[d_i][e_i];
-//					} // end of for e_i
-//					topDoc[d_i][t_i] = prob;
-//					line += topDoc[d_i][t_i] + " ";
-//				} // end of for t_i
-//				csvFile.write(line + "\n");
-//				csvFile.flush();
-//			} // end of for d_i
-//			csvFile.close();
-//		} catch (IOException e) {
-//			e.printStackTrace();
-//		}
-//		System.out.println("Done!");
-//	} // end of writeToCSV
+	public void writeToCSV() {
+		loadPosteriorDistribution();
+		List<String> entityNames = modelParameters.readFile("/home/mehdi/EntitySummarization/evaluation/docToID.txt");
+		List<String> predicateNames = modelParameters.readFile("/home/mehdi/entlda/EntitySummarization/evaluation/predicateList.txt");
+		List<String> wordNames = modelParameters.readFile("/home/mehdi/entlda/EntitySummarization/evaluation/wordToID.txt");
+		double [] sumProb = null;
+		sumProb = allocateMemory(sumProb, D);
+		for (int d_i = 0; d_i < D; d_i++) {
+			for (int p_i = 0; p_i < P; p_i++) {
+				sumProb[d_i] += theta [d_i][p_i];
+			} // end of for t_i
+		} // end of for e_i
+		try {
+			FileWriter csvFile = new FileWriter("/home/mehdi/EntitySummarization/evaluation/csv/theta.csv");
+			for (int d_i = 0; d_i < D; d_i++) {
+				String line = entityNames.get(d_i) + " ";
+				for (int p_i = 0; p_i < P; p_i++) {
+					theta [d_i][p_i] = theta [d_i][p_i] / sumProb[d_i];
+					line += theta [d_i][p_i] + " ";
+				} // end of for t_i
+				csvFile.write(line + "\n");
+				csvFile.flush();
+			} // end of for e_i
+			csvFile.close();
+			sumProb = null;
+			sumProb = allocateMemory(sumProb, P);
+			for (int p_i = 0; p_i < P; p_i++) {
+				for (int t_i = 0; t_i < T1; t_i++) {
+					sumProb [p_i] += Math.round(phi1 [p_i][t_i] * 10000) / 10000.;
+				} // end of for t_i
+			} // end of for p_i
+			
+			csvFile = new FileWriter("/home/mehdi/EntitySummarization/evaluation/csv/phi1.csv");
+			for (int p_i = 0; p_i < P; p_i++) {
+				String line = predicateNames.get(p_i) + " ";
+				for (int t_i = 0; t_i < T1; t_i++) {
+					phi1 [p_i][t_i] = (Math.round(phi1 [p_i][t_i] * 10000) / 10000.) / sumProb[p_i];
+					line += phi1 [p_i][t_i] + " ";
+				} // end of for t_i
+				csvFile.write(line + "\n");
+				csvFile.flush();
+			} // end of for p_i
+			csvFile.close();
+			
+			sumProb = null;
+			sumProb = allocateMemory(sumProb, P);
+			for (int p_i = 0; p_i < P; p_i++) {
+				for (int t_i = 0; t_i < T2; t_i++) {
+					sumProb [p_i] += Math.round(phi2 [p_i][t_i] * 10000) / 10000.;
+				} // end of for t_i
+			} // end of for p_i
+			
+			csvFile = new FileWriter("/home/mehdi/EntitySummarization/evaluation/csv/phi1.csv");
+			for (int p_i = 0; p_i < P; p_i++) {
+				String line = predicateNames.get(p_i) + " ";
+				for (int t_i = 0; t_i < T2; t_i++) {
+					phi2 [p_i][t_i] = (Math.round(phi2 [p_i][t_i] * 10000) / 10000.) / sumProb[p_i];
+					line += phi2 [p_i][t_i] + " ";
+				} // end of for t_i
+				csvFile.write(line + "\n");
+				csvFile.flush();
+			} // end of for p_i
+			csvFile.close();
+			
+			sumProb = null;
+			sumProb = allocateMemory(sumProb, T2);
+			for (int t_i = 0; t_i < T2; t_i++) {
+				for (int w_i = 0; w_i < W; w_i++) {
+					sumProb [t_i] += Math.round(zeta [t_i][w_i] * 10000) / 10000.;
+				} // end of for w_i
+			} // end of for t_i
+			
+			csvFile = new FileWriter("/home/mehdi/EntitySummarization/evaluation/csv/zeta.csv");
+			for (int w_i = 0; w_i < W; w_i++) {
+				String line = "";
+				for (int t_i = 0; t_i < T2; t_i++) {
+					zeta [t_i][w_i] = (Math.round(zeta [t_i][w_i] * 10000) / 10000.) / sumProb[t_i];
+					line += wordNames.get(w_i).split(" ")[0] + " " + zeta [t_i][w_i] + ",";
+				} // end of for t_i
+				csvFile.write(line + "\n");
+				csvFile.flush();
+			} // end of for w_i
+			csvFile.close();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		System.out.println("Done!");
+	} // end of writeToCSV
 
 	public void savePosteriorDistribution() {
 		saveMatrix(theta, saveToDir + "thetaProb.ser");
