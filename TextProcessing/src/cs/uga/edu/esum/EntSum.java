@@ -135,6 +135,9 @@ public class EntSum {
 	} // end of saveCountMatrices
 
 	public void runGibbsSampling() {
+		createPredicateDomainRangeMap();
+		
+		
 		FileHandler fh;
 		try {
 			fh = new FileHandler("/home/mehdi/mylog.txt");
@@ -175,16 +178,20 @@ public class EntSum {
 		pr = allocateMemory(pr, prSize);
 		updateCounts(did, pid, t1id, t2id, wid, -1);
 		for (int ctr = 0; ctr < P; ctr++) {
+			Set<Integer> predicateDomain = predicateDomainMap.get(ctr);
+			Set<Integer> predicateRange = predicateRangeMap.get(ctr);
 			// probability of predicate
 			double pr_p = (Npd[did][ctr] + ALPHA) / (Nd[did] + P * ALPHA);
 			for (int t_i = 0; t_i < T1; t_i++) {
-				// probability of subject type
-				double pr_t1 = (Nt1p[ctr][t_i] + BETA) / (Np1[ctr] + T1 * BETA);
-				// probability of object type
-				double pr_t2 = (Nt2p[ctr][t_i] + BETA) / (Np2[ctr] + T2 * BETA);
-				// probability of object
-				double pr_w = (Nwt2[t_i][wid] + GAMMA) / (Nt2[t_i] + W * GAMMA);
-				pr [ctr * T1 + t_i] = pr_p * pr_t1 * pr_t2 * pr_w;
+				if(predicateDomain.contains(t_i) && predicateRange.contains(t_i)){
+					// probability of subject type
+					double pr_t1 = (Nt1p[ctr][t_i] + BETA) / (Np1[ctr] + T1 * BETA);
+					// probability of object type
+					double pr_t2 = (Nt2p[ctr][t_i] + BETA) / (Np2[ctr] + T2 * BETA);
+					// probability of object
+					double pr_w = (Nwt2[t_i][wid] + GAMMA) / (Nt2[t_i] + W * GAMMA);
+					pr [ctr * T1 + t_i] = pr_p * pr_t1 * pr_t2 * pr_w;
+				} // end of if 
 			} // end of for t_i
 		} // end of for ctr
 		int pairIndex = sample(pr, randomGenerator.nextDouble());
@@ -762,7 +769,7 @@ public boolean hasValue(int[] arr, int val) {
 	} // end of allocateMemory
 	
 	
-public void predicateDomainRangeMaker(){
+public void createPredicateDomainRangeMap(){
 	//Reading from PredicateDomainRange  file (PredicateID , DomainID, RangeID)
 	BufferedReader br = null;
 	FileReader fr = null;
