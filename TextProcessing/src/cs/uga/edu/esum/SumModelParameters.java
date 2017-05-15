@@ -32,9 +32,9 @@ public class SumModelParameters {
 	public int D = 0;
 	public int W = 0;
 //	public int T = 22;
-	public int T1 = 22; 
+	public int T1 = 22;
 	public int T2 = 22;
-	public int P = 0; //17355;//17356;
+	public int P = 0; 
 	public int N = 0;
 	public int nIterations = 500;
 	int burnIn = 200;
@@ -83,64 +83,47 @@ public class SumModelParameters {
 //		}
 		D = uniqueDocIds.size() ;
 		W = uniqueWordIds.size();
-		
-		BufferedWriter bw1 = null;
 
-	      try {
-	      
-	         bw1 = new BufferedWriter(new FileWriter(corpusStatFilename, true));
-		
-		
-	
-	     	bw1.write(  "numberOfEntity, sizeOfVocabulary(Object), numberOfAllObjects(Words)");
-				bw1.newLine();
-				bw1.write(  D + " " + W + " " + N);
-				
-			} catch (IOException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-			  
-		  	
-		
-		
-			try {
-				bw1.close();
-			} catch (IOException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-		
-		
-		
-		
-		
+		BufferedWriter bw1 = null;
+		try {
+
+			bw1 = new BufferedWriter(new FileWriter(corpusStatFilename, true));
+			bw1.write(  "numberOfEntity, sizeOfVocabulary(Object), numberOfAllObjects(Words)");
+			bw1.newLine();
+			bw1.write(  D + " " + W + " " + N);
+
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
+		try {
+			bw1.close();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
 		System.out.println("D: " + D + " W: " + W + " N: " + N);
-		
-		
+
 		//Counting number of Predicate or P 
-		
+
 		BufferedReader reader=null;
 		try {
 			reader = new BufferedReader(new FileReader(predicateFilename));
 		} catch (FileNotFoundException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		
 		try {
 			while (reader.readLine() != null) P++;
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		try {
 			reader.close();
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		System.out.println("Number of Predicate="+P);
+		System.out.println("Number of Predicate=" + P);
 		//End of Counting number of Predicate or T 
 		
 		

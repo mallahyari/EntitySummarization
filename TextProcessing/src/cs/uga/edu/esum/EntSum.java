@@ -107,7 +107,7 @@ public class EntSum {
 
 	public void run() {
 		runGibbsSampling();
-//		computePosteriorDistribution();
+		computePosteriorDistribution();
 //		savePosteriorDistribution();
 //		saveCountMatrices();
 	} // end of run
@@ -293,18 +293,18 @@ public boolean hasValue(int[] arr, int val) {
 //		} // end of for e_i
 //	} // end of optimizeParameter
 
-	private double recomputeThetaProb(int[] eiEnts, double[] eiEntsSr, int t_i, double pr1_z) {
-		double sumProb = 0;
-		double sumSr = 0;
-		for (int v = 0; v < eiEnts.length; v++) {
-			sumProb += eiEntsSr[v] * theta[eiEnts[v]][t_i];
-			sumSr += eiEntsSr[v];
-		} // end of for v
-		if (sumSr == 0)
-			sumSr = 1;
-		double pr2_z = ((1 - GAMMA) * pr1_z) + (GAMMA * (sumProb / sumSr));
-		return Math.round(pr2_z * 10000) / 10000.;
-	} // end of recomputeThetaProb
+//	private double recomputeThetaProb(int[] eiEnts, double[] eiEntsSr, int t_i, double pr1_z) {
+//		double sumProb = 0;
+//		double sumSr = 0;
+//		for (int v = 0; v < eiEnts.length; v++) {
+//			sumProb += eiEntsSr[v] * theta[eiEnts[v]][t_i];
+//			sumSr += eiEntsSr[v];
+//		} // end of for v
+//		if (sumSr == 0)
+//			sumSr = 1;
+//		double pr2_z = ((1 - GAMMA) * pr1_z) + (GAMMA * (sumProb / sumSr));
+//		return Math.round(pr2_z * 10000) / 10000.;
+//	} // end of recomputeThetaProb
 
 	public int sample(double[] pr, double randSeed) {
 		int l = pr.length;
@@ -373,29 +373,39 @@ public boolean hasValue(int[] arr, int val) {
 //		theta[e_i][t_i] = (Ntp[e_i][t_i] + alphaMat[e_i][t_i]) / (Np[e_i] + sumAlpha[e_i]);
 //	} // end of computeTheta
 
-//	public void computeTheta() {
-//		for (int e_i = 0; e_i < P; e_i++) {
-//			for (int t_i = 0; t_i < T; t_i++) {
-//				theta[e_i][t_i] = Math.round(((Ntp[e_i][t_i] + alphaMat[e_i][t_i]) / (Np[e_i] + sumAlpha[e_i])) * 10000) / 10000.;
-//			} // end of for t_i
-//		} // end of for e_i
-//	} // end of computeTheta
+	public void computeTheta() {
+		for (int d_i = 0; d_i < D; d_i++) {
+			for (int p_i = 0; p_i < P; p_i++) {
+				theta[d_i][p_i] = Math.round(((Npd[d_i][p_i] + ALPHA) / (Nd[d_i] + P * ALPHA)) * 10000) / 10000.;
+//				theta[d_i][p_i] = Math.round(((Npd[d_i][p_i] + alphaMat[d_i][p_i]) / (Np[d_i] + sumAlpha[d_i])) * 10000) / 10000.;
+			} // end of for t_i
+		} // end of for e_i
+	} // end of computeTheta
 
-//	public void computePhi() {
-//		for (int t_i = 0; t_i < T; t_i++) {
-//			for (int w_i = 0; w_i < W; w_i++) {
-//				phi[t_i][w_i] = Math.round(((Nwt2[t_i][w_i] + BETA) / (Nt2[t_i] + W * BETA)) * 10000) / 10000.;
-//			} // end of for w_i
-//		} // end of for t_i
-//	} // end of computePhi
-
-//	public void computeZeta() {
-//		for (int d_i = 0; d_i < D; d_i++) {
-//			for (int e_i = 0; e_i < P; e_i++) {
-//				zeta[d_i][e_i] = Math.round(((Npd[d_i][e_i] + TAU) / (Nd[d_i] + P * TAU)) * 10000) / 10000.;
-//			} // end of for e_i
-//		} // end of for d_i
-//	} // end of computeZeta
+	public void computePhi1() {
+		for (int p_i = 0; p_i < P; p_i++) {
+			for (int t_i = 0; t_i < T1; t_i++) {
+				phi1[p_i][t_i] = Math.round(((Nt1p[p_i][t_i] + BETA) / (Np1[p_i] + T1 * BETA)) * 10000) / 10000.;
+			} // end of for w_i
+		} // end of for t_i
+	} // end of computePhi1
+	
+	public void computePhi2() {
+		for (int p_i = 0; p_i < P; p_i++) {
+			for (int t_i = 0; t_i < T2; t_i++) {
+				phi1[p_i][t_i] = Math.round(((Nt2p[p_i][t_i] + BETA) / (Np2[p_i] + T2 * BETA)) * 10000) / 10000.;
+			} // end of for w_i
+		} // end of for t_i
+	} // end of computePhi2
+	
+	
+	public void computeZeta() {
+		for (int t_i = 0; t_i < T2; t_i++) {
+			for (int w_i = 0; w_i < W; w_i++) {
+				zeta[t_i][w_i] = Math.round(((Nwt2[t_i][w_i] + GAMMA) / (Nd[t_i] + W * GAMMA)) * 10000) / 10000.;
+			} // end of for e_i
+		} // end of for d_i
+	} // end of computeZeta
 	
 //	public void writeToDisk() {
 //		Nwt = loadIntMatrix("topic-word.ser");
@@ -602,9 +612,10 @@ public boolean hasValue(int[] arr, int val) {
 	} // end of saveMatrix
 
 	public void computePosteriorDistribution() {
-		//computeTheta();
-//		computeZeta();
-//		computePhi();
+		computeTheta();
+		computePhi1();
+		computePhi2();
+		computeZeta();
 	} // end of computePosteriorDistribution
 
 	public void initializeGibbsSampling() {
