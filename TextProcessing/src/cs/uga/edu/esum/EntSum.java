@@ -451,8 +451,8 @@ public boolean hasValue(int[] arr, int val) {
 	public void writeToCSV() {
 		loadPosteriorDistribution();
 		List<String> entityNames = modelParameters.readFile("/home/mehdi/EntitySummarization/evaluation/docToID.txt");
-		List<String> predicateNames = modelParameters.readFile("/home/mehdi/entlda/EntitySummarization/evaluation/predicateList.txt");
-		List<String> wordNames = modelParameters.readFile("/home/mehdi/entlda/EntitySummarization/evaluation/wordToID.txt");
+		List<String> predicateNames = modelParameters.readFile("/home/mehdi/EntitySummarization/evaluation/predicateList.txt");
+		List<String> wordNames = modelParameters.readFile("/home/mehdi/EntitySummarization/evaluation/wordToID.txt");
 		double [] sumProb = null;
 		sumProb = allocateMemory(sumProb, D);
 		for (int d_i = 0; d_i < D; d_i++) {
@@ -500,7 +500,7 @@ public boolean hasValue(int[] arr, int val) {
 				} // end of for t_i
 			} // end of for p_i
 			
-			csvFile = new FileWriter("/home/mehdi/EntitySummarization/evaluation/csv/phi1.csv");
+			csvFile = new FileWriter("/home/mehdi/EntitySummarization/evaluation/csv/phi2.csv");
 			for (int p_i = 0; p_i < P; p_i++) {
 				String line = predicateNames.get(p_i) + " ";
 				for (int t_i = 0; t_i < T2; t_i++) {
@@ -550,7 +550,6 @@ public boolean hasValue(int[] arr, int val) {
 		phi1   = loadDoubleMatrix("phi1Prob.ser");
 		phi2   = loadDoubleMatrix("phi2Prob.ser");
 		zeta  = loadDoubleMatrix("zetaProb.ser");
-		alphaMat = loadDoubleMatrix("alphaMat.ser");
 	} // end of loadPosteriorDistribution
 
 	public int[][] loadIntMatrix(String fileName) {
