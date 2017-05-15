@@ -7,16 +7,19 @@ package cs.uga.edu.esum;
 
 import java.io.BufferedInputStream;
 import java.io.BufferedOutputStream;
+import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
+import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
@@ -80,11 +83,23 @@ public class EntSum {
 	double[][] zeta = null; // document-entity distribution
 	Random randomGenerator = null;
 	
+	
+	private static final String docPredicateDomainRange = "/home/mehdi/EntitySummarization/evaluation/predicateDomainRange.txt"; 
+	
+	// Map to store each predicate with a set of corresponding Domain
+	Map <Integer, Set<Integer>> predicateDomainMap= new HashMap<Integer, Set<Integer>>();
+	
+	// Map to store each predicate with a set of corresponding Range
+	Map<Integer, Set<Integer>> predicateRangeMap=new HashMap<Integer, Set<Integer>>();
+	
+	
 	String corpusEntitiesFile = "/home/mehdi/EntitySummarization/evaluation/corpusConceptsSr.txt";
 	
 	int showLine = 400000;
 	final Logger logger = Logger.getLogger(EntSum.class.getName());
 	String saveToDir = Configuration.getProperty("savedPosteriorFiles");
+	
+	
 
 	public EntSum() {
 		modelParameters = new SumModelParameters();
@@ -745,5 +760,68 @@ public boolean hasValue(int[] arr, int val) {
 		} // end of for rCtr
 		return ar;
 	} // end of allocateMemory
+	
+	
+public void predicateDomainRangeMaker(){
+	//Reading from PredicateDomainRange  file (PredicateID , DomainID, RangeID)
+	BufferedReader br = null;
+	FileReader fr = null;
+
+	try {
+		String str;
+		br = new BufferedReader(new FileReader(docPredicateDomainRange));
+		while ((str = br.readLine()) != null) {
+			String[] a = str.split(" ");
+			if (predicateDomainMap.get(Integer.valueOf(a[0]))==null){
+				Set<Integer> domainSet =new HashSet<Integer>();
+				domainSet.add(Integer.valueOf(a[1]));
+				predicateDomainMap.put(Integer.valueOf(a[0]), domainSet);
+				}else{
+					Set<Integer> domainSet= predicateDomainMap.get(Integer.valueOf(a[0]));
+					domainSet.add(Integer.valueOf(a[1]));
+					predicateDomainMap.put(Integer.valueOf(a[0]), domainSet);
+				}
+			
+			if (predicateRangeMap.get(Integer.valueOf(a[0]))==null){
+				Set<Integer> rangeSet =new HashSet<Integer>();
+				rangeSet.add(Integer.valueOf(a[2]));
+				predicateRangeMap.put(Integer.valueOf(a[0]), rangeSet);
+				}else{
+					Set<Integer> rangeSet= predicateRangeMap.get(Integer.valueOf(a[0]));
+					rangeSet.add(Integer.valueOf(a[2]));
+					predicateRangeMap.put(Integer.valueOf(a[0]), rangeSet);
+				}
+		
+		}
+	} catch (IOException e) {
+
+		e.printStackTrace();
+
+	} finally {
+
+		try {
+
+			if (br != null)
+				br.close();
+
+			if (fr != null)
+				fr.close();
+		} catch (IOException ex) {
+			ex.printStackTrace();
+		}
+	}	
+	
+	
+	
+	
+	
+	}
+	
+	
+	
+	
+	
+	
+	
 
 }
