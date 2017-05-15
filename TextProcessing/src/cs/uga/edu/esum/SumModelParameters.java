@@ -38,11 +38,11 @@ public class SumModelParameters {
 	public int N = 0;
 	public int nIterations = 500;
 	int burnIn = 200;
-	public double ALPHA = 0.1;
-	public final double BETA  = 0.1;
+	public double ALPHA = 50.0 / 344;
+	public final double BETA  = 0.01;
 //	public final double TAU = 50.0 / T;
 //	public final double EPSILON = 0.9;
-	public final double gamma = 0.7	;
+	public final double gamma = 0.01	;
 	public String corpusFilename = "/home/mehdi/EntitySummarization/evaluation/corpus.txt";
 	public String entitiesFilename = "/home/mehdi/EntitySummarization/evaluation/entNameOnly.txt";
 	public String corpusStatFilename = "/home/mehdi/EntitySummarization/evaluation/corpusStatistics.txt";

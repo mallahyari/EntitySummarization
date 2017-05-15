@@ -108,7 +108,7 @@ public class EntSum {
 	public void run() {
 		runGibbsSampling();
 		computePosteriorDistribution();
-//		savePosteriorDistribution();
+		savePosteriorDistribution();
 //		saveCountMatrices();
 	} // end of run
 
