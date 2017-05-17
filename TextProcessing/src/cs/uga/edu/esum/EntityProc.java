@@ -352,6 +352,7 @@ public class EntityProc {
 					wordToIdFile.write(objectName + " " + wordIdGenerator + "\n");
 					wordIdGenerator++;
 				}
+				objectTypes.clear();
 				objectTypes.addAll(getEntityRange(object.toString()));
 				for (String t : objectTypes) {
 					if (objectTypesMap.get(t) == null) {

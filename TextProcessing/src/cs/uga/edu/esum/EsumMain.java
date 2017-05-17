@@ -65,7 +65,7 @@ public class EsumMain {
 //******************************************************\\
 		
 
-		EntSum entSum = new EntSum();
+//		EntSum entSum = new EntSum();
 //		entSum.initializeMatrices();
 		
 		// Gibbs Sampling Initialization and Run //
