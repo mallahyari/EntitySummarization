@@ -450,8 +450,8 @@ public boolean hasValue(int[] arr, int val) {
 
 	public void writeToCSV() {
 		loadPosteriorDistribution();
-		List<String> entityNames = modelParameters.readFile("/home/mehdi/EntitySummarization/evaluation/docToID.txt");
-		List<String> predicateNames = modelParameters.readFile("/home/mehdi/EntitySummarization/evaluation/predicateList.txt");
+		List<String> entityNames = modelParameters.readFile("/home/mehdi/EntitySummarization/evaluation/docToId.txt");
+		List<String> predicateNames = modelParameters.readFile("/home/mehdi/EntitySummarization/evaluation/predicateToId.txt");
 		List<String> wordNames = modelParameters.readFile("/home/mehdi/EntitySummarization/evaluation/wordToID.txt");
 		double [] sumProb = null;
 		sumProb = allocateMemory(sumProb, D);

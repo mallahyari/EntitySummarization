@@ -404,19 +404,21 @@ public class EntityProc {
 			String [] tokens = line.split(" ");
 			String wordName = tokens[0];
 			String wordId = tokens[1];
-			docToIdMap.put(wordName, Integer.parseInt(wordId));
+			wordToIdMap.put(wordName, Integer.parseInt(wordId));
 		} // end of for
 		FileWriter corpusFile = new FileWriter(corpusFileName);
 		File fileDirectory = new File(entityDocs);
 		for (File file : fileDirectory.listFiles()) {
-			String fileName = file.getName().replace(".txt", "");
+			String fileName = file.getName();
 			String document = readDocumentAsString(entityDocs + fileName);
-			String [] words = document.split("|");
+			fileName = fileName.replace(".txt", "");
+			String [] words = document.split("\\|");
 			Map<Integer, Integer> wordsFrequency = new HashMap<Integer, Integer>();
 			for (String word : words) {
+				System.out.println(word);
 				int wordId = wordToIdMap.get(word);
 				int preFreq = wordsFrequency.get(wordId) != null ? wordsFrequency.get(wordId) : 0;
-				wordsFrequency.put(wordId, preFreq++);
+				wordsFrequency.put(wordId, preFreq + 1);
 			} // end of for
 			for (Map.Entry<Integer, Integer> entry : wordsFrequency.entrySet()) {
 				int wordId = entry.getKey();

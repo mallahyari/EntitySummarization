@@ -38,7 +38,7 @@ public class SumModelParameters {
 	public int N = 0;
 	public int nIterations = 500;
 	int burnIn = 200;
-	public double ALPHA = 50.0 / 344;
+	public double ALPHA = 50.0 / 264;
 	public final double BETA  = 0.01;
 //	public final double TAU = 50.0 / T;
 //	public final double EPSILON = 0.9;
@@ -46,7 +46,7 @@ public class SumModelParameters {
 	public String corpusFilename = "/home/mehdi/EntitySummarization/evaluation/corpus.txt";
 	public String entitiesFilename = "/home/mehdi/EntitySummarization/evaluation/entNameOnly.txt";
 	public String corpusStatFilename = "/home/mehdi/EntitySummarization/evaluation/corpusStatistics.txt";
-	public String predicateFilename = "/home/mehdi/EntitySummarization/evaluation/predicateList.txt";
+	public String predicateFilename = "/home/mehdi/EntitySummarization/evaluation/predicateToId.txt";
 //	public String corpusFilename = "/home/mehdi/taxonomyProject/preprocessedFiles/corpus.txt";
 //	public String entitiesFilename = "/home/mehdi/taxonomyProject/preprocessedFiles/corpusConceptsSr.txt";
 //	public String corpusStatFilename = "/home/mehdi/taxonomyProject/preprocessedFiles/corpusStatistics.txt";
