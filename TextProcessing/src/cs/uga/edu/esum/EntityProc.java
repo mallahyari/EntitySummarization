@@ -23,6 +23,7 @@ import java.text.NumberFormat;
 import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collection;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.HashMap;
@@ -69,20 +70,23 @@ import virtuoso.jena.driver.VirtuosoQueryExecutionFactory;
 
 public class EntityProc { 
 	
-	private final String uriPrefix = "http://dbpedia.org/resource/"; 
+	private final String uriPrefix = "http://dbpedia.org/resource/";
+	private final String wikiCategoryUriPrefix = "http://dbpedia.org/resource/Category:";
 	private VirtGraph virtGraph = null;
 
 	private static final String entityFile = "/home/mehdi/EntitySummarization/evaluation/faces_evaluation/instances.txt";
 	private static final String entityNameOnly = "/home/mehdi/EntitySummarization/evaluation/entNameOnly.txt";
 	private static final String predicateStopWords = "/home/mehdi/EntitySummarization/evaluation/predicateStopWords.txt";
 	// Map each object (word) to an ID
-	private static final String wordToID = "/home/mehdi/EntitySummarization/evaluation/wordToID.txt";
+	private static final String wordToIdFileName = "/home/mehdi/EntitySummarization/evaluation/wordToID.txt";
 	//Map each entity (doc) to ID
-	private static final String docToID = "/home/mehdi/EntitySummarization/evaluation/docToID.txt"; 
+	private static final String docToIdFileName = "/home/mehdi/EntitySummarization/evaluation/docToID.txt"; 
+	
+	private static final String predicateToIdFileName = "/home/mehdi/EntitySummarization/evaluation/predicateToId.txt"; 
 	
 	private static final String corpus = "/home/mehdi/EntitySummarization/evaluation/corpus.txt"; 
 	
-	private static final String docPredicateDomainRange = "/home/mehdi/EntitySummarization/evaluation/predicateDomainRange.txt"; 
+	private static final String predicateDomainRangeFileName = "/home/mehdi/EntitySummarization/evaluation/predicateDomainRange.txt"; 
 	
 	//Holding all documents (Entities) in entityDocs folder
 	private static final String entityDocs = "/home/mehdi/EntitySummarization/evaluation/entityDocs/";
@@ -168,61 +172,268 @@ public class EntityProc {
 	
 	
 /////////////////////////////////////////////////////
+//	public void predicateChecker() throws IOException{
+//		/*
+//		 * Read entity Name only (entNameOnly.txt) as input and extract all useful predicates
+//		 */
+//			//Reading from entityFile
+//			BufferedReader br = null;
+//			FileReader fr = null;
+//
+//			try {
+//				String entityLine;
+//				br = new BufferedReader(new FileReader(entityNameOnly));
+//				while ((entityLine = br.readLine()) != null) {
+//					//Calling predicateExtractor to extract all predicates and Objects for all entities in entNameOnly.txt
+//					predicateExtractor(entityLine);
+//				}
+//			} catch (IOException e) {
+//
+//				e.printStackTrace();
+//
+//			} finally {
+//
+//				try {
+//
+//					if (br != null)
+//						br.close();
+//
+//					if (fr != null)
+//						fr.close();
+//				} catch (IOException ex) {
+//					ex.printStackTrace();
+//				}
+//			}
+//			// Making Word to ID file
+//			File fout = new File(wordToIdFileName);
+//			FileOutputStream fos = new FileOutputStream(fout);
+//			BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(fos));
+//			 sortedMapWordToID = sortByValue(mapWordToID);
+//			for (Map.Entry<String,Integer> entry : sortedMapWordToID.entrySet()) {
+//				  String key = entry.getKey();
+//				  Integer value = entry.getValue();
+//				  
+//				  try {
+//					bw.write(key + "  " + value);
+//					bw.newLine();
+//				} catch (IOException e) {
+//					// TODO Auto-generated catch block
+//					e.printStackTrace();
+//				}
+//				  
+//				}
+//				bw.close();
+//				fos.close();
+//		}
+	
 	public void predicateChecker() throws IOException{
 		/*
 		 * Read entity Name only (entNameOnly.txt) as input and extract all useful predicates
 		 */
-			//Reading from entityFile
-			BufferedReader br = null;
-			FileReader fr = null;
-
-			try {
-				String entityLine;
-				br = new BufferedReader(new FileReader(entityNameOnly));
-				while ((entityLine = br.readLine()) != null) {
-					//Calling predicateExtractor to extract all predicates and Objects for all entities in entNameOnly.txt
-					predicateExtractor(entityLine);
-				}
-			} catch (IOException e) {
-
-				e.printStackTrace();
-
-			} finally {
-
-				try {
-
-					if (br != null)
-						br.close();
-
-					if (fr != null)
-						fr.close();
-				} catch (IOException ex) {
-					ex.printStackTrace();
-				}
+		//Reading from entityFile
+		try {
+			String entityLine;
+			BufferedReader br = new BufferedReader(new FileReader(entityNameOnly));
+			while ((entityLine = br.readLine()) != null) {
+				//Calling predicateExtractor to extract all predicates and Objects for all entities in entNameOnly.txt
+				predicateExtractor(entityLine);
 			}
-			// Making Word to ID file
-			File fout = new File(wordToID);
-			FileOutputStream fos = new FileOutputStream(fout);
-			BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(fos));
-			 sortedMapWordToID = sortByValue(mapWordToID);
-			for (Map.Entry<String,Integer> entry : sortedMapWordToID.entrySet()) {
-				  String key = entry.getKey();
-				  Integer value = entry.getValue();
-				  
-				  try {
-					bw.write(key + "  " + value);
-					bw.newLine();
-				} catch (IOException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				}
-				  
-				}
-				bw.close();
-				fos.close();
+			br.close();
+		} catch (IOException e) {
+
+			e.printStackTrace();
+
 		}
+	} // end of predicateChecker
 	
-	////////////////////////////////////////////////////////
+	
+	public Set<String> readPredicateStopWords(String filename) {
+		//Reading stop predicate from predicate Stop Words file
+		Set<String> predicateStopWords = new HashSet<String>();
+		try {
+			String stopPredicate;
+			BufferedReader br = new BufferedReader(new FileReader(filename));
+
+			while ((stopPredicate = br.readLine()) != null) {
+				predicateStopWords.add(stopPredicate);
+			}
+			br.close();
+		} catch (IOException e) {
+
+			e.printStackTrace();
+
+		}
+		return predicateStopWords;
+	} // end of readPredicateStopWords
+	
+	
+	public void processEntities() throws IOException {
+		System.out.println("Connecting to Virtuoso ... ");
+		virtGraph = connectToVirtuoso();
+		System.out.println("Successfully Connected to Virtuoso!\n");
+		String entityName = "";
+		BufferedReader br = new BufferedReader(new FileReader(entityNameOnly));
+		FileWriter wordToIdFile = new FileWriter(wordToIdFileName);
+		FileWriter docToIdFile = new FileWriter(docToIdFileName);
+		FileWriter rTypesFile = new FileWriter("rangeToId.txt");
+		FileWriter sTypesFile = new FileWriter("domainToId.txt");
+		FileWriter predicateToIdFile = new FileWriter(predicateToIdFileName);
+		FileWriter predicateDomainRangeFile = new FileWriter(predicateDomainRangeFileName);
+		int subjectTypeIdGenerator = 0;
+		int prediateIdGenerator = 0;
+		int objectTypeIdGenerator = 0;
+		int wordIdGenerator = 0;
+		int docIdGenerator = 0;
+		Map<String,Integer> objectTypesMap = new HashMap<String,Integer>();
+		Map<String,Integer> subjectTypesMap = new HashMap<String,Integer>();
+		Map<String, Integer> wordToIdMap = new HashMap<String,Integer>();
+		Map<String, Integer> predicateToIdMap = new HashMap<String,Integer>();
+		while ((entityName = br.readLine()) != null) {
+			String subjectUrl = "<" + uriPrefix + entityName + ">";
+			Set<String> subjectTypes = getEntityTypes(subjectUrl);
+			for (String t : subjectTypes) {
+				if (subjectTypesMap.get(t) == null) {
+					sTypesFile.write(t + " " + subjectTypeIdGenerator + "\n");
+					subjectTypeIdGenerator++;
+				} // end of if
+			} // end of for
+			subjectTypes.addAll(getEntityTypes(subjectUrl));
+			Set<String> predicateStopWordsSet = readPredicateStopWords(predicateStopWords);
+			FileWriter docFile = new FileWriter(entityDocs + entityName +".txt");
+			//Connecting to Virtuoso to extract predicates and objects
+			StringBuffer queryString = new StringBuffer();
+			queryString.append("SELECT ?o FROM <" + GRAPH + "> WHERE { ");
+			queryString.append("<" + uriPrefix + entityName + ">" + " ?p ?o . ");
+			queryString.append("}");
+			Query sparql = QueryFactory.create(queryString.toString());
+			VirtuosoQueryExecution vqe = VirtuosoQueryExecutionFactory.create (sparql, virtGraph);
+			ResultSet results = vqe.execSelect();
+			docToIdFile.write(entityName + " " + docIdGenerator + "\n");
+			while (results.hasNext()) {
+				Set<String> objectTypes = new HashSet<String>();
+				QuerySolution result = results.nextSolution();
+				RDFNode predicate = result.get("p");
+				RDFNode object = result.get("o");
+				//Finding the position of the last "/"	and take only predicate name
+				int index = predicate.toString().lastIndexOf("/");
+				String predicateName = predicate.toString().substring(index + 1);
+
+				/* if predicate is subject or contains http://dbpedia.org/ontology/ and Object contains http://dbpedia.org/ we will keep that predicate
+				 * if predicate  contains http://dbpedia.org/property/ and Object contains http://dbpedia.org/ we will keep that predicate
+				 * if predicate is http://dbpedia.org/ontology/wikiPageWikiLink we will drop it
+				 */
+				if (predicateStopWordsSet.contains(predicateName) || object.isLiteral()) continue;
+				if (predicate.toString().equals("http://www.w3.org/1999/02/22-rdf-syntax-ns#type")) continue;
+				String objectName = "";
+				if (predicateName.equals("subject")){
+					objectName = object.toString().substring(wikiCategoryUriPrefix.length());
+				}else {
+					objectName = object.toString().substring(uriPrefix.length());
+				} // end of if
+				if (predicateToIdMap.get(predicateName) == null) {
+					predicateToIdMap.put(predicateName, prediateIdGenerator);
+					predicateToIdFile.write(predicateName + " " + prediateIdGenerator);
+					prediateIdGenerator++;
+				}
+				objectTypes = getEntityTypes(object.toString());
+				
+				// writes the object and all its types to the doc file
+				docFile.write(objectName + "|");
+				for (String t : objectTypes) {
+					docFile.write(t + "|");
+				}
+				if (wordToIdMap.get(objectName) == null) {
+					wordToIdMap.put(objectName, wordIdGenerator);
+					wordToIdFile.write(objectName + " " + wordIdGenerator + "\n");
+					wordIdGenerator++;
+				}
+				for (String t : objectTypes) {
+					if (wordToIdMap.get(t) == null) {
+						wordToIdMap.put(t, wordIdGenerator);
+						wordToIdFile.write(t + " " + wordIdGenerator + "\n");
+						wordIdGenerator++;
+					}
+				} // end of for
+				objectTypes.addAll(getEntityRange(object.toString()));
+				for (String t : objectTypes) {
+					if (objectTypesMap.get(t) == null) {
+						rTypesFile.write(t + " " + objectTypeIdGenerator + "\n");
+						objectTypeIdGenerator++;
+					} // end of if
+				} // end of for
+				int predicateId = predicateToIdMap.get(predicateName);
+				for (String d : subjectTypes) {
+					int domainId = subjectTypesMap.get(d);
+					for (String r : objectTypes) {
+						int rangeId = objectTypesMap.get(r);
+						predicateDomainRangeFile.write(predicateId + " " + domainId + " " + rangeId  + "\n");
+					} // end of for
+				} // end of for
+			} // end of while
+			docFile.close();
+		} // end of while
+		wordToIdFile.close();
+		docToIdFile.close();
+		rTypesFile.close();
+		sTypesFile.close();
+		predicateToIdFile.close();
+		predicateDomainRangeFile.close();
+		br.close();
+	} // end of processEntities
+	
+	
+	private Set<String> getEntityRange(String predicateUrl) {
+		StringBuffer queryString = new StringBuffer();
+		queryString.append("SELECT ?ran FROM <" + GRAPH + "> WHERE { ");
+		queryString.append("<" + predicateUrl + ">" + " <http://www.w3.org/2000/01/rdf-schema#range> ?ran . } ");
+		Query sparql = QueryFactory.create(queryString.toString());
+		VirtuosoQueryExecution vqe = VirtuosoQueryExecutionFactory.create (sparql, virtGraph);
+		ResultSet results = vqe.execSelect();
+		Set<String> types = new HashSet<String>();
+		while (results.hasNext()) {
+			QuerySolution result = results.nextSolution();
+			int index = result.getResource("ran").toString().lastIndexOf("/");
+			types.add(result.getResource("ran").toString().substring(index));
+		} // end of while
+		return types;
+	} // end of getEntityRange
+	
+	private Set<String> getEntityDomain(String predicateUrl) {
+		StringBuffer queryString = new StringBuffer();
+		queryString.append("SELECT ?dom FROM <" + GRAPH + "> WHERE { ");
+		queryString.append("<" + predicateUrl + ">" + " <http://www.w3.org/2000/01/rdf-schema#domain> ?dom . } ");
+		Query sparql = QueryFactory.create(queryString.toString());
+		VirtuosoQueryExecution vqe = VirtuosoQueryExecutionFactory.create (sparql, virtGraph);
+		ResultSet results = vqe.execSelect();
+		Set<String> types = new HashSet<String>();
+		while (results.hasNext()) {
+			QuerySolution result = results.nextSolution();
+			int index = result.getResource("dom").toString().lastIndexOf("/");
+			types.add(result.getResource("dom").toString().substring(index));
+		} // end of while
+		return types;
+	} // end of getEntityDomain
+
+
+	private Set<String> getEntityTypes(String entiyUrl) {
+		StringBuffer queryString = new StringBuffer();
+		queryString.append("SELECT ?o FROM <" + GRAPH + "> WHERE { ");
+		queryString.append("<" + entiyUrl + ">" + " a ?o . ");
+		queryString.append("}");
+		Query sparql = QueryFactory.create(queryString.toString());
+		VirtuosoQueryExecution vqe = VirtuosoQueryExecutionFactory.create (sparql, virtGraph);
+		ResultSet results = vqe.execSelect();
+		Set<String> types = new HashSet<String>();
+		while (results.hasNext()) {
+			QuerySolution result = results.nextSolution();
+			int index = result.getResource("o").toString().lastIndexOf("/");
+			types.add(result.getResource("o").toString().substring(index));
+		} // end of while
+		return types;
+	} // end of getEntityTypes
+
+
+		////////////////////////////////////////////////////////
 	/*
 	 * taking entity name and extract all predicates (meaningful ones) 
 	 */
@@ -358,7 +569,7 @@ public class EntityProc {
 				BufferedWriter bw1 = null;
 				try {
 			      
-			         bw1 = new BufferedWriter(new FileWriter(docToID, true));
+			         bw1 = new BufferedWriter(new FileWriter(docToIdFileName, true));
 			         	bw1.write(entityName + "  " + docCount);
 						bw1.newLine();
 					} catch (IOException e) {
@@ -386,7 +597,7 @@ public class EntityProc {
 			FileReader frObject=null;
 			Map<String, Integer> mapWordToID =new HashMap<String,Integer>();
 				String strObject;
-				brObject = new BufferedReader(new FileReader(wordToID));
+				brObject = new BufferedReader(new FileReader(wordToIdFileName));
 				while ((strObject = brObject.readLine()) != null) {
 					 String[] kvPair = strObject.split("  ");
 					    mapWordToID.put(kvPair[0], Integer.valueOf(kvPair[1]));
@@ -580,7 +791,7 @@ public class EntityProc {
 			 BufferedWriter bw1 = null;
 			 	try {
 			      
-			         bw1 = new BufferedWriter(new FileWriter(docPredicateDomainRange, true));
+			         bw1 = new BufferedWriter(new FileWriter(predicateDomainRangeFileName, true));
 			         	bw1.write(t1[1] + " " + domainID1+" "+ rangeID1);
 						bw1.newLine();
 						
