@@ -80,7 +80,9 @@ public class EntityProc {
 	// Map each object (word) to an ID
 	private static final String wordToIdFileName = "/home/mehdi/EntitySummarization/evaluation/wordToID.txt";
 	//Map each entity (doc) to ID
-	private static final String docToIdFileName = "/home/mehdi/EntitySummarization/evaluation/docToID.txt"; 
+	private static final String docToIdFileName = "/home/mehdi/EntitySummarization/evaluation/docToId.txt"; 
+	private static final String rangeToIdFileName = "/home/mehdi/EntitySummarization/evaluation/rangeToId.txt";
+	private static final String domainToIdFileName = "/home/mehdi/EntitySummarization/evaluation/domainToId.txt";
 	
 	private static final String predicateToIdFileName = "/home/mehdi/EntitySummarization/evaluation/predicateToId.txt"; 
 	
@@ -111,6 +113,7 @@ public class EntityProc {
 	private int predicateNumber=0;
 	private int domainNumber=0;
 	private int rangeNumber=0;
+	
 	
 
 	public void readWriteEntity() throws FileNotFoundException{
@@ -275,8 +278,8 @@ public class EntityProc {
 		BufferedReader br = new BufferedReader(new FileReader(entityNameOnly));
 		FileWriter wordToIdFile = new FileWriter(wordToIdFileName);
 		FileWriter docToIdFile = new FileWriter(docToIdFileName);
-		FileWriter rTypesFile = new FileWriter("rangeToId.txt");
-		FileWriter sTypesFile = new FileWriter("domainToId.txt");
+		FileWriter rTypesFile = new FileWriter(rangeToIdFileName);
+		FileWriter sTypesFile = new FileWriter(domainToIdFileName);
 		FileWriter predicateToIdFile = new FileWriter(predicateToIdFileName);
 		FileWriter predicateDomainRangeFile = new FileWriter(predicateDomainRangeFileName);
 		int subjectTypeIdGenerator = 0;
@@ -289,7 +292,7 @@ public class EntityProc {
 		Map<String, Integer> wordToIdMap = new HashMap<String,Integer>();
 		Map<String, Integer> predicateToIdMap = new HashMap<String,Integer>();
 		while ((entityName = br.readLine()) != null) {
-			String subjectUrl = "<" + uriPrefix + entityName + ">";
+			String subjectUrl = uriPrefix + entityName;
 			Set<String> subjectTypes = getEntityTypes(subjectUrl);
 			for (String t : subjectTypes) {
 				if (subjectTypesMap.get(t) == null) {
@@ -303,7 +306,7 @@ public class EntityProc {
 			FileWriter docFile = new FileWriter(entityDocs + entityName +".txt");
 			//Connecting to Virtuoso to extract predicates and objects
 			StringBuffer queryString = new StringBuffer();
-			queryString.append("SELECT ?o FROM <" + GRAPH + "> WHERE { ");
+			queryString.append("SELECT ?p ?o FROM <" + GRAPH + "> WHERE { ");
 			queryString.append("<" + uriPrefix + entityName + ">" + " ?p ?o . ");
 			queryString.append("}");
 			Query sparql = QueryFactory.create(queryString.toString());
@@ -326,6 +329,7 @@ public class EntityProc {
 				 */
 				if (predicateStopWordsSet.contains(predicateName) || object.isLiteral()) continue;
 				if (predicate.toString().equals("http://www.w3.org/1999/02/22-rdf-syntax-ns#type")) continue;
+				if (!predicate.toString().contains("http://dbpedia.org") || !object.toString().contains("http://dbpedia.org")) continue;
 				String objectName = "";
 				if (predicateName.equals("subject")){
 					objectName = object.toString().substring(wikiCategoryUriPrefix.length());
@@ -334,7 +338,7 @@ public class EntityProc {
 				} // end of if
 				if (predicateToIdMap.get(predicateName) == null) {
 					predicateToIdMap.put(predicateName, prediateIdGenerator);
-					predicateToIdFile.write(predicateName + " " + prediateIdGenerator);
+					predicateToIdFile.write(predicateName + " " + prediateIdGenerator + "\n");
 					prediateIdGenerator++;
 				}
 				objectTypes = getEntityTypes(object.toString());
@@ -430,7 +434,7 @@ public class EntityProc {
 		while (results.hasNext()) {
 			QuerySolution result = results.nextSolution();
 			int index = result.getResource("o").toString().lastIndexOf("/");
-			types.add(result.getResource("o").toString().substring(index));
+			types.add(result.getResource("o").toString().substring(index + 1));
 		} // end of while
 		return types;
 	} // end of getEntityTypes
