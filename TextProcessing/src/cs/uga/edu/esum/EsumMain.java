@@ -41,9 +41,10 @@ public class EsumMain {
 		 *to be ran after predicateChekcer because this function will fill out the list of perdicate in predicateSet 
 		 */
 		
-	//	EntityProc predicCheck =new EntityProc();
-	//	predicCheck.predicateChecker();
-	//	predicCheck.makingPredicateList();
+		EntityProc predicCheck = new EntityProc();
+		predicCheck.processEntities();
+//		predicCheck.predicateChecker();
+//		predicCheck.makingPredicateList();
 	
 		/*
 		 * Step 3 :  Extract Domain and Range for each predicate and make predicateDomainRange.txt
@@ -61,8 +62,8 @@ public class EsumMain {
 //******************************************************\\
 		
 
-		EntSum entSum = new EntSum();
-		entSum.initializeMatrices();
+//		EntSum entSum = new EntSum();
+//		entSum.initializeMatrices();
 		
 		// Gibbs Sampling Initialization and Run //
 //		entSum.initializeGibbsSampling();
@@ -71,7 +72,7 @@ public class EsumMain {
 		
 
 		
-      entSum.writeToCSV();
+//      entSum.writeToCSV();
 		
 		
 		
