@@ -294,10 +294,11 @@ public class EntityProc {
 			for (String t : subjectTypes) {
 				if (subjectTypesMap.get(t) == null) {
 					sTypesFile.write(t + " " + subjectTypeIdGenerator + "\n");
+					subjectTypesMap.put(t, subjectTypeIdGenerator);
 					subjectTypeIdGenerator++;
 				} // end of if
 			} // end of for
-			subjectTypes.addAll(getEntityTypes(subjectUrl));
+			subjectTypes.addAll(getEntityDomain(subjectUrl));
 			Set<String> predicateStopWordsSet = readPredicateStopWords(predicateStopWords);
 			FileWriter docFile = new FileWriter(entityDocs + entityName +".txt");
 			//Connecting to Virtuoso to extract predicates and objects
@@ -309,6 +310,7 @@ public class EntityProc {
 			VirtuosoQueryExecution vqe = VirtuosoQueryExecutionFactory.create (sparql, virtGraph);
 			ResultSet results = vqe.execSelect();
 			docToIdFile.write(entityName + " " + docIdGenerator + "\n");
+			docIdGenerator++;
 			while (results.hasNext()) {
 				Set<String> objectTypes = new HashSet<String>();
 				QuerySolution result = results.nextSolution();
@@ -357,6 +359,7 @@ public class EntityProc {
 				objectTypes.addAll(getEntityRange(object.toString()));
 				for (String t : objectTypes) {
 					if (objectTypesMap.get(t) == null) {
+						objectTypesMap.put(t, objectTypeIdGenerator);
 						rTypesFile.write(t + " " + objectTypeIdGenerator + "\n");
 						objectTypeIdGenerator++;
 					} // end of if
