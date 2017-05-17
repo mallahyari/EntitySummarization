@@ -42,7 +42,7 @@ public class EsumMain {
 		 */
 		
 		EntityProc predicCheck = new EntityProc();
-		predicCheck.processEntities();
+//		predicCheck.processEntities();
 //		predicCheck.predicateChecker();
 //		predicCheck.makingPredicateList();
 	

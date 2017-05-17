@@ -86,7 +86,7 @@ public class EntityProc {
 	
 	private static final String predicateToIdFileName = "/home/mehdi/EntitySummarization/evaluation/predicateToId.txt"; 
 	
-	private static final String corpus = "/home/mehdi/EntitySummarization/evaluation/corpus.txt"; 
+	private static final String corpusFileName = "/home/mehdi/EntitySummarization/evaluation/corpus.txt"; 
 	
 	private static final String predicateDomainRangeFileName = "/home/mehdi/EntitySummarization/evaluation/predicateDomainRange.txt"; 
 	
@@ -389,6 +389,83 @@ public class EntityProc {
 	} // end of processEntities
 	
 	
+	public void makeCorpus() throws IOException {
+		List<String> docToId = readDocument(docToIdFileName);
+		Map<String,Integer> docToIdMap = new HashMap<String,Integer>();
+		for (String line : docToId) {
+			String [] tokens = line.split(" ");
+			String docName = tokens[0];
+			String docId = tokens[1];
+			docToIdMap.put(docName, Integer.parseInt(docId));
+		} // end of for
+		List<String> wordToId = readDocument(wordToIdFileName);
+		Map<String,Integer> wordToIdMap = new HashMap<String,Integer>();
+		for (String line : wordToId) {
+			String [] tokens = line.split(" ");
+			String wordName = tokens[0];
+			String wordId = tokens[1];
+			docToIdMap.put(wordName, Integer.parseInt(wordId));
+		} // end of for
+		FileWriter corpusFile = new FileWriter(corpusFileName);
+		File fileDirectory = new File(entityDocs);
+		for (File file : fileDirectory.listFiles()) {
+			String fileName = file.getName().replace(".txt", "");
+			String document = readDocumentAsString(entityDocs + fileName);
+			String [] words = document.split("|");
+			Map<Integer, Integer> wordsFrequency = new HashMap<Integer, Integer>();
+			for (String word : words) {
+				int wordId = wordToIdMap.get(word);
+				int preFreq = wordsFrequency.get(wordId) != null ? wordsFrequency.get(wordId) : 0;
+				wordsFrequency.put(wordId, preFreq++);
+			} // end of for
+			for (Map.Entry<Integer, Integer> entry : wordsFrequency.entrySet()) {
+				int wordId = entry.getKey();
+				int wordFreq = entry.getValue();
+				corpusFile.write(docToIdMap.get(fileName) + " " + wordId + " " + wordFreq + "\n");
+			} // end of for
+			
+		} // end of for (File)
+		corpusFile.close();
+		
+	} // end of makeCorpus
+	
+	public List<String> readDocument(String filename) {
+		List<String> content = new ArrayList<String>();
+		try {
+			BufferedReader br = new BufferedReader(new FileReader(filename));
+			String line = "";
+			while ((line = br.readLine()) != null) {
+				content.add(line);
+			} // end of while
+//			System.out.println(content);
+			br.close();
+		} catch (FileNotFoundException e) {
+			e.printStackTrace();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		return content;
+	} // end of readDocument
+	
+	public String readDocumentAsString(String filename) {
+		String content = "";
+		try {
+			BufferedReader br = new BufferedReader(new FileReader(filename));
+			String line = "";
+			while ((line = br.readLine()) != null) {
+				content += line;
+			} // end of while
+//			System.out.println(content);
+			br.close();
+		} catch (FileNotFoundException e) {
+			e.printStackTrace();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		return content;
+	} // end of readDocument
+	
+	
 	private Set<String> getEntityRange(String predicateUrl) {
 		StringBuffer queryString = new StringBuffer();
 		queryString.append("SELECT ?ran FROM <" + GRAPH + "> WHERE { ");
@@ -646,7 +723,7 @@ public class EntityProc {
 						 BufferedWriter bw1 = null;
 						 	try {
 						      
-						         bw1 = new BufferedWriter(new FileWriter(corpus, true));
+						         bw1 = new BufferedWriter(new FileWriter(corpusFileName, true));
 						         	bw1.write(countEntity + " " + value+" "+ d);
 									bw1.newLine();
 									
