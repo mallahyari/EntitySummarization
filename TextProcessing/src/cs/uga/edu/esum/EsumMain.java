@@ -43,6 +43,9 @@ public class EsumMain {
 		
 		EntityProc predicCheck = new EntityProc();
 //		predicCheck.processEntities();
+		predicCheck.makeCorpus();
+		
+		
 //		predicCheck.predicateChecker();
 //		predicCheck.makingPredicateList();
 	
