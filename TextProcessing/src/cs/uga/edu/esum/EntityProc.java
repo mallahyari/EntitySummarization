@@ -362,6 +362,10 @@ public class EntityProc {
 						objectTypeIdGenerator++;
 					} // end of if
 				} // end of for
+				// if this object has no type at all, attach owl#Thing type to it
+				if (objectTypes.isEmpty()) {
+					objectTypes.add("owl#Thing");
+				}
 				int objectId = wordToIdMap.get(objectName);
 				if (objectTotypeMap.get(objectId) == null) {
 					Set<Integer> types = new HashSet<Integer>();

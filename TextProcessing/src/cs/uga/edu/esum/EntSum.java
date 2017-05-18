@@ -182,6 +182,7 @@ public class EntSum {
 		for (int ctr = 0; ctr < P; ctr++) {
 //			Set<Integer> predicateDomain = predicateDomainMap.get(ctr) != null ? predicateDomainMap.get(ctr) : new HashSet<Integer>() ;
 			Set<Integer> predicateRange  = predicateRangeMap.get(ctr)  != null ? predicateRangeMap.get(ctr) : new HashSet<Integer>();
+//			System.out.println("id:" + ctr + ", wid: " + wid + " " + predicateRange);
 			// probability of predicate
 			double pr_p = (Npd[did][ctr] + ALPHA) / (Nd[did] + P * ALPHA);
 			for (int t_i = 0; t_i < T2; t_i++) {
@@ -444,7 +445,7 @@ public boolean hasValue(int[] arr, int val) {
 	public void computeZeta() {
 		for (int t_i = 0; t_i < T2; t_i++) {
 			for (int w_i = 0; w_i < W; w_i++) {
-				zeta[t_i][w_i] = Math.round(((Nwt2[t_i][w_i] + GAMMA) / (Nd[t_i] + W * GAMMA)) * 10000) / 10000.;
+				zeta[t_i][w_i] = Math.round(((Nwt2[t_i][w_i] + GAMMA) / (Nt2[t_i] + W * GAMMA)) * 10000) / 10000.;
 			} // end of for e_i
 		} // end of for d_i
 	} // end of computeZeta
