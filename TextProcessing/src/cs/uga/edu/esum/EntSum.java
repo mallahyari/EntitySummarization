@@ -85,12 +85,15 @@ public class EntSum {
 	
 	
 	private static final String docPredicateDomainRange = "/home/mehdi/EntitySummarization/evaluation/predicateDomainRange.txt"; 
+	private static final String objectToTypeMapFileName = "/home/mehdi/EntitySummarization/evaluation/objToType.ser"; 
 	
 	// Map to store each predicate with a set of corresponding Domain
 	Map <Integer, Set<Integer>> predicateDomainMap= new HashMap<Integer, Set<Integer>>();
 	
 	// Map to store each predicate with a set of corresponding Range
 	Map<Integer, Set<Integer>> predicateRangeMap=new HashMap<Integer, Set<Integer>>();
+	
+	Map<Integer, Set<Integer>> objectTotypeMap = new HashMap<Integer,Set<Integer>>();
 	
 	
 	String corpusEntitiesFile = "/home/mehdi/EntitySummarization/evaluation/corpusConceptsSr.txt";
@@ -136,8 +139,7 @@ public class EntSum {
 
 	public void runGibbsSampling() {
 		createPredicateDomainRangeMap();
-		
-		
+		objectTotypeMap = loadObjectToTypeMap(objectToTypeMapFileName);
 		FileHandler fh;
 		try {
 			fh = new FileHandler("/home/mehdi/mylog.txt");
@@ -171,7 +173,7 @@ public class EntSum {
 	
 	
 	public void samplePredicateAndTypeAssignment(int did, int pid, int t1id, int t2id, int wid, int w_i) {
-//		int[] diEnts = docEntMat[did];
+		Set<Integer> wordTypes = objectTotypeMap.get(wid);
 		double[] pr = null;
 		int prSize = P * T1;
 		//int [] eids = new int [diEnts.length];
@@ -183,7 +185,7 @@ public class EntSum {
 			// probability of predicate
 			double pr_p = (Npd[did][ctr] + ALPHA) / (Nd[did] + P * ALPHA);
 			for (int t_i = 0; t_i < T1; t_i++) {
-				if(predicateDomain.contains(t_i) && predicateRange.contains(t_i)){
+				if(predicateDomain.contains(t_i) && predicateRange.contains(t_i) && wordTypes.contains(t_i)){
 					// probability of subject type
 					double pr_t1 = (Nt1p[ctr][t_i] + BETA) / (Np1[ctr] + T1 * BETA);
 					// probability of object type
@@ -635,6 +637,28 @@ public boolean hasValue(int[] arr, int val) {
 			e.printStackTrace();
 		}
 	} // end of saveMatrix
+	
+	@SuppressWarnings("unchecked")
+	public Map<Integer, Set<Integer>> loadObjectToTypeMap(String fileName) {
+		System.out.println("Loading " + fileName + " into Memory...");
+		try {
+			FileInputStream inputFile = new FileInputStream(fileName);
+			BufferedInputStream bfin = new BufferedInputStream(inputFile);
+			ObjectInputStream in = new ObjectInputStream(bfin);
+			Map<Integer, Set<Integer>> objToTypeMap = (Map<Integer, Set<Integer>>) in.readObject();
+			in.close();
+			System.out.println(fileName + " Successfuly Loaded into Memory.\n");
+			return objToTypeMap;
+		} catch (FileNotFoundException e) {
+			e.printStackTrace();
+		} catch (IOException e) {
+			e.printStackTrace();
+		} catch (ClassNotFoundException e) {
+			e.printStackTrace();
+		}
+		return null;
+	} // end of loadDoubleMatrix
+
 
 	public void computePosteriorDistribution() {
 		computeTheta();
