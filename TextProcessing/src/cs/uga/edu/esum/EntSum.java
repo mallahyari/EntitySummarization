@@ -199,6 +199,10 @@ public class EntSum {
 			} // end of for t_i
 		} // end of for ctr
 		int pairIndex = sample(pr, randomGenerator.nextDouble());
+		if (pairIndex == -1) {
+//			System.out.println("-1");
+			pairIndex = randomGenerator.nextInt(pr.length);
+		}
 		int newPredicate = pairIndex / T2;
 //		int newSubjectType = pairIndex % T2;
 		int newObjectType = pairIndex % T2;
@@ -431,7 +435,7 @@ public boolean hasValue(int[] arr, int val) {
 	public void computePhi2() {
 		for (int p_i = 0; p_i < P; p_i++) {
 			for (int t_i = 0; t_i < T2; t_i++) {
-				phi1[p_i][t_i] = Math.round(((Nt2p[p_i][t_i] + BETA) / (Np2[p_i] + T2 * BETA)) * 10000) / 10000.;
+				phi2[p_i][t_i] = Math.round(((Nt2p[p_i][t_i] + BETA) / (Np2[p_i] + T2 * BETA)) * 10000) / 10000.;
 			} // end of for w_i
 		} // end of for t_i
 	} // end of computePhi2
@@ -676,7 +680,7 @@ public boolean hasValue(int[] arr, int val) {
 
 	public void computePosteriorDistribution() {
 		computeTheta();
-		computePhi1();
+//		computePhi1();
 		computePhi2();
 		computeZeta();
 	} // end of computePosteriorDistribution
