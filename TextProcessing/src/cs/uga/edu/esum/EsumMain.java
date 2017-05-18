@@ -41,9 +41,10 @@ public class EsumMain {
 		 *to be ran after predicateChekcer because this function will fill out the list of perdicate in predicateSet 
 		 */
 		
-//		EntityProc predicCheck = new EntityProc();
-//		predicCheck.processEntities();
-//		predicCheck.makeCorpus();
+		EntityProc predicCheck = new EntityProc();
+		predicCheck.processEntities();
+		predicCheck.makeCorpus();
+		System.out.println("Done!");
 		
 		
 //		predicCheck.predicateChecker();
@@ -75,7 +76,7 @@ public class EsumMain {
 		
 
 		
-      entSum.writeToCSV();
+//      entSum.writeToCSV();
 		
 		
 		
