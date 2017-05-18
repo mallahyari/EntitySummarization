@@ -184,8 +184,7 @@ public class EntSum {
 			Set<Integer> predicateDomain = predicateDomainMap.get(ctr) != null ? predicateDomainMap.get(ctr) : new HashSet<Integer>() ;
 			Set<Integer> predicateRange  = predicateRangeMap.get(ctr)  != null ? predicateRangeMap.get(ctr) : new HashSet<Integer>();
 			// probability of predicate
-			double pr_p = (Npd[did][ctr] + ALPHA) / (Nd[did] + P * ALPHA);
-			prPredicate [ctr] = pr_p;
+			prPredicate [ctr] = (Npd[did][ctr] + ALPHA) / (Nd[did] + P * ALPHA);
 			for (int t_i = 0; t_i < T1; t_i++) {
 				if(predicateDomain.contains(t_i)){
 					// probability of subject type
@@ -205,6 +204,8 @@ public class EntSum {
 		int newPredicate   = sample(prPredicate, randomGenerator.nextDouble());
 		int newSubjectType = sample(prPredicateSubject[newPredicate], randomGenerator.nextDouble());
 		int newObjectType  = sample(prPredicateObject[newPredicate], randomGenerator.nextDouble());
+		if (newPredicate == -1 || newSubjectType == -1 || newObjectType == -1)
+			System.out.println("-1");
 		p[w_i] = newPredicate;
 		z1[w_i] = newSubjectType;
 		z2[w_i] = newObjectType;
