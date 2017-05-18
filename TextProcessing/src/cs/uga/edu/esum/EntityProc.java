@@ -87,6 +87,7 @@ public class EntityProc {
 	private static final String predicateToIdFileName = "/home/mehdi/EntitySummarization/evaluation/predicateToId.txt"; 
 	
 	private static final String corpusFileName = "/home/mehdi/EntitySummarization/evaluation/corpus.txt"; 
+	private static final String objectToTypeMapFileName = "/home/mehdi/EntitySummarization/evaluation/objToType.ser"; 
 	
 	private static final String predicateDomainRangeFileName = "/home/mehdi/EntitySummarization/evaluation/predicateDomainRange.txt"; 
 	
@@ -291,6 +292,7 @@ public class EntityProc {
 		Map<String,Integer> subjectTypesMap = new HashMap<String,Integer>();
 		Map<String, Integer> wordToIdMap = new HashMap<String,Integer>();
 		Map<String, Integer> predicateToIdMap = new HashMap<String,Integer>();
+		Map<Integer, Set<Integer>> objectTotypeMap = new HashMap<Integer,Set<Integer>>();
 		while ((entityName = br.readLine()) != null) {
 			String subjectUrl = uriPrefix + entityName;
 			Set<String> subjectTypes = getEntityTypes(subjectUrl);
@@ -352,7 +354,6 @@ public class EntityProc {
 					wordToIdFile.write(objectName + " " + wordIdGenerator + "\n");
 					wordIdGenerator++;
 				}
-				objectTypes.clear();
 				objectTypes.addAll(getEntityRange(object.toString()));
 				for (String t : objectTypes) {
 					if (objectTypesMap.get(t) == null) {
@@ -361,6 +362,20 @@ public class EntityProc {
 						objectTypeIdGenerator++;
 					} // end of if
 				} // end of for
+				int objectId = wordToIdMap.get(objectName);
+				if (objectTotypeMap.get(objectId) == null) {
+					Set<Integer> types = new HashSet<Integer>();
+					for (String t : objectTypes) {
+						types.add(objectTypesMap.get(t));
+					} // end of for
+					objectTotypeMap.put(objectId, types);
+				}else {
+					Set<Integer> types = objectTotypeMap.get(objectId);
+					for (String t : objectTypes) {
+						types.add(objectTypesMap.get(t));
+					} // end of for
+					objectTotypeMap.put(objectId, types);
+				} // end of if
 				int predicateId = predicateToIdMap.get(predicateName);
 				for (String d : subjectTypes) {
 					int domainId = subjectTypesMap.get(d);
@@ -379,11 +394,55 @@ public class EntityProc {
 		predicateToIdFile.close();
 		predicateDomainRangeFile.close();
 		br.close();
+		saveObjectToTypeMap(objectTotypeMap, objectToTypeMapFileName);
 	} // end of processEntities
 	
 	
 	
 	
+	public void saveObjectToTypeMap(Map<Integer, Set<Integer>> objectTotypeMap, String fileName) {
+		try {
+			File f = new File(fileName);
+			if (f.exists()) {
+				System.out.println(fileName + " already exists");
+				f.delete();
+				System.out.println(fileName + " deleted.");
+			} // end of if
+			FileOutputStream outputFile = new FileOutputStream(f);
+			BufferedOutputStream bfout = new BufferedOutputStream(outputFile);
+			ObjectOutputStream out = new ObjectOutputStream(bfout);
+			out.writeObject(objectTotypeMap);
+			out.close();
+			System.out.println("Map Serialized successfully.\n");
+		} catch (FileNotFoundException e) {
+			e.printStackTrace();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	} // end of saveObjectToTypeMap
+	
+	@SuppressWarnings("unchecked")
+	public Map<Integer, Set<Integer>> loadObjectToTypeMap(String fileName) {
+		System.out.println("Loading " + fileName + " into Memory...");
+		try {
+			FileInputStream inputFile = new FileInputStream(fileName);
+			BufferedInputStream bfin = new BufferedInputStream(inputFile);
+			ObjectInputStream in = new ObjectInputStream(bfin);
+			Map<Integer, Set<Integer>> objToTypeMap = (Map<Integer, Set<Integer>>) in.readObject();
+			in.close();
+			System.out.println(fileName + " Successfuly Loaded into Memory.\n");
+			return objToTypeMap;
+		} catch (FileNotFoundException e) {
+			e.printStackTrace();
+		} catch (IOException e) {
+			e.printStackTrace();
+		} catch (ClassNotFoundException e) {
+			e.printStackTrace();
+		}
+		return null;
+	} // end of loadDoubleMatrix
+
+
 	public void processEntities_withTypefrequency() throws IOException {
 		System.out.println("Connecting to Virtuoso ... ");
 		virtGraph = connectToVirtuoso();
