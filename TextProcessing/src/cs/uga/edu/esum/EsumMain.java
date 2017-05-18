@@ -67,16 +67,14 @@ public class EsumMain {
 		
 
 		EntSum entSum = new EntSum();
-//		entSum.initializeMatrices();
-//		
-//		// Gibbs Sampling Initialization and Run //
-//		entSum.initializeGibbsSampling();
-////		
-//		entSum.run();
-//		
+		entSum.initializeMatrices();
+		
+		// Gibbs Sampling Initialization and Run //
+		entSum.initializeGibbsSampling();
+		entSum.run();
 
 		
-     entSum.writeToCSV();
+//     entSum.writeToCSV();
 		
 		
 		
