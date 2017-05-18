@@ -175,35 +175,38 @@ public class EntSum {
 	public void samplePredicateAndTypeAssignment(int did, int pid, int t1id, int t2id, int wid, int w_i) {
 		Set<Integer> wordTypes = objectTotypeMap.get(wid);
 		double[] pr = null;
-		int prSize = P * T1;
+		int prSize = P * T2;
 		//int [] eids = new int [diEnts.length];
 		pr = allocateMemory(pr, prSize);
-		updateCounts(did, pid, t1id, t2id, wid, -1);
+		updateCounts(did, pid, t2id, wid, -1);
 		for (int ctr = 0; ctr < P; ctr++) {
-			Set<Integer> predicateDomain = predicateDomainMap.get(ctr) != null ? predicateDomainMap.get(ctr) : new HashSet<Integer>() ;
+//			Set<Integer> predicateDomain = predicateDomainMap.get(ctr) != null ? predicateDomainMap.get(ctr) : new HashSet<Integer>() ;
 			Set<Integer> predicateRange  = predicateRangeMap.get(ctr)  != null ? predicateRangeMap.get(ctr) : new HashSet<Integer>();
 			// probability of predicate
 			double pr_p = (Npd[did][ctr] + ALPHA) / (Nd[did] + P * ALPHA);
-			for (int t_i = 0; t_i < T1; t_i++) {
-				if(predicateDomain.contains(t_i) && predicateRange.contains(t_i) && wordTypes.contains(t_i)){
+			for (int t_i = 0; t_i < T2; t_i++) {
+				if(predicateRange.contains(t_i) && wordTypes.contains(t_i)){
+//				if(predicateDomain.contains(t_i) && predicateRange.contains(t_i) && wordTypes.contains(t_i)){
 					// probability of subject type
-					double pr_t1 = (Nt1p[ctr][t_i] + BETA) / (Np1[ctr] + T1 * BETA);
+//					double pr_t1 = (Nt1p[ctr][t_i] + BETA) / (Np1[ctr] + T1 * BETA);
 					// probability of object type
 					double pr_t2 = (Nt2p[ctr][t_i] + BETA) / (Np2[ctr] + T2 * BETA);
 					// probability of object
 					double pr_w = (Nwt2[t_i][wid] + GAMMA) / (Nt2[t_i] + W * GAMMA);
-					pr [ctr * T1 + t_i] = pr_p * pr_t1 * pr_t2 * pr_w;
+					pr [ctr * T2 + t_i] = pr_p * pr_t2 * pr_w;
+//					pr [ctr * T2 + t_i] = pr_p * pr_t1 * pr_t2 * pr_w;
 				} // end of if 
 			} // end of for t_i
 		} // end of for ctr
 		int pairIndex = sample(pr, randomGenerator.nextDouble());
-		int newPredicate = pairIndex / T1;
-		int newSubjectType = pairIndex % T1;
-		int newObjectType = pairIndex % T1;
+		int newPredicate = pairIndex / T2;
+//		int newSubjectType = pairIndex % T2;
+		int newObjectType = pairIndex % T2;
 		p[w_i] = newPredicate;
-		z1[w_i] = newSubjectType;
+//		z1[w_i] = newSubjectType;
 		z2[w_i] = newObjectType;
-		updateCounts(did, newPredicate, newSubjectType, newObjectType, wid, +1);
+		updateCounts(did, newPredicate, newObjectType, wid, +1);
+//		updateCounts(did, newPredicate, newSubjectType, newObjectType, wid, +1);
 		
 //		if (pairIndex != -1) {
 //			int newEntity = diEnts[pairIndex / T];
@@ -347,6 +350,17 @@ public boolean hasValue(int[] arr, int val) {
 		} // end of for
 		return -1;
 	} // end of sample
+	
+	public void updateCounts(int dId, int pId, int t2Id, int wId, int val) {
+		Npd[dId][pId] = Npd[dId][pId] + val;
+		Nt2p[pId][t2Id] = Nt2p[pId][t2Id] + val;
+		Nwt2[t2Id][wId] = Nwt2[t2Id][wId] + val;
+		Nd[dId] = Nd[dId] + val;
+//		Np[pId] = Np[pId] + val;
+		Np2[pId] = Np2[pId] + val;
+//		Nt[tId] = Nt[tId] + val;
+		Nt2[t2Id] = Nt2[t2Id] + val;
+	} // end of updateCounts
 
 	public void updateCounts(int dId, int pId, int t1Id, int t2Id, int wId, int val) {
 		Npd[dId][pId] = Npd[dId][pId] + val;

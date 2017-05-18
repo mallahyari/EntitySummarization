@@ -33,7 +33,7 @@ public class SumModelParameters {
 	public int W = 0;
 //	public int T = 22;
 	public int T1 = 22;
-	public int T2 = 22;
+	public int T2 = 133;
 	public int P = 0; 
 	public int N = 0;
 	public int nIterations = 500;
