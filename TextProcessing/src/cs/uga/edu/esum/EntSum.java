@@ -180,6 +180,7 @@ public class EntSum {
 		prPredicateSubject = allocateMemory(prPredicateSubject, P, T1);
 		prPredicateObject  = allocateMemory(prPredicateObject, P, T2);
 		updateCounts(did, pid, t1id, t2id, wid, -1);
+		double sum = 0;
 		for (int ctr = 0; ctr < P; ctr++) {
 			Set<Integer> predicateDomain = predicateDomainMap.get(ctr) != null ? predicateDomainMap.get(ctr) : new HashSet<Integer>() ;
 			Set<Integer> predicateRange  = predicateRangeMap.get(ctr)  != null ? predicateRangeMap.get(ctr) : new HashSet<Integer>();
@@ -198,14 +199,20 @@ public class EntSum {
 					// probability of object
 					double pr_w = (Nwt2[t_i][wid] + GAMMA) / (Nt2[t_i] + W * GAMMA);
 					prPredicateObject [ctr][t_i] = pr_t2 * pr_w;
+					sum += prPredicateObject [ctr][t_i];
 				} // end of if 
 			} // end of for t_i
 		} // end of for ctr
 		int newPredicate   = sample(prPredicate, randomGenerator.nextDouble());
 		int newSubjectType = sample(prPredicateSubject[newPredicate], randomGenerator.nextDouble());
 		int newObjectType  = sample(prPredicateObject[newPredicate], randomGenerator.nextDouble());
-		if (newPredicate == -1 || newSubjectType == -1 || newObjectType == -1)
-			System.out.println("-1");
+		if (newPredicate == -1) {
+			newPredicate = randomGenerator.nextInt(P);
+		}else if (newSubjectType == -1) {
+			newSubjectType = randomGenerator.nextInt(T1);
+		}else if (newObjectType == -1) {
+			newObjectType = randomGenerator.nextInt(T2);
+		}
 		p[w_i] = newPredicate;
 		z1[w_i] = newSubjectType;
 		z2[w_i] = newObjectType;
