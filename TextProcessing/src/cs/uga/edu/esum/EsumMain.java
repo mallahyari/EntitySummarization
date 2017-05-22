@@ -41,10 +41,10 @@ public class EsumMain {
 		 *to be ran after predicateChekcer because this function will fill out the list of perdicate in predicateSet 
 		 */
 		
-//		EntityProc predicCheck = new EntityProc();
-//		predicCheck.processEntities();
-//		predicCheck.makeCorpus();
-//		System.out.println("Done!");
+		EntityProc predicCheck = new EntityProc();
+		predicCheck.processEntities();
+		predicCheck.makeCorpus();
+		System.out.println("Done!");
 		
 		
 //		predicCheck.predicateChecker();
@@ -66,7 +66,7 @@ public class EsumMain {
 //******************************************************\\
 		
 
-		EntSum entSum = new EntSum();
+//		EntSum entSum = new EntSum();
 //		entSum.initializeMatrices();
 //		
 //		// Gibbs Sampling Initialization and Run //
@@ -74,7 +74,7 @@ public class EsumMain {
 //		entSum.run();
 
 		
-     entSum.writeToCSV();
+//     entSum.writeToCSV();
 		
 		
 		

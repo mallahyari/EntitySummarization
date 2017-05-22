@@ -656,7 +656,7 @@ public class EntityProc {
 		while (results.hasNext()) {
 			QuerySolution result = results.nextSolution();
 			int index = result.getResource("ran").toString().lastIndexOf("/");
-			types.add(result.getResource("ran").toString().substring(index));
+			types.add(result.getResource("ran").toString().substring(index + 1));
 		} // end of while
 		return types;
 	} // end of getEntityRange
