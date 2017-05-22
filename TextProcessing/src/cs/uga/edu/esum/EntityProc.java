@@ -354,7 +354,7 @@ public class EntityProc {
 					wordToIdFile.write(objectName + " " + wordIdGenerator + "\n");
 					wordIdGenerator++;
 				}
-				objectTypes.addAll(getEntityRange(predicate.toString()));
+				objectTypes.addAll(getPredicateRange(predicate.toString()));
 				for (String t : objectTypes) {
 					if (objectTypesMap.get(t) == null) {
 						objectTypesMap.put(t, objectTypeIdGenerator);
@@ -537,7 +537,7 @@ public class EntityProc {
 						wordIdGenerator++;
 					}
 				} // end of for
-				objectTypes.addAll(getEntityRange(object.toString()));
+				objectTypes.addAll(getPredicateRange(object.toString()));
 				for (String t : objectTypes) {
 					if (objectTypesMap.get(t) == null) {
 						objectTypesMap.put(t, objectTypeIdGenerator);
@@ -645,7 +645,7 @@ public class EntityProc {
 	} // end of readDocument
 	
 	
-	private Set<String> getEntityRange(String predicateUrl) {
+	private Set<String> getPredicateRange(String predicateUrl) {
 		StringBuffer queryString = new StringBuffer();
 		queryString.append("SELECT ?ran FROM <" + GRAPH + "> WHERE { ");
 		queryString.append("<" + predicateUrl + ">" + " <http://www.w3.org/2000/01/rdf-schema#range> ?ran . } ");
@@ -659,7 +659,7 @@ public class EntityProc {
 			types.add(result.getResource("ran").toString().substring(index + 1));
 		} // end of while
 		return types;
-	} // end of getEntityRange
+	} // end of getPredicateRange
 	
 	private Set<String> getEntityDomain(String predicateUrl) {
 		StringBuffer queryString = new StringBuffer();
