@@ -391,8 +391,7 @@ public class EntityProc {
 		Set<String> types = new HashSet<String>();
 		while (results.hasNext()) {
 			QuerySolution result = results.nextSolution();
-			int index = result.getResource("cat").toString().indexOf(wikiCategoryUriPrefix);
-			types.add(result.getResource("cat").toString().substring(index + 1));
+			types.add(result.getResource("cat").toString().substring(wikiCategoryUriPrefix.length()));
 		} // end of while
 		return types;
 	} // end of getEntityCategories
