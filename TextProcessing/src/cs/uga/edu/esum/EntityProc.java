@@ -477,14 +477,6 @@ public class EntityProc {
 					wordToIdFile.write(objectName + " " + wordIdGenerator + "\n");
 					wordIdGenerator++;
 				}
-				subjectTypes.addAll(getPredicateDomain(predicate.toString()));
-				for (String t : subjectTypes) {
-					if (subjectTypesMap.get(t) == null) {
-						sTypesFile.write(t + " " + subjectTypeIdGenerator + "\n");
-						subjectTypesMap.put(t, subjectTypeIdGenerator);
-						subjectTypeIdGenerator++;
-					} // end of if
-				} // end of for
 				objectTypes.addAll(getPredicateRange(predicate.toString()));
 				for (String t : objectTypes) {
 					if (objectTypesMap.get(t) == null) {
@@ -660,15 +652,6 @@ public class EntityProc {
 						wordIdGenerator++;
 					}
 				} // end of for
-				subjectTypes.addAll(getPredicateDomain(predicate.toString()));
-				for (String t : subjectTypes) {
-					if (subjectTypesMap.get(t) == null) {
-						sTypesFile.write(t + " " + subjectTypeIdGenerator + "\n");
-						subjectTypesMap.put(t, subjectTypeIdGenerator);
-						subjectTypeIdGenerator++;
-					} // end of if
-				} // end of for
-				objectTypes.addAll(getPredicateRange(predicate.toString()));
 				for (String t : objectTypes) {
 					if (objectTypesMap.get(t) == null) {
 						objectTypesMap.put(t, objectTypeIdGenerator);
@@ -787,7 +770,7 @@ public class EntityProc {
 		while (results.hasNext()) {
 			QuerySolution result = results.nextSolution();
 			int index = result.getResource("ran").toString().lastIndexOf("/");
-			types.add(result.getResource("ran").toString().substring(index));
+			types.add(result.getResource("ran").toString().substring(index + 1));
 		} // end of while
 		return types;
 	} // end of getPredicateRange
