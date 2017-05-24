@@ -90,7 +90,7 @@ public class EntityProc {
 	private static final String objectToTypeMapFileName = "/home/mehdi/EntitySummarization/evaluation/objToType.ser"; 
 	
 	private static final String predicateDomainRangeFileName = "/home/mehdi/EntitySummarization/evaluation/predicateDomainRange.txt"; 
-	private static final String predicateObjectFileName = "/home/mehdi/EntitySummarization/evaluation/predicateObject.txt";
+	private static final String predicateObjectFileName = "/home/mehdi/EntitySummarization/evaluation/predicateObject.ser";
 	
 	//Holding all documents (Entities) in entityDocs folder
 	private static final String entityDocs = "/home/mehdi/EntitySummarization/evaluation/entityDocs/";
