@@ -90,6 +90,7 @@ public class EntityProc {
 	private static final String objectToTypeMapFileName = "/home/mehdi/EntitySummarization/evaluation/objToType.ser"; 
 	
 	private static final String predicateDomainRangeFileName = "/home/mehdi/EntitySummarization/evaluation/predicateDomainRange.txt"; 
+	private static final String predicateObjectFileName = "/home/mehdi/EntitySummarization/evaluation/predicateObject.txt";
 	
 	//Holding all documents (Entities) in entityDocs folder
 	private static final String entityDocs = "/home/mehdi/EntitySummarization/evaluation/entityDocs/";
@@ -105,15 +106,16 @@ public class EntityProc {
 	
 	
 	private Vector<String> predicateVector=new Vector<String>();
-	private Vector<String> objectVector =new Vector<String>();
-	private Map<String, Integer> mapWordToID =new HashMap<String, Integer>();
-	private Map<String, Integer> sortedMapWordToID =new HashMap<String, Integer>();
-	private Map<String, Integer> mapDocToID =new HashMap<String, Integer>();
+	private Vector<String> objectVector = new Vector<String>();
+	private Map<String, Integer> mapWordToID = new HashMap<String, Integer>();
+	private Map<String, Integer> sortedMapWordToID = new HashMap<String, Integer>();
+	private Map<String, Integer> mapDocToID = new HashMap<String, Integer>();
 	private int wordCount=0;
 	private int docCount=0;
 	private int predicateNumber=0;
 	private int domainNumber=0;
 	private int rangeNumber=0;
+	
 	
 	
 
@@ -271,7 +273,136 @@ public class EntityProc {
 	} // end of readPredicateStopWords
 	
 	
+	/* This method processes entities based on their Wikipedia categories.
+	 * 
+	 */
 	public void processEntities() throws IOException {
+		System.out.println("Connecting to Virtuoso ... ");
+		virtGraph = connectToVirtuoso();
+		System.out.println("Successfully Connected to Virtuoso!\n");
+		String entityName = "";
+		BufferedReader br = new BufferedReader(new FileReader(entityNameOnly));
+		FileWriter wordToIdFile = new FileWriter(wordToIdFileName);
+		FileWriter docToIdFile = new FileWriter(docToIdFileName);
+		FileWriter predicateToIdFile = new FileWriter(predicateToIdFileName);
+		FileWriter predicateObjectFile = new FileWriter(predicateObjectFileName);
+		int prediateIdGenerator = 0;
+		int wordIdGenerator = 0;
+		int docIdGenerator = 0;
+		Map<String, Integer> wordToIdMap = new HashMap<String,Integer>();
+		Map<String, Integer> predicateToIdMap = new HashMap<String,Integer>();
+//		Map<Integer, Set<Integer>> objectTotypeMap = new HashMap<Integer,Set<Integer>>();
+		while ((entityName = br.readLine()) != null) {
+//			String subjectUrl = uriPrefix + entityName;
+//			Set<String> subjectTypes = getEntityTypes(subjectUrl);
+			Set<String> predicateStopWordsSet = readPredicateStopWords(predicateStopWords);
+			FileWriter docFile = new FileWriter(entityDocs + entityName +".txt");
+			//Connecting to Virtuoso to extract predicates and objects
+			StringBuffer queryString = new StringBuffer();
+			queryString.append("SELECT ?p ?o FROM <" + GRAPH + "> WHERE { ");
+			queryString.append("<" + uriPrefix + entityName + ">" + " ?p ?o . ");
+			queryString.append("}");
+			Query sparql = QueryFactory.create(queryString.toString());
+			VirtuosoQueryExecution vqe = VirtuosoQueryExecutionFactory.create (sparql, virtGraph);
+			ResultSet results = vqe.execSelect();
+			docToIdFile.write(entityName + " " + docIdGenerator + "\n");
+			docIdGenerator++;
+			while (results.hasNext()) {
+				Set<String> objectCategories = new HashSet<String>();
+				QuerySolution result = results.nextSolution();
+				RDFNode predicate = result.get("p");
+				RDFNode object = result.get("o");
+				//Finding the position of the last "/"	and take only predicate name
+				int index = predicate.toString().lastIndexOf("/");
+				String predicateName = predicate.toString().substring(index + 1);
+
+				/* if predicate is subject or contains http://dbpedia.org/ontology/ and Object contains http://dbpedia.org/ we will keep that predicate
+				 * if predicate  contains http://dbpedia.org/property/ and Object contains http://dbpedia.org/ we will keep that predicate
+				 * if predicate is http://dbpedia.org/ontology/wikiPageWikiLink we will drop it
+				 */
+				if (predicateStopWordsSet.contains(predicateName) || object.isLiteral()) continue;
+				if (predicate.toString().equals("http://www.w3.org/1999/02/22-rdf-syntax-ns#type")) continue;
+				if (!predicate.toString().contains("http://dbpedia.org") || !object.toString().contains("http://dbpedia.org")) continue;
+				String objectName = "";
+				if (predicateName.equals("subject")){
+					objectName = object.toString().substring(wikiCategoryUriPrefix.length());
+				}else {
+					objectName = object.toString().substring(uriPrefix.length());
+				} // end of if
+				if (predicateToIdMap.get(predicateName) == null) {
+					predicateToIdMap.put(predicateName, prediateIdGenerator);
+					predicateToIdFile.write(predicateName + " " + prediateIdGenerator + "\n");
+					prediateIdGenerator++;
+				}
+				objectCategories = getEntityCategories(object.toString());
+				docFile.write(objectName + "|");
+				// writes the object categories to the doc file
+				for (String c : objectCategories) {
+					docFile.write(c + "|");
+					if (wordToIdMap.get(c) == null) {
+						wordToIdMap.put(c, wordIdGenerator);
+						wordToIdFile.write(c + " " + wordIdGenerator + "\n");
+						wordIdGenerator++;
+					}
+				} // end of for
+				if (wordToIdMap.get(objectName) == null) {
+					wordToIdMap.put(objectName, wordIdGenerator);
+					wordToIdFile.write(objectName + " " + wordIdGenerator + "\n");
+					wordIdGenerator++;
+				}
+//				int objectId = wordToIdMap.get(objectName);
+//				if (objectTotypeMap.get(objectId) == null) {
+//					Set<Integer> types = new HashSet<Integer>();
+//					for (String t : objectCategories) {
+//						types.add(objectTypesMap.get(t));
+//					} // end of for
+//					objectTotypeMap.put(objectId, types);
+//				}else {
+//					Set<Integer> types = objectTotypeMap.get(objectId);
+//					for (String t : objectCategories) {
+//						types.add(objectTypesMap.get(t));
+//					} // end of for
+//					objectTotypeMap.put(objectId, types);
+//				} // end of if
+				int predicateId = predicateToIdMap.get(predicateName);
+					for (String c : objectCategories) {
+						int objId = wordToIdMap.get(c);
+						predicateObjectFile.write(predicateId + " " + objId  + "\n");
+					} // end of for
+			} // end of while
+			docFile.close();
+		} // end of while
+		wordToIdFile.close();
+		docToIdFile.close();
+		predicateToIdFile.close();
+		predicateObjectFile.close();
+		br.close();
+//		saveObjectToTypeMap(objectTotypeMap, objectToTypeMapFileName);
+	} // end of processEntities
+	
+	private Set<String> getEntityCategories(String entiyUrl) {
+		StringBuffer queryString = new StringBuffer();
+		queryString.append("SELECT ?cat FROM <" + GRAPH + "> WHERE { ");
+		queryString.append("<" + entiyUrl + ">" + " <http://purl.org/dc/terms/subject> ?cat. ");
+		queryString.append("}");
+		Query sparql = QueryFactory.create(queryString.toString());
+		VirtuosoQueryExecution vqe = VirtuosoQueryExecutionFactory.create (sparql, virtGraph);
+		ResultSet results = vqe.execSelect();
+		Set<String> types = new HashSet<String>();
+		while (results.hasNext()) {
+			QuerySolution result = results.nextSolution();
+			int index = result.getResource("cat").toString().indexOf(wikiCategoryUriPrefix);
+			types.add(result.getResource("cat").toString().substring(index + 1));
+		} // end of while
+		return types;
+	} // end of getEntityCategories
+
+
+	/*
+	 * This method is to process the entities and create related files using objects and their types.
+	 * It will supplement the doc files by repeating each object as many times as its types. 
+	 */
+	public void processEntities_WithObjectFrequency() throws IOException {
 		System.out.println("Connecting to Virtuoso ... ");
 		virtGraph = connectToVirtuoso();
 		System.out.println("Successfully Connected to Virtuoso!\n");
@@ -296,14 +427,6 @@ public class EntityProc {
 		while ((entityName = br.readLine()) != null) {
 			String subjectUrl = uriPrefix + entityName;
 			Set<String> subjectTypes = getEntityTypes(subjectUrl);
-			for (String t : subjectTypes) {
-				if (subjectTypesMap.get(t) == null) {
-					sTypesFile.write(t + " " + subjectTypeIdGenerator + "\n");
-					subjectTypesMap.put(t, subjectTypeIdGenerator);
-					subjectTypeIdGenerator++;
-				} // end of if
-			} // end of for
-			subjectTypes.addAll(getEntityDomain(subjectUrl));
 			Set<String> predicateStopWordsSet = readPredicateStopWords(predicateStopWords);
 			FileWriter docFile = new FileWriter(entityDocs + entityName +".txt");
 			//Connecting to Virtuoso to extract predicates and objects
@@ -354,7 +477,15 @@ public class EntityProc {
 					wordToIdFile.write(objectName + " " + wordIdGenerator + "\n");
 					wordIdGenerator++;
 				}
-				objectTypes.addAll(getEntityRange(predicate.toString()));
+				subjectTypes.addAll(getPredicateDomain(predicate.toString()));
+				for (String t : subjectTypes) {
+					if (subjectTypesMap.get(t) == null) {
+						sTypesFile.write(t + " " + subjectTypeIdGenerator + "\n");
+						subjectTypesMap.put(t, subjectTypeIdGenerator);
+						subjectTypeIdGenerator++;
+					} // end of if
+				} // end of for
+				objectTypes.addAll(getPredicateRange(predicate.toString()));
 				for (String t : objectTypes) {
 					if (objectTypesMap.get(t) == null) {
 						objectTypesMap.put(t, objectTypeIdGenerator);
@@ -471,14 +602,6 @@ public class EntityProc {
 		while ((entityName = br.readLine()) != null) {
 			String subjectUrl = uriPrefix + entityName;
 			Set<String> subjectTypes = getEntityTypes(subjectUrl);
-			for (String t : subjectTypes) {
-				if (subjectTypesMap.get(t) == null) {
-					sTypesFile.write(t + " " + subjectTypeIdGenerator + "\n");
-					subjectTypesMap.put(t, subjectTypeIdGenerator);
-					subjectTypeIdGenerator++;
-				} // end of if
-			} // end of for
-			subjectTypes.addAll(getEntityDomain(subjectUrl));
 			Set<String> predicateStopWordsSet = readPredicateStopWords(predicateStopWords);
 			FileWriter docFile = new FileWriter(entityDocs + entityName +".txt");
 			//Connecting to Virtuoso to extract predicates and objects
@@ -537,7 +660,15 @@ public class EntityProc {
 						wordIdGenerator++;
 					}
 				} // end of for
-				objectTypes.addAll(getEntityRange(object.toString()));
+				subjectTypes.addAll(getPredicateDomain(predicate.toString()));
+				for (String t : subjectTypes) {
+					if (subjectTypesMap.get(t) == null) {
+						sTypesFile.write(t + " " + subjectTypeIdGenerator + "\n");
+						subjectTypesMap.put(t, subjectTypeIdGenerator);
+						subjectTypeIdGenerator++;
+					} // end of if
+				} // end of for
+				objectTypes.addAll(getPredicateRange(predicate.toString()));
 				for (String t : objectTypes) {
 					if (objectTypesMap.get(t) == null) {
 						objectTypesMap.put(t, objectTypeIdGenerator);
@@ -645,7 +776,7 @@ public class EntityProc {
 	} // end of readDocument
 	
 	
-	private Set<String> getEntityRange(String predicateUrl) {
+	private Set<String> getPredicateRange(String predicateUrl) {
 		StringBuffer queryString = new StringBuffer();
 		queryString.append("SELECT ?ran FROM <" + GRAPH + "> WHERE { ");
 		queryString.append("<" + predicateUrl + ">" + " <http://www.w3.org/2000/01/rdf-schema#range> ?ran . } ");
@@ -659,9 +790,9 @@ public class EntityProc {
 			types.add(result.getResource("ran").toString().substring(index));
 		} // end of while
 		return types;
-	} // end of getEntityRange
+	} // end of getPredicateRange
 	
-	private Set<String> getEntityDomain(String predicateUrl) {
+	private Set<String> getPredicateDomain(String predicateUrl) {
 		StringBuffer queryString = new StringBuffer();
 		queryString.append("SELECT ?dom FROM <" + GRAPH + "> WHERE { ");
 		queryString.append("<" + predicateUrl + ">" + " <http://www.w3.org/2000/01/rdf-schema#domain> ?dom . } ");
@@ -675,7 +806,7 @@ public class EntityProc {
 			types.add(result.getResource("dom").toString().substring(index));
 		} // end of while
 		return types;
-	} // end of getEntityDomain
+	} // end of getPredicateDomain
 
 
 	private Set<String> getEntityTypes(String entiyUrl) {
