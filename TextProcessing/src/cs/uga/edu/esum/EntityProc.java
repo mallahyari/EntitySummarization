@@ -379,9 +379,31 @@ public class EntityProc {
 		predicateToIdFile.close();
 		predicateObjectFile.close();
 		br.close();
-//		saveObjectToTypeMap(objectTotypeMap, objectToTypeMapFileName);
+		savePredicateToObjectMap(predicateToObjectMap, predicateObjectFileName);
 	} // end of processEntities
 	
+	private void savePredicateToObjectMap(Map<Integer, Set<Integer>> predicateToObjectMap, String fileName) {
+		try {
+			File f = new File(fileName);
+			if (f.exists()) {
+				System.out.println(fileName + " already exists");
+				f.delete();
+				System.out.println(fileName + " deleted.");
+			} // end of if
+			FileOutputStream outputFile = new FileOutputStream(f);
+			BufferedOutputStream bfout = new BufferedOutputStream(outputFile);
+			ObjectOutputStream out = new ObjectOutputStream(bfout);
+			out.writeObject(predicateToObjectMap);
+			out.close();
+			System.out.println("Map Serialized successfully.\n");
+		} catch (FileNotFoundException e) {
+			e.printStackTrace();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	} // end of savePredicateToObjectMap
+
+
 	private Set<String> getEntityCategories(String entiyUrl) {
 		StringBuffer queryString = new StringBuffer();
 		queryString.append("SELECT ?cat FROM <" + GRAPH + "> WHERE { ");
