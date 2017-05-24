@@ -291,7 +291,7 @@ public class EntityProc {
 		int docIdGenerator = 0;
 		Map<String, Integer> wordToIdMap = new HashMap<String,Integer>();
 		Map<String, Integer> predicateToIdMap = new HashMap<String,Integer>();
-//		Map<Integer, Set<Integer>> objectTotypeMap = new HashMap<Integer,Set<Integer>>();
+		Map<Integer, Set<Integer>> predicateToObjectMap = new HashMap<Integer,Set<Integer>>();
 		while ((entityName = br.readLine()) != null) {
 //			String subjectUrl = uriPrefix + entityName;
 //			Set<String> subjectTypes = getEntityTypes(subjectUrl);
@@ -334,8 +334,13 @@ public class EntityProc {
 					predicateToIdFile.write(predicateName + " " + prediateIdGenerator + "\n");
 					prediateIdGenerator++;
 				}
-				objectCategories = getEntityCategories(object.toString());
+				if (wordToIdMap.get(objectName) == null) {
+					wordToIdMap.put(objectName, wordIdGenerator);
+					wordToIdFile.write(objectName + " " + wordIdGenerator + "\n");
+					wordIdGenerator++;
+				}
 				docFile.write(objectName + "|");
+				objectCategories = getEntityCategories(object.toString());
 				// writes the object categories to the doc file
 				for (String c : objectCategories) {
 					docFile.write(c + "|");
@@ -345,30 +350,27 @@ public class EntityProc {
 						wordIdGenerator++;
 					}
 				} // end of for
-				if (wordToIdMap.get(objectName) == null) {
-					wordToIdMap.put(objectName, wordIdGenerator);
-					wordToIdFile.write(objectName + " " + wordIdGenerator + "\n");
-					wordIdGenerator++;
-				}
-//				int objectId = wordToIdMap.get(objectName);
-//				if (objectTotypeMap.get(objectId) == null) {
-//					Set<Integer> types = new HashSet<Integer>();
-//					for (String t : objectCategories) {
-//						types.add(objectTypesMap.get(t));
-//					} // end of for
-//					objectTotypeMap.put(objectId, types);
-//				}else {
-//					Set<Integer> types = objectTotypeMap.get(objectId);
-//					for (String t : objectCategories) {
-//						types.add(objectTypesMap.get(t));
-//					} // end of for
-//					objectTotypeMap.put(objectId, types);
-//				} // end of if
+				
 				int predicateId = predicateToIdMap.get(predicateName);
+				if (predicateToObjectMap.get(predicateId) == null) {
+					Set<Integer> objs = new HashSet<Integer>();
+					objs.add(wordToIdMap.get(objectName));
 					for (String c : objectCategories) {
-						int objId = wordToIdMap.get(c);
-						predicateObjectFile.write(predicateId + " " + objId  + "\n");
+						objs.add(wordToIdMap.get(c));
 					} // end of for
+					predicateToObjectMap.put(predicateId, objs);
+				}else {
+					Set<Integer> objs = predicateToObjectMap.get(predicateId);
+					for (String c : objectCategories) {
+						objs.add(wordToIdMap.get(c));
+					} // end of for
+					predicateToObjectMap.put(predicateId, objs);
+				} // end of if
+//				int predicateId = predicateToIdMap.get(predicateName);
+//				for (String c : objectCategories) {
+//					int objId = wordToIdMap.get(c);
+//					predicateObjectFile.write(predicateId + " " + objId  + "\n");
+//				} // end of for
 			} // end of while
 			docFile.close();
 		} // end of while
