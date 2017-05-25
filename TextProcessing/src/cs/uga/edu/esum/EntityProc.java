@@ -60,6 +60,7 @@ import com.hp.hpl.jena.query.*;
 import com.hp.hpl.jena.rdf.model.*;
 import com.hp.hpl.jena.sparql.engine.http.QueryEngineHTTP;
 
+import book.set.ObjectBilinkable;
 import cs.uga.edu.wikiaccess.WikipediaAccessLayer;
 import virtuoso.jena.driver.VirtGraph;
 import virtuoso.jena.driver.VirtuosoQueryExecution;
@@ -91,6 +92,7 @@ public class EntityProc {
 	
 	private static final String predicateDomainRangeFileName = "/home/mehdi/EntitySummarization/evaluation/predicateDomainRange.txt"; 
 	private static final String predicateObjectFileName = "/home/mehdi/EntitySummarization/evaluation/predicateObject.ser";
+	protected final String predicateObjectWeightFileName = "/home/mehdi/EntitySummarization/evaluation/predicateObjectWeight.ser";
 	
 	//Holding all documents (Entities) in entityDocs folder
 	private static final String entityDocs = "/home/mehdi/EntitySummarization/evaluation/entityDocs/";
@@ -115,6 +117,7 @@ public class EntityProc {
 	private int predicateNumber=0;
 	private int domainNumber=0;
 	private int rangeNumber=0;
+	protected int[][] predicateObjectWeight = null;
 	
 	
 	
@@ -223,7 +226,6 @@ public class EntityProc {
 //					bw.write(key + "  " + value);
 //					bw.newLine();
 //				} catch (IOException e) {
-//					// TODO Auto-generated catch block
 //					e.printStackTrace();
 //				}
 //				  
@@ -292,6 +294,7 @@ public class EntityProc {
 		Map<String, Integer> wordToIdMap = new HashMap<String,Integer>();
 		Map<String, Integer> predicateToIdMap = new HashMap<String,Integer>();
 		Map<Integer, Set<Integer>> predicateToObjectMap = new HashMap<Integer,Set<Integer>>();
+		Map<Integer, Set<String>> objectToCategoryMap = new HashMap<Integer,Set<String>>();
 		while ((entityName = br.readLine()) != null) {
 //			String subjectUrl = uriPrefix + entityName;
 //			Set<String> subjectTypes = getEntityTypes(subjectUrl);
@@ -350,6 +353,8 @@ public class EntityProc {
 						wordIdGenerator++;
 					}
 				} // end of for
+				int objectId = wordToIdMap.get(objectName);
+				objectToCategoryMap.put(objectId, objectCategories);
 				
 				int predicateId = predicateToIdMap.get(predicateName);
 				if (predicateToObjectMap.get(predicateId) == null) {
@@ -380,7 +385,67 @@ public class EntityProc {
 		predicateObjectFile.close();
 		br.close();
 		savePredicateToObjectMap(predicateToObjectMap, predicateObjectFileName);
+		System.out.println("predicates: " + predicateToIdMap.size() + "    " + predicateToObjectMap.size());
+		// create the lambda matrix
+		int numOfPredicates = predicateToObjectMap.size();
+		int numOfObjects    = wordToIdMap.size();
+		predicateObjectWeight = new int[numOfPredicates][numOfObjects];
+		for (int i = 0; i < numOfPredicates; i++) {
+			for (int j = 0; j < numOfObjects; j++) {
+				Set<String> cats = objectToCategoryMap.get(j) != null ? objectToCategoryMap.get(j) : new HashSet<String>();
+				if (predicateToObjectMap.get(i).contains(j)) {
+					predicateObjectWeight[i][j] = cats.size(); 
+				}else {
+					predicateObjectWeight[i][j] = 1; 
+				}
+			} // end of for (j)
+		} // end of for (i)
+		saveMatrix(predicateObjectWeight, predicateObjectWeightFileName);
 	} // end of processEntities
+	
+	public void saveMatrix(int [][] mat, String fileName) {
+		System.out.println("Serializing Matrix...");
+		try {
+			File f = new File(fileName);
+			if (f.exists()) {
+				System.out.println(fileName + " already exists");
+				f.delete();
+				System.out.println(fileName + " deleted.");
+			} // end of if
+			FileOutputStream outputFile = new FileOutputStream(f);
+			BufferedOutputStream bfout = new BufferedOutputStream(outputFile);
+			ObjectOutputStream out = new ObjectOutputStream(bfout);
+			out.writeObject(mat);
+			out.close();
+			System.out.println("Matrix Serialized successfully.\n");
+		} catch (FileNotFoundException e) {
+			e.printStackTrace();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	} // end of saveMatrix
+	
+	public int[][] loadIntMatrix(String fileName) {
+		System.out.println("Loading " + fileName + " into Memory...");
+		try {
+			FileInputStream inputFile = new FileInputStream(fileName);
+			BufferedInputStream bfin = new BufferedInputStream(inputFile);
+			ObjectInputStream in = new ObjectInputStream(bfin);
+			int[][] z = (int[][]) in.readObject();
+			in.close();
+			System.out.println(fileName + " Successfuly Loaded into Memory.\n");
+			return z;
+		} catch (FileNotFoundException e) {
+			e.printStackTrace();
+		} catch (IOException e) {
+			e.printStackTrace();
+		} catch (ClassNotFoundException e) {
+			e.printStackTrace();
+		}
+		return null;
+	} // end of loadIntMatrix
+	
+	
 	
 	private void savePredicateToObjectMap(Map<Integer, Set<Integer>> predicateToObjectMap, String fileName) {
 		try {
@@ -402,6 +467,27 @@ public class EntityProc {
 			e.printStackTrace();
 		}
 	} // end of savePredicateToObjectMap
+	
+	@SuppressWarnings("unchecked")
+	public Map<Integer, Set<Integer>> loadPredicateToObjectMap(String fileName) {
+		System.out.println("Loading " + fileName + " into Memory...");
+		try {
+			FileInputStream inputFile = new FileInputStream(fileName);
+			BufferedInputStream bfin = new BufferedInputStream(inputFile);
+			ObjectInputStream in = new ObjectInputStream(bfin);
+			Map<Integer, Set<Integer>> predToObjMap = (Map<Integer, Set<Integer>>) in.readObject();
+			in.close();
+			System.out.println(fileName + " Successfuly Loaded into Memory.\n");
+			return predToObjMap;
+		} catch (FileNotFoundException e) {
+			e.printStackTrace();
+		} catch (IOException e) {
+			e.printStackTrace();
+		} catch (ClassNotFoundException e) {
+			e.printStackTrace();
+		}
+		return null;
+	} // end of loadPredicateToObjectMap
 
 
 	private Set<String> getEntityCategories(String entiyUrl) {
