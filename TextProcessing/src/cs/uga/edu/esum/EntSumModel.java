@@ -244,6 +244,198 @@ public class EntSumModel {
 //	
 	
 
+
+
+//	public void sampleEntityAndTopicAssignmentBurnIn(int d_i, int w_i) {
+//		int[] diEnts = docEntMat[d_i];
+//		double[] pr = null;
+//		pr = allocateMemory(pr, P * T);
+//		for (int ctr = 0; ctr < diEnts.length; ctr++) {
+//			int e_i = diEnts[ctr];
+//			for (int t_i = 0; t_i < T; t_i++) {
+//				updateCounts(d_i, e_i, t_i, w_i, -1);
+//				double pr_e = (Npd[d_i][e_i] + TAU) / (Nd[d_i] + P * TAU);
+//				double pr_z = (Ntp[e_i][t_i] + alphaMat[e_i][t_i])
+//						/ (Np[e_i] + sumAlpha[e_i]);
+//				double pr_w = (Nwt2[t_i][w_i] + BETA) / (Nt2[t_i] + W * BETA);
+//				pr[e_i * T + t_i] = pr_e * pr_z * pr_w;
+//			} // end of for t_i
+//		} // end of for ctr
+//		int pairIndex = sample(pr, randomGenerator.nextDouble());
+//		int newEntity = pairIndex / T;
+//		int newTopic = pairIndex % T;
+//		updateCounts(d_i, newEntity, newTopic, w_i, 1);
+//	} // end of sampleEntityAndTopicAssignmentBurnIn
+
+
+	
+	public void updateCounts(int dId, int pId, int wId, int val) {
+		Npd[dId][pId] = Npd[dId][pId] + val;
+		Nwp[pId][wId] = Nwp[pId][wId] + val;
+		Nd[dId] = Nd[dId] + val;
+		Np[pId] = Np[pId] + val;
+	} // end of updateCounts
+
+
+//	public void computeAlpha() {
+//		for (int e_i = 0; e_i < P; e_i++) {
+//			for (int t_i = 0; t_i < T; t_i++) {
+//				int[] neighbors = entEntMat[e_i];
+//				double sumProb = 0;
+//				for (int v = 0; v < neighbors.length; v++) {
+//					sumProb += theta[neighbors[v]][t_i];
+//					// sumProb += (Nte [v][t_i] + alphaMat [v][t_i]) / (Ne [v] +
+//					// sumAlpha [v]);
+//				} // end of for
+//				double oldAlpha_ei_ti = alphaMat[e_i][t_i];
+//				if (neighbors.length > 0) {
+//					alphaMat [e_i][t_i] = ((1 - EPSILON) * ALPHA) + (EPSILON * (T / neighbors.length) * sumProb);
+//				}else {
+//					alphaMat [e_i][t_i] = (1 - EPSILON) * ALPHA;
+//				}
+//				sumAlpha[e_i] = sumAlpha[e_i] - oldAlpha_ei_ti + alphaMat[e_i][t_i];
+//			} // end of for t_i
+//		} // end of for e_i
+//	} // end of computeAlpha
+
+//	public double computeAlpha(int e_i, int t_i) {
+//		int[] neighbors = entEntMat[e_i];
+//		double sumProb = 0;
+//		for (int v = 0; v < neighbors.length; v++) {
+//			sumProb += theta[v][t_i];
+//			// sumProb += (Nte [v][t_i] + alphaMat [v][t_i]) / (Ne [v] +
+//			// sumAlpha [v]);
+//		} // end of for
+//		return ((EPSILON * ALPHA) + ((1 - EPSILON) * (T / neighbors.length) * sumProb));
+//	} // end of computeAlpha
+
+//	public void computeTheta(int e_i, int t_i) {
+//		theta[e_i][t_i] = (Ntp[e_i][t_i] + alphaMat[e_i][t_i]) / (Np[e_i] + sumAlpha[e_i]);
+//	} // end of computeTheta
+
+	
+//	public void writeToDisk() {
+//		Nwt = loadIntMatrix("topic-word.ser");
+//		try {
+//			FileWriter csvFile = new FileWriter("/home/mehdi/entlda/csv/Nwt.csv");
+//			for (int w_i = 0; w_i < W; w_i++) {
+//				String line = w_i + " ";
+//				for (int t_i = 0; t_i < T; t_i++) {
+//					line += Nwt [t_i][w_i] + " ";
+//				} // end of for t_i
+//				csvFile.write(line + "\n");
+//				csvFile.flush();
+//			} // end of for e_i
+//			csvFile.close();
+//		}catch (IOException e) {
+//			
+//		}
+//		
+//	}
+
+	public void writeToCSV() {
+		loadPosteriorDistribution();
+		List<String> entityNames = modelParameters.readFile("/home/mehdi/EntitySummarization/evaluation/docToId.txt");
+		List<String> predicateNames = modelParameters.readFile("/home/mehdi/EntitySummarization/evaluation/predicateToId.txt");
+		List<String> wordNames = modelParameters.readFile("/home/mehdi/EntitySummarization/evaluation/wordToID.txt");
+		double [] sumProb = null;
+		sumProb = allocateMemory(sumProb, D);
+		for (int d_i = 0; d_i < D; d_i++) {
+			for (int p_i = 0; p_i < P; p_i++) {
+				sumProb[d_i] += theta [d_i][p_i];
+			} // end of for t_i
+		} // end of for e_i
+		try {
+			FileWriter csvFile = new FileWriter("/home/mehdi/EntitySummarization/evaluation/csv/theta.csv");
+			for (int d_i = 0; d_i < D; d_i++) {
+				String line = entityNames.get(d_i) + " ";
+				for (int p_i = 0; p_i < P; p_i++) {
+					theta [d_i][p_i] = theta [d_i][p_i] / sumProb[d_i];
+					line += theta [d_i][p_i] + " ";
+				} // end of for t_i
+				csvFile.write(line + "\n");
+				csvFile.flush();
+			} // end of for e_i
+			csvFile.close();
+			sumProb = null;
+			sumProb = allocateMemory(sumProb, P);
+			for (int p_i = 0; p_i < P; p_i++) {
+				for (int w_i = 0; w_i < W; w_i++) {
+					sumProb [p_i] += Math.round(phi [p_i][w_i] * 10000) / 10000.;
+				} // end of for w_i
+			} // end of for p_i
+			csvFile = new FileWriter("/home/mehdi/EntitySummarization/evaluation/csv/phi.csv");
+			for (int w_i = 0; w_i < W; w_i++) {
+				String line = "";
+				for (int p_i = 0; p_i < P; p_i++) {
+					phi [p_i][w_i] = (Math.round(phi [p_i][w_i] * 10000) / 10000.) / sumProb[p_i];
+					line += wordNames.get(w_i).split(" ")[0] + " " + predicateNames.get(p_i) + ":" + phi [p_i][w_i] + ",";
+				} // end of for t_i
+				csvFile.write(line + "\n");
+				csvFile.flush();
+			} // end of for w_i
+			csvFile.close();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		System.out.println("Done!");
+	} // end of writeToCSV
+
+	
+//	public void samplePredicateAndTypeAssignment_OLD(int did, int pid, int t1id, int t2id, int wid, int w_i) {
+//		Set<Integer> wordTypes = objectTotypeMap.get(wid);
+//		double[] pr = null;
+//		int prSize = P * T2;
+//		//int [] eids = new int [diEnts.length];
+//		pr = allocateMemory(pr, prSize);
+//		updateCounts(did, pid, t2id, wid, -1);
+//		for (int ctr = 0; ctr < P; ctr++) {
+////			Set<Integer> predicateDomain = predicateDomainMap.get(ctr) != null ? predicateDomainMap.get(ctr) : new HashSet<Integer>() ;
+//			Set<Integer> predicateRange  = predicateRangeMap.get(ctr)  != null ? predicateRangeMap.get(ctr) : new HashSet<Integer>();
+////			System.out.println("id:" + ctr + ", wid: " + wid + " " + predicateRange);
+//			// probability of predicate
+//			double pr_p = (Npd[did][ctr] + ALPHA) / (Nd[did] + P * ALPHA);
+//			for (int t_i = 0; t_i < T2; t_i++) {
+//				if(predicateRange.contains(t_i) && wordTypes.contains(t_i)){
+////				if(predicateDomain.contains(t_i) && predicateRange.contains(t_i) && wordTypes.contains(t_i)){
+//					// probability of subject type
+////					double pr_t1 = (Nt1p[ctr][t_i] + BETA) / (Np1[ctr] + T1 * BETA);
+//					// probability of object type
+//					double pr_t2 = (Nt2p[ctr][t_i] + BETA) / (Np2[ctr] + T2 * BETA);
+//					// probability of object
+//					double pr_w = (Nwt2[t_i][wid] + GAMMA) / (Nt2[t_i] + W * GAMMA);
+//					pr [ctr * T2 + t_i] = pr_p * pr_t2 * pr_w;
+////					pr [ctr * T2 + t_i] = pr_p * pr_t1 * pr_t2 * pr_w;
+//				} // end of if 
+//			} // end of for t_i
+//		} // end of for ctr
+//		int pairIndex = sample(pr, randomGenerator.nextDouble());
+//		if (pairIndex == -1) {
+////			System.out.println("-1");
+//			pairIndex = randomGenerator.nextInt(pr.length);
+//		}
+//		int newPredicate = pairIndex / T2;
+////		int newSubjectType = pairIndex % T2;
+//		int newObjectType = pairIndex % T2;
+//		p[w_i] = newPredicate;
+////		z1[w_i] = newSubjectType;
+//		z2[w_i] = newObjectType;
+//		updateCounts(did, newPredicate, newObjectType, wid, +1);
+////		updateCounts(did, newPredicate, newSubjectType, newObjectType, wid, +1);
+//		
+////		if (pairIndex != -1) {
+////			int newEntity = diEnts[pairIndex / T];
+////			int newTopic = pairIndex % T;
+////			e[w_i] = newEntity;
+////			z[w_i] = newTopic;
+////			updateCounts(did, newEntity, newTopic, wid, +1);
+////		}else {
+////			updateCounts(did, eid, tid, wid, +1);
+////		}
+//	} // end of samplePredicateAndTypeAssignment_OLD
+//	
+	
+
 public boolean hasValue(int[] arr, int val) {
 		for (int v : arr) {
 			if (v ==  val)
@@ -293,12 +485,6 @@ public boolean hasValue(int[] arr, int val) {
 		return -1;
 	} // end of sample
 	
-	public void updateCounts(int dId, int pId, int wId, int val) {
-		Npd[dId][pId] = Npd[dId][pId] + val;
-		Nwp[pId][wId] = Nwp[pId][wId] + val;
-		Nd[dId] = Nd[dId] + val;
-		Np[pId] = Np[pId] + val;
-	} // end of updateCounts
 
 
 //	public void computeAlpha() {
@@ -374,57 +560,10 @@ public boolean hasValue(int[] arr, int val) {
 //		
 //	}
 
-	public void writeToCSV() {
-		loadPosteriorDistribution();
-		List<String> entityNames = modelParameters.readFile("/home/mehdi/EntitySummarization/evaluation/docToId.txt");
-		List<String> predicateNames = modelParameters.readFile("/home/mehdi/EntitySummarization/evaluation/predicateToId.txt");
-		List<String> wordNames = modelParameters.readFile("/home/mehdi/EntitySummarization/evaluation/wordToID.txt");
-		double [] sumProb = null;
-		sumProb = allocateMemory(sumProb, D);
-		for (int d_i = 0; d_i < D; d_i++) {
-			for (int p_i = 0; p_i < P; p_i++) {
-				sumProb[d_i] += theta [d_i][p_i];
-			} // end of for t_i
-		} // end of for e_i
-		try {
-			FileWriter csvFile = new FileWriter("/home/mehdi/EntitySummarization/evaluation/csv/theta.csv");
-			for (int d_i = 0; d_i < D; d_i++) {
-				String line = entityNames.get(d_i) + " ";
-				for (int p_i = 0; p_i < P; p_i++) {
-					theta [d_i][p_i] = theta [d_i][p_i] / sumProb[d_i];
-					line += theta [d_i][p_i] + " ";
-				} // end of for t_i
-				csvFile.write(line + "\n");
-				csvFile.flush();
-			} // end of for e_i
-			csvFile.close();
-			sumProb = null;
-			sumProb = allocateMemory(sumProb, P);
-			for (int p_i = 0; p_i < P; p_i++) {
-				for (int w_i = 0; w_i < W; w_i++) {
-					sumProb [p_i] += Math.round(phi [p_i][w_i] * 10000) / 10000.;
-				} // end of for w_i
-			} // end of for p_i
-			csvFile = new FileWriter("/home/mehdi/EntitySummarization/evaluation/csv/phi.csv");
-			for (int w_i = 0; w_i < W; w_i++) {
-				String line = "";
-				for (int p_i = 0; p_i < P; p_i++) {
-					phi [p_i][w_i] = (Math.round(phi [p_i][w_i] * 10000) / 10000.) / sumProb[p_i];
-					line += wordNames.get(w_i).split(" ")[0] + " " + predicateNames.get(p_i) + ":" + phi [p_i][w_i] + ",";
-				} // end of for t_i
-				csvFile.write(line + "\n");
-				csvFile.flush();
-			} // end of for w_i
-			csvFile.close();
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
-		System.out.println("Done!");
-	} // end of writeToCSV
 
 	public void savePosteriorDistribution() {
 		saveMatrix(theta, saveToDir + "thetaProb.ser");
-		saveMatrix(phi, saveToDir + "phiProb.ser");
+		saveMatrix(phi, saveToDir + "phi2Prob.ser");
 	} // end of savePosteriorDistribution
 
 	public void loadPosteriorDistribution() {
