@@ -95,7 +95,7 @@ public class EntityProc {
 	protected final String predicateObjectWeightFileName = "/home/mehdi/EntitySummarization/evaluation/predicateObjectWeight.ser";
 	
 	//Holding all documents (Entities) in entityDocs folder
-	private static final String entityDocs = "/home/mehdi/EntitySummarization/evaluation/entityDocs/";
+	private static final String entityDocs = "/home/mehdi/EntitySummarization/evaluation/entityDocs/"; 
 	private static final String predicateList = "/home/mehdi/EntitySummarization/evaluation/";
 	
 	////
