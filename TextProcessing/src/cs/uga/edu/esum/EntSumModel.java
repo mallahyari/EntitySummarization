@@ -183,7 +183,7 @@ public class EntSumModel {
 			} // end of if
 		} // end of for ctr
 		if(sum == 0)
-			System.out.println("====");
+			System.out.println("===="); 
 		int newPredicate   = sample(pr, randomGenerator.nextDouble());
 		p[w_i] = newPredicate;
 		updateCounts(did, newPredicate, wid, +1);
