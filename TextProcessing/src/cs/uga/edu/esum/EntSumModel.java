@@ -166,15 +166,24 @@ public class EntSumModel {
 		double[] pr = null;
 		pr = allocateMemory(pr, P);
 		updateCounts(did, pid, wid, -1);
+		double sum = 0;
+			
 		for (int ctr = 0; ctr < P; ctr++) {
 			if (predicateToObjectMap.get(ctr).contains(wid)) {
 				// probability of predicate
 				double pr_p = (Npd[did][ctr] + ALPHA) / (Nd[did] + P * ALPHA);
+				if (pr_p == 0)
+					System.out.println("==== ");
 				// probability of object
 				double pr_w = (Nwp[ctr][wid] + predicateObjectWeight[ctr][wid] * BETA) / (Np[ctr] + sumPredObjWeight[ctr] * BETA);
+				if (pr_w == 0)
+					System.out.println("==== ");
 				pr [ctr] = pr_p * pr_w;
+				sum += pr[ctr];
 			} // end of if
 		} // end of for ctr
+		if(sum == 0)
+			System.out.println("====");
 		int newPredicate   = sample(pr, randomGenerator.nextDouble());
 		p[w_i] = newPredicate;
 		updateCounts(did, newPredicate, wid, +1);
@@ -415,7 +424,7 @@ public boolean hasValue(int[] arr, int val) {
 
 	public void savePosteriorDistribution() {
 		saveMatrix(theta, saveToDir + "thetaProb.ser");
-		saveMatrix(phi, saveToDir + "phi2Prob.ser");
+		saveMatrix(phi, saveToDir + "phiProb.ser");
 	} // end of savePosteriorDistribution
 
 	public void loadPosteriorDistribution() {

@@ -393,11 +393,13 @@ public class EntityProc {
 		for (int i = 0; i < numOfPredicates; i++) {
 			for (int j = 0; j < numOfObjects; j++) {
 				Set<String> cats = objectToCategoryMap.get(j) != null ? objectToCategoryMap.get(j) : new HashSet<String>();
-				if (predicateToObjectMap.get(i).contains(j)) {
+				if (predicateToObjectMap.get(i).contains(j) && !cats.isEmpty()) {
 					predicateObjectWeight[i][j] = cats.size(); 
 				}else {
 					predicateObjectWeight[i][j] = 1; 
 				}
+				if (predicateObjectWeight[i][j] == 0)
+					System.out.println("=======");
 			} // end of for (j)
 		} // end of for (i)
 		saveMatrix(predicateObjectWeight, predicateObjectWeightFileName);
