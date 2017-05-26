@@ -92,6 +92,7 @@ public class EntityProc {
 	
 	private static final String predicateDomainRangeFileName = "/home/mehdi/EntitySummarization/evaluation/predicateDomainRange.txt"; 
 	private static final String predicateObjectFileName = "/home/mehdi/EntitySummarization/evaluation/predicateObject.ser";
+	private String objectPredicateFileName = "/home/mehdi/EntitySummarization/evaluation/objectPredicate.ser";
 	protected final String predicateObjectWeightFileName = "/home/mehdi/EntitySummarization/evaluation/predicateObjectWeight.ser";
 	
 	//Holding all documents (Entities) in entityDocs folder
@@ -118,6 +119,7 @@ public class EntityProc {
 	private int domainNumber=0;
 	private int rangeNumber=0;
 	protected int[][] predicateObjectWeight = null;
+	
 	
 	
 	
@@ -409,6 +411,7 @@ public class EntityProc {
 		predicateObjectFile.close();
 		br.close();
 		savePredicateToObjectMap(predicateToObjectMap, predicateObjectFileName);
+		saveObjectToPredicateMap(objectToPredicateMap, objectPredicateFileName);
 		System.out.println("predicates: " + predicateToIdMap.size() + "    " + predicateToObjectMap.size());
 		// create the lambda matrix
 		int numOfPredicates = predicateToObjectMap.size();
@@ -429,6 +432,11 @@ public class EntityProc {
 		saveMatrix(predicateObjectWeight, predicateObjectWeightFileName);
 	} // end of processEntities
 	
+	private void saveObjectToPredicateMap(Map<Integer, Set<Integer>> objectToPredicateMap, String fileName) {
+		saveMap(objectToPredicateMap, fileName);
+	} // end of saveObjectToPredicateMap
+
+
 	public void saveMatrix(int [][] mat, String fileName) {
 		System.out.println("Serializing Matrix...");
 		try {
@@ -471,27 +479,8 @@ public class EntityProc {
 		return null;
 	} // end of loadIntMatrix
 	
-	
-	
 	private void savePredicateToObjectMap(Map<Integer, Set<Integer>> predicateToObjectMap, String fileName) {
-		try {
-			File f = new File(fileName);
-			if (f.exists()) {
-				System.out.println(fileName + " already exists");
-				f.delete();
-				System.out.println(fileName + " deleted.");
-			} // end of if
-			FileOutputStream outputFile = new FileOutputStream(f);
-			BufferedOutputStream bfout = new BufferedOutputStream(outputFile);
-			ObjectOutputStream out = new ObjectOutputStream(bfout);
-			out.writeObject(predicateToObjectMap);
-			out.close();
-			System.out.println("Map Serialized successfully.\n");
-		} catch (FileNotFoundException e) {
-			e.printStackTrace();
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
+		saveMap(predicateToObjectMap, fileName);
 	} // end of savePredicateToObjectMap
 	
 	@SuppressWarnings("unchecked")
@@ -659,10 +648,13 @@ public class EntityProc {
 		saveObjectToTypeMap(objectTotypeMap, objectToTypeMapFileName);
 	} // end of processEntities
 	
-	
-	
-	
 	public void saveObjectToTypeMap(Map<Integer, Set<Integer>> objectTotypeMap, String fileName) {
+		saveMap(objectTotypeMap, fileName);
+	} // end of saveObjectToTypeMap
+	
+	
+	
+	public void saveMap(Map<Integer, Set<Integer>> map, String fileName) {
 		try {
 			File f = new File(fileName);
 			if (f.exists()) {
@@ -673,7 +665,7 @@ public class EntityProc {
 			FileOutputStream outputFile = new FileOutputStream(f);
 			BufferedOutputStream bfout = new BufferedOutputStream(outputFile);
 			ObjectOutputStream out = new ObjectOutputStream(bfout);
-			out.writeObject(objectTotypeMap);
+			out.writeObject(map);
 			out.close();
 			System.out.println("Map Serialized successfully.\n");
 		} catch (FileNotFoundException e) {
@@ -681,7 +673,7 @@ public class EntityProc {
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
-	} // end of saveObjectToTypeMap
+	} // end of saveMap
 	
 	@SuppressWarnings("unchecked")
 	public Map<Integer, Set<Integer>> loadObjectToTypeMap(String fileName) {
