@@ -295,6 +295,7 @@ public class EntityProc {
 		Map<String, Integer> predicateToIdMap = new HashMap<String,Integer>();
 		Map<Integer, Set<Integer>> predicateToObjectMap = new HashMap<Integer,Set<Integer>>();
 		Map<Integer, Set<String>> objectToCategoryMap = new HashMap<Integer,Set<String>>();
+		Map<Integer, Set<Integer>> objectToPredicateMap = new HashMap<Integer,Set<Integer>>();
 		while ((entityName = br.readLine()) != null) {
 //			String subjectUrl = uriPrefix + entityName;
 //			Set<String> subjectTypes = getEntityTypes(subjectUrl);
@@ -354,23 +355,46 @@ public class EntityProc {
 					}
 				} // end of for
 				int objectId = wordToIdMap.get(objectName);
+				int predicateId = predicateToIdMap.get(predicateName);
 				objectToCategoryMap.put(objectId, objectCategories);
 				
-				int predicateId = predicateToIdMap.get(predicateName);
-				if (predicateToObjectMap.get(predicateId) == null) {
-					Set<Integer> objs = new HashSet<Integer>();
-					objs.add(wordToIdMap.get(objectName));
+				if (objectToPredicateMap.get(objectId) == null) {
+					Set<Integer> preds = new HashSet<Integer>();
+					preds.add(predicateId);
 					for (String c : objectCategories) {
-						objs.add(wordToIdMap.get(c));
+						int catId = wordToIdMap.get(c);
+						Set<Integer> catpreds = new HashSet<Integer>();
+						if (objectToPredicateMap.get(catId) == null) {
+							catpreds.add(predicateId);
+						}else {
+							catpreds = objectToPredicateMap.get(catId);
+							catpreds.add(predicateId);
+						} // end of if
+						objectToPredicateMap.put(catId, catpreds);
 					} // end of for
-					predicateToObjectMap.put(predicateId, objs);
+					objectToPredicateMap.put(objectId, preds);
 				}else {
-					Set<Integer> objs = predicateToObjectMap.get(predicateId);
-					for (String c : objectCategories) {
-						objs.add(wordToIdMap.get(c));
-					} // end of for
-					predicateToObjectMap.put(predicateId, objs);
+					Set<Integer> preds = objectToPredicateMap.get(objectId);
+					objectToPredicateMap.put(objectId, preds);
 				} // end of if
+				
+//				int predicateId = predicateToIdMap.get(predicateName);
+//				if (predicateToObjectMap.get(predicateId) == null) {
+//					Set<Integer> objs = new HashSet<Integer>();
+//					objs.add(wordToIdMap.get(objectName));
+//					for (String c : objectCategories) {
+//						objs.add(wordToIdMap.get(c));
+//					} // end of for
+//					predicateToObjectMap.put(predicateId, objs);
+//				}else {
+//					Set<Integer> objs = predicateToObjectMap.get(predicateId);
+//					for (String c : objectCategories) {
+//						objs.add(wordToIdMap.get(c));
+//					} // end of for
+//					predicateToObjectMap.put(predicateId, objs);
+//				} // end of if
+				
+				
 //				int predicateId = predicateToIdMap.get(predicateName);
 //				for (String c : objectCategories) {
 //					int objId = wordToIdMap.get(c);
