@@ -213,6 +213,7 @@ public class EntSum {
 		}else if (newObjectType == -1) {
 			newObjectType = randomGenerator.nextInt(T2);
 		}
+			System.out.println("-1");
 		p[w_i] = newPredicate;
 		z1[w_i] = newSubjectType;
 		z2[w_i] = newObjectType;

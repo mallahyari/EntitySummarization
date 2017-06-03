@@ -24,6 +24,7 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Random;
+import java.util.Scanner;
 import java.util.Set;
 import java.util.logging.FileHandler;
 import java.util.logging.Level;
@@ -79,7 +80,7 @@ public class EntSumModel {
 	Map <Integer, Set<Integer>> predicateDomainMap= new HashMap<Integer, Set<Integer>>();
 	
 	// Map to store each predicate with a set of corresponding Objects
-	Map<Integer, Set<Integer>> predicateToObjectMap = new HashMap<Integer, Set<Integer>>();
+	Map<Integer, Set<Integer>> objectToPredicateMap = new HashMap<Integer, Set<Integer>>();
 	
 	Map<Integer, Set<Integer>> objectTotypeMap = new HashMap<Integer,Set<Integer>>();
 	
@@ -130,7 +131,7 @@ public class EntSumModel {
 	} // end of saveCountMatrices
 
 	public void runGibbsSampling() {
-		predicateToObjectMap = entProc.loadPredicateToObjectMap(predicateObjectFileName);
+		objectToPredicateMap = entProc.loadPredicateToObjectMap(entProc.objectPredicateFileName);
 		FileHandler fh;
 		try {
 			fh = new FileHandler("/home/mehdi/mylog.txt");
@@ -163,13 +164,14 @@ public class EntSumModel {
 	} // end of runGibbsSampling
 	
 	public void samplePredicateAssignment(int did, int pid, int wid, int w_i) {
+		Set<Integer> wordPredicate = objectToPredicateMap.get(wid);
 		double[] pr = null;
 		pr = allocateMemory(pr, P);
 		updateCounts(did, pid, wid, -1);
 		double sum = 0;
 			
 		for (int ctr = 0; ctr < P; ctr++) {
-			if (predicateToObjectMap.get(ctr).contains(wid)) {
+			if (wordPredicate.contains(ctr)) {
 				// probability of predicate
 				double pr_p = (Npd[did][ctr] + ALPHA) / (Nd[did] + P * ALPHA);
 				if (pr_p == 0)
@@ -334,6 +336,8 @@ public class EntSumModel {
 //	}
 
 	public void writeToCSV() {
+		Map <String, Map<String, Double>> probabilitySearch = new HashMap <String, Map<String, Double>>();
+		
 		loadPosteriorDistribution();
 		List<String> entityNames = modelParameters.readFile("/home/mehdi/EntitySummarization/evaluation/docToId.txt");
 		List<String> predicateNames = modelParameters.readFile("/home/mehdi/EntitySummarization/evaluation/predicateToId.txt");
@@ -369,12 +373,32 @@ public class EntSumModel {
 				String line = "";
 				for (int p_i = 0; p_i < P; p_i++) {
 					phi [p_i][w_i] = (Math.round(phi [p_i][w_i] * 10000) / 10000.) / sumProb[p_i];
-					line += wordNames.get(w_i).split(" ")[0] + " " + predicateNames.get(p_i) + ":" + phi [p_i][w_i] + ",";
+					String word = wordNames.get(w_i).split(" ")[0];
+					line += word + " " + predicateNames.get(p_i) + " " + phi [p_i][w_i] + ",";
+					if (probabilitySearch.get(word) == null) {
+						Map<String,Double> preToProb = new HashMap<String,Double>();
+						preToProb.put(predicateNames.get(p_i), phi [p_i][w_i]);
+						probabilitySearch.put(word, preToProb);
+					}else {
+						Map<String,Double> preToProb = probabilitySearch.get(word);
+						preToProb.put(predicateNames.get(p_i), phi [p_i][w_i]);
+						probabilitySearch.put(word, preToProb);
+					}
 				} // end of for t_i
 				csvFile.write(line + "\n");
 				csvFile.flush();
 			} // end of for w_i
 			csvFile.close();
+			boolean flag = true;
+			System.out.println("Enter a word and predicate:");
+			Scanner sc = new Scanner(System.in);
+			while(flag) {
+				String word = sc.nextLine();
+				String predicate = sc.nextLine();
+				System.out.println("Probability = " + probabilitySearch.get(word).get(predicate));
+				if (word.equals("QUIT")) flag = false;
+			}
+			sc.close();
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
@@ -563,13 +587,12 @@ public boolean hasValue(int[] arr, int val) {
 
 	public void savePosteriorDistribution() {
 		saveMatrix(theta, saveToDir + "thetaProb.ser");
-		saveMatrix(phi, saveToDir + "phi2Prob.ser");
+		saveMatrix(phi, saveToDir + "phiProb.ser");
 	} // end of savePosteriorDistribution
 
 	public void loadPosteriorDistribution() {
 		theta = loadDoubleMatrix("thetaProb.ser");
 		phi   = loadDoubleMatrix("phiProb.ser");
-		phi   = loadDoubleMatrix("phi2Prob.ser");
 	} // end of loadPosteriorDistribution
 
 	public int[][] loadIntMatrix(String fileName) {

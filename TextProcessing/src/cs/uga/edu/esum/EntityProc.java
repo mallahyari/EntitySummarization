@@ -92,7 +92,7 @@ public class EntityProc {
 	
 	private static final String predicateDomainRangeFileName = "/home/mehdi/EntitySummarization/evaluation/predicateDomainRange.txt"; 
 	private static final String predicateObjectFileName = "/home/mehdi/EntitySummarization/evaluation/predicateObject.ser";
-	private String objectPredicateFileName = "/home/mehdi/EntitySummarization/evaluation/objectPredicate.ser";
+	protected String objectPredicateFileName = "/home/mehdi/EntitySummarization/evaluation/objectPredicate.ser";
 	protected final String predicateObjectWeightFileName = "/home/mehdi/EntitySummarization/evaluation/predicateObjectWeight.ser";
 	
 	//Holding all documents (Entities) in entityDocs folder
@@ -377,7 +377,19 @@ public class EntityProc {
 					objectToPredicateMap.put(objectId, preds);
 				}else {
 					Set<Integer> preds = objectToPredicateMap.get(objectId);
+					preds.add(predicateId);
 					objectToPredicateMap.put(objectId, preds);
+					for (String c : objectCategories) {
+						int catId = wordToIdMap.get(c);
+						Set<Integer> catpreds = new HashSet<Integer>();
+						if (objectToPredicateMap.get(catId) == null) {
+							catpreds.add(predicateId);
+						}else {
+							catpreds = objectToPredicateMap.get(catId);
+							catpreds.add(predicateId);
+						} // end of if
+						objectToPredicateMap.put(catId, catpreds);
+					} // end of for
 				} // end of if
 				
 //				int predicateId = predicateToIdMap.get(predicateName);
@@ -410,17 +422,19 @@ public class EntityProc {
 		predicateToIdFile.close();
 		predicateObjectFile.close();
 		br.close();
-		savePredicateToObjectMap(predicateToObjectMap, predicateObjectFileName);
+//		savePredicateToObjectMap(predicateToObjectMap, predicateObjectFileName);
 		saveObjectToPredicateMap(objectToPredicateMap, objectPredicateFileName);
-		System.out.println("predicates: " + predicateToIdMap.size() + "    " + predicateToObjectMap.size());
+		System.out.println("predicates: " + predicateToIdMap.size() + "    " + objectToPredicateMap.size());
+		Set<Integer> st = objectToPredicateMap.keySet();
 		// create the lambda matrix
-		int numOfPredicates = predicateToObjectMap.size();
+		int numOfPredicates = predicateToIdMap.size();
 		int numOfObjects    = wordToIdMap.size();
 		predicateObjectWeight = new int[numOfPredicates][numOfObjects];
+		
 		for (int i = 0; i < numOfPredicates; i++) {
 			for (int j = 0; j < numOfObjects; j++) {
 				Set<String> cats = objectToCategoryMap.get(j) != null ? objectToCategoryMap.get(j) : new HashSet<String>();
-				if (predicateToObjectMap.get(i).contains(j) && !cats.isEmpty()) {
+				if (objectToPredicateMap.get(j) != null && objectToPredicateMap.get(j).contains(i) && !cats.isEmpty()) {
 					predicateObjectWeight[i][j] = cats.size(); 
 				}else {
 					predicateObjectWeight[i][j] = 1; 
@@ -429,6 +443,20 @@ public class EntityProc {
 					System.out.println("=======");
 			} // end of for (j)
 		} // end of for (i)
+		
+		
+//		for (int i = 0; i < numOfPredicates; i++) {
+//			for (int j = 0; j < numOfObjects; j++) {
+//				Set<String> cats = objectToCategoryMap.get(j) != null ? objectToCategoryMap.get(j) : new HashSet<String>();
+//				if (predicateToObjectMap.get(i).contains(j) && !cats.isEmpty()) {
+//					predicateObjectWeight[i][j] = cats.size(); 
+//				}else {
+//					predicateObjectWeight[i][j] = 1; 
+//				}
+//				if (predicateObjectWeight[i][j] == 0)
+//					System.out.println("=======");
+//			} // end of for (j)
+//		} // end of for (i)
 		saveMatrix(predicateObjectWeight, predicateObjectWeightFileName);
 	} // end of processEntities
 	
@@ -833,7 +861,7 @@ public class EntityProc {
 			String [] words = document.split("\\|");
 			Map<Integer, Integer> wordsFrequency = new HashMap<Integer, Integer>();
 			for (String word : words) {
-				System.out.println(word);
+			//	System.out.println(word);
 				int wordId = wordToIdMap.get(word);
 				int preFreq = wordsFrequency.get(wordId) != null ? wordsFrequency.get(wordId) : 0;
 				wordsFrequency.put(wordId, preFreq + 1);
