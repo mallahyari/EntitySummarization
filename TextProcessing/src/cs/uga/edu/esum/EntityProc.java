@@ -347,15 +347,21 @@ public class EntityProc {
 				}
 				docFile.write(objectName + "|");
 				objectCategories = getEntityCategories(object.toString());
-				// writes the object categories to the doc file
-				for (String c : objectCategories) {
-					docFile.write(c + "|");
-					if (wordToIdMap.get(c) == null) {
-						wordToIdMap.put(c, wordIdGenerator);
-						wordToIdFile.write(c + " " + wordIdGenerator + "\n");
-						wordIdGenerator++;
-					}
-				} // end of for
+				
+				// if you want to increase object frequency in the document
+				for (int i = 0; i < objectCategories.size(); i++) {
+					docFile.write(objectName + "|");
+				}
+				
+				// if you want to include object categories in the document, write the object categories to the doc file
+//				for (String c : objectCategories) {
+//					docFile.write(c + "|");
+//					if (wordToIdMap.get(c) == null) {
+//						wordToIdMap.put(c, wordIdGenerator);
+//						wordToIdFile.write(c + " " + wordIdGenerator + "\n");
+//						wordIdGenerator++;
+//					}
+//				} // end of for
 				int objectId = wordToIdMap.get(objectName);
 				int predicateId = predicateToIdMap.get(predicateName);
 				objectToCategoryMap.put(objectId, objectCategories);
@@ -363,33 +369,37 @@ public class EntityProc {
 				if (objectToPredicateMap.get(objectId) == null) {
 					Set<Integer> preds = new HashSet<Integer>();
 					preds.add(predicateId);
-					for (String c : objectCategories) {
-						int catId = wordToIdMap.get(c);
-						Set<Integer> catpreds = new HashSet<Integer>();
-						if (objectToPredicateMap.get(catId) == null) {
-							catpreds.add(predicateId);
-						}else {
-							catpreds = objectToPredicateMap.get(catId);
-							catpreds.add(predicateId);
-						} // end of if
-						objectToPredicateMap.put(catId, catpreds);
-					} // end of for
 					objectToPredicateMap.put(objectId, preds);
+					
+					// uncomment the block below ONLY if you want to include object categories in the documents
+//					for (String c : objectCategories) {
+//						int catId = wordToIdMap.get(c);
+//						Set<Integer> catpreds = new HashSet<Integer>();
+//						if (objectToPredicateMap.get(catId) == null) {
+//							catpreds.add(predicateId);
+//						}else {
+//							catpreds = objectToPredicateMap.get(catId);
+//							catpreds.add(predicateId);
+//						} // end of if
+//						objectToPredicateMap.put(catId, catpreds);
+//					} // end of for
 				}else {
 					Set<Integer> preds = objectToPredicateMap.get(objectId);
 					preds.add(predicateId);
 					objectToPredicateMap.put(objectId, preds);
-					for (String c : objectCategories) {
-						int catId = wordToIdMap.get(c);
-						Set<Integer> catpreds = new HashSet<Integer>();
-						if (objectToPredicateMap.get(catId) == null) {
-							catpreds.add(predicateId);
-						}else {
-							catpreds = objectToPredicateMap.get(catId);
-							catpreds.add(predicateId);
-						} // end of if
-						objectToPredicateMap.put(catId, catpreds);
-					} // end of for
+					
+					// uncomment the block below ONLY if you want to include object categories in the documents
+//					for (String c : objectCategories) {
+//						int catId = wordToIdMap.get(c);
+//						Set<Integer> catpreds = new HashSet<Integer>();
+//						if (objectToPredicateMap.get(catId) == null) {
+//							catpreds.add(predicateId);
+//						}else {
+//							catpreds = objectToPredicateMap.get(catId);
+//							catpreds.add(predicateId);
+//						} // end of if
+//						objectToPredicateMap.put(catId, catpreds);
+//					} // end of for
 				} // end of if
 				
 //				int predicateId = predicateToIdMap.get(predicateName);
@@ -425,7 +435,7 @@ public class EntityProc {
 //		savePredicateToObjectMap(predicateToObjectMap, predicateObjectFileName);
 		saveObjectToPredicateMap(objectToPredicateMap, objectPredicateFileName);
 		System.out.println("predicates: " + predicateToIdMap.size() + "    " + objectToPredicateMap.size());
-		Set<Integer> st = objectToPredicateMap.keySet();
+//		Set<Integer> st = objectToPredicateMap.keySet();
 		// create the lambda matrix
 		int numOfPredicates = predicateToIdMap.size();
 		int numOfObjects    = wordToIdMap.size();
@@ -437,10 +447,8 @@ public class EntityProc {
 				if (objectToPredicateMap.get(j) != null && objectToPredicateMap.get(j).contains(i) && !cats.isEmpty()) {
 					predicateObjectWeight[i][j] = cats.size(); 
 				}else {
-					predicateObjectWeight[i][j] = 1; 
+					predicateObjectWeight[i][j] = 0; 
 				}
-				if (predicateObjectWeight[i][j] == 0)
-					System.out.println("=======");
 			} // end of for (j)
 		} // end of for (i)
 		

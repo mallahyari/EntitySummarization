@@ -36,7 +36,7 @@ public class ModelParameters {
 	public int T2 = 133;
 	public int P = 0; 
 	public int N = 0;
-	public int nIterations = 500;
+	public int nIterations = 1000;
 	int burnIn = 200;
 	public double ALPHA = 50.0 / 264;
 	public final double BETA  = 0.01;
