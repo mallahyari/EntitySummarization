@@ -389,16 +389,16 @@ public class EntSumModel {
 				csvFile.flush();
 			} // end of for w_i
 			csvFile.close();
-			boolean flag = true;
-			System.out.println("Enter a word and predicate:");
-			Scanner sc = new Scanner(System.in);
-			while(flag) {
-				String word = sc.nextLine();
-				String predicate = sc.nextLine();
-				System.out.println("Probability = " + probabilitySearch.get(word).get(predicate));
-				if (word.equals("QUIT")) flag = false;
-			}
-			sc.close();
+//			boolean flag = true;
+//			System.out.println("Enter a word and predicate:");
+//			Scanner sc = new Scanner(System.in);
+//			while(flag) {
+//				String word = sc.nextLine();
+//				String predicate = sc.nextLine();
+//				System.out.println("Probability = " + probabilitySearch.get(word).get(predicate));
+//				if (word.equals("QUIT")) flag = false;
+//			}
+//			sc.close();
 		} catch (IOException e) {
 			e.printStackTrace();
 		}

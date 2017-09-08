@@ -447,7 +447,7 @@ public class EntityProc {
 				if (objectToPredicateMap.get(j) != null && objectToPredicateMap.get(j).contains(i) && !cats.isEmpty()) {
 					predicateObjectWeight[i][j] = cats.size(); 
 				}else {
-					predicateObjectWeight[i][j] = 0; 
+					predicateObjectWeight[i][j] = 1; 
 				}
 			} // end of for (j)
 		} // end of for (i)
