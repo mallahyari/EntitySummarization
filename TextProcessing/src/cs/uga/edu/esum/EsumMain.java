@@ -90,8 +90,8 @@ public class EsumMain {
 		
 //		    EntLDA2 entLDA2 = new EntLDA2();
 //		                       entLDA2.initializeMatrices();
-//		
-//		 // Gibbs Sampling Initialization and Run //
+//		  
+//		   // Gibbs Sampling Initialization and Run //
 //		entLDA2.initializeGibbsSampling();
 //		entLDA2.run();
 //		
