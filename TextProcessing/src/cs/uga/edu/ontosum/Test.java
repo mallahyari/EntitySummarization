@@ -1,12 +1,13 @@
 package cs.uga.edu.ontosum;
 
+import java.io.IOException;
+
 public class Test {
 
-	public static void main(String[] args) {
+	public static void main(String[] args) throws IOException {
 		// TODO Auto-generated method stub
-		int j = 1;
-		System.out.println("Hi");
-		//test
+		esumExtendPreProcessing makefile=new esumExtendPreProcessing();
+		makefile.predicateChecker();
 
 	}
 
