@@ -79,94 +79,57 @@
 public class esumExtendPreProcessing {
 		
 		private final String uriPrefix = "http://dbpedia.org/resource/";
-		
 		private final String wikiCategoryUriPrefix = "http://dbpedia.org/resource/Category:";
-		
 		private VirtGraph virtGraph = null;
-		
-		
 		private static final String entityFile = "/home/mehdi/EntitySummarizationExt/evaluation/faces_evaluation/instances.txt";
-		
 		private static final String entityNameOnly = "/home/mehdi/EntitySummarization/evaluation/entNameOnly.txt";
-		
-		private static final String predicateStopWords = "/home/mehdi/EntitySummarization/evaluation/predicateStopWords.txt";
+			private static final String predicateStopWords = "/home/mehdi/EntitySummarization/evaluation/predicateStopWords.txt";
 		
 		// Map each object (word) to an ID
-		
 		private static final String wordToIdFileName = "/home/mehdi/EntitySummarizationExt/evaluation/wordToID.txt";
-		
 		//Map each entity (doc) to ID
-		
 		private static final String docToIdFileName = "/home/mehdi/EntitySummarizationExt/evaluation/docToId.txt"; 
-		
 		private static final String rangeToIdFileName = "/home/mehdi/EntitySummarizationExt/evaluation/rangeToId.txt";
-		
 		private static final String domainToIdFileName = "/home/mehdi/EntitySummarizationExt/evaluation/domainToId.txt";
-		
 		private static final String predicateToIdFileName = "/home/mehdi/EntitySummarizationExt/evaluation/predicateToId.txt"; 
-		
 		private static final String corpusFileName = "/home/mehdi/EntitySummarizationExt/evaluation/corpus.txt"; 
-		
 		private static final String objectToTypeMapFileName = "/home/mehdi/EntitySummarizationExt/evaluation/objToType.ser"; 
-		
 		private static final String predicateDomainRangeFileName = "/home/mehdi/EntitySummarizationExt/evaluation/predicateDomainRange.txt"; 
-		
 		private static final String predicateObjectFileName = "/home/mehdi/EntitySummarizationExt/evaluation/predicateObject.ser";
-		
 		protected String objectPredicateFileName = "/home/mehdi/EntitySummarizationExt/evaluation/objectPredicate.ser";
-		
 		protected final String predicateObjectWeightFileName = "/home/mehdi/EntitySummarizationExt/evaluation/predicateObjectWeight.ser";
-		
 		//Holding all documents (Entities) in entityDocs folder
 		
 		private static final String entityDocs = "/home/mehdi/EntitySummarizationExt/evaluation/entityDocs/"; 
-		
 		private static final String predicateList = "/home/mehdi/EntitySummarizationExt/evaluation/";
 		
 		////
 		
 		private Set<String> predicateSet=new HashSet<String>();
-		
 		private Set<String> objectSet=new HashSet<String>();
-		
 		private Set<String> domainSet =new HashSet<String>();
-		
 		private Set<String> rangeSet=new HashSet<String>();
-		
 		private Map<String, Integer>domainMap=new HashMap<String,Integer>();
-		
 		private Map<String, Integer>rangeMap=new HashMap<String,Integer>();
-		
 		private Vector<String> predicateVector=new Vector<String>();
-		
 		private Vector<String> objectVector = new Vector<String>();
-		
 		private Map<String, Integer> mapWordToID = new HashMap<String, Integer>();
-		
 		private Map<String, Integer> sortedMapWordToID = new HashMap<String, Integer>();
-		
 		private Map<String, Integer> mapDocToID = new HashMap<String, Integer>();
-		
 		private int wordCount=0;
-		
 		private int docCount=0;
-		
 		private int predicateNumber=0;
-		
 		private int domainNumber=0;
-		
 		private int rangeNumber=0;
-		
 		protected int[][] predicateObjectWeight = null;
 
 ////////////////////////////////////////////////////////
 
-		
-		/*
+/*
 
-		* //////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+* //////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-		* */ 
+* */ 
 
 		public void predicateChecker() throws IOException{
 
@@ -195,16 +158,6 @@ public class esumExtendPreProcessing {
 		* //////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 		* */ 
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
 		
 		
 		
@@ -306,6 +259,11 @@ public void predicateExtractor(String entityName ) throws IOException{
 			//Add predicate URL to predicate Set (Whole Predicate)
 			
 			predicateSet.add(p.toString());
+			
+			System.out.println(s.toString());
+			System.out.println(predicateName);
+			System.out.println(objectName);
+			
 			}
 			
 			
