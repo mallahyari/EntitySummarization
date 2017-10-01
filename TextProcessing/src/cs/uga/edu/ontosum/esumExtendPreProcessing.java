@@ -261,8 +261,8 @@ public void predicateExtractor(String entityName ) throws IOException{
 			predicateSet.add(p.toString());
 			
 			//System.out.println(s.toString());
-			System.out.println(predicateName);
-			System.out.println(objectName);
+			System.out.println("PREDICATE:  "+ predicateName);
+			System.out.println("OBJECT: "+ objectName);
 			
 			}
 			
