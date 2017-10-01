@@ -2,132 +2,74 @@
 
 
 
-
-
-import static cs.uga.edu.dicgenerator.VirtuosoAccess.*;
-
-import grph.algo.bfs.BFSResult;
-
-import grph.properties.LabelProperty;
-
-
-import java.io.BufferedInputStream;
-
-import java.io.BufferedOutputStream;
-
-import java.io.BufferedReader;
-
-import java.io.BufferedWriter;
-
-import java.io.File;
-
-import java.io.FileInputStream;
-
-import java.io.FileNotFoundException;
-
-import java.io.FileOutputStream;
-
-import java.io.FileReader;
-
-import java.io.FileWriter;
-
-import java.io.IOException;
-
-import java.io.ObjectInputStream;
-
-import java.io.ObjectOutputStream;
-
-import java.io.OutputStreamWriter;
-
-import java.io.UnsupportedEncodingException;
-
-import java.text.NumberFormat;
-
-import java.text.ParseException;
-
-import java.util.ArrayList;
-
-import java.util.Arrays;
-
-import java.util.Collection;
-
-import java.util.Collections;
-
-import java.util.Comparator;
-
-import java.util.HashMap;
-
-import java.util.HashSet;
-
-import java.util.Iterator;
-
-import java.util.LinkedHashMap;
-
-import java.util.LinkedList;
-
-import java.util.List;
-
-import java.util.Map;
-
-import java.util.Random;
-
-import java.util.Scanner;
-
-import java.util.Set;
-
-import java.util.Vector;
-
-import java.util.logging.FileHandler;
-
-import java.util.logging.Level;
-
-import java.util.logging.Logger;
-
-import java.util.logging.SimpleFormatter;
-
-
-import org.apache.commons.io.FileUtils;
-
-import org.jsoup.Connection;
-
-import org.jsoup.Jsoup;
-
-import org.jsoup.nodes.Document;
-
-import org.jsoup.select.Elements;
-
-import org.python.core.util.FileUtil;
-
-
-import cnrs.grph.set.HashIntSet;
-
-import cnrs.grph.set.IntSet;
-
-
-import com.google.common.io.Files;
-
-import com.google.gson.JsonObject;
-
-import com.google.gson.JsonParser;
-
-import com.google.gson.stream.JsonReader;
-
-import com.hp.hpl.jena.query.*;
-
-import com.hp.hpl.jena.rdf.model.*;
-
-import com.hp.hpl.jena.sparql.engine.http.QueryEngineHTTP;
-
-
-import book.set.ObjectBilinkable;
-
-import cs.uga.edu.wikiaccess.WikipediaAccessLayer;
-
-import virtuoso.jena.driver.VirtGraph;
-
-import virtuoso.jena.driver.VirtuosoQueryExecution;
-
-import virtuoso.jena.driver.VirtuosoQueryExecutionFactory;
+		
+		
+		import static cs.uga.edu.dicgenerator.VirtuosoAccess.*;
+		import grph.algo.bfs.BFSResult;
+		import grph.properties.LabelProperty;
+		import java.io.BufferedInputStream;
+		import java.io.BufferedOutputStream;
+		import java.io.BufferedReader;
+		import java.io.BufferedWriter;
+		import java.io.File;
+		import java.io.FileInputStream;
+		import java.io.FileNotFoundException;
+		import java.io.FileOutputStream;
+		import java.io.FileReader;
+		import java.io.FileWriter;
+		import java.io.IOException;
+		import java.io.ObjectInputStream;
+		import java.io.ObjectOutputStream;
+		import java.io.OutputStreamWriter;
+		import java.io.UnsupportedEncodingException;
+		import java.text.NumberFormat;
+		import java.text.ParseException;
+		import java.util.ArrayList;
+		import java.util.Arrays;
+		import java.util.Collection;
+		import java.util.Collections;
+		import java.util.Comparator;
+		import java.util.HashMap;
+		import java.util.HashSet;
+		
+		import java.util.Iterator;
+		import java.util.LinkedHashMap;
+		import java.util.LinkedList;
+		import java.util.List;
+		
+		import java.util.Map;
+		import java.util.Random;
+		import java.util.Scanner;
+		import java.util.Set;
+		
+		import java.util.Vector;
+		import java.util.logging.FileHandler;
+		import java.util.logging.Level;
+		import java.util.logging.Logger;
+		import java.util.logging.SimpleFormatter;
+		import org.apache.commons.io.FileUtils;
+		import org.jsoup.Connection;
+		import org.jsoup.Jsoup;
+		import org.jsoup.nodes.Document;
+		import org.jsoup.select.Elements;
+		import org.python.core.util.FileUtil;
+		
+		
+		import cnrs.grph.set.HashIntSet;
+		import cnrs.grph.set.IntSet;
+		
+		import com.google.common.io.Files;
+		import com.google.gson.JsonObject;
+		import com.google.gson.JsonParser;
+		import com.google.gson.stream.JsonReader;
+		import com.hp.hpl.jena.query.*;
+		import com.hp.hpl.jena.rdf.model.*;
+		import com.hp.hpl.jena.sparql.engine.http.QueryEngineHTTP;
+		import book.set.ObjectBilinkable;
+		import cs.uga.edu.wikiaccess.WikipediaAccessLayer;
+		import virtuoso.jena.driver.VirtGraph;
+		import virtuoso.jena.driver.VirtuosoQueryExecution;
+		import virtuoso.jena.driver.VirtuosoQueryExecutionFactory;
 
 
 
@@ -135,90 +77,137 @@ import virtuoso.jena.driver.VirtuosoQueryExecutionFactory;
 
 
 public class esumExtendPreProcessing {
-
-private final String uriPrefix = "http://dbpedia.org/resource/";
-
-private final String wikiCategoryUriPrefix = "http://dbpedia.org/resource/Category:";
-
-private VirtGraph virtGraph = null;
-
-
-private static final String entityFile = "/home/mehdi/EntitySummarizationExt/evaluation/faces_evaluation/instances.txt";
-
-private static final String entityNameOnly = "/home/mehdi/EntitySummarization/evaluation/entNameOnly.txt";
-
-private static final String predicateStopWords = "/home/mehdi/EntitySummarization/evaluation/predicateStopWords.txt";
-
-// Map each object (word) to an ID
-
-private static final String wordToIdFileName = "/home/mehdi/EntitySummarizationExt/evaluation/wordToID.txt";
-
-//Map each entity (doc) to ID
-
-private static final String docToIdFileName = "/home/mehdi/EntitySummarizationExt/evaluation/docToId.txt"; 
-
-private static final String rangeToIdFileName = "/home/mehdi/EntitySummarizationExt/evaluation/rangeToId.txt";
-
-private static final String domainToIdFileName = "/home/mehdi/EntitySummarizationExt/evaluation/domainToId.txt";
-
-private static final String predicateToIdFileName = "/home/mehdi/EntitySummarizationExt/evaluation/predicateToId.txt"; 
-
-private static final String corpusFileName = "/home/mehdi/EntitySummarizationExt/evaluation/corpus.txt"; 
-
-private static final String objectToTypeMapFileName = "/home/mehdi/EntitySummarizationExt/evaluation/objToType.ser"; 
-
-private static final String predicateDomainRangeFileName = "/home/mehdi/EntitySummarizationExt/evaluation/predicateDomainRange.txt"; 
-
-private static final String predicateObjectFileName = "/home/mehdi/EntitySummarizationExt/evaluation/predicateObject.ser";
-
-protected String objectPredicateFileName = "/home/mehdi/EntitySummarizationExt/evaluation/objectPredicate.ser";
-
-protected final String predicateObjectWeightFileName = "/home/mehdi/EntitySummarizationExt/evaluation/predicateObjectWeight.ser";
-
-//Holding all documents (Entities) in entityDocs folder
-
-private static final String entityDocs = "/home/mehdi/EntitySummarizationExt/evaluation/entityDocs/"; 
-
-private static final String predicateList = "/home/mehdi/EntitySummarizationExt/evaluation/";
-
-////
-
-private Set<String> predicateSet=new HashSet<String>();
-
-private Set<String> objectSet=new HashSet<String>();
-
-private Set<String> domainSet =new HashSet<String>();
-
-private Set<String> rangeSet=new HashSet<String>();
-
-private Map<String, Integer>domainMap=new HashMap<String,Integer>();
-
-private Map<String, Integer>rangeMap=new HashMap<String,Integer>();
-
-private Vector<String> predicateVector=new Vector<String>();
-
-private Vector<String> objectVector = new Vector<String>();
-
-private Map<String, Integer> mapWordToID = new HashMap<String, Integer>();
-
-private Map<String, Integer> sortedMapWordToID = new HashMap<String, Integer>();
-
-private Map<String, Integer> mapDocToID = new HashMap<String, Integer>();
-
-private int wordCount=0;
-
-private int docCount=0;
-
-private int predicateNumber=0;
-
-private int domainNumber=0;
-
-private int rangeNumber=0;
-
-protected int[][] predicateObjectWeight = null;
+		
+		private final String uriPrefix = "http://dbpedia.org/resource/";
+		
+		private final String wikiCategoryUriPrefix = "http://dbpedia.org/resource/Category:";
+		
+		private VirtGraph virtGraph = null;
+		
+		
+		private static final String entityFile = "/home/mehdi/EntitySummarizationExt/evaluation/faces_evaluation/instances.txt";
+		
+		private static final String entityNameOnly = "/home/mehdi/EntitySummarization/evaluation/entNameOnly.txt";
+		
+		private static final String predicateStopWords = "/home/mehdi/EntitySummarization/evaluation/predicateStopWords.txt";
+		
+		// Map each object (word) to an ID
+		
+		private static final String wordToIdFileName = "/home/mehdi/EntitySummarizationExt/evaluation/wordToID.txt";
+		
+		//Map each entity (doc) to ID
+		
+		private static final String docToIdFileName = "/home/mehdi/EntitySummarizationExt/evaluation/docToId.txt"; 
+		
+		private static final String rangeToIdFileName = "/home/mehdi/EntitySummarizationExt/evaluation/rangeToId.txt";
+		
+		private static final String domainToIdFileName = "/home/mehdi/EntitySummarizationExt/evaluation/domainToId.txt";
+		
+		private static final String predicateToIdFileName = "/home/mehdi/EntitySummarizationExt/evaluation/predicateToId.txt"; 
+		
+		private static final String corpusFileName = "/home/mehdi/EntitySummarizationExt/evaluation/corpus.txt"; 
+		
+		private static final String objectToTypeMapFileName = "/home/mehdi/EntitySummarizationExt/evaluation/objToType.ser"; 
+		
+		private static final String predicateDomainRangeFileName = "/home/mehdi/EntitySummarizationExt/evaluation/predicateDomainRange.txt"; 
+		
+		private static final String predicateObjectFileName = "/home/mehdi/EntitySummarizationExt/evaluation/predicateObject.ser";
+		
+		protected String objectPredicateFileName = "/home/mehdi/EntitySummarizationExt/evaluation/objectPredicate.ser";
+		
+		protected final String predicateObjectWeightFileName = "/home/mehdi/EntitySummarizationExt/evaluation/predicateObjectWeight.ser";
+		
+		//Holding all documents (Entities) in entityDocs folder
+		
+		private static final String entityDocs = "/home/mehdi/EntitySummarizationExt/evaluation/entityDocs/"; 
+		
+		private static final String predicateList = "/home/mehdi/EntitySummarizationExt/evaluation/";
+		
+		////
+		
+		private Set<String> predicateSet=new HashSet<String>();
+		
+		private Set<String> objectSet=new HashSet<String>();
+		
+		private Set<String> domainSet =new HashSet<String>();
+		
+		private Set<String> rangeSet=new HashSet<String>();
+		
+		private Map<String, Integer>domainMap=new HashMap<String,Integer>();
+		
+		private Map<String, Integer>rangeMap=new HashMap<String,Integer>();
+		
+		private Vector<String> predicateVector=new Vector<String>();
+		
+		private Vector<String> objectVector = new Vector<String>();
+		
+		private Map<String, Integer> mapWordToID = new HashMap<String, Integer>();
+		
+		private Map<String, Integer> sortedMapWordToID = new HashMap<String, Integer>();
+		
+		private Map<String, Integer> mapDocToID = new HashMap<String, Integer>();
+		
+		private int wordCount=0;
+		
+		private int docCount=0;
+		
+		private int predicateNumber=0;
+		
+		private int domainNumber=0;
+		
+		private int rangeNumber=0;
+		
+		protected int[][] predicateObjectWeight = null;
 
 ////////////////////////////////////////////////////////
 
+		
+		/*
+
+		* //////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+		* */ 
+
+		public void predicateChecker() throws IOException{
+
+		/*
+
+		* Read entity Name only (entNameOnly.txt) as input and extract all useful predicates
+
+		*/
+		//Reading from entityFile
+
+		try {
+		String entityLine;
+		BufferedReader br = new BufferedReader(new FileReader(entityNameOnly));
+		while ((entityLine = br.readLine()) != null) {
+		//Calling predicateExtractor to extract all predicates and Objects for all entities in entNameOnly.txt
+		predicateExtractor(entityLine);
+		}
+		br.close();
+		} catch (IOException e) {
+		e.printStackTrace();
+		}
+		} // end of predicateChecker
+
+		/*
+
+		* //////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+		* */ 
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
 /*
 
 * taking entity name and extract all predicates (meaningful ones) 
@@ -229,294 +218,182 @@ public void predicateExtractor(String entityName ) throws IOException{
 
 //Reading stop predicate from predicate Stop Words file
 
-BufferedReader br = null;
-
-FileReader fr = null;
-
-Vector<String> predicateStopWordsVec=new Vector<String>();
-
-try {
-
-String stopPredicate;
-
-br = new BufferedReader(new FileReader(predicateStopWords));
-
-
-while ((stopPredicate = br.readLine()) != null) {
-
-predicateStopWordsVec.add(stopPredicate);
-
-}
-
-} catch (IOException e) {
-
-
-e.printStackTrace();
-
-
-}
+	BufferedReader br = null;
+	FileReader fr = null;
+	Vector<String> predicateStopWordsVec=new Vector<String>();
+		try {
+		String stopPredicate;
+	
+		br = new BufferedReader(new FileReader(predicateStopWords));	
+		while ((stopPredicate = br.readLine()) != null) {
+		predicateStopWordsVec.add(stopPredicate);
+		}
+		} catch (IOException e) {
+		e.printStackTrace();
+		}
 
 //Connecting to Virtuoso to extract predicates and objects
 
-System.out.println("Connecting to Virtuoso ... ");
+			System.out.println("Connecting to Virtuoso ... ");
+			virtGraph = connectToVirtuoso();
+			System.out.println("Successfully Connected to Virtuoso!\n");
+			
+			StringBuffer queryString = new StringBuffer();
+			queryString.append("SELECT ?p ?o FROM <" + GRAPH + "> WHERE { <http://dbpedia.org/resource/" + entityName +"> ?p ?o. }  ");
+			
+			
+			Query sparql = QueryFactory.create(queryString.toString());
+			VirtuosoQueryExecution vqe = VirtuosoQueryExecutionFactory.create (sparql, virtGraph);
+			ResultSet results = vqe.execSelect();
+			while (results.hasNext()) {
+			QuerySolution result = results.nextSolution();
+			RDFNode graph = result.get("graph");
+			RDFNode s = result.get("s");
+			RDFNode p = result.get("p");
+			RDFNode o = result.get("o");
+			//Finding the position of the last "/" and take only predicate name
+			int index = p.toString().lastIndexOf("/");
+			String predicateName=p.toString().substring(index+1);
+			
+			/* if predicate is subject or contains http://dbpedia.org/ontology/ and Object contains http://dbpedia.org/ we will keep that predicate
+			
+			* if predicate  contains http://dbpedia.org/property/ and Object contains http://dbpedia.org/ we will keep that predicate
+			
+			* if predicate is http://dbpedia.org/ontology/wikiPageWikiLink we will drop it
+			
+			*/
+			
+			if (predicateName.equals("subject")){
+			int indexO = o.toString().lastIndexOf("/");
+			String objectName=o.toString().substring(indexO+10);
+			objectSet.add(objectName);
+			//Add to the Vector
+			objectVector.add(objectName);
+			//predicateSet.add(predicateName);
+			predicateSet.add(p.toString());
+			}else if(!(p.toString().equals("http://dbpedia.org/ontology/wikiPageWikiLink")) && p.toString().contains("http://dbpedia.org/ontology/") && o.toString().contains("http://dbpedia.org/") ){
+			int indexP=p.toString().lastIndexOf("/");
+			String predicateNameStr=p.toString().substring(indexP+1);
+			int indexO = o.toString().lastIndexOf("/");
+			String objectName=o.toString().substring(indexO+1);
+			objectSet.add(objectName);
+			//Add to the Vector
+			objectVector.add(objectName);
+			
+			//Add predicate NAME only to predicate Set
+			
+			//predicateSet.add(predicateName);
+			
+			//Add predicate URL to predicate Set (Whole Predicate)
+			
+			predicateSet.add(p.toString());
+			}else if(p.toString().contains("http://dbpedia.org/property/") && o.toString().contains("http://dbpedia.org/") && !(o.isLiteral())){
+			int indexP=p.toString().lastIndexOf("/");
+			String predicateNameStr=p.toString().substring(indexP+1);
+			int indexO = o.toString().lastIndexOf("/");
+			String objectName=o.toString().substring(indexO+1);
+			objectSet.add(objectName);
+			
+			//Add to the Vector
+			
+			//objectVector.add(predicateNameStr+": "+objectName);
+			
+			objectVector.add(objectName);
+			//Add to predicate set
+			
+			//predicateSet.add(predicateName);
+			
+			//Add predicate URL to predicate Set (Whole Predicate)
+			
+			predicateSet.add(p.toString());
+			}
+			
+			
+			} //End of While 
+			
+			
+			//     // creating mapWordToID
+			
+			// for (String word: objectSet){
+			
+			// if (!mapWordToID.containsKey(word)){
+			
+			// mapWordToID.put(word, wordCount);
+			
+			// System.out.println(word + " " + wordCount);
+			
+			// wordCount++;
+			
+			// }
+			
+			// }
+			
+			//making doc using object for each entity (Barack_Obama.txt)
+			
+			File fout = new File(entityDocs+ entityName +".txt");
+			FileOutputStream fos = new FileOutputStream(fout);
+			BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(fos));
+			
+			//Adding Objects
+			
+			for(String o: objectVector){
+			try {
+			bw.write(o + " | ");
+			//bw.newLine();
+			} catch (IOException e) {
+			e.printStackTrace();
+			}
+			}
+			
+			
+			
+			
+			
+			
+			
+			System.out.println(entityName +".txt has been created."  );
+			objectVector.clear();
+			objectSet.clear();
+			bw.close();
+			fos.close();
+			
+			// End of making doc
+			
+			///////////////////////////////////////////
+			
+			// Making entity(doc) to ID file (entity  ID) Barack_Obama  0 
+			
+			// BufferedWriter bw1 = null;
+			
+			// try {
+			
+			//      
+			
+			//         bw1 = new BufferedWriter(new FileWriter(docToIdFileName, true));
+			
+			//         bw1.write(entityName + "  " + docCount);
+			
+			// bw1.newLine();
+			
+			// } catch (IOException e) {
+			
+			// // TODO Auto-generated catch block
+			
+			// e.printStackTrace();
+			
+			// }
+			
+			// docCount++;
+			
+			// bw1.close();
+			
+			} // End of Entity Extractor Function
+			
+			//////////////////////////////////////
+			
+			//Entity
 
-virtGraph = connectToVirtuoso();
 
-System.out.println("Successfully Connected to Virtuoso!\n");
-
-StringBuffer queryString = new StringBuffer();
-
-queryString.append("SELECT ?p ?o FROM <" + GRAPH + "> WHERE { <http://dbpedia.org/resource/" + entityName +"> ?p ?o. }  ");
-
-
-Query sparql = QueryFactory.create(queryString.toString());
-
-
-VirtuosoQueryExecution vqe = VirtuosoQueryExecutionFactory.create (sparql, virtGraph);
-
-
-ResultSet results = vqe.execSelect();
-
-while (results.hasNext()) {
-
-QuerySolution result = results.nextSolution();
-
-RDFNode graph = result.get("graph");
-
-RDFNode s = result.get("s");
-
-RDFNode p = result.get("p");
-
-RDFNode o = result.get("o");
-
-//Finding the position of the last "/" and take only predicate name
-
-int index = p.toString().lastIndexOf("/");
-
-String predicateName=p.toString().substring(index+1);
-
-/* if predicate is subject or contains http://dbpedia.org/ontology/ and Object contains http://dbpedia.org/ we will keep that predicate
-
-* if predicate  contains http://dbpedia.org/property/ and Object contains http://dbpedia.org/ we will keep that predicate
-
-* if predicate is http://dbpedia.org/ontology/wikiPageWikiLink we will drop it
-
-*/
-
-if (predicateName.equals("subject")){
-
-int indexO = o.toString().lastIndexOf("/");
-
-String objectName=o.toString().substring(indexO+10);
-
-objectSet.add(objectName);
-
-//Add to the Vector
-
-objectVector.add(objectName);
-
-//predicateSet.add(predicateName);
-
-predicateSet.add(p.toString());
-
-}else if(!(p.toString().equals("http://dbpedia.org/ontology/wikiPageWikiLink")) && p.toString().contains("http://dbpedia.org/ontology/") && o.toString().contains("http://dbpedia.org/") ){
-
-int indexP=p.toString().lastIndexOf("/");
-
-String predicateNameStr=p.toString().substring(indexP+1);
-
-int indexO = o.toString().lastIndexOf("/");
-
-String objectName=o.toString().substring(indexO+1);
-
-objectSet.add(objectName);
-
-//Add to the Vector
-
-objectVector.add(objectName);
-
-//Add predicate NAME only to predicate Set
-
-//predicateSet.add(predicateName);
-
-//Add predicate URL to predicate Set (Whole Predicate)
-
-predicateSet.add(p.toString());
-
-}else if(p.toString().contains("http://dbpedia.org/property/") && o.toString().contains("http://dbpedia.org/") && !(o.isLiteral())){
-
-int indexP=p.toString().lastIndexOf("/");
-
-String predicateNameStr=p.toString().substring(indexP+1);
-
-int indexO = o.toString().lastIndexOf("/");
-
-String objectName=o.toString().substring(indexO+1);
-
-objectSet.add(objectName);
-
-//Add to the Vector
-
-//objectVector.add(predicateNameStr+": "+objectName);
-
-objectVector.add(objectName);
-
-//Add to predicate set
-
-//predicateSet.add(predicateName);
-
-//Add predicate URL to predicate Set (Whole Predicate)
-
-predicateSet.add(p.toString());
-
-}
-
-
-} //End of While 
-
-
-//     // creating mapWordToID
-
-// for (String word: objectSet){
-
-// if (!mapWordToID.containsKey(word)){
-
-// mapWordToID.put(word, wordCount);
-
-// System.out.println(word + " " + wordCount);
-
-// wordCount++;
-
-// }
-
-// }
-
-//making doc using object for each entity (Barack_Obama.txt)
-
-File fout = new File(entityDocs+ entityName +".txt");
-
-FileOutputStream fos = new FileOutputStream(fout);
-
-BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(fos));
-
-//Adding Objects
-
-for(String o: objectVector){
-
-try {
-
-bw.write(o + " | ");
-
-//bw.newLine();
-
-} catch (IOException e) {
-
-e.printStackTrace();
-
-}
-
-}
-
-
-
-
-
-
-
-System.out.println(entityName +".txt has been created."  );
-
-objectVector.clear();
-
-objectSet.clear();
-
-
-bw.close();
-
-fos.close();
-
-// End of making doc
-
-///////////////////////////////////////////
-
-// Making entity(doc) to ID file (entity  ID) Barack_Obama  0 
-
-// BufferedWriter bw1 = null;
-
-// try {
-
-//      
-
-//         bw1 = new BufferedWriter(new FileWriter(docToIdFileName, true));
-
-//         bw1.write(entityName + "  " + docCount);
-
-// bw1.newLine();
-
-// } catch (IOException e) {
-
-// // TODO Auto-generated catch block
-
-// e.printStackTrace();
-
-// }
-
-// docCount++;
-
-// bw1.close();
-
-} // End of Entity Extractor Function
-
-//////////////////////////////////////
-
-//Entity
-
-/*
-
-* //////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
-* */ 
-
-public void predicateChecker() throws IOException{
-
-/*
-
-* Read entity Name only (entNameOnly.txt) as input and extract all useful predicates
-
-*/
-
-//Reading from entityFile
-
-try {
-
-String entityLine;
-
-BufferedReader br = new BufferedReader(new FileReader(entityNameOnly));
-
-while ((entityLine = br.readLine()) != null) {
-
-//Calling predicateExtractor to extract all predicates and Objects for all entities in entNameOnly.txt
-
-predicateExtractor(entityLine);
-
-}
-
-br.close();
-
-} catch (IOException e) {
-
-
-e.printStackTrace();
-
-
-}
-
-} // end of predicateChecker
-
-/*
-
-* //////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
-* */ 
 
 
 public void readWriteEntity() throws FileNotFoundException{
