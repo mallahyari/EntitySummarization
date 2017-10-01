@@ -260,7 +260,7 @@ public void predicateExtractor(String entityName ) throws IOException{
 			
 			predicateSet.add(p.toString());
 			
-			System.out.println(s.toString());
+			//System.out.println(s.toString());
 			System.out.println(predicateName);
 			System.out.println(objectName);
 			
