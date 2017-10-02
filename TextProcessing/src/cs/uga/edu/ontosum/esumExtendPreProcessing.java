@@ -111,8 +111,12 @@ public class esumExtendPreProcessing {
 		private Set<String> rangeSet=new HashSet<String>();
 		private Map<String, Integer>domainMap=new HashMap<String,Integer>();
 		private Map<String, Integer>rangeMap=new HashMap<String,Integer>();
+		
 		private Vector<String> predicateVector=new Vector<String>();
 		private Vector<String> objectVector = new Vector<String>();
+		private Vector<String> tripleVector=new Vector<String>();
+		
+		
 		private Map<String, Integer> mapWordToID = new HashMap<String, Integer>();
 		private Map<String, Integer> sortedMapWordToID = new HashMap<String, Integer>();
 		private Map<String, Integer> mapDocToID = new HashMap<String, Integer>();
@@ -208,6 +212,8 @@ public void predicateExtractor(String entityName ) throws IOException{
 			int index = p.toString().lastIndexOf("/");
 			String predicateName=p.toString().substring(index+1);
 			
+			
+			
 			/* if predicate is subject or contains http://dbpedia.org/ontology/ and Object contains http://dbpedia.org/ we will keep that predicate
 			
 			* if predicate  contains http://dbpedia.org/property/ and Object contains http://dbpedia.org/ we will keep that predicate
@@ -217,53 +223,63 @@ public void predicateExtractor(String entityName ) throws IOException{
 			*/
 			
 			if (predicateName.equals("subject")){
-			int indexO = o.toString().lastIndexOf("/");
-			String objectName=o.toString().substring(indexO+10);
-			objectSet.add(objectName);
-			//Add to the Vector
-			objectVector.add(objectName);
-			//predicateSet.add(predicateName);
-			predicateSet.add(p.toString());
+				
+				int indexO = o.toString().lastIndexOf("/");
+				String objectName=o.toString().substring(indexO+10);
+				objectSet.add(objectName);
+				//Add to the Vector
+				objectVector.add(objectName);
+				//predicateSet.add(predicateName);
+				predicateSet.add(p.toString());
+				
+				int indexs = s.toString().lastIndexOf("/");
+				String subjectName=s.toString().substring(indexs+10);
+				
+				tripleVector.add(subjectName +" " + predicateName +" " + objectName);
+				
+				System.out.println("SUBJECT:"+ subjectName);
+				System.out.println("PREDICATE:  "+ predicateName);
+				System.out.println("OBJECT: "+ objectName);
+				
+			
 			}else if(!(p.toString().equals("http://dbpedia.org/ontology/wikiPageWikiLink")) && p.toString().contains("http://dbpedia.org/ontology/") && o.toString().contains("http://dbpedia.org/") ){
-			int indexP=p.toString().lastIndexOf("/");
-			String predicateNameStr=p.toString().substring(indexP+1);
-			int indexO = o.toString().lastIndexOf("/");
-			String objectName=o.toString().substring(indexO+1);
-			objectSet.add(objectName);
-			//Add to the Vector
-			objectVector.add(objectName);
-			
-			//Add predicate NAME only to predicate Set
-			
-			//predicateSet.add(predicateName);
-			
-			//Add predicate URL to predicate Set (Whole Predicate)
-			
-			predicateSet.add(p.toString());
+				int indexP=p.toString().lastIndexOf("/");
+				String predicateNameStr=p.toString().substring(indexP+1);
+				int indexO = o.toString().lastIndexOf("/");
+				String objectName=o.toString().substring(indexO+1);
+				objectSet.add(objectName);
+				//Add to the Vector
+				objectVector.add(objectName);
+				
+				//Add predicate NAME only to predicate Set
+				
+				//predicateSet.add(predicateName);
+				
+				//Add predicate URL to predicate Set (Whole Predicate)
+				
+				predicateSet.add(p.toString());
 			}else if(p.toString().contains("http://dbpedia.org/property/") && o.toString().contains("http://dbpedia.org/") && !(o.isLiteral())){
-			int indexP=p.toString().lastIndexOf("/");
-			String predicateNameStr=p.toString().substring(indexP+1);
-			int indexO = o.toString().lastIndexOf("/");
-			String objectName=o.toString().substring(indexO+1);
-			objectSet.add(objectName);
-			
-			//Add to the Vector
-			
-			//objectVector.add(predicateNameStr+": "+objectName);
-			
-			objectVector.add(objectName);
-			//Add to predicate set
-			
-			//predicateSet.add(predicateName);
-			
-			//Add predicate URL to predicate Set (Whole Predicate)
-			
-			predicateSet.add(p.toString());
-			
-			//System.out.println(s.toString());
-			System.out.println("PREDICATE:  "+ predicateName);
-			System.out.println("OBJECT: "+ objectName);
-			
+				int indexP=p.toString().lastIndexOf("/");
+				String predicateNameStr=p.toString().substring(indexP+1);
+				int indexO = o.toString().lastIndexOf("/");
+				String objectName=o.toString().substring(indexO+1);
+				objectSet.add(objectName);
+				
+				//Add to the Vector
+				
+				//objectVector.add(predicateNameStr+": "+objectName);
+				
+				objectVector.add(objectName);
+				//Add to predicate set
+				
+				//predicateSet.add(predicateName);
+				
+				//Add predicate URL to predicate Set (Whole Predicate)
+				
+				predicateSet.add(p.toString());
+				
+				
+				
 			}
 			
 			
