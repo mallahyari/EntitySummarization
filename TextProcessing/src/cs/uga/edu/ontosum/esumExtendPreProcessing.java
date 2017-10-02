@@ -340,6 +340,7 @@ public void predicateExtractor(String entityName ) throws IOException{
 			System.out.println(entityName +".txt has been created."  );
 			objectVector.clear();
 			objectSet.clear();
+			tripleVector.clear();
 			bw.close();
 			fos.close();
 			
