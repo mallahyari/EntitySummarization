@@ -257,9 +257,11 @@ public void predicateExtractor(String entityName ) throws IOException{
 				
 				predicateSet.add(p.toString());
 				
-				System.out.println("PPPPPPPP:"+ predicateNameStr +p.toString() );
+				System.out.println("SUBJECT:"+ entityName);
+				System.out.println("PREDICATE:  "+ predicateNameStr);
+				System.out.println("OBJECT: "+ objectName);
 				
-				tripleVector.add(entityName +" " + predicateName +" " + objectName);
+				tripleVector.add(entityName +" " + predicateNameStr +" " + objectName);
 				
 			}else if(p.toString().contains("http://dbpedia.org/property/") && o.toString().contains("http://dbpedia.org/") && !(o.isLiteral())){
 				int indexP=p.toString().lastIndexOf("/");
@@ -281,9 +283,13 @@ public void predicateExtractor(String entityName ) throws IOException{
 				
 				predicateSet.add(p.toString());
 				
-				System.out.println("VVVVVVVVVVVVV:"+ predicateNameStr +p.toString() );
+				System.out.println("VVVVVVVVVVVVV:");
 				
-				tripleVector.add(entityName +" " + predicateName +" " + objectName);
+				System.out.println("SUBJECT:"+ entityName);
+				System.out.println("PREDICATE:  "+ predicateNameStr);
+				System.out.println("OBJECT: "+ objectName);
+				
+				tripleVector.add(entityName +" " + predicateNameStr +" " + objectName);
 				
 				
 			}
