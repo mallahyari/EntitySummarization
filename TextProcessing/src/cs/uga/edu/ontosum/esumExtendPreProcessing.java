@@ -289,7 +289,7 @@ public void predicateExtractor(String entityName ) throws IOException{
 				System.out.println("PREDICATE:  "+ predicateNameStr);
 				System.out.println("OBJECT: "+ objectName);
 				
-				tripleVector.add(entityName +" " + predicateNameStr +" " + objectName);
+				tripleVector.add(entityName +" | " + predicateNameStr +" | " + objectName);
 				
 				
 			}
