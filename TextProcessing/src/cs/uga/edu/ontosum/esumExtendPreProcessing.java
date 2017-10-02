@@ -196,7 +196,7 @@ public void predicateExtractor(String entityName ) throws IOException{
 			System.out.println("Successfully Connected to Virtuoso!\n");
 			
 			StringBuffer queryString = new StringBuffer();
-			queryString.append("SELECT ?p ?o FROM <" + GRAPH + "> WHERE { <http://dbpedia.org/resource/" + entityName +"> ?p ?o. }  ");
+			queryString.append("SELECT ?s ?p ?o FROM <" + GRAPH + "> WHERE { <http://dbpedia.org/resource/" + entityName +"> ?p ?o. }  ");
 			
 			
 			Query sparql = QueryFactory.create(queryString.toString());
