@@ -314,15 +314,15 @@ public void predicateExtractor(String entityName ) throws IOException{
 			
 			// }
 			
-			//making doc using object for each entity (Barack_Obama.txt)
+			//making doc using triples for each entity (Barack_Obama.txt)
 			
 			File fout = new File(entityDocs+ entityName +".txt");
 			FileOutputStream fos = new FileOutputStream(fout);
 			BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(fos));
 			
-			//Adding Objects
+			//Adding triples
 			
-			for(String o: objectVector){
+			for(String o: tripleVector){
 			try {
 			bw.write(o + " | ");
 			//bw.newLine();
