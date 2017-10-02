@@ -232,12 +232,10 @@ public void predicateExtractor(String entityName ) throws IOException{
 				//predicateSet.add(predicateName);
 				predicateSet.add(p.toString());
 				
-				int indexs = s.toString().lastIndexOf("/");
-				String subjectName=s.toString().substring(indexs+10);
 				
-				tripleVector.add(subjectName +" " + predicateName +" " + objectName);
+				tripleVector.add(entityName +" " + predicateName +" " + objectName);
 				
-				System.out.println("SUBJECT:"+ subjectName);
+				System.out.println("SUBJECT:"+ entityName);
 				System.out.println("PREDICATE:  "+ predicateName);
 				System.out.println("OBJECT: "+ objectName);
 				
