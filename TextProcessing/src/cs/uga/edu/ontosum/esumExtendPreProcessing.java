@@ -212,7 +212,7 @@ public void predicateExtractor(String entityName ) throws IOException{
 			int index = p.toString().lastIndexOf("/");
 			String predicateName=p.toString().substring(index+1);
 			
-			if (s.toString().isEmpty()){
+			if (s.toString().equals(null)){
 				System.out.println("Subject is empty");
 			}
 			
