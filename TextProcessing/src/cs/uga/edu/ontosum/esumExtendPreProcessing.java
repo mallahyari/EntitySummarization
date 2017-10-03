@@ -212,9 +212,9 @@ public void predicateExtractor(String entityName ) throws IOException{
 			int index = p.toString().lastIndexOf("/");
 			String predicateName=p.toString().substring(index+1);
 			
-			if (s.toString().equals(null)){
-				System.out.println("Subject is empty");
-			}
+			
+				System.out.println("Subject is empty" + s.toString());
+			
 			
 			/* if predicate is subject or contains http://dbpedia.org/ontology/ and Object contains http://dbpedia.org/ we will keep that predicate
 			
