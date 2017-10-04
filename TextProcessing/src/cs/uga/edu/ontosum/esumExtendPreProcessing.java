@@ -366,7 +366,7 @@ public void predicateExtractor(String entityName ) throws IOException{
 				int indexP1=p1.toString().lastIndexOf("/");
 				String predicateNameStr1=p1.toString().substring(indexP1+1);
 				int indexS1 = s1.toString().lastIndexOf("/");
-				String subjectName=o1.toString().substring(indexS1+1);
+				String subjectName=s1.toString().substring(indexS1+1);
 				subjectSet.add(subjectName);
 				//Add to the Vector
 				subjectVector.add(subjectName);
