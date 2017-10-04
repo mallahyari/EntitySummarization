@@ -362,7 +362,7 @@ public void predicateExtractor(String entityName ) throws IOException{
 //				System.out.println("OBJECT: "+ objectName);
 				
 			
-			}else if(!(p1.toString().equals("http://dbpedia.org/ontology/wikiPageWikiLink")) && p1.toString().contains("http://dbpedia.org/ontology/") && o1.toString().contains("http://dbpedia.org/") ){
+			}else if(!(p1.toString().equals("http://dbpedia.org/ontology/wikiPageWikiLink")) && p1.toString().contains("http://dbpedia.org/ontology/") && s1.toString().contains("http://dbpedia.org/") ){
 				int indexP1=p1.toString().lastIndexOf("/");
 				String predicateNameStr1=p1.toString().substring(indexP1+1);
 				int indexS1 = s1.toString().lastIndexOf("/");
@@ -386,7 +386,7 @@ public void predicateExtractor(String entityName ) throws IOException{
 				tripleVector.add(subjectName +" | " + predicateNameStr1 +" | " + entityName);
 				
 				
-			}else if(p1.toString().contains("http://dbpedia.org/property/") && o1.toString().contains("http://dbpedia.org/") && !(o1.isLiteral())){
+			}else if(p1.toString().contains("http://dbpedia.org/property/") ){
 				int indexP1=p1.toString().lastIndexOf("/");
 				String predicateNameStr1=p1.toString().substring(indexP1+1);
 				int indexS1 = s1.toString().lastIndexOf("/");
