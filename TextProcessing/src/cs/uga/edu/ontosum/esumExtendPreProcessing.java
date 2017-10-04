@@ -81,6 +81,7 @@ public class esumExtendPreProcessing {
 		private final String uriPrefix = "http://dbpedia.org/resource/";
 		private final String wikiCategoryUriPrefix = "http://dbpedia.org/resource/Category:";
 		private VirtGraph virtGraph = null;
+		private VirtGraph virtGraph1 = null;
 		private static final String entityFile = "/home/mehdi/EntitySummarizationExt/evaluation/faces_evaluation/instances.txt";
 		private static final String entityNameOnly = "/home/mehdi/EntitySummarization/evaluation/entNameOnly.txt";
 			private static final String predicateStopWords = "/home/mehdi/EntitySummarization/evaluation/predicateStopWords.txt";
@@ -107,6 +108,7 @@ public class esumExtendPreProcessing {
 		
 		private Set<String> predicateSet=new HashSet<String>();
 		private Set<String> objectSet=new HashSet<String>();
+		private Set<String> subjectSet=new HashSet<String>();
 		private Set<String> domainSet =new HashSet<String>();
 		private Set<String> rangeSet=new HashSet<String>();
 		private Map<String, Integer>domainMap=new HashMap<String,Integer>();
@@ -114,6 +116,7 @@ public class esumExtendPreProcessing {
 		
 		private Vector<String> predicateVector=new Vector<String>();
 		private Vector<String> objectVector = new Vector<String>();
+		private Vector<String> subjectVector = new Vector<String>();
 		private Vector<String> tripleVector=new Vector<String>();
 		
 		
@@ -300,6 +303,139 @@ public void predicateExtractor(String entityName ) throws IOException{
 			
 			
 			} //End of While 
+			
+			
+			
+			/////////////////////////////////////////////
+			
+			//Connecting to Virtuoso to extract predicates and objects
+
+			System.out.println("Connecting to Virtuoso ... ");
+			virtGraph1 = connectToVirtuoso();
+			System.out.println("Successfully Connected to Virtuoso!\n");
+			
+			StringBuffer queryString1 = new StringBuffer();
+			queryString1.append("SELECT ?s ?p ?o FROM <" + GRAPH + "> WHERE { ?s ?p <http://dbpedia.org/resource/" + entityName +">. }  ");
+			
+			
+			Query sparql1 = QueryFactory.create(queryString1.toString());
+			VirtuosoQueryExecution vqe1 = VirtuosoQueryExecutionFactory.create (sparql1, virtGraph1);
+			ResultSet results1 = vqe1.execSelect();
+			while (results1.hasNext()) {
+			QuerySolution result1 = results1.nextSolution();
+			RDFNode graph1 = result1.get("graph1");
+			RDFNode s1 = result1.get("s");
+			RDFNode p1 = result1.get("p");
+			RDFNode o1 = result1.get("o");
+			//Finding the position of the last "/" and take only predicate name
+			int index1 = p1.toString().lastIndexOf("/");
+			String predicateName1=p1.toString().substring(index1+1);
+			
+			
+				//System.out.println("Subject is empty" + s);
+			
+			
+			/* if predicate is subject or contains http://dbpedia.org/ontology/ and Object contains http://dbpedia.org/ we will keep that predicate
+			
+			* if predicate  contains http://dbpedia.org/property/ and Object contains http://dbpedia.org/ we will keep that predicate
+			
+			* if predicate is http://dbpedia.org/ontology/wikiPageWikiLink we will drop it
+			
+			*/
+			
+			if (predicateName1.equals("subject")){
+				
+				int indexS1 = s1.toString().lastIndexOf("/");
+				String subjectName=s1.toString().substring(indexS1+10);
+				subjectSet.add(subjectName);
+				//Add to the Vector
+				subjectVector.add(subjectName);
+				//predicateSet.add(predicateName);
+				predicateSet.add(p1.toString());
+				
+				tripleVector.add(subjectName +" | " + predicateName1 +" | " + entityName);
+				
+			//	tripleVector.add(entityName +" " + predicateName +" " + objectName);
+				
+//				System.out.println("SUBJECT:"+ entityName);
+//				System.out.println("PREDICATE:  "+ predicateName);
+//				System.out.println("OBJECT: "+ objectName);
+				
+			
+			}else if(!(p1.toString().equals("http://dbpedia.org/ontology/wikiPageWikiLink")) && p1.toString().contains("http://dbpedia.org/ontology/") && o1.toString().contains("http://dbpedia.org/") ){
+				int indexP1=p1.toString().lastIndexOf("/");
+				String predicateNameStr1=p1.toString().substring(indexP1+1);
+				int indexS1 = s1.toString().lastIndexOf("/");
+				String subjectName=o1.toString().substring(indexS1+1);
+				subjectSet.add(subjectName);
+				//Add to the Vector
+				subjectVector.add(subjectName);
+				
+				//Add predicate NAME only to predicate Set
+				
+				//predicateSet.add(predicateName);
+				
+				//Add predicate URL to predicate Set (Whole Predicate)
+				
+				predicateSet.add(p1.toString());
+				
+//				System.out.println("SUBJECT:"+ entityName);
+//				System.out.println("PREDICATE:  "+ predicateNameStr);
+//				System.out.println("OBJECT: "+ objectName);
+//				
+				tripleVector.add(subjectName +" | " + predicateNameStr1 +" | " + entityName);
+				
+				
+			}else if(p1.toString().contains("http://dbpedia.org/property/") && o1.toString().contains("http://dbpedia.org/") && !(o1.isLiteral())){
+				int indexP1=p1.toString().lastIndexOf("/");
+				String predicateNameStr1=p1.toString().substring(indexP1+1);
+				int indexS1 = s1.toString().lastIndexOf("/");
+				String subjectName=s1.toString().substring(indexS1+1);
+				subjectSet.add(subjectName);
+				
+				//Add to the Vector
+				
+				//objectVector.add(predicateNameStr+": "+objectName);
+				
+				subjectVector.add(subjectName);
+				//Add to predicate set
+				
+				//predicateSet.add(predicateName);
+				
+				//Add predicate URL to predicate Set (Whole Predicate)
+				
+				predicateSet.add(p1.toString());
+				
+				System.out.println("VVVVVVVVVVVVV:");
+				
+//				System.out.println("SUBJECT:"+ entityName);
+//				System.out.println("PREDICATE:  "+ predicateNameStr);
+//				System.out.println("OBJECT: "+ objectName);
+				
+				tripleVector.add(subjectName +" | " + predicateNameStr1 +" | " + entityName);
+				
+				
+			}
+			
+			
+			} //End of While 
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
 			
 			
 			//     // creating mapWordToID
