@@ -72,8 +72,8 @@ public class EntSumModel {
 	Random randomGenerator = null;
 	EntityProc entProc = null;
 	
-	private static final String docPredicateDomainRange = "/home/mehdi/EntitySummarization/evaluation/predicateDomainRange.txt"; 
-	private static final String predicateObjectFileName = "/home/mehdi/EntitySummarization/evaluation/predicateObject.ser"; 
+	private static final String docPredicateDomainRange = "/home/mehdi/EntitySummarizationExt/evaluation/predicateDomainRange.txt"; 
+	private static final String predicateObjectFileName = "/home/mehdi/EntitySummarizationExt/evaluation/predicateObject.ser"; 
 
 	
 	// Map to store each predicate with a set of corresponding Domain
@@ -85,7 +85,7 @@ public class EntSumModel {
 	Map<Integer, Set<Integer>> objectTotypeMap = new HashMap<Integer,Set<Integer>>();
 	
 	
-	String corpusEntitiesFile = "/home/mehdi/EntitySummarization/evaluation/corpusConceptsSr.txt";
+	String corpusEntitiesFile = "/home/mehdi/EntitySummarizationExt/evaluation/corpusConceptsSr.txt";
 	
 	int showLine = 400000;
 	final Logger logger = Logger.getLogger(EntSumModel.class.getName());
@@ -339,9 +339,9 @@ public class EntSumModel {
 		Map <String, Map<String, Double>> probabilitySearch = new HashMap <String, Map<String, Double>>();
 		
 		loadPosteriorDistribution();
-		List<String> entityNames = modelParameters.readFile("/home/mehdi/EntitySummarization/evaluation/docToId.txt");
-		List<String> predicateNames = modelParameters.readFile("/home/mehdi/EntitySummarization/evaluation/predicateToId.txt");
-		List<String> wordNames = modelParameters.readFile("/home/mehdi/EntitySummarization/evaluation/wordToID.txt");
+		List<String> entityNames = modelParameters.readFile("/home/mehdi/EntitySummarizationExt/evaluation/docToId.txt");
+		List<String> predicateNames = modelParameters.readFile("/home/mehdi/EntitySummarizationExt/evaluation/predicateToId.txt");
+		List<String> wordNames = modelParameters.readFile("/home/mehdi/EntitySummarizationExt/evaluation/wordToID.txt");
 		double [] sumProb = null;
 		sumProb = allocateMemory(sumProb, D);
 		for (int d_i = 0; d_i < D; d_i++) {
@@ -350,7 +350,7 @@ public class EntSumModel {
 			} // end of for t_i
 		} // end of for e_i
 		try {
-			FileWriter csvFile = new FileWriter("/home/mehdi/EntitySummarization/evaluation/csv/theta.csv");
+			FileWriter csvFile = new FileWriter("/home/mehdi/EntitySummarizationExt/evaluation/csv/theta.csv");
 			for (int d_i = 0; d_i < D; d_i++) {
 				String line = entityNames.get(d_i) + " ";
 				for (int p_i = 0; p_i < P; p_i++) {
@@ -368,7 +368,7 @@ public class EntSumModel {
 					sumProb [p_i] += Math.round(phi [p_i][w_i] * 10000) / 10000.;
 				} // end of for w_i
 			} // end of for p_i
-			csvFile = new FileWriter("/home/mehdi/EntitySummarization/evaluation/csv/phi.csv");
+			csvFile = new FileWriter("/home/mehdi/EntitySummarizationExt/evaluation/csv/phi.csv");
 			for (int w_i = 0; w_i < W; w_i++) {
 				String line = "";
 				for (int p_i = 0; p_i < P; p_i++) {
