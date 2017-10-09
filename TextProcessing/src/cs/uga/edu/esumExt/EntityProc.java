@@ -123,7 +123,7 @@ public class EntityProc {
 	/////////////////////////////////////////////////
 	
 	
-	public static Vector<String> extractSimilarWords(String keyword) throws IOException{
+	public static Set<String> extractSimilarWords(String keyword) throws IOException{
 		// Open the file
 		FileInputStream fstream = new FileInputStream("W2Voutput.txt");
 		BufferedReader br = new BufferedReader(new InputStreamReader(fstream));
@@ -137,7 +137,7 @@ public class EntityProc {
 		}
 		//items[1]= new_york_university 0.75,cornell_university 0.68,university_of_chicago 0.67
 		//creating vector of similar words upper than a threshold
-		Vector <String> myOutput=new Vector<>();
+		Set <String> myOutput=new HashSet<>();
 		if (datamap.containsKey(keyword)){
 			String [] mydata=datamap.get(keyword).split(",");
 			List<String> itemList = Arrays.asList(mydata);
@@ -402,10 +402,10 @@ public class EntityProc {
 				
 				// Extract Similar words
 				// if you want to include similar words in the document, write the similar words to the doc file
-				Vector <String> similarWords=new Vector<String>();
-				similarWords=extractSimilarWords(objectName);
+			//	Set <String> similarWords=new Vector<String>();
+				objectCategories=extractSimilarWords(objectName);
 						
-				for (String c : similarWords) {
+				for (String c : objectCategories) {
 					docFile.write(c + "|");
 					if (wordToIdMap.get(c) == null) {
 						wordToIdMap.put(c, wordIdGenerator);
@@ -426,34 +426,34 @@ public class EntityProc {
 					objectToPredicateMap.put(objectId, preds);
 					
 					// uncomment the block below ONLY if you want to include object categories in the documents
-//					for (String c : objectCategories) {
-//						int catId = wordToIdMap.get(c);
-//						Set<Integer> catpreds = new HashSet<Integer>();
-//						if (objectToPredicateMap.get(catId) == null) {
-//							catpreds.add(predicateId);
-//						}else {
-//							catpreds = objectToPredicateMap.get(catId);
-//							catpreds.add(predicateId);
-//						} // end of if
-//						objectToPredicateMap.put(catId, catpreds);
-//					} // end of for
+					for (String c : objectCategories) {
+						int catId = wordToIdMap.get(c);
+						Set<Integer> catpreds = new HashSet<Integer>();
+						if (objectToPredicateMap.get(catId) == null) {
+							catpreds.add(predicateId);
+						}else {
+							catpreds = objectToPredicateMap.get(catId);
+							catpreds.add(predicateId);
+						} // end of if
+						objectToPredicateMap.put(catId, catpreds);
+					} // end of for
 				}else {
 					Set<Integer> preds = objectToPredicateMap.get(objectId);
 					preds.add(predicateId);
 					objectToPredicateMap.put(objectId, preds);
 					
 					// uncomment the block below ONLY if you want to include object categories in the documents
-//					for (String c : objectCategories) {
-//						int catId = wordToIdMap.get(c);
-//						Set<Integer> catpreds = new HashSet<Integer>();
-//						if (objectToPredicateMap.get(catId) == null) {
-//							catpreds.add(predicateId);
-//						}else {
-//							catpreds = objectToPredicateMap.get(catId);
-//							catpreds.add(predicateId);
-//						} // end of if
-//						objectToPredicateMap.put(catId, catpreds);
-//					} // end of for
+					for (String c : objectCategories) {
+						int catId = wordToIdMap.get(c);
+						Set<Integer> catpreds = new HashSet<Integer>();
+						if (objectToPredicateMap.get(catId) == null) {
+							catpreds.add(predicateId);
+						}else {
+							catpreds = objectToPredicateMap.get(catId);
+							catpreds.add(predicateId);
+						} // end of if
+						objectToPredicateMap.put(catId, catpreds);
+					} // end of for
 				} // end of if
 				
 //				int predicateId = predicateToIdMap.get(predicateName);
