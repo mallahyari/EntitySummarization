@@ -15,6 +15,7 @@ import java.io.FileOutputStream;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.io.InputStreamReader;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.io.OutputStreamWriter;
@@ -119,10 +120,43 @@ public class EntityProc {
 	private int domainNumber=0;
 	private int rangeNumber=0;
 	protected int[][] predicateObjectWeight = null;
+	/////////////////////////////////////////////////
 	
 	
+	public static Vector<String> extractSimilarWords(String keyword) throws IOException{
+		// Open the file
+		FileInputStream fstream = new FileInputStream("output.txt");
+		BufferedReader br = new BufferedReader(new InputStreamReader(fstream));
+		String strLine;
+		Map<String, String> datamap=new HashMap<>();
+		//Read File Line By Line and extract object name and similar words
+		//for example Columbia_University : new_york_university 0.75,cornell_university 0.68,university_of_chicago 0.67
+		while ((strLine = br.readLine()) != null)   {
+		      String[] items = strLine.split(" : ");
+		      datamap.put(items[0], items[1]);
+		}
+		//items[1]= new_york_university 0.75,cornell_university 0.68,university_of_chicago 0.67
+		//creating vector of similar words upper than a threshold
+		Vector <String> myOutput=new Vector<>();
+		if (datamap.containsKey(keyword)){
+			String [] mydata=datamap.get(keyword).split(",");
+			List<String> itemList = Arrays.asList(mydata);
+		     for (String item : itemList) {
+		    	  String [] mydata1=item.split(" ");
+		    	  //defining the threshold 0.50
+		         if (Double.parseDouble(mydata1[1])>0.50){
+		        	 myOutput.add(mydata1[0]);
+		        	 System.out.println(mydata1[0]);
+		         }
+		       }
+		}
+		//Close the input stream
+		br.close();
+		return myOutput;
+	}
 	
 	
+	/////////////////////////////////////////////////////
 
 	public void readWriteEntity() throws FileNotFoundException{
 		/*
@@ -348,10 +382,11 @@ public class EntityProc {
 				docFile.write(objectName + "|");
 				objectCategories = getEntityCategories(object.toString());
 				
-				// if you want to increase object frequency in the document
-				for (int i = 0; i < objectCategories.size(); i++) {
-					docFile.write(objectName + "|");
-				}
+//				// if you want to increase object frequency in the document
+//				for (int i = 0; i < objectCategories.size(); i++) {
+//					docFile.write(objectName + "|");
+//				}
+//				
 				
 				// if you want to include object categories in the document, write the object categories to the doc file
 //				for (String c : objectCategories) {
@@ -362,6 +397,25 @@ public class EntityProc {
 //						wordIdGenerator++;
 //					}
 //				} // end of for
+				
+				
+				
+				// Extract Similar words
+				// if you want to include similar words in the document, write the similar words to the doc file
+				Vector <String> similarWords=new Vector<String>();
+				similarWords=extractSimilarWords(objectName);
+						
+				for (String c : similarWords) {
+					docFile.write(c + "|");
+					if (wordToIdMap.get(c) == null) {
+						wordToIdMap.put(c, wordIdGenerator);
+						wordToIdFile.write(c + " " + wordIdGenerator + "\n");
+						wordIdGenerator++;
+					}
+			} // end of for
+				
+				
+				
 				int objectId = wordToIdMap.get(objectName);
 				int predicateId = predicateToIdMap.get(predicateName);
 				objectToCategoryMap.put(objectId, objectCategories);
