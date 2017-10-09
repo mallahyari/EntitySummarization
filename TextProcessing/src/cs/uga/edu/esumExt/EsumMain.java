@@ -47,6 +47,8 @@ public class EsumMain {
 		System.out.println("Done!"); 
 		
 		
+		
+		
 //		predicCheck.predicateChecker();
 //		predicCheck.makingPredicateList();
 	
