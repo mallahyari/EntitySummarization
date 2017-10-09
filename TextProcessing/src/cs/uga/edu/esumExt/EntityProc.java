@@ -125,7 +125,7 @@ public class EntityProc {
 	
 	public static Vector<String> extractSimilarWords(String keyword) throws IOException{
 		// Open the file
-		FileInputStream fstream = new FileInputStream("output.txt");
+		FileInputStream fstream = new FileInputStream("W2Voutput.txt");
 		BufferedReader br = new BufferedReader(new InputStreamReader(fstream));
 		String strLine;
 		Map<String, String> datamap=new HashMap<>();
