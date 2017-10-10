@@ -72,7 +72,7 @@ public class EsumMain {
 		
 		// Gibbs Sampling Initialization and Run //
 		entSum.initializeGibbsSampling();
-		//entSum.run();
+		entSum.run();
 		
 		
 		// Old Model 
