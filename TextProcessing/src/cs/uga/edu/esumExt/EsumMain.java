@@ -40,13 +40,13 @@ public class EsumMain {
 		 *making PredicateList 	//Making Predicate list text file predicateList.txt  contains full URL predicate with a unique number. This functions needs 
 		 *to be ran after predicateChekcer because this function will fill out the list of perdicate in predicateSet 
 		 */
-		
-		EntityProc predicCheck = new EntityProc();
-		predicCheck.processEntities();
-		predicCheck.makeCorpus();
-		System.out.println("Done!"); 
-		
-		
+//		
+//		EntityProc predicCheck = new EntityProc();
+//		predicCheck.processEntities();
+//		predicCheck.makeCorpus();
+//		System.out.println("Done!"); 
+//		
+//		
 		
 		
 //		predicCheck.predicateChecker();
@@ -68,7 +68,7 @@ public class EsumMain {
 //******************************************************\\
 		
 		EntSumModel entSum = new EntSumModel();
-		//entSum.initializeMatrices();
+		entSum.initializeMatrices();
 		
 		// Gibbs Sampling Initialization and Run //
 		//entSum.initializeGibbsSampling();
