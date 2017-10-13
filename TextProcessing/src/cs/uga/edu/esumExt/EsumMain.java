@@ -48,6 +48,7 @@ public class EsumMain {
 //		predicCheck.processEntities();
 //		predicCheck.makeCorpus();
 //		System.out.println("Done!"); 
+
 //		
 //		predicCheck.predicateChecker();
 //		predicCheck.makingPredicateList();
