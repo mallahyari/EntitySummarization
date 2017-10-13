@@ -400,7 +400,7 @@ public class EntityProc {
 					wordIdGenerator++;
 				}
 				docFile.write(objectName + "|");
-				objectCategories = getEntityCategories(object.toString());
+			//	objectCategories = getEntityCategories(object.toString());
 				
 //				// if you want to increase object frequency in the document
 //				for (int i = 0; i < objectCategories.size(); i++) {
