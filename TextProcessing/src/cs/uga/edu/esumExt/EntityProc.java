@@ -383,13 +383,13 @@ public class EntityProc {
 					objectName = object.toString().substring(uriPrefix.length());
 					}else{
 						//Real literal
-						object.toString().replace("@en", "");
-						object.toString().replace("( )", "");
-						object.toString().replace("\"", "");
-						if(object.toString().contains("http://"))continue;
+						String myLiteral=object.toString().replace("@en", "");
+						myLiteral=object.toString().replace("( )", "");
+						myLiteral=object.toString().replace("\"", "");
+						if(myLiteral.contains("http://"))continue;
 						
 						objectName=object.toString();
-						System.out.println("Literal: "+entityName+"  "+ objectName);
+						System.out.println("Literal: "+entityName+"  "+ myLiteral);
 					}
 				} // end of if
 				
