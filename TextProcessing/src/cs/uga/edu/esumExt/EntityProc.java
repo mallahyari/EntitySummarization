@@ -379,7 +379,7 @@ public class EntityProc {
 				if (predicateName.equals("subject")){
 					objectName = object.toString().substring(wikiCategoryUriPrefix.length());
 				}else {
-					if(object.toString().contains("http://")){
+					if(object.toString().contains("http://dbpedia.org")){
 					objectName = object.toString().substring(uriPrefix.length());
 					}else{
 						objectName=object.toString();
