@@ -364,15 +364,14 @@ public class EntityProc {
 				//if (predicateStopWordsSet.contains(predicateName) || object.isLiteral()) continue;
 				if (predicateStopWordsSet.contains(predicateName)) continue;
 				if (predicate.toString().equals("http://www.w3.org/1999/02/22-rdf-syntax-ns#type")) continue;
-				
+				// check literal if contains digit
 				if(object.isLiteral() && object.toString().matches(".*\\d+.*")) continue;
 				
 				//Literals do not have http://dbpedia.org so if you do not want to consider literal uncomment line below
-				if (!predicate.toString().contains("http://dbpedia.org") || !object.toString().contains("http://dbpedia.org")) continue;
-			//	if (!predicate.toString().contains("http://dbpedia.org") ) continue;
+			//	if (!predicate.toString().contains("http://dbpedia.org") || !object.toString().contains("http://dbpedia.org")) continue;
+				if (!predicate.toString().contains("http://dbpedia.org") ) continue;
 				//check for literal abstract
-			//	if (predicate.toString().contains("http://dbpedia.org/ontology/abstract") ) continue;
-			//	if(object.isLiteral() && object.toString().matches(".*\\d+.*")) continue;
+				if (predicate.toString().contains("http://dbpedia.org/ontology/abstract") ) continue;
 				
 				
 				
@@ -380,7 +379,11 @@ public class EntityProc {
 				if (predicateName.equals("subject")){
 					objectName = object.toString().substring(wikiCategoryUriPrefix.length());
 				}else {
+					if(object.toString().contains("http://")){
 					objectName = object.toString().substring(uriPrefix.length());
+					}else{
+						objectName=object.toString();
+					}
 				} // end of if
 				
 //				if(object.isLiteral()){
