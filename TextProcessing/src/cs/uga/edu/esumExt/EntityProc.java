@@ -146,7 +146,7 @@ public class EntityProc {
 		    	  //defining the threshold 0.50
 		         if (Double.parseDouble(mydata1[1])>0.50){
 		        	 myOutput.add(mydata1[0]);
-		        	 System.out.println(mydata1[0]);
+		        	// System.out.println(mydata1[0]);
 		         }
 		       }
 		}
