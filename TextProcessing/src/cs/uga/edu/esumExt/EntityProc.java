@@ -363,14 +363,13 @@ public class EntityProc {
 				//drop literal objects
 				//if (predicateStopWordsSet.contains(predicateName) || object.isLiteral()) continue;
 				if (predicateStopWordsSet.contains(predicateName)) continue;
-				if (predicate.toString().equals("http://www.w3.org/1999/02/22-rdf-syntax-ns#type")) continue;
+				if (predicate.toString().equals("http://www.w3.org/1999/02/22-rdf-syntax-ns#type") || predicate.toString().equals("http://dbpedia.org/property/website")) continue;
 				// check literal if contains digit
 				if(object.isLiteral() && object.toString().matches(".*\\d+.*")) continue;
 				if(object.isLiteral() &&(object.toString().length()<4||object.toString().contains(".jpg")||object.toString().contains(".png")||object.toString().contains(".svg"))){
 					System.out.println("XXXXXXX"+ object.toString());
 					continue;
 				}
-				if(object.toString().contains("http://")||object.toString().contains("https://")) continue;
 				
 				
 				
