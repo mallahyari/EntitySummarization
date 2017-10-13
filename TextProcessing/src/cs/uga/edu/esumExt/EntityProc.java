@@ -371,6 +371,7 @@ public class EntityProc {
 					continue;
 				}
 				
+				if (predicateName.equals("thumbnail")) continue;
 				
 				
 				//Literals do not have http://dbpedia.org so if you do not want to consider literal uncomment line below
