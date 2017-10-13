@@ -386,9 +386,9 @@ public class EntityProc {
 					}
 				} // end of if
 				
-//				if(object.isLiteral()){
-//					System.out.println("Literal: "+object.toString());
-//				}
+			if(object.isLiteral()){
+				System.out.println("Literal: "+entityName+"  "+ object.toString());
+				}
 				if (predicateToIdMap.get(predicateName) == null) {
 					predicateToIdMap.put(predicateName, prediateIdGenerator);
 					predicateToIdFile.write(predicateName + " " + prediateIdGenerator + "\n");
