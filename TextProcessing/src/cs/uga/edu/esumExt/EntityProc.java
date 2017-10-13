@@ -383,6 +383,7 @@ public class EntityProc {
 					objectName = object.toString().substring(uriPrefix.length());
 					}else{
 						objectName=object.toString();
+						System.out.println("Literal: "+entityName+"  "+ objectName);
 					}
 				} // end of if
 				
