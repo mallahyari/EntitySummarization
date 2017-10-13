@@ -366,6 +366,9 @@ public class EntityProc {
 				if (predicate.toString().equals("http://www.w3.org/1999/02/22-rdf-syntax-ns#type")) continue;
 				// check literal if contains digit
 				if(object.isLiteral() && object.toString().matches(".*\\d+.*")) continue;
+				if(object.isLiteral() && (object.toString().contains("http://")||object.toString().contains("https://")||object.toString().length()<4||object.toString().contains(".jpg")||object.toString().contains(".png")||object.toString().contains(".svg")))continue;
+				
+				
 				
 				//Literals do not have http://dbpedia.org so if you do not want to consider literal uncomment line below
 			//	if (!predicate.toString().contains("http://dbpedia.org") || !object.toString().contains("http://dbpedia.org")) continue;
@@ -387,7 +390,7 @@ public class EntityProc {
 						myLiteral=myLiteral.replace("@en", "");
 						myLiteral=myLiteral.replace("( )", "");
 						myLiteral=myLiteral.replace("\"", "");
-						if(myLiteral.contains("http://")||myLiteral.contains("https://")||myLiteral.length()<4||myLiteral.contains(".jpg")||myLiteral.contains(".png"))continue;
+						//if(myLiteral.contains("http://")||myLiteral.contains("https://")||myLiteral.length()<4||myLiteral.contains(".jpg")||myLiteral.contains(".png")||myLiteral.contains(".svg"))continue;
 						
 						//objectName=object.toString();
 						System.out.println("Literal: "+entityName+"  "+predicateName+"  "+ myLiteral);
