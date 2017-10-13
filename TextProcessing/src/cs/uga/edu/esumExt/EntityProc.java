@@ -368,6 +368,8 @@ public class EntityProc {
 				//Literals do not have http://dbpedia.org so if you do not want to consider literal uncomment line below
 				//if (!predicate.toString().contains("http://dbpedia.org") || !object.toString().contains("http://dbpedia.org")) continue;
 				if (!predicate.toString().contains("http://dbpedia.org") ) continue;
+				//check for literal abstract
+				if (predicate.toString().contains("http://dbpedia.org/ontology/abstract") ) continue;
 				
 				String objectName = "";
 				if (predicateName.equals("subject")){
