@@ -383,19 +383,20 @@ public class EntityProc {
 					objectName = object.toString().substring(uriPrefix.length());
 					}else{
 						//Real literal
-						String myLiteral=object.toString().replace("@en", "");
-						myLiteral=object.toString().replace("( )", "");
-						myLiteral=object.toString().replace("\"", "");
-						if(myLiteral.contains("http://"))continue;
+						String myLiteral=object.toString();
+						myLiteral=myLiteral.replace("@en", "");
+						myLiteral=myLiteral.replace("( )", "");
+						myLiteral=myLiteral.replace("\"", "");
+						if(myLiteral.contains("http://")||myLiteral.contains("https://"))continue;
 						
 						objectName=object.toString();
 						System.out.println("Literal: "+entityName+"  "+ myLiteral);
 					}
 				} // end of if
 				
-			if(object.isLiteral()){
-				System.out.println("Literal: "+entityName+"  "+ object.toString());
-				}
+//			if(object.isLiteral()){
+//				System.out.println("Literal: "+entityName+"  "+ object.toString());
+//				}
 				if (predicateToIdMap.get(predicateName) == null) {
 					predicateToIdMap.put(predicateName, prediateIdGenerator);
 					predicateToIdFile.write(predicateName + " " + prediateIdGenerator + "\n");
