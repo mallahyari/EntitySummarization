@@ -361,9 +361,11 @@ public class EntityProc {
 				 * if predicate is http://dbpedia.org/ontology/wikiPageWikiLink we will drop it
 				 */
 				//drop literal objects
-				if (predicateStopWordsSet.contains(predicateName) || object.isLiteral()) continue;
-				//if (predicateStopWordsSet.contains(predicateName)) continue;
+				//if (predicateStopWordsSet.contains(predicateName) || object.isLiteral()) continue;
+				if (predicateStopWordsSet.contains(predicateName)) continue;
 				if (predicate.toString().equals("http://www.w3.org/1999/02/22-rdf-syntax-ns#type")) continue;
+				
+				if(object.isLiteral() && object.toString().matches(".*\\d+.*")) continue;
 				
 				//Literals do not have http://dbpedia.org so if you do not want to consider literal uncomment line below
 				if (!predicate.toString().contains("http://dbpedia.org") || !object.toString().contains("http://dbpedia.org")) continue;
