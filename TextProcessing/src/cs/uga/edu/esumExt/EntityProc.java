@@ -368,8 +368,8 @@ public class EntityProc {
 				if(object.isLiteral() && object.toString().matches(".*\\d+.*")) continue;
 				
 				//Literals do not have http://dbpedia.org so if you do not want to consider literal uncomment line below
-			//	if (!predicate.toString().contains("http://dbpedia.org") || !object.toString().contains("http://dbpedia.org")) continue;
-				if (!predicate.toString().contains("http://dbpedia.org") ) continue;
+				if (!predicate.toString().contains("http://dbpedia.org") || !object.toString().contains("http://dbpedia.org")) continue;
+			//	if (!predicate.toString().contains("http://dbpedia.org") ) continue;
 				//check for literal abstract
 				if (predicate.toString().contains("http://dbpedia.org/ontology/abstract") ) continue;
 				
