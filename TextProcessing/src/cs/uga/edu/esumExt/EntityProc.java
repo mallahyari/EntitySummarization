@@ -361,16 +361,16 @@ public class EntityProc {
 				 * if predicate is http://dbpedia.org/ontology/wikiPageWikiLink we will drop it
 				 */
 				//drop literal objects
-				//if (predicateStopWordsSet.contains(predicateName) || object.isLiteral()) continue;
-				if (predicateStopWordsSet.contains(predicateName)) continue;
+				if (predicateStopWordsSet.contains(predicateName) || object.isLiteral()) continue;
+				//if (predicateStopWordsSet.contains(predicateName)) continue;
 				if (predicate.toString().equals("http://www.w3.org/1999/02/22-rdf-syntax-ns#type")) continue;
 				
 				//Literals do not have http://dbpedia.org so if you do not want to consider literal uncomment line below
-				//if (!predicate.toString().contains("http://dbpedia.org") || !object.toString().contains("http://dbpedia.org")) continue;
-				if (!predicate.toString().contains("http://dbpedia.org") ) continue;
+				if (!predicate.toString().contains("http://dbpedia.org") || !object.toString().contains("http://dbpedia.org")) continue;
+			//	if (!predicate.toString().contains("http://dbpedia.org") ) continue;
 				//check for literal abstract
-				if (predicate.toString().contains("http://dbpedia.org/ontology/abstract") ) continue;
-				if(object.isLiteral() && object.toString().matches(".*\\d+.*")) continue;
+			//	if (predicate.toString().contains("http://dbpedia.org/ontology/abstract") ) continue;
+			//	if(object.isLiteral() && object.toString().matches(".*\\d+.*")) continue;
 				
 				
 				
@@ -381,9 +381,9 @@ public class EntityProc {
 					objectName = object.toString().substring(uriPrefix.length());
 				} // end of if
 				
-				if(object.isLiteral()){
-					System.out.println("Literal: "+object.toString());
-				}
+//				if(object.isLiteral()){
+//					System.out.println("Literal: "+object.toString());
+//				}
 				if (predicateToIdMap.get(predicateName) == null) {
 					predicateToIdMap.put(predicateName, prediateIdGenerator);
 					predicateToIdFile.write(predicateName + " " + prediateIdGenerator + "\n");
