@@ -370,6 +370,9 @@ public class EntityProc {
 				if (!predicate.toString().contains("http://dbpedia.org") ) continue;
 				//check for literal abstract
 				if (predicate.toString().contains("http://dbpedia.org/ontology/abstract") ) continue;
+				if(object.isLiteral() && object.toString().matches(".*\\d+.*")) continue;
+				
+				
 				
 				String objectName = "";
 				if (predicateName.equals("subject")){
