@@ -387,10 +387,10 @@ public class EntityProc {
 						myLiteral=myLiteral.replace("@en", "");
 						myLiteral=myLiteral.replace("( )", "");
 						myLiteral=myLiteral.replace("\"", "");
-						if(myLiteral.contains("http://")||myLiteral.contains("https://"))continue;
+						if(myLiteral.contains("http://")||myLiteral.contains("https://")||myLiteral.length()<4||myLiteral.contains(".jpg")||myLiteral.contains(".png"))continue;
 						
 						objectName=object.toString();
-						System.out.println("Literal: "+entityName+"  "+ myLiteral);
+						System.out.println("Literal: "+entityName+"  "+predicateName+"  "+ myLiteral);
 					}
 				} // end of if
 				
