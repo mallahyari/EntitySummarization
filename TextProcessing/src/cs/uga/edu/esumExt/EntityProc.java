@@ -360,7 +360,9 @@ public class EntityProc {
 				 * if predicate  contains http://dbpedia.org/property/ and Object contains http://dbpedia.org/ we will keep that predicate
 				 * if predicate is http://dbpedia.org/ontology/wikiPageWikiLink we will drop it
 				 */
-				if (predicateStopWordsSet.contains(predicateName) || object.isLiteral()) continue;
+				//drop literal objects
+				//if (predicateStopWordsSet.contains(predicateName) || object.isLiteral()) continue;
+				if (predicateStopWordsSet.contains(predicateName)) continue;
 				if (predicate.toString().equals("http://www.w3.org/1999/02/22-rdf-syntax-ns#type")) continue;
 				if (!predicate.toString().contains("http://dbpedia.org") || !object.toString().contains("http://dbpedia.org")) continue;
 				String objectName = "";
@@ -369,6 +371,10 @@ public class EntityProc {
 				}else {
 					objectName = object.toString().substring(uriPrefix.length());
 				} // end of if
+				
+				if(object.isLiteral()){
+					System.out.println("Literal: "+object.toString());
+				}
 				if (predicateToIdMap.get(predicateName) == null) {
 					predicateToIdMap.put(predicateName, prediateIdGenerator);
 					predicateToIdFile.write(predicateName + " " + prediateIdGenerator + "\n");
