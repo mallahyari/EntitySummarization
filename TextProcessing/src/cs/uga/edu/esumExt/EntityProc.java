@@ -400,13 +400,13 @@ public class EntityProc {
 						myLiteral=myLiteral.replace("\"", "");
 						myLiteral=myLiteral.replace("*", "_");
 						myLiteral=myLiteral.replace("\n", " ");
+						literalObject.add(myLiteral);
 						myLiteral=myLiteral.replace(" ", "_");
 						//if(myLiteral.contains("http://")||myLiteral.contains("https://")||myLiteral.length()<4||myLiteral.contains(".jpg")||myLiteral.contains(".png")||myLiteral.contains(".svg"))continue;
 						
 						//objectName=object.toString();
 						System.out.println("Literal: "+entityName+"  "+predicateName+"  "+ myLiteral);
 						objectName=myLiteral;
-						literalObject.add(objectName);
 						
 					}
 				} // end of if
