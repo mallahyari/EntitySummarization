@@ -93,6 +93,8 @@ public class EntityProc {
 	
 	private static final String predicateDomainRangeFileName = "/home/mehdi/EntitySummarizationExt/evaluation/predicateDomainRange.txt"; 
 	private static final String predicateObjectFileName = "/home/mehdi/EntitySummarizationExt/evaluation/predicateObject.ser";
+	private static final String literalObjectFileName = "/home/mehdi/EntitySummarizationExt/evaluation/literalObjectName.txt";
+	
 	protected String objectPredicateFileName = "/home/mehdi/EntitySummarizationExt/evaluation/objectPredicate.ser";
 	protected final String predicateObjectWeightFileName = "/home/mehdi/EntitySummarizationExt/evaluation/predicateObjectWeight.ser";
 	
@@ -324,6 +326,7 @@ public class EntityProc {
 		FileWriter docToIdFile = new FileWriter(docToIdFileName);
 		FileWriter predicateToIdFile = new FileWriter(predicateToIdFileName);
 		FileWriter predicateObjectFile = new FileWriter(predicateObjectFileName);
+		FileWriter literalObjectFile=new FileWriter(literalObjectFileName);
 		int prediateIdGenerator = 0;
 		int wordIdGenerator = 0;
 		int docIdGenerator = 0;
@@ -347,6 +350,8 @@ public class EntityProc {
 			ResultSet results = vqe.execSelect();
 			docToIdFile.write(entityName + " " + docIdGenerator + "\n");
 			docIdGenerator++;
+			Set<String> literalObject=new HashSet<>();
+			
 			while (results.hasNext()) {
 				Set<String> objectCategories = new HashSet<String>();
 				QuerySolution result = results.nextSolution();
@@ -400,6 +405,7 @@ public class EntityProc {
 						//objectName=object.toString();
 						System.out.println("Literal: "+entityName+"  "+predicateName+"  "+ myLiteral);
 						objectName=myLiteral;
+						literalObject.add(objectName);
 						
 					}
 				} // end of if
@@ -493,6 +499,12 @@ public class EntityProc {
 						objectToPredicateMap.put(catId, catpreds);
 					} // end of for
 				} // end of if
+				
+				//Write Set of Literals into File
+				for (String myliteral : literalObject){
+					literalObjectFile.write(myliteral + "\n");
+				}
+				
 				
 //				int predicateId = predicateToIdMap.get(predicateName);
 //				if (predicateToObjectMap.get(predicateId) == null) {
