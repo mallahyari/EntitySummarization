@@ -371,7 +371,7 @@ public class EntityProc {
 					continue;
 				}
 				
-				if (predicateName.equals("thumbnail")||predicateName.equals("homepage")||predicateName.equals("url")) continue;
+				if (predicateName.equals("thumbnail")||predicateName.equals("homepage")||predicateName.equals("url")||predicateName.length()<4) continue;
 				
 				
 				//Literals do not have http://dbpedia.org so if you do not want to consider literal uncomment line below
