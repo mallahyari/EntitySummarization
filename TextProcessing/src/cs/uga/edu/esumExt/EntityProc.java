@@ -335,6 +335,8 @@ public class EntityProc {
 		Map<Integer, Set<Integer>> predicateToObjectMap = new HashMap<Integer,Set<Integer>>();
 		Map<Integer, Set<String>> objectToCategoryMap = new HashMap<Integer,Set<String>>();
 		Map<Integer, Set<Integer>> objectToPredicateMap = new HashMap<Integer,Set<Integer>>();
+		Set<String> literalObject=new HashSet<>();
+		
 		while ((entityName = br.readLine()) != null) {
 //			String subjectUrl = uriPrefix + entityName;
 //			Set<String> subjectTypes = getEntityTypes(subjectUrl);
@@ -350,7 +352,6 @@ public class EntityProc {
 			ResultSet results = vqe.execSelect();
 			docToIdFile.write(entityName + " " + docIdGenerator + "\n");
 			docIdGenerator++;
-			Set<String> literalObject=new HashSet<>();
 			
 			while (results.hasNext()) {
 				Set<String> objectCategories = new HashSet<String>();
@@ -500,10 +501,7 @@ public class EntityProc {
 					} // end of for
 				} // end of if
 				
-				//Write Set of Literals into File
-				for (String myliteral : literalObject){
-					literalObjectFile.write(myliteral + "\n");
-				}
+				
 				
 				
 //				int predicateId = predicateToIdMap.get(predicateName);
@@ -535,6 +533,11 @@ public class EntityProc {
 		docToIdFile.close();
 		predicateToIdFile.close();
 		predicateObjectFile.close();
+		//Write Set of Literals into File
+		for (String myliteral : literalObject){
+			literalObjectFile.write(myliteral + "\n");
+		}
+		literalObjectFile.close();
 		br.close();
 //		savePredicateToObjectMap(predicateToObjectMap, predicateObjectFileName);
 		saveObjectToPredicateMap(objectToPredicateMap, objectPredicateFileName);
