@@ -395,6 +395,7 @@ public class EntityProc {
 						myLiteral=myLiteral.replace("( )", "");
 						myLiteral=myLiteral.replace("\"", "");
 						myLiteral=myLiteral.replace("*", " ");
+						myLiteral=myLiteral.replace("\n", " ");
 						//if(myLiteral.contains("http://")||myLiteral.contains("https://")||myLiteral.length()<4||myLiteral.contains(".jpg")||myLiteral.contains(".png")||myLiteral.contains(".svg"))continue;
 						
 						//objectName=object.toString();
