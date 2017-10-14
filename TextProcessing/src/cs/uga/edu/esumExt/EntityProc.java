@@ -948,7 +948,7 @@ public class EntityProc {
 		for (String line : wordToId) {
 			String [] tokens = line.split(" ");
 			String wordName = tokens[0];
-			String wordId = tokens[1];
+			String wordId = tokens[tokens.length-1];
 			wordToIdMap.put(wordName, Integer.parseInt(wordId));
 		} // end of for
 		FileWriter corpusFile = new FileWriter(corpusFileName);
