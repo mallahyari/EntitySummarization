@@ -373,6 +373,7 @@ public class EntityProc {
 				// check literal if contains digit
 				if(object.isLiteral() && object.toString().matches(".*\\d+.*")) continue;
 				if(object.isLiteral() &&(object.toString().length()<4||object.toString().contains(".jpg")||object.toString().contains(".png")||object.toString().contains(".svg")))		continue;
+				if(object.toString().length()<4)continue;
 				
 				
 				if (predicateName.equals("thumbnail")||predicateName.equals("homepage")||predicateName.equals("url")||predicateName.length()<4) continue;
