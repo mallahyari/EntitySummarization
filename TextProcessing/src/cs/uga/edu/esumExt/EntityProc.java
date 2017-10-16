@@ -175,7 +175,7 @@ public class EntityProc {
 			      if (items[1].equals(",")) continue;
 			   
 			      
-			      System.out.println(items[0]+"      "+ items[1]);
+			   //   System.out.println(items[0]+"      "+ items[1]);
 			      datamap.put(items[0], items[1]);
 			}
 			//items[1]= new_york_university 0.75,cornell_university 0.68,university_of_chicago 0.67
