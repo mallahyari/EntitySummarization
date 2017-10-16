@@ -164,7 +164,7 @@ public class EntSumModel {
 	} // end of runGibbsSampling
 	
 	public void samplePredicateAssignment(int did, int pid, int wid, int w_i) {
-		System.out.println(wid);
+	//	System.out.println(wid);
 		Set<Integer> wordPredicate = objectToPredicateMap.get(wid);
 		double[] pr = null;
 		pr = allocateMemory(pr, P);
