@@ -564,6 +564,49 @@ public class EntityProc {
 				
 				
 				
+				////// LITERAL
+				
+				if (objectToPredicateMap.get(objectId) == null) {
+					Set<Integer> preds = new HashSet<Integer>();
+					preds.add(predicateId);
+					objectToPredicateMap.put(objectId, preds);
+					
+					// uncomment the block below ONLY if you want to include object categories in the documents
+					for (String c : literalCategories) {
+						int catId = wordToIdMap.get(c);
+						Set<Integer> catpreds = new HashSet<Integer>();
+						if (objectToPredicateMap.get(catId) == null) {
+							catpreds.add(predicateId);
+						}else {
+							catpreds = objectToPredicateMap.get(catId);
+							catpreds.add(predicateId);
+						} // end of if
+						objectToPredicateMap.put(catId, catpreds);
+					} // end of for
+				}else {
+					Set<Integer> preds = objectToPredicateMap.get(objectId);
+					preds.add(predicateId);
+					objectToPredicateMap.put(objectId, preds);
+					
+					// uncomment the block below ONLY if you want to include object categories in the documents
+					for (String c : literalCategories) {
+						int catId = wordToIdMap.get(c);
+						Set<Integer> catpreds = new HashSet<Integer>();
+						if (objectToPredicateMap.get(catId) == null) {
+							catpreds.add(predicateId);
+						}else {
+							catpreds = objectToPredicateMap.get(catId);
+							catpreds.add(predicateId);
+						} // end of if
+						objectToPredicateMap.put(catId, catpreds);
+					} // end of for
+				} // end of if
+				
+				
+				
+				
+				
+				
 				
 //				int predicateId = predicateToIdMap.get(predicateName);
 //				if (predicateToObjectMap.get(predicateId) == null) {
