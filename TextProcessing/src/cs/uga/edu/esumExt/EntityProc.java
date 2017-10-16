@@ -188,7 +188,7 @@ public class EntityProc {
 			    	 // String [] mydata1=item.split(" ");
 			    	  //defining the threshold 0.50
 			         //if (Double.parseDouble(mydata1[1])>0.50){
-			        	 myOutput.add(item);
+			        	 myOutput.add(item.toLowerCase());
 			        	// System.out.println(mydata1[0]);
 			        // }
 			       }
