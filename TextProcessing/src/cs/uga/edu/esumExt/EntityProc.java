@@ -159,6 +159,46 @@ public class EntityProc {
 	
 	
 	/////////////////////////////////////////////////////
+	
+	
+	
+		public static Set<String> extractSimilarWordsforLiteral(String keyword) throws IOException{
+			// Open the file
+			FileInputStream fstream = new FileInputStream("finalresult.txt");
+			BufferedReader br = new BufferedReader(new InputStreamReader(fstream));
+			String strLine;
+			Map<String, String> datamap=new HashMap<>();
+			//Read File Line By Line and extract object name and similar words
+			//for example Columbia_University : new_york_university 0.75,cornell_university 0.68,university_of_chicago 0.67
+			while ((strLine = br.readLine()) != null)   {
+			      String[] items = strLine.split(" :: ");
+			      if (items[1].equals(",")) continue;
+			   
+			      
+			      System.out.println(items[0]+"      "+ items[1]);
+			      datamap.put(items[0], items[1]);
+			}
+			//items[1]= new_york_university 0.75,cornell_university 0.68,university_of_chicago 0.67
+			//creating vector of similar words upper than a threshold
+			Set <String> myOutput=new HashSet<>();
+			if (datamap.containsKey(keyword)){
+				String [] mydata=datamap.get(keyword).split(",");
+				List<String> itemList = Arrays.asList(mydata);
+			     for (String item : itemList) {
+			    	 // String [] mydata1=item.split(" ");
+			    	  //defining the threshold 0.50
+			         //if (Double.parseDouble(mydata1[1])>0.50){
+			        	 myOutput.add(item);
+			        	// System.out.println(mydata1[0]);
+			        // }
+			       }
+			}
+			//Close the input stream
+			br.close();
+			return myOutput;
+		}
+	/////////////////////////////////////////////////////
+	
 
 	public void readWriteEntity() throws FileNotFoundException{
 		/*
@@ -355,6 +395,9 @@ public class EntityProc {
 			
 			while (results.hasNext()) {
 				Set<String> objectCategories = new HashSet<String>();
+				//to keep literal similar words extracted from ENR
+				Set<String> literalCategories = new HashSet<String>();
+				
 				QuerySolution result = results.nextSolution();
 				RDFNode predicate = result.get("p");
 				RDFNode object = result.get("o");
@@ -461,7 +504,21 @@ public class EntityProc {
 						wordToIdFile.write(c + " " + wordIdGenerator + "\n");
 						wordIdGenerator++;
 					}
-			} // end of for
+				} // end of for
+				
+				
+				
+				//literalCategories is a set of similar words to each literal, which are adding to bag of words.
+				literalCategories=extractSimilarWordsforLiteral(objectName);
+				
+				for (String cl : literalCategories) {
+					docFile.write(cl + "|");
+					if (wordToIdMap.get(cl) == null) {
+						wordToIdMap.put(cl, wordIdGenerator);
+						wordToIdFile.write(cl + " " + wordIdGenerator + "\n");
+						wordIdGenerator++;
+					}
+				} // end of for
 				
 				
 				
