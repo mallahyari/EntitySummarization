@@ -438,7 +438,7 @@ public class EntityProc {
 					objectName = object.toString().substring(wikiCategoryUriPrefix.length());
 				}else {
 					if(object.toString().contains("http://dbpedia.org")){
-					objectName = object.toString().substring(uriPrefix.length());
+						objectName = object.toString().substring(uriPrefix.length());
 					}else{
 						//Real literal
 						String myLiteral=object.toString();
@@ -450,11 +450,11 @@ public class EntityProc {
 						literalObject.add(myLiteral);
 						myLiteral=myLiteral.replace(" ", "_");
 						//if(myLiteral.contains("http://")||myLiteral.contains("https://")||myLiteral.length()<4||myLiteral.contains(".jpg")||myLiteral.contains(".png")||myLiteral.contains(".svg"))continue;
-						
+
 						//objectName=object.toString();
 						System.out.println("Literal: "+entityName+"  "+predicateName+"  "+ myLiteral);
 						objectName=myLiteral;
-						
+
 					}
 				} // end of if
 				
