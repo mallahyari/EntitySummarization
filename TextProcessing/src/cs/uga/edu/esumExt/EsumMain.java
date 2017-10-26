@@ -44,14 +44,14 @@ public class EsumMain {
 //		**** 1)Uncomment lines46-47-48-49 & RUN
 //		**** 2)comment lines46-47-48-49 and uncomment 71-73-74  & RUN
 //		**** 3)comment lines46-47-48-49 and comment 71-73-74 & uncomment 84 RUN
-//		EntityProc predicCheck = new EntityProc();
-//		predicCheck.processEntities();
-//		predicCheck.makeCorpus();
-//		System.out.println("Done!"); 
+		EntityProc predicCheck = new EntityProc();
+		predicCheck.processEntities();
+		predicCheck.makeCorpus();
+		System.out.println("Done!"); 
 
 //		
-//		predicCheck.predicateChecker();
-//		predicCheck.makingPredicateList();
+	//	predicCheck.predicateChecker();
+		//predicCheck.makingPredicateList();
 	
 		/*
 		 * Step 3 :  Extract Domain and Range for each predicate and make predicateDomainRange.txt
@@ -82,7 +82,7 @@ public class EsumMain {
 //		// Gibbs Sampling Initialization and Run //
 //		entSum.initializeGibbsSampling();
 //		entSum.run();
-       entSum.writeToCSV();
+     //  entSum.writeToCSV();
 		
 		
 		
