@@ -38,7 +38,7 @@ public class SumModelParameters {
 	public int N = 0;
 	public int nIterations = 2000;
 	int burnIn = 200;
-	public double ALPHA = 50.0 / 402;
+	public double ALPHA = 60.0 / 390;
 	public final double BETA  = 0.01;
 //	public final double TAU = 50.0 / T;
 //	public final double EPSILON = 0.9;
