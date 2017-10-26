@@ -439,6 +439,7 @@ public class EntityProc {
 				}else {
 					if(object.toString().contains("http://dbpedia.org")){
 						objectName = object.toString().substring(uriPrefix.length());
+						System.out.println(entityName+ "  "+ objectName);
 					}else{
 						//Real literal
 						String myLiteral=object.toString();
