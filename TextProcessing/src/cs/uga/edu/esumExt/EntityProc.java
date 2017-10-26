@@ -452,7 +452,7 @@ public class EntityProc {
 						//if(myLiteral.contains("http://")||myLiteral.contains("https://")||myLiteral.length()<4||myLiteral.contains(".jpg")||myLiteral.contains(".png")||myLiteral.contains(".svg"))continue;
 
 						//objectName=object.toString();
-						System.out.println("Literal: "+entityName+"  "+predicateName+"  "+ myLiteral);
+						//System.out.println("Literal: "+entityName+"  "+predicateName+"  "+ myLiteral);
 						objectName=myLiteral;
 
 					}
