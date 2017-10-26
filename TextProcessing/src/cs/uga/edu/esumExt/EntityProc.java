@@ -94,6 +94,7 @@ public class EntityProc {
 	private static final String predicateDomainRangeFileName = "/home/mehdi/EntitySummarizationExt/evaluation/predicateDomainRange.txt"; 
 	private static final String predicateObjectFileName = "/home/mehdi/EntitySummarizationExt/evaluation/predicateObject.ser";
 	private static final String literalObjectFileName = "/home/mehdi/EntitySummarizationExt/evaluation/literalObjectName.txt";
+	private static final String realObjectFileName = "/home/mehdi/EntitySummarizationExt/evaluation/realObjectName.txt";
 	
 	protected String objectPredicateFileName = "/home/mehdi/EntitySummarizationExt/evaluation/objectPredicate.ser";
 	protected final String predicateObjectWeightFileName = "/home/mehdi/EntitySummarizationExt/evaluation/predicateObjectWeight.ser";
@@ -367,6 +368,7 @@ public class EntityProc {
 		FileWriter predicateToIdFile = new FileWriter(predicateToIdFileName);
 		FileWriter predicateObjectFile = new FileWriter(predicateObjectFileName);
 		FileWriter literalObjectFile=new FileWriter(literalObjectFileName);
+		FileWriter realObjectFile=new FileWriter(realObjectFileName);
 		int prediateIdGenerator = 0;
 		int wordIdGenerator = 0;
 		int docIdGenerator = 0;
@@ -376,6 +378,7 @@ public class EntityProc {
 		Map<Integer, Set<String>> objectToCategoryMap = new HashMap<Integer,Set<String>>();
 		Map<Integer, Set<Integer>> objectToPredicateMap = new HashMap<Integer,Set<Integer>>();
 		Set<String> literalObject=new HashSet<>();
+		Set<String> realObject=new HashSet<>();
 		
 		while ((entityName = br.readLine()) != null) {
 //			String subjectUrl = uriPrefix + entityName;
@@ -440,6 +443,7 @@ public class EntityProc {
 					if(object.toString().contains("http://dbpedia.org")){
 						objectName = object.toString().substring(uriPrefix.length());
 						System.out.println(entityName+ "  "+ objectName);
+						realObject.add(objectName);
 					}else{
 						//Real literal
 						String myLiteral=object.toString();
@@ -638,11 +642,20 @@ public class EntityProc {
 		docToIdFile.close();
 		predicateToIdFile.close();
 		predicateObjectFile.close();
+		
 		//Write Set of Literals into File
 		for (String myliteral : literalObject){
 			literalObjectFile.write(myliteral + "\n");
 		}
 		literalObjectFile.close();
+		
+		//Write Set of realObjects into File
+				for (String myObject : realObject){
+					realObjectFile.write(myObject + "\n");
+				}
+				realObjectFile.close();
+		
+		
 		br.close();
 //		savePredicateToObjectMap(predicateToObjectMap, predicateObjectFileName);
 		saveObjectToPredicateMap(objectToPredicateMap, objectPredicateFileName);
