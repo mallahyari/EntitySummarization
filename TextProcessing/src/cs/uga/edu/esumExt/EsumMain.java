@@ -69,10 +69,10 @@ public class EsumMain {
 //******************************************************\\
 		
 		EntSumModel entSum = new EntSumModel();
-		entSum.initializeMatrices();
+		//entSum.initializeMatrices();
 		// Gibbs Sampling Initialization and Run //
-		entSum.initializeGibbsSampling();
-		entSum.run();
+		//entSum.initializeGibbsSampling();
+		//entSum.run();
 		
 		// Old Model 
 
@@ -82,7 +82,7 @@ public class EsumMain {
 //		// Gibbs Sampling Initialization and Run //
 //		entSum.initializeGibbsSampling();
 //		entSum.run();
-     //  entSum.writeToCSV();
+       entSum.writeToCSV();
 		
 		
 		
