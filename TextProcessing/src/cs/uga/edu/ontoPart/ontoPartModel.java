@@ -56,7 +56,7 @@ public class ontoPartModel {
 	double ALPHA = 0;
 	double BETA = 0;
 //	double TAU = 0;
-	modelParameters modelParameters = null;
+	ModelParameters modelParameters = null;
 	int[][] Npd = null; //doc X predicate (object X predicate)
 	int[][] Nwp = null;  //type X word
 	int[] Nd = null;  //Array of all documents with the size N
@@ -95,7 +95,7 @@ public class ontoPartModel {
 
 	public ontoPartModel() {
 		entProc = new entityProcessing();
-		modelParameters = new modelParameters();
+		modelParameters = new ModelParameters();
 		this.w = modelParameters.w;
 		this.d = modelParameters.d;
 		this.D = modelParameters.D;
