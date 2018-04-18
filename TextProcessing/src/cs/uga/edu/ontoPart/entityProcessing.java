@@ -77,32 +77,36 @@ public class entityProcessing {
 	private final String wikiCategoryUriPrefix = "http://dbpedia.org/resource/Category:";
 	private VirtGraph virtGraph = null;
 
-	private static final String entityFile = "/home/mehdi/EntitySummarizationExt/evaluation/faces_evaluation/instances.txt";
-	private static final String entityNameOnly = "/home/mehdi/EntitySummarizationExt/evaluation/entNameOnly.txt";
-	private static final String predicateStopWords = "/home/mehdi/EntitySummarizationExt/evaluation/predicateStopWords.txt";
+	private static final String entityFile = "/home/mehdi/ontoPart/evaluation/faces_evaluation/instances.txt";
+	private static final String entityNameOnly = "/home/mehdi/ontoPart/evaluation/entNameOnly.txt";
+	private static final String predicateStopWords = "/home/mehdi/ontoPart/evaluation/predicateStopWords.txt";
 	// Map each object (word) to an ID
-	private static final String wordToIdFileName = "/home/mehdi/EntitySummarizationExt/evaluation/wordToID.txt";
+	private static final String wordToIdFileName = "/home/mehdi/ontoPart/evaluation/wordToID.txt";
 	//Map each entity (doc) to ID
-	private static final String docToIdFileName = "/home/mehdi/EntitySummarizationExt/evaluation/docToId.txt"; 
-	private static final String rangeToIdFileName = "/home/mehdi/EntitySummarizationExt/evaluation/rangeToId.txt";
-	private static final String domainToIdFileName = "/home/mehdi/EntitySummarizationExt/evaluation/domainToId.txt";
+	private static final String docToIdFileName = "/home/mehdi/ontoPart/evaluation/docToId.txt"; 
+	private static final String rangeToIdFileName = "/home/mehdi/ontoPart/evaluation/rangeToId.txt";
+	private static final String domainToIdFileName = "/home/mehdi/ontoPart/evaluation/domainToId.txt";
 	
-	private static final String predicateToIdFileName = "/home/mehdi/EntitySummarizationExt/evaluation/predicateToId.txt"; 
+	private static final String predicateToIdFileName = "/home/mehdi/ontoPart/evaluation/predicateToId.txt"; 
 	
-	private static final String corpusFileName = "/home/mehdi/EntitySummarizationExt/evaluation/corpus.txt"; 
-	private static final String objectToTypeMapFileName = "/home/mehdi/EntitySummarizationExt/evaluation/objToType.ser"; 
+	private static final String corpusFileName = "/home/mehdi/ontoPart/evaluation/corpus.txt"; 
+	private static final String objectToTypeMapFileName = "/home/mehdi/ontoPart/evaluation/objToType.ser"; 
 	
-	private static final String predicateDomainRangeFileName = "/home/mehdi/EntitySummarizationExt/evaluation/predicateDomainRange.txt"; 
-	private static final String predicateObjectFileName = "/home/mehdi/EntitySummarizationExt/evaluation/predicateObject.ser";
-	private static final String literalObjectFileName = "/home/mehdi/EntitySummarizationExt/evaluation/literalObjectName.txt";
-	private static final String realObjectFileName = "/home/mehdi/EntitySummarizationExt/evaluation/realObjectName.txt";
+	private static final String predicateDomainRangeFileName = "/home/mehdi/ontoPart/evaluation/predicateDomainRange.txt"; 
+	private static final String predicateObjectFileName = "/home/mehdi/ontoPart/evaluation/predicateObject.ser";
+	private static final String literalObjectFileName = "/home/mehdi/ontoPart/evaluation/literalObjectName.txt";
+	private static final String realObjectFileName = "/home/mehdi/ontoPart/evaluation/realObjectName.txt";
 	
-	protected String objectPredicateFileName = "/home/mehdi/EntitySummarizationExt/evaluation/objectPredicate.ser";
-	protected final String predicateObjectWeightFileName = "/home/mehdi/EntitySummarizationExt/evaluation/predicateObjectWeight.ser";
+	protected String objectPredicateFileName = "/home/mehdi/ontoPart/evaluation/objectPredicate.ser";
+	protected final String predicateObjectWeightFileName = "/home/mehdi/ontoPart/evaluation/predicateObjectWeight.ser";
 	
 	//Holding all documents (Entities) in entityDocs folder
-	private static final String entityDocs = "/home/mehdi/EntitySummarizationExt/evaluation/entityDocs/"; 
-	private static final String predicateList = "/home/mehdi/EntitySummarizationExt/evaluation/";
+	private static final String entityDocs = "/home/mehdi/ontoPart/evaluation/entityDocs/"; 
+	private static final String predicateList = "/home/mehdi/ontoPart/evaluation/";
+	
+
+
+
 	
 	////
 	private Set<String> predicateSet=new HashSet<String>();

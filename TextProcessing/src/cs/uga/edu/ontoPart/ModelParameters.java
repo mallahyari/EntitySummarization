@@ -45,10 +45,10 @@ public class ModelParameters {
 //	public final double TAU = 50.0 / T;
 //	public final double EPSILON = 0.9;
 	public final double gamma = 0.01	;
-	public String corpusFilename = "/home/mehdi/EntitySummarizationExt/evaluation/corpus.txt";
-	public String entitiesFilename = "/home/mehdi/EntitySummarizationExt/evaluation/entNameOnly.txt";
-	public String corpusStatFilename = "/home/mehdi/EntitySummarizationExt/evaluation/corpusStatistics.txt";
-	public String predicateFilename = "/home/mehdi/EntitySummarizationExt/evaluation/predicateToId.txt";
+	public String corpusFilename = "/home/mehdi/ontoPart/evaluation/corpus.txt";
+	public String entitiesFilename = "/home/mehdi/ontoPart/evaluation/entNameOnly.txt";
+	public String corpusStatFilename = "/home/mehdi/ontoPart/evaluation/corpusStatistics.txt";
+	public String predicateFilename = "/home/mehdi/ontoPart/evaluation/predicateToId.txt";
 //	public String corpusFilename = "/home/mehdi/taxonomyProject/preprocessedFiles/corpus.txt";
 //	public String entitiesFilename = "/home/mehdi/taxonomyProject/preprocessedFiles/corpusConceptsSr.txt";
 //	public String corpusStatFilename = "/home/mehdi/taxonomyProject/preprocessedFiles/corpusStatistics.txt";

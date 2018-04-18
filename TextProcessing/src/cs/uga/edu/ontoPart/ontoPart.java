@@ -84,8 +84,8 @@ public class ontoPart {
 	Random randomGenerator = null;
 	
 	
-	private static final String docPredicateDomainRange = "/home/mehdi/EntitySummarizationExt/evaluation/predicateDomainRange.txt"; 
-	private static final String objectToTypeMapFileName = "/home/mehdi/EntitySummarizationExt/evaluation/objToType.ser"; 
+	private static final String docPredicateDomainRange = "/home/mehdi/ontoPart/evaluation/predicateDomainRange.txt"; 
+	private static final String objectToTypeMapFileName = "/home/mehdi/ontoPart/evaluation/objToType.ser"; 
 	
 	// Map to store each predicate with a set of corresponding Domain
 	Map <Integer, Set<Integer>> predicateDomainMap= new HashMap<Integer, Set<Integer>>();
@@ -518,9 +518,9 @@ public boolean hasValue(int[] arr, int val) {
 
 	public void writeToCSV() {
 		loadPosteriorDistribution();
-		List<String> entityNames = modelParameters.readFile("/home/mehdi/EntitySummarizationExt/evaluation/docToId.txt");
-		List<String> predicateNames = modelParameters.readFile("/home/mehdi/EntitySummarizationExt/evaluation/predicateToId.txt");
-		List<String> wordNames = modelParameters.readFile("/home/mehdi/EntitySummarizationExt/evaluation/wordToID.txt");
+		List<String> entityNames = modelParameters.readFile("/home/mehdi/ontoPart/evaluation/docToId.txt");
+		List<String> predicateNames = modelParameters.readFile("/home/mehdi/ontoPart/evaluation/predicateToId.txt");
+		List<String> wordNames = modelParameters.readFile("/home/mehdi/ontoPart/evaluation/wordToID.txt");
 		double [] sumProb = null;
 		sumProb = allocateMemory(sumProb, D);
 		for (int d_i = 0; d_i < D; d_i++) {
@@ -529,7 +529,7 @@ public boolean hasValue(int[] arr, int val) {
 			} // end of for t_i
 		} // end of for e_i
 		try {
-			FileWriter csvFile = new FileWriter("/home/mehdi/EntitySummarizationExt/evaluation/csv/theta.csv");
+			FileWriter csvFile = new FileWriter("/home/mehdi/ontoPart/evaluation/csv/theta.csv");
 			for (int d_i = 0; d_i < D; d_i++) {
 				String line = entityNames.get(d_i) + " ";
 				for (int p_i = 0; p_i < P; p_i++) {
@@ -548,7 +548,7 @@ public boolean hasValue(int[] arr, int val) {
 				} // end of for t_i
 			} // end of for p_i
 			
-			csvFile = new FileWriter("/home/mehdi/EntitySummarizationExt/evaluation/csv/phi1.csv");
+			csvFile = new FileWriter("/home/mehdi/ontoPart/evaluation/csv/phi1.csv");
 			for (int p_i = 0; p_i < P; p_i++) {
 				String line = predicateNames.get(p_i) + " ";
 				for (int t_i = 0; t_i < T1; t_i++) {
@@ -568,7 +568,7 @@ public boolean hasValue(int[] arr, int val) {
 				} // end of for t_i
 			} // end of for p_i
 			
-			csvFile = new FileWriter("/home/mehdi/EntitySummarizationExt/evaluation/csv/phi2.csv");
+			csvFile = new FileWriter("/home/mehdi/ontoPart/evaluation/csv/phi2.csv");
 			for (int p_i = 0; p_i < P; p_i++) {
 				String line = predicateNames.get(p_i) + " ";
 				for (int t_i = 0; t_i < T2; t_i++) {
@@ -588,7 +588,7 @@ public boolean hasValue(int[] arr, int val) {
 				} // end of for w_i
 			} // end of for t_i
 			
-			csvFile = new FileWriter("/home/mehdi/EntitySummarizationExt/evaluation/csv/zeta.csv");
+			csvFile = new FileWriter("/home/mehdi/ontoPart/evaluation/csv/zeta.csv");
 			for (int w_i = 0; w_i < W; w_i++) {
 				String line = "";
 				for (int t_i = 0; t_i < T2; t_i++) {
