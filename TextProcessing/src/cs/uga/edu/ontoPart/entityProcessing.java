@@ -70,6 +70,7 @@ import virtuoso.jena.driver.VirtuosoQueryExecutionFactory;
 
 // comment 2
 
+
 public class entityProcessing { 
 	
 	private final String uriPrefix = "http://dbpedia.org/resource/";
