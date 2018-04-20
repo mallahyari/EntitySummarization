@@ -96,7 +96,7 @@ public class ontoPart {
 	Map<Integer, Set<Integer>> objectTotypeMap = new HashMap<Integer,Set<Integer>>();
 	
 	
-	String corpusEntitiesFile = "/home/mehdi/EntitySummarizationExt/evaluation/corpusConceptsSr.txt";
+	String corpusEntitiesFile = "/home/mehdi/ontoPart/evaluation/corpusConceptsSr.txt";
 	
 	int showLine = 400000;
 	final Logger logger = Logger.getLogger(ontoPart.class.getName());
