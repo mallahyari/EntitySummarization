@@ -44,10 +44,10 @@ public class ontoPartMain {
 //		**** 1)Uncomment lines46-47-48-49 & RUN
 //		**** 2)comment lines46-47-48-49 and uncomment 71-73-74  & RUN
 //		**** 3)comment lines46-47-48-49 and comment 71-73-74 & uncomment 84 RUN
-//		EntityProc predicCheck = new EntityProc();
-//		predicCheck.processEntities();
-//		predicCheck.makeCorpus();
-//		System.out.println("Done!"); 
+		entityProcessing predicCheck = new entityProcessing();
+		predicCheck.processEntities();
+		predicCheck.makeCorpus();
+		System.out.println("Done!"); 
 
 //		
 	//	predicCheck.predicateChecker();
