@@ -390,7 +390,7 @@ public class entityProcessing {
 //			String subjectUrl = uriPrefix + entityName;
 //			Set<String> subjectTypes = getEntityTypes(subjectUrl);
 			Set<String> predicateStopWordsSet = readPredicateStopWords(predicateStopWords);
-			FileWriter docFile = new FileWriter(entityDocs + entityName +".txt");
+			//FileWriter docFile = new FileWriter(entityDocs + entityName +".txt");
 			//Connecting to Virtuoso to extract predicates and objects
 			StringBuffer queryString = new StringBuffer();
 			queryString.append("SELECT ?p ?o FROM <" + GRAPH + "> WHERE { ");
@@ -401,6 +401,8 @@ public class entityProcessing {
 			ResultSet results = vqe.execSelect();
 			docToIdFile.write(entityName + " " + docIdGenerator + "\n");
 			docIdGenerator++;
+			
+			objectVector1.clear();
 			
 			while (results.hasNext()) {
 				Set<String> objectCategories = new HashSet<String>();
@@ -644,7 +646,7 @@ public class entityProcessing {
 //					predicateObjectFile.write(predicateId + " " + objId  + "\n");
 //				} // end of for
 			} // end of while
-			docFile.close();
+			//docFile.close();
 		} // end of while
 		wordToIdFile.close();
 		docToIdFile.close();
@@ -657,7 +659,7 @@ public class entityProcessing {
 		}
 		literalObjectFile.close();
 	
-		
+		System.out.println(objectVector1.size());
 		if (objectVector1.size() > 15) {
 		System.out.println("AAAA");
 		FileWriter docFile = new FileWriter(entityDocs + entityName +".txt");
