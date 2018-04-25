@@ -447,7 +447,7 @@ public class entityProcessing {
 				//check for literal abstract
 				if (predicate.toString().contains("http://dbpedia.org/ontology/abstract") ) {
 					objectName = object.toString();//.substring("http://dbpedia.org/ontology/abstract".length());
-					objectVector1.add(objectName + "|");
+					objectVector1.add(predicateName+ " "+objectName + "|");
 				}
 				objectName = "";
 				
@@ -499,7 +499,7 @@ public class entityProcessing {
 					wordIdGenerator++;
 				}
 			//	docFile.write(objectName + "|");
-			objectVector1.add(objectName + "|");
+			objectVector1.add(predicateName+ " "+objectName + "|");
 				
 				
 				
