@@ -459,7 +459,7 @@ public class entityProcessing {
 						objectName = object.toString().substring(uriPrefix.length());
 						System.out.println(entityName+ "  "+ objectName);
 						realObject.add(objectName);
-						objectVector1.add(objectName + "|");
+						
 						
 					}else{
 						//Real literal
@@ -476,7 +476,7 @@ public class entityProcessing {
 						//objectName=object.toString();
 						//System.out.println("Literal: "+entityName+"  "+predicateName+"  "+ myLiteral);
 						objectName=myLiteral;
-						objectVector1.add(objectName + "|");
+						
 
 					}
 				} // end of if
@@ -495,7 +495,7 @@ public class entityProcessing {
 					wordIdGenerator++;
 				}
 			//	docFile.write(objectName + "|");
-			//	objectVector1.add(objectName + "|");
+			objectVector1.add(objectName + "|");
 				
 				
 				
