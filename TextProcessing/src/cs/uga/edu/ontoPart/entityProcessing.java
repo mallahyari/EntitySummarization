@@ -444,15 +444,19 @@ public class entityProcessing {
 				
 				
 				String objectName = "";
+				//check for literal abstract
+				if (predicate.toString().contains("http://dbpedia.org/ontology/abstract") ) {
+					objectName = object.toString().substring("http://dbpedia.org/ontology/abstract".length());
+					objectVector1.add(objectName + "|");
+				}
+				objectName = "";
+				
+				
 				if (predicateName.equals("subject")){
 					//objectName = object.toString().substring(wikiCategoryUriPrefix.length());
 				}else {
 					
-					//check for literal abstract
-//					if (predicate.toString().contains("http://dbpedia.org/ontology/abstract") ) {
-//						objectName = object.toString().substring("http://dbpedia.org/ontology/abstract".length());
-//						objectVector1.add(objectName + "|");
-//					}
+					
 					
 					
 					if(object.toString().contains("http://dbpedia.org")){
