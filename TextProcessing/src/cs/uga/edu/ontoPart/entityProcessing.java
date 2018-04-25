@@ -119,6 +119,7 @@ public class entityProcessing {
 	
 	private Vector<String> predicateVector=new Vector<String>();
 	private Vector<String> objectVector = new Vector<String>();
+	private Vector<String> objectVector1 = new Vector<String>();
 	private Map<String, Integer> mapWordToID = new HashMap<String, Integer>();
 	private Map<String, Integer> sortedMapWordToID = new HashMap<String, Integer>();
 	private Map<String, Integer> mapDocToID = new HashMap<String, Integer>();
@@ -481,7 +482,9 @@ public class entityProcessing {
 					wordToIdFile.write(objectName + " " + wordIdGenerator + "\n");
 					wordIdGenerator++;
 				}
-				docFile.write(objectName + "|");
+			//	docFile.write(objectName + "|");
+				objectVector1.add(objectName + "|");
+				
 			//	objectCategories = getEntityCategories(object.toString());
 				
 //				// if you want to increase object frequency in the document
@@ -653,6 +656,22 @@ public class entityProcessing {
 			literalObjectFile.write(myliteral + "\n");
 		}
 		literalObjectFile.close();
+	
+		
+		if (objectVector1.size() > 15) {
+		
+		FileWriter docFile = new FileWriter(entityDocs + entityName +".txt");
+	
+		for (String myObject1 : objectVector1){
+			docFile.write(myObject1);
+		}
+		docFile.close();
+		}
+		
+		
+		
+		
+		
 		
 		//Write Set of realObjects into File
 				for (String myObject : realObject){
