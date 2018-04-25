@@ -659,7 +659,7 @@ public class entityProcessing {
 	
 		
 		if (objectVector1.size() > 15) {
-		
+		System.out.println("AAAA");
 		FileWriter docFile = new FileWriter(entityDocs + entityName +".txt");
 	
 		for (String myObject1 : objectVector1){
