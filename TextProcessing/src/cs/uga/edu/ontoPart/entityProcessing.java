@@ -439,8 +439,7 @@ public class entityProcessing {
 				//Literals do not have http://dbpedia.org so if you do not want to consider literal uncomment line below
 			//	if (!predicate.toString().contains("http://dbpedia.org") || !object.toString().contains("http://dbpedia.org")) continue;
 				if (!predicate.toString().contains("http://dbpedia.org") ) continue;
-				//check for literal abstract
-			//	if (predicate.toString().contains("http://dbpedia.org/ontology/abstract") ) continue;
+				
 				
 				
 				
@@ -448,10 +447,19 @@ public class entityProcessing {
 				if (predicateName.equals("subject")){
 					//objectName = object.toString().substring(wikiCategoryUriPrefix.length());
 				}else {
+					
+					//check for literal abstract
+					if (predicate.toString().contains("http://dbpedia.org/ontology/abstract") ) {
+						objectVector1.add(objectName + "|");
+					}
+					
+					
 					if(object.toString().contains("http://dbpedia.org")){
-						objectName = object.toString().substring(uriPrefix.length());
+						objectName = object.toString().substring("http://dbpedia.org/ontology/abstract".length());
 						System.out.println(entityName+ "  "+ objectName);
 						realObject.add(objectName);
+						objectVector1.add(objectName + "|");
+						
 					}else{
 						//Real literal
 						String myLiteral=object.toString();
@@ -467,6 +475,7 @@ public class entityProcessing {
 						//objectName=object.toString();
 						//System.out.println("Literal: "+entityName+"  "+predicateName+"  "+ myLiteral);
 						objectName=myLiteral;
+						objectVector1.add(objectName + "|");
 
 					}
 				} // end of if
@@ -485,7 +494,7 @@ public class entityProcessing {
 					wordIdGenerator++;
 				}
 			//	docFile.write(objectName + "|");
-				objectVector1.add(objectName + "|");
+			//	objectVector1.add(objectName + "|");
 				
 			//	objectCategories = getEntityCategories(object.toString());
 				
