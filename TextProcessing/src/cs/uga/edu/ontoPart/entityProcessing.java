@@ -647,6 +647,20 @@ public class entityProcessing {
 //				} // end of for
 			} // end of while
 			//docFile.close();
+			
+			System.out.println(objectVector1.size());
+			if (objectVector1.size() > 15) {
+			System.out.println("AAAA");
+			FileWriter docFile = new FileWriter(entityDocs + entityName +".txt");
+		
+			for (String myObject1 : objectVector1){
+				docFile.write(myObject1);
+			}
+			docFile.close();
+			}
+			
+			
+			
 		} // end of while
 		wordToIdFile.close();
 		docToIdFile.close();
@@ -659,16 +673,7 @@ public class entityProcessing {
 		}
 		literalObjectFile.close();
 	
-		System.out.println(objectVector1.size());
-		if (objectVector1.size() > 15) {
-		System.out.println("AAAA");
-		FileWriter docFile = new FileWriter(entityDocs + entityName +".txt");
-	
-		for (String myObject1 : objectVector1){
-			docFile.write(myObject1);
-		}
-		docFile.close();
-		}
+		
 		
 		
 		
