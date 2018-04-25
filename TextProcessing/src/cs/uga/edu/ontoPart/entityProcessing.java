@@ -450,12 +450,13 @@ public class entityProcessing {
 					
 					//check for literal abstract
 					if (predicate.toString().contains("http://dbpedia.org/ontology/abstract") ) {
+						objectName = object.toString().substring("http://dbpedia.org/ontology/abstract".length());
 						objectVector1.add(objectName + "|");
 					}
 					
 					
 					if(object.toString().contains("http://dbpedia.org")){
-						objectName = object.toString().substring("http://dbpedia.org/ontology/abstract".length());
+						objectName = object.toString().substring(uriPrefix.length());
 						System.out.println(entityName+ "  "+ objectName);
 						realObject.add(objectName);
 						objectVector1.add(objectName + "|");
@@ -495,6 +496,11 @@ public class entityProcessing {
 				}
 			//	docFile.write(objectName + "|");
 			//	objectVector1.add(objectName + "|");
+				
+				
+				
+				
+				
 				
 			//	objectCategories = getEntityCategories(object.toString());
 				
