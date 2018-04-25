@@ -449,10 +449,10 @@ public class entityProcessing {
 				}else {
 					
 					//check for literal abstract
-					if (predicate.toString().contains("http://dbpedia.org/ontology/abstract") ) {
-						objectName = object.toString().substring("http://dbpedia.org/ontology/abstract".length());
-						objectVector1.add(objectName + "|");
-					}
+//					if (predicate.toString().contains("http://dbpedia.org/ontology/abstract") ) {
+//						objectName = object.toString().substring("http://dbpedia.org/ontology/abstract".length());
+//						objectVector1.add(objectName + "|");
+//					}
 					
 					
 					if(object.toString().contains("http://dbpedia.org")){
