@@ -151,7 +151,7 @@ public class entityProcessing {
 			StringBuffer queryString = new StringBuffer();
 			queryString.append("SELECT ?s FROM <" + GRAPH + "> WHERE { ");
 			queryString.append(" ?s a <" + uriClassPrefix + className + "> " );
-			queryString.append("} ");
+			queryString.append("} Limit 100");
 			System.out.println(queryString);
 			Query sparql = QueryFactory.create(queryString.toString());
 			VirtuosoQueryExecution vqe = VirtuosoQueryExecutionFactory.create (sparql, virtGraph);
