@@ -169,6 +169,7 @@ public class entityProcessing {
 				//Finding the position of the last "/"	and take only predicate name
 				int index = subject.toString().lastIndexOf("/");
 				String subjectName = subject.toString().substring(index + 1);
+				
 				//if a class has an entity then it will be added into classNametoID file 
 				if (subjectName.length()>5 && classNameToIdMap.get(className) == null) {
 					classNameToIdMap.put(className, classIdGenerator);
@@ -195,6 +196,8 @@ public class entityProcessing {
 		docFile.close();
 		br.close();
 		subjectToIdFile.close();
+		classToIdFile.close();
+		
 	} // end of createEntityList
 	
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
