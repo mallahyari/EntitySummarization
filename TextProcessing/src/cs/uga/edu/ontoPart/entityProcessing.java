@@ -142,10 +142,14 @@ public class entityProcessing {
 		System.out.println("Successfully Connected to Virtuoso!\n");
 		String className = "";
 		int subjectIdGenerator = 0;
+		int classIdGenerator=0;
+		FileWriter classToIdFile = new FileWriter(entityList +"classListandID.txt");
 		FileWriter subjectToIdFile = new FileWriter(entityList +"entityListandID.txt");
 		BufferedReader br = new BufferedReader(new FileReader(classNameOnly));
 		Set<String> subjectNames = new HashSet<String>();
 		Map<String, Integer> subjectNameToIdMap = new HashMap<String,Integer>();
+		Map<String, Integer> classNameToIdMap = new HashMap<String,Integer>();
+		boolean classWithInstance=false;
 		
 		while ((className = br.readLine()) != null) {
 			//Connecting to Virtuoso to extract predicates and objects
@@ -157,6 +161,7 @@ public class entityProcessing {
 			Query sparql = QueryFactory.create(queryString.toString());
 			VirtuosoQueryExecution vqe = VirtuosoQueryExecutionFactory.create (sparql, virtGraph);
 			ResultSet results = vqe.execSelect();
+			
 		
 			while (results.hasNext()) {
 				QuerySolution result = results.nextSolution();
@@ -164,6 +169,13 @@ public class entityProcessing {
 				//Finding the position of the last "/"	and take only predicate name
 				int index = subject.toString().lastIndexOf("/");
 				String subjectName = subject.toString().substring(index + 1);
+				//if a class has an entity then it will be added into classNametoID file 
+				if (subjectName.length()>5 && classNameToIdMap.get(className) == null) {
+					classNameToIdMap.put(className, classIdGenerator);
+					classToIdFile.write(className + " " + classIdGenerator + "\n");
+					classIdGenerator++;
+				}
+				
 				//if subject name length is greater that 5 then it will be added into set
 				if (subjectName.length()>5) {
 				subjectNames.add(subjectName);
