@@ -149,7 +149,7 @@ public class entityProcessing {
 //			
 			//Connecting to Virtuoso to extract predicates and objects
 			StringBuffer queryString = new StringBuffer();
-			queryString.append("SELECT * FROM <" + GRAPH + "> WHERE { ");
+			queryString.append("SELECT ?s FROM <" + GRAPH + "> WHERE { ");
 			queryString.append("< ?s a" + uriClassPrefix + className + ">" + "  FILTER ( 1 >  <SHORT_OR_LONG::bif:rnd> (10, ?s)) ");
 			queryString.append("} ORDER BY RAND() Limit 10");
 			Query sparql = QueryFactory.create(queryString.toString());
