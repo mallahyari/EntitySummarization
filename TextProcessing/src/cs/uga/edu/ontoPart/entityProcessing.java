@@ -141,8 +141,11 @@ public class entityProcessing {
 		virtGraph = connectToVirtuoso();
 		System.out.println("Successfully Connected to Virtuoso!\n");
 		String className = "";
+		int subjectIdGenerator = 0;
+		FileWriter subjectToIdFile = new FileWriter(entityList +"entityListandID.txt");
 		BufferedReader br = new BufferedReader(new FileReader(classNameOnly));
 		Set<String> subjectNames = new HashSet<String>();
+		Map<String, Integer> subjectNameToIdMap = new HashMap<String,Integer>();
 		
 		while ((className = br.readLine()) != null) {
 //			
@@ -170,7 +173,11 @@ public class entityProcessing {
 				if (subjectName.length()>5) {
 				subjectNames.add(subjectName);
 				}
-
+				if (subjectName.length()>5 && subjectNameToIdMap.get(subjectName) == null) {
+					subjectNameToIdMap.put(subjectName, subjectIdGenerator);
+					subjectToIdFile.write(subjectName + " " + subjectIdGenerator + "\n");
+					subjectIdGenerator++;
+				}
 			
 			
 		} // end of while
@@ -184,242 +191,11 @@ public class entityProcessing {
 		}
 		docFile.close();
 		br.close();
-		
+		subjectToIdFile.close();
 
 	} // end of processEntities
 	
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-	public static Set<String> extractSimilarWords(String keyword) throws IOException{
-		// Open the file
-		FileInputStream fstream = new FileInputStream("W2Voutput.txt");
-		BufferedReader br = new BufferedReader(new InputStreamReader(fstream));
-		String strLine;
-		Map<String, String> datamap=new HashMap<>();
-		//Read File Line By Line and extract object name and similar words
-		//for example Columbia_University : new_york_university 0.75,cornell_university 0.68,university_of_chicago 0.67
-		while ((strLine = br.readLine()) != null)   {
-		      String[] items = strLine.split(" : ");
-		      datamap.put(items[0], items[1]);
-		}
-		//items[1]= new_york_university 0.75,cornell_university 0.68,university_of_chicago 0.67
-		//creating vector of similar words upper than a threshold
-		Set <String> myOutput=new HashSet<>();
-		if (datamap.containsKey(keyword)){
-			String [] mydata=datamap.get(keyword).split(",");
-			List<String> itemList = Arrays.asList(mydata);
-		     for (String item : itemList) {
-		    	  String [] mydata1=item.split(" ");
-		    	  //defining the threshold 0.50
-		         if (Double.parseDouble(mydata1[1])>0.50){
-		        	 myOutput.add(mydata1[0]);
-		        	// System.out.println(mydata1[0]);
-		         }
-		       }
-		}
-		//Close the input stream
-		br.close();
-		return myOutput;
-	}
-	
-	
-	/////////////////////////////////////////////////////
-	
-	
-	
-		public static Set<String> extractSimilarWordsforLiteral(String keyword) throws IOException{
-			// Open the file
-			FileInputStream fstream = new FileInputStream("finalresult.txt");
-			BufferedReader br = new BufferedReader(new InputStreamReader(fstream));
-			String strLine;
-			Map<String, String> datamap=new HashMap<>();
-			//Read File Line By Line and extract object name and similar words
-			//for example Columbia_University : new_york_university 0.75,cornell_university 0.68,university_of_chicago 0.67
-			while ((strLine = br.readLine()) != null)   {
-			      String[] items = strLine.split(" :: ");
-			      if (items[1].equals(",")) continue;
-			   
-			      
-			   //   System.out.println(items[0]+"      "+ items[1]);
-			      datamap.put(items[0], items[1]);
-			}
-			//items[1]= new_york_university 0.75,cornell_university 0.68,university_of_chicago 0.67
-			//creating vector of similar words upper than a threshold
-			Set <String> myOutput=new HashSet<>();
-			if (datamap.containsKey(keyword)){
-				String [] mydata=datamap.get(keyword).split(",");
-				List<String> itemList = Arrays.asList(mydata);
-			     for (String item : itemList) {
-			    	 // String [] mydata1=item.split(" ");
-			    	  //defining the threshold 0.50
-			         //if (Double.parseDouble(mydata1[1])>0.50){
-			        	 myOutput.add(item.toLowerCase());
-			        	// System.out.println(mydata1[0]);
-			        // }
-			       }
-			}
-			//Close the input stream
-			br.close();
-			return myOutput;
-		}
-	/////////////////////////////////////////////////////
-	
-
-	public void readWriteEntity() throws FileNotFoundException{
-		/*
-		 * Read entity file as input (instances.txt) write entity to name only file as output (entNameOnly.txt)
-		 */
-		
-			//Writing to entNameOnly.txt
-			File fout = new File(entityNameOnly);
-			FileOutputStream fos = new FileOutputStream(fout);
-			BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(fos));
-			
-			//Reading from entityFile (instances.txt)
-			BufferedReader br = null;
-			FileReader fr = null;
-
-			try {
-				String entityLine, entityPart, result;
-				String delStr = "http://dbpedia.org/resource/";	
-				br = new BufferedReader(new FileReader(entityFile));
-
-				while ((entityLine = br.readLine()) != null) {
-					int index = entityLine.indexOf(delStr);
-					int subIndex = index + delStr.length();
-					entityPart=entityLine.substring(subIndex);
-					result = entityPart.substring(0, entityPart.indexOf(":-:"));
-					System.out.println(result.toLowerCase());
-				//	bw.write(result.toLowerCase());
-					bw.write(result);
-					bw.newLine();
-					
-				}
-				bw.close();
-
-			} catch (IOException e) {
-
-				e.printStackTrace();
-
-			} finally {
-
-				try {
-
-					if (br != null)
-						br.close();
-
-					if (fr != null)
-						fr.close();
-
-				} catch (IOException ex) {
-
-					ex.printStackTrace();
-
-				}
-
-			}
-
-		
-		}
-	
-	
-/////////////////////////////////////////////////////
-//	public void predicateChecker() throws IOException{
-//		/*
-//		 * Read entity Name only (entNameOnly.txt) as input and extract all useful predicates
-//		 */
-//			//Reading from entityFile
-//			BufferedReader br = null;
-//			FileReader fr = null;
-//
-//			try {
-//				String entityLine;
-//				br = new BufferedReader(new FileReader(entityNameOnly));
-//				while ((entityLine = br.readLine()) != null) {
-//					//Calling predicateExtractor to extract all predicates and Objects for all entities in entNameOnly.txt
-//					predicateExtractor(entityLine);
-//				}
-//			} catch (IOException e) {
-//
-//				e.printStackTrace();
-//
-//			} finally {
-//
-//				try {
-//
-//					if (br != null)
-//						br.close();
-//
-//					if (fr != null)
-//						fr.close();
-//				} catch (IOException ex) {
-//					ex.printStackTrace();
-//				}
-//			}
-//			// Making Word to ID file
-//			File fout = new File(wordToIdFileName);
-//			FileOutputStream fos = new FileOutputStream(fout);
-//			BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(fos));
-//			 sortedMapWordToID = sortByValue(mapWordToID);
-//			for (Map.Entry<String,Integer> entry : sortedMapWordToID.entrySet()) {
-//				  String key = entry.getKey();
-//				  Integer value = entry.getValue();
-//				  
-//				  try {
-//					bw.write(key + "  " + value);
-//					bw.newLine();
-//				} catch (IOException e) {
-//					e.printStackTrace();
-//				}
-//				  
-//				}
-//				bw.close();
-//				fos.close();
-//		}
-	
-	public void predicateChecker() throws IOException{
-		/*
-		 * Read entity Name only (entNameOnly.txt) as input and extract all useful predicates
-		 */
-		//Reading from entityFile
-		try {
-			String entityLine;
-			BufferedReader br = new BufferedReader(new FileReader(entityNameOnly));
-			while ((entityLine = br.readLine()) != null) {
-				//Calling predicateExtractor to extract all predicates and Objects for all entities in entNameOnly.txt
-				predicateExtractor(entityLine);
-			}
-			br.close();
-		} catch (IOException e) {
-
-			e.printStackTrace();
-
-		}
-	} // end of predicateChecker
-	
-	
-	public Set<String> readPredicateStopWords(String filename) {
-		//Reading stop predicate from predicate Stop Words file
-		Set<String> predicateStopWords = new HashSet<String>();
-		try {
-			String stopPredicate;
-			BufferedReader br = new BufferedReader(new FileReader(filename));
-
-			while ((stopPredicate = br.readLine()) != null) {
-				predicateStopWords.add(stopPredicate);
-			}
-			br.close();
-		} catch (IOException e) {
-
-			e.printStackTrace();
-
-		}
-		return predicateStopWords;
-	} // end of readPredicateStopWords
-	
-	
-	/* This method processes entities based on their Wikipedia categories.
-	 * 
-	 */
 	public void processEntities() throws IOException {
 		System.out.println("Connecting to Virtuoso ... ");
 		virtGraph = connectToVirtuoso();
@@ -799,6 +575,240 @@ public class entityProcessing {
 //		} // end of for (i)
 		//saveMatrix(predicateObjectWeight, predicateObjectWeightFileName);
 	} // end of processEntities
+
+
+	
+	public static Set<String> extractSimilarWords(String keyword) throws IOException{
+		// Open the file
+		FileInputStream fstream = new FileInputStream("W2Voutput.txt");
+		BufferedReader br = new BufferedReader(new InputStreamReader(fstream));
+		String strLine;
+		Map<String, String> datamap=new HashMap<>();
+		//Read File Line By Line and extract object name and similar words
+		//for example Columbia_University : new_york_university 0.75,cornell_university 0.68,university_of_chicago 0.67
+		while ((strLine = br.readLine()) != null)   {
+		      String[] items = strLine.split(" : ");
+		      datamap.put(items[0], items[1]);
+		}
+		//items[1]= new_york_university 0.75,cornell_university 0.68,university_of_chicago 0.67
+		//creating vector of similar words upper than a threshold
+		Set <String> myOutput=new HashSet<>();
+		if (datamap.containsKey(keyword)){
+			String [] mydata=datamap.get(keyword).split(",");
+			List<String> itemList = Arrays.asList(mydata);
+		     for (String item : itemList) {
+		    	  String [] mydata1=item.split(" ");
+		    	  //defining the threshold 0.50
+		         if (Double.parseDouble(mydata1[1])>0.50){
+		        	 myOutput.add(mydata1[0]);
+		        	// System.out.println(mydata1[0]);
+		         }
+		       }
+		}
+		//Close the input stream
+		br.close();
+		return myOutput;
+	}
+	
+	
+	/////////////////////////////////////////////////////
+	
+	
+	
+		public static Set<String> extractSimilarWordsforLiteral(String keyword) throws IOException{
+			// Open the file
+			FileInputStream fstream = new FileInputStream("finalresult.txt");
+			BufferedReader br = new BufferedReader(new InputStreamReader(fstream));
+			String strLine;
+			Map<String, String> datamap=new HashMap<>();
+			//Read File Line By Line and extract object name and similar words
+			//for example Columbia_University : new_york_university 0.75,cornell_university 0.68,university_of_chicago 0.67
+			while ((strLine = br.readLine()) != null)   {
+			      String[] items = strLine.split(" :: ");
+			      if (items[1].equals(",")) continue;
+			   
+			      
+			   //   System.out.println(items[0]+"      "+ items[1]);
+			      datamap.put(items[0], items[1]);
+			}
+			//items[1]= new_york_university 0.75,cornell_university 0.68,university_of_chicago 0.67
+			//creating vector of similar words upper than a threshold
+			Set <String> myOutput=new HashSet<>();
+			if (datamap.containsKey(keyword)){
+				String [] mydata=datamap.get(keyword).split(",");
+				List<String> itemList = Arrays.asList(mydata);
+			     for (String item : itemList) {
+			    	 // String [] mydata1=item.split(" ");
+			    	  //defining the threshold 0.50
+			         //if (Double.parseDouble(mydata1[1])>0.50){
+			        	 myOutput.add(item.toLowerCase());
+			        	// System.out.println(mydata1[0]);
+			        // }
+			       }
+			}
+			//Close the input stream
+			br.close();
+			return myOutput;
+		}
+	/////////////////////////////////////////////////////
+	
+
+	public void readWriteEntity() throws FileNotFoundException{
+		/*
+		 * Read entity file as input (instances.txt) write entity to name only file as output (entNameOnly.txt)
+		 */
+		
+			//Writing to entNameOnly.txt
+			File fout = new File(entityNameOnly);
+			FileOutputStream fos = new FileOutputStream(fout);
+			BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(fos));
+			
+			//Reading from entityFile (instances.txt)
+			BufferedReader br = null;
+			FileReader fr = null;
+
+			try {
+				String entityLine, entityPart, result;
+				String delStr = "http://dbpedia.org/resource/";	
+				br = new BufferedReader(new FileReader(entityFile));
+
+				while ((entityLine = br.readLine()) != null) {
+					int index = entityLine.indexOf(delStr);
+					int subIndex = index + delStr.length();
+					entityPart=entityLine.substring(subIndex);
+					result = entityPart.substring(0, entityPart.indexOf(":-:"));
+					System.out.println(result.toLowerCase());
+				//	bw.write(result.toLowerCase());
+					bw.write(result);
+					bw.newLine();
+					
+				}
+				bw.close();
+
+			} catch (IOException e) {
+
+				e.printStackTrace();
+
+			} finally {
+
+				try {
+
+					if (br != null)
+						br.close();
+
+					if (fr != null)
+						fr.close();
+
+				} catch (IOException ex) {
+
+					ex.printStackTrace();
+
+				}
+
+			}
+
+		
+		}
+	
+	
+/////////////////////////////////////////////////////
+//	public void predicateChecker() throws IOException{
+//		/*
+//		 * Read entity Name only (entNameOnly.txt) as input and extract all useful predicates
+//		 */
+//			//Reading from entityFile
+//			BufferedReader br = null;
+//			FileReader fr = null;
+//
+//			try {
+//				String entityLine;
+//				br = new BufferedReader(new FileReader(entityNameOnly));
+//				while ((entityLine = br.readLine()) != null) {
+//					//Calling predicateExtractor to extract all predicates and Objects for all entities in entNameOnly.txt
+//					predicateExtractor(entityLine);
+//				}
+//			} catch (IOException e) {
+//
+//				e.printStackTrace();
+//
+//			} finally {
+//
+//				try {
+//
+//					if (br != null)
+//						br.close();
+//
+//					if (fr != null)
+//						fr.close();
+//				} catch (IOException ex) {
+//					ex.printStackTrace();
+//				}
+//			}
+//			// Making Word to ID file
+//			File fout = new File(wordToIdFileName);
+//			FileOutputStream fos = new FileOutputStream(fout);
+//			BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(fos));
+//			 sortedMapWordToID = sortByValue(mapWordToID);
+//			for (Map.Entry<String,Integer> entry : sortedMapWordToID.entrySet()) {
+//				  String key = entry.getKey();
+//				  Integer value = entry.getValue();
+//				  
+//				  try {
+//					bw.write(key + "  " + value);
+//					bw.newLine();
+//				} catch (IOException e) {
+//					e.printStackTrace();
+//				}
+//				  
+//				}
+//				bw.close();
+//				fos.close();
+//		}
+	
+	public void predicateChecker() throws IOException{
+		/*
+		 * Read entity Name only (entNameOnly.txt) as input and extract all useful predicates
+		 */
+		//Reading from entityFile
+		try {
+			String entityLine;
+			BufferedReader br = new BufferedReader(new FileReader(entityNameOnly));
+			while ((entityLine = br.readLine()) != null) {
+				//Calling predicateExtractor to extract all predicates and Objects for all entities in entNameOnly.txt
+				predicateExtractor(entityLine);
+			}
+			br.close();
+		} catch (IOException e) {
+
+			e.printStackTrace();
+
+		}
+	} // end of predicateChecker
+	
+	
+	public Set<String> readPredicateStopWords(String filename) {
+		//Reading stop predicate from predicate Stop Words file
+		Set<String> predicateStopWords = new HashSet<String>();
+		try {
+			String stopPredicate;
+			BufferedReader br = new BufferedReader(new FileReader(filename));
+
+			while ((stopPredicate = br.readLine()) != null) {
+				predicateStopWords.add(stopPredicate);
+			}
+			br.close();
+		} catch (IOException e) {
+
+			e.printStackTrace();
+
+		}
+		return predicateStopWords;
+	} // end of readPredicateStopWords
+	
+	
+	/* This method processes entities based on their Wikipedia categories.
+	 * 
+	 */
 	
 	private void saveObjectToPredicateMap(Map<Integer, Set<Integer>> objectToPredicateMap, String fileName) {
 		saveMap(objectToPredicateMap, fileName);
