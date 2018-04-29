@@ -162,6 +162,7 @@ public class entityProcessing {
 			VirtuosoQueryExecution vqe = VirtuosoQueryExecutionFactory.create (sparql, virtGraph);
 			ResultSet results = vqe.execSelect();
 			
+		int numberOfInstance=0;
 		
 			while (results.hasNext()) {
 				QuerySolution result = results.nextSolution();
@@ -171,7 +172,7 @@ public class entityProcessing {
 				String subjectName = subject.toString().substring(index + 1);
 				
 				//if a class has an entity then it will be added into classNametoID file 
-				if (subjectName.length()>5 && classNameToIdMap.get(className) == null) {
+				if (subjectName.length()>5 && numberOfInstance> 20 && classNameToIdMap.get(className) == null) {
 					classNameToIdMap.put(className, classIdGenerator);
 					classToIdFile.write(className + " " + classIdGenerator + "\n");
 					classIdGenerator++;
@@ -181,11 +182,12 @@ public class entityProcessing {
 				if (subjectName.length()>5) {
 				subjectNames.add(subjectName);
 				}
-				if (subjectName.length()>5 && subjectNameToIdMap.get(subjectName) == null) {
+				if (subjectName.length()>5 && numberOfInstance> 20 && subjectNameToIdMap.get(subjectName) == null) {
 					subjectNameToIdMap.put(subjectName, subjectIdGenerator);
 					subjectToIdFile.write(subjectName + " " + subjectIdGenerator + "\n");
 					subjectIdGenerator++;
 				}
+				numberOfInstance++;
 			} // end of while
 		}// end of while
 		//Write into file all subjects extracted from classes	
