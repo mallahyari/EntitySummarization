@@ -74,11 +74,13 @@ import virtuoso.jena.driver.VirtuosoQueryExecutionFactory;
 public class entityProcessing { 
 	
 	private final String uriPrefix = "http://dbpedia.org/resource/";
+	private final String uriClassPrefix = "http://dbpedia.org/ontology/";
 	private final String wikiCategoryUriPrefix = "http://dbpedia.org/resource/Category:";
 	private VirtGraph virtGraph = null;
 
 	private static final String entityFile = "/home/mehdi/ontoPart/evaluation/instances.txt";
 	private static final String entityNameOnly = "/home/mehdi/ontoPart/evaluation/entNameOnly.txt";
+	private static final String classNameOnly = "/home/mehdi/ontoPart/evaluation/classNameOnly.txt";
 	private static final String predicateStopWords = "/home/mehdi/ontoPart/evaluation/predicateStopWords.txt";
 	// Map each object (word) to an ID
 	private static final String wordToIdFileName = "/home/mehdi/ontoPart/evaluation/wordToID.txt";
@@ -101,6 +103,7 @@ public class entityProcessing {
 	protected final String predicateObjectWeightFileName = "/home/mehdi/ontoPart/evaluation/predicateObjectWeight.ser";
 	
 	//Holding all documents (Entities) in entityDocs folder
+	private static final String entityList = "/home/mehdi/ontoPart/evaluation/";
 	private static final String entityDocs = "/home/mehdi/ontoPart/evaluation/entityDocs/"; 
 	private static final String predicateList = "/home/mehdi/ontoPart/evaluation/";
 	
@@ -129,9 +132,61 @@ public class entityProcessing {
 	private int domainNumber=0;
 	private int rangeNumber=0;
 	protected int[][] predicateObjectWeight = null;
-	/////////////////////////////////////////////////
+	///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 	
 	
+	
+	public void createEntityList() throws IOException {
+		System.out.println("Connecting to Virtuoso ... ");
+		virtGraph = connectToVirtuoso();
+		System.out.println("Successfully Connected to Virtuoso!\n");
+		String className = "";
+		BufferedReader br = new BufferedReader(new FileReader(classNameOnly));
+		
+		Set<String> subjectNames = new HashSet<String>();
+		
+		while ((className = br.readLine()) != null) {
+//			
+			//Connecting to Virtuoso to extract predicates and objects
+			StringBuffer queryString = new StringBuffer();
+			queryString.append("SELECT * FROM <" + GRAPH + "> WHERE { ");
+			queryString.append("< ?s a" + uriClassPrefix + className + ">" + "  FILTER ( 1 >  <SHORT_OR_LONG::bif:rnd> (10, ?s)) ");
+			queryString.append("} ORDER BY RAND() Limit 10");
+			Query sparql = QueryFactory.create(queryString.toString());
+			VirtuosoQueryExecution vqe = VirtuosoQueryExecutionFactory.create (sparql, virtGraph);
+			ResultSet results = vqe.execSelect();
+		
+			
+			
+			while (results.hasNext()) {
+				
+				QuerySolution result = results.nextSolution();
+				RDFNode subject = result.get("s");
+				
+				//Finding the position of the last "/"	and take only predicate name
+				int index = subject.toString().lastIndexOf("/");
+				String subjectName = subject.toString().substring(index + 1);
+				subjectNames.add(subjectName);
+				
+
+			
+			
+		} // end of while
+			
+			
+		}// end of while
+			
+		FileWriter docFile = new FileWriter(entityList +"entityList.txt");
+		for (String mySubject : subjectNames){
+		docFile.write(mySubject+ "\n");
+		}
+		docFile.close();
+		br.close();
+		
+
+	} // end of processEntities
+	
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 	public static Set<String> extractSimilarWords(String keyword) throws IOException{
 		// Open the file
 		FileInputStream fstream = new FileInputStream("W2Voutput.txt");

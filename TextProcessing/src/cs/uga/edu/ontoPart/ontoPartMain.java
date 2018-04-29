@@ -44,10 +44,10 @@ public class ontoPartMain {
 //		**** 1)Uncomment lines46-47-48-49 & RUN
 //		**** 2)comment lines46-47-48-49 and uncomment 71-73-74  & RUN
 //		**** 3)comment lines46-47-48-49 and comment 71-73-74 & uncomment 84 RUN
-		entityProcessing predicCheck = new entityProcessing();
-		predicCheck.processEntities();
-		predicCheck.makeCorpus();
-		System.out.println("Done!"); 
+//		entityProcessing predicCheck = new entityProcessing();
+//		predicCheck.processEntities();
+//		predicCheck.makeCorpus();
+//		System.out.println("Done!"); 
 
 //		
 	//	predicCheck.predicateChecker();
@@ -82,7 +82,7 @@ public class ontoPartMain {
 //		// Gibbs Sampling Initialization and Run //
 //		entSum.initializeGibbsSampling();
 //		entSum.run();
-       entSum.writeToCSV();
+//       entSum.writeToCSV();
 		
 		
 		
@@ -96,7 +96,8 @@ public class ontoPartMain {
 //		
 		
 		
-		
+		entityProcessing createMyEntityList = new entityProcessing();
+		createMyEntityList.createEntityList();
 		
 		
 		
