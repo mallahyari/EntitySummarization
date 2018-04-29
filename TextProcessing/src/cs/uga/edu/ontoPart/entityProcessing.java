@@ -148,7 +148,6 @@ public class entityProcessing {
 		Map<String, Integer> subjectNameToIdMap = new HashMap<String,Integer>();
 		
 		while ((className = br.readLine()) != null) {
-//			
 			//Connecting to Virtuoso to extract predicates and objects
 			StringBuffer queryString = new StringBuffer();
 			queryString.append("SELECT ?s FROM <" + GRAPH + "> WHERE { ");
@@ -159,13 +158,9 @@ public class entityProcessing {
 			VirtuosoQueryExecution vqe = VirtuosoQueryExecutionFactory.create (sparql, virtGraph);
 			ResultSet results = vqe.execSelect();
 		
-			
-			
 			while (results.hasNext()) {
-				
 				QuerySolution result = results.nextSolution();
 				RDFNode subject = result.get("s");
-				
 				//Finding the position of the last "/"	and take only predicate name
 				int index = subject.toString().lastIndexOf("/");
 				String subjectName = subject.toString().substring(index + 1);
@@ -178,13 +173,9 @@ public class entityProcessing {
 					subjectToIdFile.write(subjectName + " " + subjectIdGenerator + "\n");
 					subjectIdGenerator++;
 				}
-			
-			
-		} // end of while
-			
-			
+			} // end of while
 		}// end of while
-			
+		//Write into file all subjects extracted from classes	
 		FileWriter docFile = new FileWriter(entityList +"entityList.txt");
 		for (String mySubject : subjectNames){
 		docFile.write(mySubject+ "\n");
@@ -192,8 +183,7 @@ public class entityProcessing {
 		docFile.close();
 		br.close();
 		subjectToIdFile.close();
-
-	} // end of processEntities
+	} // end of createEntityList
 	
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 	public void processEntities() throws IOException {
