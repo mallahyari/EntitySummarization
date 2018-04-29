@@ -135,14 +135,13 @@ public class entityProcessing {
 	///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 	
 	
-	
+	//Create list of subject name (entity name) given a list of class Name
 	public void createEntityList() throws IOException {
 		System.out.println("Connecting to Virtuoso ... ");
 		virtGraph = connectToVirtuoso();
 		System.out.println("Successfully Connected to Virtuoso!\n");
 		String className = "";
 		BufferedReader br = new BufferedReader(new FileReader(classNameOnly));
-		
 		Set<String> subjectNames = new HashSet<String>();
 		
 		while ((className = br.readLine()) != null) {
@@ -150,8 +149,8 @@ public class entityProcessing {
 			//Connecting to Virtuoso to extract predicates and objects
 			StringBuffer queryString = new StringBuffer();
 			queryString.append("SELECT ?s FROM <" + GRAPH + "> WHERE { ");
-			queryString.append(" ?s a <" + uriClassPrefix + className + "> " );
-			queryString.append("} Limit 100");
+			queryString.append(" ?s a <" + uriClassPrefix + className + "> FILTER ( 1 >  <SHORT_OR_LONG::bif:rnd> (10, ?s))  " );
+			queryString.append("} Limit 200");
 			System.out.println(queryString);
 			Query sparql = QueryFactory.create(queryString.toString());
 			VirtuosoQueryExecution vqe = VirtuosoQueryExecutionFactory.create (sparql, virtGraph);
@@ -167,8 +166,10 @@ public class entityProcessing {
 				//Finding the position of the last "/"	and take only predicate name
 				int index = subject.toString().lastIndexOf("/");
 				String subjectName = subject.toString().substring(index + 1);
+				//if subject name length is greater that 5 then it will be added into set
+				if (subjectName.length()>5) {
 				subjectNames.add(subjectName);
-				
+				}
 
 			
 			
