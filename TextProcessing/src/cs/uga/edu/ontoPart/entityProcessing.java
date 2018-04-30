@@ -187,14 +187,14 @@ public class entityProcessing {
 				queryString1.append("FILTER (?p NOT IN (<http://dbpedia.org/ontology/abstract> ) ) ");
 				queryString1.append("FILTER (?p NOT IN (<http://www.w3.org/2000/01/rdf-schema#comment> ) ) ");
 				queryString1.append("}  ");
-				System.out.println(queryString1);
+				//System.out.println(queryString1);
 				Query sparql1 = QueryFactory.create(queryString1.toString());
 				VirtuosoQueryExecution vqe1 = VirtuosoQueryExecutionFactory.create (sparql1, virtGraph);
 				ResultSet results1 = vqe1.execSelect();
 				if (results1.hasNext()) {
 					QuerySolution result1 = results1.nextSolution();
 					RDFNode subject1 = result1.get("pTotal");
-					System.out.print(subjectName+ subject1.toString());
+					System.out.print(subjectName+ "  pTotal " +subject1.toString());
 				}
 				
 				
