@@ -195,7 +195,7 @@ public class entityProcessing {
 					QuerySolution result1 = results1.nextSolution();
 					RDFNode subject1 = result1.get("pTotal");
 					int index1 = subject1.toString().lastIndexOf("^^");
-					String mysubject = subject1.toString().substring(0,index1 + 1);
+					String mysubject = subject1.toString().substring(0,index1 );
 					
 					
 					System.out.println(subjectName+ "  pTotal " +mysubject);
