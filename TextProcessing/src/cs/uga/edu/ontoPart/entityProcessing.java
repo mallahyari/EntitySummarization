@@ -166,6 +166,7 @@ public class entityProcessing {
 			
 			
 		int numberOfInstance=0;
+		int numberOfPredicate=0;
 		
 			while (results.hasNext()) {
 				QuerySolution result = results.nextSolution();
@@ -195,10 +196,10 @@ public class entityProcessing {
 					QuerySolution result1 = results1.nextSolution();
 					RDFNode subject1 = result1.get("pTotal");
 					int index1 = subject1.toString().lastIndexOf("^^");
-					String mysubject = subject1.toString().substring(0,index1 );
+					String myPredicateNum = subject1.toString().substring(0,index1 );
+					numberOfPredicate=Integer.parseInt(myPredicateNum);
 					
-					
-					System.out.println(subjectName+ "  pTotal " +mysubject);
+				//	System.out.println(subjectName+ "  pTotal " +myPredicateNum);
 				}
 				
 				
@@ -208,7 +209,7 @@ public class entityProcessing {
 				
 				
 				//if a class has an entity then it will be added into classNametoID file 
-				if (subjectName.length()>5 && numberOfInstance> 20 && classNameToIdMap.get(className) == null) {
+				if (subjectName.length()>5 && numberOfPredicate> 30 && classNameToIdMap.get(className) == null) {
 					classNameToIdMap.put(className, classIdGenerator);
 					classToIdFile.write(className + " " + classIdGenerator + "\n");
 					classIdGenerator++;
@@ -218,10 +219,12 @@ public class entityProcessing {
 				if (subjectName.length()>5) {
 				subjectNames.add(subjectName);
 				}
-				if (subjectName.length()>5 && numberOfInstance> 20 && subjectNameToIdMap.get(subjectName) == null) {
+				if (subjectName.length()>5 && numberOfPredicate> 30 && subjectNameToIdMap.get(subjectName) == null) {
 					subjectNameToIdMap.put(subjectName, subjectIdGenerator);
 					subjectToIdFile.write(subjectName + " " + subjectIdGenerator + "\n");
 					subjectIdGenerator++;
+					System.out.println(subjectName+ "  predicateNume " +numberOfPredicate);
+					
 				}
 				numberOfInstance++;
 			} // end of while
