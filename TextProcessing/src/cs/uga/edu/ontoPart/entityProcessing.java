@@ -223,6 +223,11 @@ public class entityProcessing {
 				queryString1.append("FILTER (?p NOT IN (<http://dbpedia.org/ontology/thumbnail> ) ) ");
 				queryString1.append("FILTER (?p NOT IN (<http://xmlns.com/foaf/0.1/depiction> ) ) ");
 				queryString1.append("FILTER (?p NOT IN (<http://xmlns.com/foaf/0.1/isPrimaryTopicOf> ) ) ");
+				queryString1.append("FILTER (?p NOT IN (<http://dbpedia.org/property/image> ) ) ");
+				queryString1.append("FILTER (?p NOT IN (<http://dbpedia.org/property/mapImage> ) ) ");
+				queryString1.append("FILTER (?p NOT IN (<http://dbpedia.org/property/percentage> ) ) ");
+				queryString1.append("FILTER (?p NOT IN (<http://dbpedia.org/property/seats> ) ) ");
+				queryString1.append("FILTER (?p NOT IN (<http://dbpedia.org/property/width> ) ) ");
 				
 				queryString1.append("}  ");
 				//System.out.println(queryString1);
@@ -257,8 +262,14 @@ public class entityProcessing {
 					queryString2.append("FILTER (?p NOT IN (<http://dbpedia.org/ontology/thumbnail> ) ) ");
 					queryString2.append("FILTER (?p NOT IN (<http://xmlns.com/foaf/0.1/depiction> ) ) ");
 					queryString2.append("FILTER (?p NOT IN (<http://xmlns.com/foaf/0.1/isPrimaryTopicOf> ) ) ");
+					queryString2.append("FILTER (?p NOT IN (<http://dbpedia.org/property/image> ) ) ");
+					queryString2.append("FILTER (?p NOT IN (<http://dbpedia.org/property/mapImage> ) ) ");
+					queryString2.append("FILTER (?p NOT IN (<http://dbpedia.org/property/percentage> ) ) ");
+					queryString2.append("FILTER (?p NOT IN (<http://dbpedia.org/property/seats> ) ) ");
+					queryString2.append("FILTER (?p NOT IN (<http://dbpedia.org/property/width> ) ) ");
 					
 					
+						
 					
 					queryString2.append("}  ");
 					Query sparql2 = QueryFactory.create(queryString2.toString());
@@ -277,8 +288,16 @@ public class entityProcessing {
 							int index2 = predicate.toString().lastIndexOf("/");
 							String predicateName = predicate.toString().substring(index2 + 1);
 							
-							int index3 = object.toString().lastIndexOf("/");
-							String objectName = object.toString().substring(index3 + 1);
+							String objectNameRaw=object.toString();
+							
+							if (object.toString().contains("^^")){
+								int index4 = object.toString().lastIndexOf("^");
+								 objectNameRaw = object.toString().substring(0,index4);
+							}
+							
+							
+							int index3 = objectNameRaw.toString().lastIndexOf("/");
+							String objectName = objectNameRaw.toString().substring(index3 + 1);
 							System.out.println(subjectName+"  Predicate "+predicateName + "    "+ objectName);
 							
 							
