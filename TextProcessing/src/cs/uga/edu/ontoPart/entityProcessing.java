@@ -292,7 +292,7 @@ public class entityProcessing {
 							
 							if (object.toString().contains("^^")){
 								int index4 = object.toString().lastIndexOf("^");
-								 objectNameRaw = object.toString().substring(0,index4);
+								 objectNameRaw = object.toString().substring(0,index4-1);
 							}
 							
 							
