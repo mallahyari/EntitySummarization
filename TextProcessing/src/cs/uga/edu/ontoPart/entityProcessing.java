@@ -196,7 +196,7 @@ public class entityProcessing {
 					QuerySolution result1 = results1.nextSolution();
 					RDFNode subject1 = result1.get("pTotal");
 					numberOfPredicate=Integer.parseInt(subject1.toString());
-					System.out.print(subjectName+ "  pTotal " +subject1.toString());
+					System.out.print(subjectName+ "  pTotal " +subject1.toString() + "num of predicate"+ numberOfPredicate+ "\n");
 				}
 				
 				
