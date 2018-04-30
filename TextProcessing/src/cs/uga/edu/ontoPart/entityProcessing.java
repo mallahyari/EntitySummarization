@@ -230,10 +230,10 @@ public class entityProcessing {
 							
 							int index2 = predicate.toString().lastIndexOf("/");
 							String predicateName = predicate.toString().substring(index + 1);
-							System.out.println(predicateName + "    "+ object);
+							System.out.println(subjectName+"  Predicate "+predicateName + "    "+ object);
 							} //end while
 				}// end if
-				
+				System.out.println("XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX");
 				
 				//if a class has an entity then it will be added into classNametoID file 
 				if (subjectName.length()>5 && numberOfPredicate> 30 && classNameToIdMap.get(className) == null) {
@@ -250,7 +250,7 @@ public class entityProcessing {
 					subjectNameToIdMap.put(subjectName, subjectIdGenerator);
 					subjectToIdFile.write(subjectName + " " + subjectIdGenerator + "\n");
 					subjectIdGenerator++;
-					System.out.println(subjectName+ "  predicateNume " +numberOfPredicate);
+					//System.out.println(subjectName+ "  predicateNume " +numberOfPredicate);
 					
 				}
 				numberOfInstance++;
