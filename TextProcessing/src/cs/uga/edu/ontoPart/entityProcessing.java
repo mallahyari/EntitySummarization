@@ -220,6 +220,10 @@ public class entityProcessing {
 				queryString1.append("FILTER (?p NOT IN (<http://dbpedia.org/ontology/wikiPageExternalLink> ) ) ");
 				queryString1.append("FILTER (?p NOT IN (<http://dbpedia.org/ontology/abstract> ) ) ");
 				queryString1.append("FILTER (?p NOT IN (<http://www.w3.org/2000/01/rdf-schema#comment> ) ) ");
+				queryString1.append("FILTER (?p NOT IN (<http://dbpedia.org/ontology/thumbnail> ) ) ");
+				queryString1.append("FILTER (?p NOT IN (<http://xmlns.com/foaf/0.1/depiction> ) ) ");
+				queryString1.append("FILTER (?p NOT IN (<http://xmlns.com/foaf/0.1/isPrimaryTopicOf> ) ) ");
+				
 				queryString1.append("}  ");
 				//System.out.println(queryString1);
 				Query sparql1 = QueryFactory.create(queryString1.toString());
@@ -250,6 +254,12 @@ public class entityProcessing {
 					queryString2.append("FILTER (?p NOT IN (<http://dbpedia.org/ontology/wikiPageExternalLink> ) ) ");
 					queryString2.append("FILTER (?p NOT IN (<http://dbpedia.org/ontology/abstract> ) ) ");
 					queryString2.append("FILTER (?p NOT IN (<http://www.w3.org/2000/01/rdf-schema#comment> ) ) ");
+					queryString2.append("FILTER (?p NOT IN (<http://dbpedia.org/ontology/thumbnail> ) ) ");
+					queryString2.append("FILTER (?p NOT IN (<http://xmlns.com/foaf/0.1/depiction> ) ) ");
+					queryString2.append("FILTER (?p NOT IN (<http://xmlns.com/foaf/0.1/isPrimaryTopicOf> ) ) ");
+					
+					
+					
 					queryString2.append("}  ");
 					Query sparql2 = QueryFactory.create(queryString2.toString());
 					VirtuosoQueryExecution vqe2 = VirtuosoQueryExecutionFactory.create (sparql2, virtGraph);
@@ -272,7 +282,7 @@ public class entityProcessing {
 							System.out.println(subjectName+"  Predicate "+predicateName + "    "+ objectName);
 							
 							
-							predicateObjectVec.add(predicateName + "*"+ objectName);
+							predicateObjectVec.add(predicateName + "*"+ objectName.replace("@en", ""));
 							
 							
 							//Store ONLY predicate with ID
