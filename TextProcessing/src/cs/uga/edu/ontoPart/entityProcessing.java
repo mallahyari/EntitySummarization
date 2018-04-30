@@ -229,9 +229,10 @@ public class entityProcessing {
 							RDFNode object = result2.get("o");
 							
 							int index2 = predicate.toString().lastIndexOf("/");
-							String predicateName = predicate.toString().substring(index + 1);
+							String predicateName = predicate.toString().substring(index2 + 1);
+							
 							int index3 = object.toString().lastIndexOf("/");
-							String objectName = object.toString().substring(index + 1);
+							String objectName = object.toString().substring(index3 + 1);
 							System.out.println(subjectName+"  Predicate "+predicateName + "    "+ objectName);
 							} //end while
 				}// end if
