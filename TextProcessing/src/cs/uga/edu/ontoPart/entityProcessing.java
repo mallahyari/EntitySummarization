@@ -230,7 +230,9 @@ public class entityProcessing {
 							
 							int index2 = predicate.toString().lastIndexOf("/");
 							String predicateName = predicate.toString().substring(index + 1);
-							System.out.println(subjectName+"  Predicate "+predicateName + "    "+ object);
+							int index3 = object.toString().lastIndexOf("/");
+							String objectName = object.toString().substring(index + 1);
+							System.out.println(subjectName+"  Predicate "+predicateName + "    "+ objectName);
 							} //end while
 				}// end if
 				System.out.println("XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX");
