@@ -236,6 +236,8 @@ public class entityProcessing {
 				}
 				//Only extract/select entities where the number of its predicate is greater that 30 and 
 				//extract their predicate and objects
+				predicateObjectVec.clear();
+				
 				if (numberOfPredicate>30 ){
 					StringBuffer queryString2 = new StringBuffer();
 					queryString2.append("SELECT ?p ?o FROM <" + GRAPH + "> WHERE { ");
