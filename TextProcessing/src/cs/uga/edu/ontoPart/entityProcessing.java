@@ -194,7 +194,7 @@ public class entityProcessing {
 				if (results1.hasNext()) {
 					QuerySolution result1 = results1.nextSolution();
 					RDFNode subject1 = result1.get("pTotal");
-					System.out.print(subjectName+ "  pTotal " +subject1.toString());
+					System.out.println(subjectName+ "  pTotal " +subject1.toString());
 				}
 				
 				
