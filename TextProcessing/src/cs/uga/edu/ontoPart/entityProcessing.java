@@ -98,6 +98,11 @@ public class entityProcessing {
 	private static final String predicateObjectFileName = "/home/mehdi/ontoPart/evaluation/predicateObject.ser";
 	private static final String literalObjectFileName = "/home/mehdi/ontoPart/evaluation/literalObjectName.txt";
 	private static final String realObjectFileName = "/home/mehdi/ontoPart/evaluation/realObjectName.txt";
+	private static final String classIdFileName = "/home/mehdi/ontoPart/evaluation/classListandID.txt";
+	private static final String subjectIdFileName = "/home/mehdi/ontoPart/evaluation/entityListandID.txt";
+	private static final String predicateObjectIdFileName = "/home/mehdi/ontoPart/evaluation/predicateObjectID.txt";
+	
+	
 	
 	protected String objectPredicateFileName = "/home/mehdi/ontoPart/evaluation/objectPredicate.ser";
 	protected final String predicateObjectWeightFileName = "/home/mehdi/ontoPart/evaluation/predicateObjectWeight.ser";
@@ -141,16 +146,44 @@ public class entityProcessing {
 		virtGraph = connectToVirtuoso();
 		System.out.println("Successfully Connected to Virtuoso!\n");
 		String className = "";
-		int subjectIdGenerator = 0;
-		int classIdGenerator=0;
-		FileWriter classToIdFile = new FileWriter(entityList +"classListandID.txt");
-		FileWriter subjectToIdFile = new FileWriter(entityList +"entityListandID.txt");
+		
+		FileWriter classToIdFile = new FileWriter(classIdFileName); //"/home/mehdi/ontoPart/evaluation/classListandID.txt";
+		FileWriter subjectToIdFile = new FileWriter(subjectIdFileName); // "/home/mehdi/ontoPart/evaluation/entityListandID.txt";
+		
 		BufferedReader br = new BufferedReader(new FileReader(classNameOnly));
 		Set<String> subjectNames = new HashSet<String>();
 		Map<String, Integer> subjectNameToIdMap = new HashMap<String,Integer>();
 		Map<String, Integer> classNameToIdMap = new HashMap<String,Integer>();
-		boolean classWithInstance=false;
+		 Vector<String> predicateObjectVec = new Vector<String>();
+		int subjectIdGenerator = 0;
+		int classIdGenerator=0;
+		int prediateIdGenerator = 0;
+		int prediateObjectIdGenerator = 0;
 		
+		int wordIdGenerator = 0;
+		int docIdGenerator = 0;
+		Map<String, Integer> wordToIdMap = new HashMap<String,Integer>();
+		Map<String, Integer> predicateToIdMap = new HashMap<String,Integer>();
+		Map<String, Integer> predicateObjectIdMap = new HashMap<String,Integer>();
+		
+		Map<Integer, Set<Integer>> predicateToObjectMap = new HashMap<Integer,Set<Integer>>();
+		Map<Integer, Set<String>> objectToCategoryMap = new HashMap<Integer,Set<String>>();
+		Map<Integer, Set<Integer>> objectToPredicateMap = new HashMap<Integer,Set<Integer>>();
+		Set<String> literalObject=new HashSet<>();
+		Set<String> realObject=new HashSet<>();
+
+		
+		FileWriter wordToIdFile = new FileWriter(wordToIdFileName); //"/home/mehdi/ontoPart/evaluation/wordToID.txt";
+		
+		FileWriter predicateToIdFile = new FileWriter(predicateToIdFileName); //"/home/mehdi/ontoPart/evaluation/predicateToId.txt"; 
+		FileWriter predicateObjectFile = new FileWriter(predicateObjectFileName);
+		FileWriter literalObjectFile=new FileWriter(literalObjectFileName);
+		FileWriter realObjectFile=new FileWriter(realObjectFileName);
+		
+		
+		
+	
+		//Read list of classes from a text file  and extract entity from that class
 		while ((className = br.readLine()) != null) {
 			//Connecting to Virtuoso to extract predicates and objects
 			StringBuffer queryString = new StringBuffer();
@@ -165,9 +198,9 @@ public class entityProcessing {
 			
 			
 			
-		int numberOfInstance=0;
-		int numberOfPredicate=0;
 		
+		int numberOfPredicate=0;
+		// For each subject (entity) extract number of useful predicates
 			while (results.hasNext()) {
 				QuerySolution result = results.nextSolution();
 				RDFNode subject = result.get("s");
@@ -201,7 +234,8 @@ public class entityProcessing {
 					
 				//	System.out.println(subjectName+ "  pTotal " +myPredicateNum);
 				}
-				//Only extract entities where the number of its predicate is greater that 30
+				//Only extract/select entities where the number of its predicate is greater that 30 and 
+				//extract their predicate and objects
 				if (numberOfPredicate>30 ){
 					StringBuffer queryString2 = new StringBuffer();
 					queryString2.append("SELECT ?p ?o FROM <" + GRAPH + "> WHERE { ");
@@ -234,8 +268,39 @@ public class entityProcessing {
 							int index3 = object.toString().lastIndexOf("/");
 							String objectName = object.toString().substring(index3 + 1);
 							System.out.println(subjectName+"  Predicate "+predicateName + "    "+ objectName);
+							
+							
+							predicateObjectVec.add(predicateName + "*"+ objectName);
+							
+							
+							//Store ONLY predicate with ID
+							if (predicateToIdMap.get(predicateName) == null) {
+								predicateToIdMap.put(predicateName, prediateIdGenerator);
+								predicateToIdFile.write(predicateName + " " + prediateIdGenerator + "\n");
+								prediateIdGenerator++;
+							}
+							//Store ONLY object with ID
+							if (wordToIdMap.get(objectName) == null) {
+								wordToIdMap.put(objectName, wordIdGenerator);
+								wordToIdFile.write(objectName + " " + wordIdGenerator + "\n");
+								wordIdGenerator++;
+							}
+							//Store pair of predicate*object with ID
+							if (predicateObjectIdMap.get(predicateName+"*"+objectName) == null) {
+								predicateObjectIdMap.put(predicateName+"*"+objectName, prediateObjectIdGenerator);
+								wordToIdFile.write(objectName + " " + prediateObjectIdGenerator + "\n");
+								prediateObjectIdGenerator++;
+							}
+							
+							
+							
 							} //end while
 				}// end if
+				FileWriter entityFileDocs = new FileWriter(entityDocs+ subjectName+".txt");
+				for (String myUnit: predicateObjectVec){
+					entityFileDocs.write(myUnit+" | ");
+				}entityFileDocs.close();
+				
 				System.out.println("XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX");
 				
 				//if a class has an entity then it will be added into classNametoID file 
@@ -244,6 +309,15 @@ public class entityProcessing {
 					classToIdFile.write(className + " " + classIdGenerator + "\n");
 					classIdGenerator++;
 				}
+				
+				
+				
+				
+					
+				
+				
+				
+				
 				
 				//if subject name length is greater that 5 then it will be added into set
 				if (subjectName.length()>5) {
@@ -256,7 +330,9 @@ public class entityProcessing {
 					//System.out.println(subjectName+ "  predicateNume " +numberOfPredicate);
 					
 				}
-				numberOfInstance++;
+				
+				
+			
 			} // end of while
 		}// end of while
 		//Write into file all subjects extracted from classes	
@@ -268,6 +344,8 @@ public class entityProcessing {
 		br.close();
 		subjectToIdFile.close();
 		classToIdFile.close();
+		
+		
 		
 	} // end of createEntityList
 	
