@@ -166,6 +166,7 @@ public class entityProcessing {
 			
 			
 		int numberOfInstance=0;
+		int numberOfPredicate=0;
 		
 			while (results.hasNext()) {
 				QuerySolution result = results.nextSolution();
@@ -194,6 +195,7 @@ public class entityProcessing {
 				if (results1.hasNext()) {
 					QuerySolution result1 = results1.nextSolution();
 					RDFNode subject1 = result1.get("pTotal");
+					numberOfPredicate=Integer.parseInt(subject1.toString());
 					System.out.print(subjectName+ "  pTotal " +subject1.toString());
 				}
 				
@@ -204,7 +206,7 @@ public class entityProcessing {
 				
 				
 				//if a class has an entity then it will be added into classNametoID file 
-				if (subjectName.length()>5 && numberOfInstance> 20 && classNameToIdMap.get(className) == null) {
+				if (subjectName.length()>5 && numberOfPredicate> 30 && classNameToIdMap.get(className) == null) {
 					classNameToIdMap.put(className, classIdGenerator);
 					classToIdFile.write(className + " " + classIdGenerator + "\n");
 					classIdGenerator++;
@@ -214,7 +216,7 @@ public class entityProcessing {
 				if (subjectName.length()>5) {
 				subjectNames.add(subjectName);
 				}
-				if (subjectName.length()>5 && numberOfInstance> 20 && subjectNameToIdMap.get(subjectName) == null) {
+				if (subjectName.length()>5 && numberOfInstance> 30 && subjectNameToIdMap.get(subjectName) == null) {
 					subjectNameToIdMap.put(subjectName, subjectIdGenerator);
 					subjectToIdFile.write(subjectName + " " + subjectIdGenerator + "\n");
 					subjectIdGenerator++;
@@ -222,12 +224,7 @@ public class entityProcessing {
 				numberOfInstance++;
 			} // end of while
 		}// end of while
-		//Write into file all subjects extracted from classes	
-		FileWriter docFile = new FileWriter(entityList +"entityList.txt");
-		for (String mySubject : subjectNames){
-		docFile.write(mySubject+ "\n");
-		}
-		docFile.close();
+		
 		br.close();
 		subjectToIdFile.close();
 		classToIdFile.close();
