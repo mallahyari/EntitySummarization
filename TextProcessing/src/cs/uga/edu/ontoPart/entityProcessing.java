@@ -162,14 +162,46 @@ public class entityProcessing {
 			VirtuosoQueryExecution vqe = VirtuosoQueryExecutionFactory.create (sparql, virtGraph);
 			ResultSet results = vqe.execSelect();
 			
+			
+			
+			
 		int numberOfInstance=0;
 		
 			while (results.hasNext()) {
 				QuerySolution result = results.nextSolution();
 				RDFNode subject = result.get("s");
+				
 				//Finding the position of the last "/"	and take only predicate name
 				int index = subject.toString().lastIndexOf("/");
 				String subjectName = subject.toString().substring(index + 1);
+				
+				StringBuffer queryString1 = new StringBuffer();
+				queryString1.append("select   (count(?p)as ?pTotal) FROM <" + GRAPH + "> WHERE { ");
+				queryString1.append("<http://dbpedia.org/resource/" + subjectName +"> ?p ?o.  " );
+				queryString1.append("FILTER (?p NOT IN (<http://dbpedia.org/ontology/profession> ) ) ");
+				queryString1.append("FILTER (?p NOT IN (<http://www.w3.org/1999/02/22-rdf-syntax-ns#type> ) ) ");
+				queryString1.append(" FILTER (?p NOT IN (<http://www.w3.org/2002/07/owl#sameAs> ) )");
+				queryString1.append("FILTER (?p NOT IN (<http://purl.org/dc/terms/subject> ) )");
+				queryString1.append("FILTER (?p NOT IN (<http://dbpedia.org/ontology/wikiPageWikiLink> ) ) ");
+				queryString1.append("FILTER (?p NOT IN (<http://dbpedia.org/ontology/wikiPageExternalLink> ) ) ");
+				queryString1.append("FILTER (?p NOT IN (<http://dbpedia.org/ontology/abstract> ) ) ");
+				queryString1.append("FILTER (?p NOT IN (<http://www.w3.org/2000/01/rdf-schema#comment> ) ) ");
+				queryString1.append("}  ");
+				System.out.println(queryString1);
+				Query sparql1 = QueryFactory.create(queryString1.toString());
+				VirtuosoQueryExecution vqe1 = VirtuosoQueryExecutionFactory.create (sparql1, virtGraph);
+				ResultSet results1 = vqe1.execSelect();
+				if (results1.hasNext()) {
+					QuerySolution result1 = results1.nextSolution();
+					RDFNode subject1 = result.get("pTotal");
+					System.out.print(subjectName+ subject1.toString());
+				}
+				
+				
+				
+				
+				
+				
 				
 				//if a class has an entity then it will be added into classNametoID file 
 				if (subjectName.length()>5 && numberOfInstance> 20 && classNameToIdMap.get(className) == null) {
