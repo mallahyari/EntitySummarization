@@ -181,7 +181,7 @@ public class entityProcessing {
 				queryString1.append("<http://dbpedia.org/resource/" + subjectName +"> ?p ?o.  " );
 				queryString1.append("FILTER (?p NOT IN (<http://dbpedia.org/ontology/profession> ) ) ");
 				queryString1.append("FILTER (?p NOT IN (<http://www.w3.org/1999/02/22-rdf-syntax-ns#type> ) ) ");
-				queryString1.append(" FILTER (?p NOT IN (<http://www.w3.org/2002/07/owl#sameAs> ) )");
+				queryString1.append("FILTER (?p NOT IN (<http://www.w3.org/2002/07/owl#sameAs> ) )");
 				queryString1.append("FILTER (?p NOT IN (<http://purl.org/dc/terms/subject> ) )");
 				queryString1.append("FILTER (?p NOT IN (<http://dbpedia.org/ontology/wikiPageWikiLink> ) ) ");
 				queryString1.append("FILTER (?p NOT IN (<http://dbpedia.org/ontology/wikiPageExternalLink> ) ) ");
@@ -201,11 +201,30 @@ public class entityProcessing {
 					
 				//	System.out.println(subjectName+ "  pTotal " +myPredicateNum);
 				}
-				
-				
-				
-				
-				
+				//Only extract entities where the number of its predicate is greater that 30
+				if (numberOfPredicate>30 ){
+					StringBuffer queryString2 = new StringBuffer();
+					queryString2.append("SELECT ?p ?o FROM <" + GRAPH + "> WHERE { ");
+					queryString2.append("<" + uriPrefix + subjectName + ">" + " ?p ?o . ");
+					queryString2.append("}");
+					Query sparql2 = QueryFactory.create(queryString2.toString());
+					VirtuosoQueryExecution vqe2 = VirtuosoQueryExecutionFactory.create (sparql2, virtGraph);
+					ResultSet results2 = vqe2.execSelect();
+							
+					while (results2.hasNext()) {
+							Set<String> objectCategories = new HashSet<String>();
+							//to keep literal similar words extracted from ENR
+							Set<String> literalCategories = new HashSet<String>();
+							
+							QuerySolution result2 = results2.nextSolution();
+							RDFNode predicate = result2.get("p");
+							RDFNode object = result2.get("o");
+							
+							int index2 = predicate.toString().lastIndexOf("/");
+							String predicateName = predicate.toString().substring(index + 1);
+							System.out.println(predicateName + "    "+ object);
+							} //end while
+				}// end if
 				
 				
 				//if a class has an entity then it will be added into classNametoID file 
