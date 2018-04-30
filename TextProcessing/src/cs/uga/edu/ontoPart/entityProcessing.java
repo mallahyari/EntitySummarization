@@ -206,7 +206,15 @@ public class entityProcessing {
 					StringBuffer queryString2 = new StringBuffer();
 					queryString2.append("SELECT ?p ?o FROM <" + GRAPH + "> WHERE { ");
 					queryString2.append("<" + uriPrefix + subjectName + ">" + " ?p ?o . ");
-					queryString2.append("}");
+					queryString2.append("FILTER (?p NOT IN (<http://dbpedia.org/ontology/profession> ) ) ");
+					queryString2.append("FILTER (?p NOT IN (<http://www.w3.org/1999/02/22-rdf-syntax-ns#type> ) ) ");
+					queryString2.append("FILTER (?p NOT IN (<http://www.w3.org/2002/07/owl#sameAs> ) )");
+					queryString2.append("FILTER (?p NOT IN (<http://purl.org/dc/terms/subject> ) )");
+					queryString2.append("FILTER (?p NOT IN (<http://dbpedia.org/ontology/wikiPageWikiLink> ) ) ");
+					queryString2.append("FILTER (?p NOT IN (<http://dbpedia.org/ontology/wikiPageExternalLink> ) ) ");
+					queryString2.append("FILTER (?p NOT IN (<http://dbpedia.org/ontology/abstract> ) ) ");
+					queryString2.append("FILTER (?p NOT IN (<http://www.w3.org/2000/01/rdf-schema#comment> ) ) ");
+					queryString2.append("}  ");
 					Query sparql2 = QueryFactory.create(queryString2.toString());
 					VirtuosoQueryExecution vqe2 = VirtuosoQueryExecutionFactory.create (sparql2, virtGraph);
 					ResultSet results2 = vqe2.execSelect();
