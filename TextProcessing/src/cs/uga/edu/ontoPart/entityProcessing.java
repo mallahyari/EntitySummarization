@@ -233,6 +233,12 @@ public class entityProcessing {
 				queryString1.append("FILTER (?p NOT IN (<http://dbpedia.org/property/seats> ) ) ");
 				queryString1.append("FILTER (?p NOT IN (<http://dbpedia.org/property/width> ) ) ");
 				queryString1.append("FILTER (?p NOT IN (<http://dbpedia.org/property/map> ) ) ");
+				queryString1.append("FILTER (?p NOT IN (<http://dbpedia.org/property/length> ) ) ");
+				queryString1.append("FILTER (?p NOT IN (<http://xmlns.com/foaf/0.1/homepage> ) ) ");
+				queryString1.append("FILTER (?p NOT IN (<http://dbpedia.org/property/d> ) ) ");
+				queryString1.append("FILTER (?p NOT IN (<http://dbpedia.org/property/b> ) ) ");
+				queryString1.append("FILTER (?p NOT IN (<http://dbpedia.org/property/washpo> ) ) ");
+		
 				queryString1.append("}  ");
 				//System.out.println(queryString1);
 				Query sparql1 = QueryFactory.create(queryString1.toString());
@@ -272,6 +278,14 @@ public class entityProcessing {
 					queryString2.append("FILTER (?p NOT IN (<http://dbpedia.org/property/seats> ) ) ");
 					queryString2.append("FILTER (?p NOT IN (<http://dbpedia.org/property/width> ) ) ");
 					queryString2.append("FILTER (?p NOT IN (<http://dbpedia.org/property/map> ) ) ");
+					queryString2.append("FILTER (?p NOT IN (<http://dbpedia.org/property/length> ) ) ");
+					queryString2.append("FILTER (?p NOT IN (<http://xmlns.com/foaf/0.1/homepage> ) ) ");
+					queryString2.append("FILTER (?p NOT IN (<http://dbpedia.org/property/d> ) ) ");
+					queryString2.append("FILTER (?p NOT IN (<http://dbpedia.org/property/b> ) ) ");
+					queryString2.append("FILTER (?p NOT IN (<http://dbpedia.org/property/washpo> ) ) ");
+					
+					
+					
 					queryString2.append("}  ");
 					Query sparql2 = QueryFactory.create(queryString2.toString());
 					VirtuosoQueryExecution vqe2 = VirtuosoQueryExecutionFactory.create (sparql2, virtGraph);
