@@ -102,7 +102,7 @@ public class entityProcessing {
 	private static final String literalObjectFileName = "/home/mehdi/ontoPart/evaluation/literalObjectName.txt";
 	private static final String realObjectFileName = "/home/mehdi/ontoPart/evaluation/realObjectName.txt";
 	private static final String classIdFileName = "/home/mehdi/ontoPart/evaluation/classListandID.txt";
-	private static final String subjectIdFileName = "/home/mehdi/ontoPart/evaluation/entityListandID.txt";
+	//private static final String subjectIdFileName = "/home/mehdi/ontoPart/evaluation/entityListandID.txt";
 	private static final String predicateObjectIdFileName = "/home/mehdi/ontoPart/evaluation/predicateObjectID.txt";
 	
 	
@@ -151,7 +151,7 @@ public class entityProcessing {
 		String className = "";
 		
 		FileWriter classToIdFile = new FileWriter(classIdFileName); //"/home/mehdi/ontoPart/evaluation/classListandID.txt";
-		FileWriter subjectToIdFile = new FileWriter(subjectIdFileName); // "/home/mehdi/ontoPart/evaluation/entityListandID.txt";
+		FileWriter subjectToIdFile = new FileWriter(docToIdFileName); // "/home/mehdi/ontoPart/evaluation/docToId.txt";
 		
 		BufferedReader br = new BufferedReader(new FileReader(classNameOnly));
 		Set<String> subjectNames = new HashSet<String>();
@@ -368,6 +368,81 @@ public class entityProcessing {
 	} // end of createEntityList
 	
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+	public void makeCorpus() throws IOException {
+		List<String> docToId = readDocument(docToIdFileName);
+		Map<String,Integer> docToIdMap = new HashMap<String,Integer>();
+		for (String line : docToId) {
+			String [] tokens = line.split(" ");
+			String docName = tokens[0];
+			String docId = tokens[1];
+			docToIdMap.put(docName, Integer.parseInt(docId));
+		} // end of for
+		
+		//"wordToIdFileName" stores ONLY objects to ID while "predicateObjectPairToIdFileName" stores pair of predicate*object with ID
+		List<String> wordToId = readDocument(wordToIdFileName);
+		Map<String,Integer> wordToIdMap = new HashMap<String,Integer>();
+		for (String line : wordToId) {
+			String [] tokens = line.split(" ");
+			String wordName = tokens[0];
+			String wordId = tokens[tokens.length-1];
+			wordToIdMap.put(wordName, Integer.parseInt(wordId));
+		} // end of for
+		FileWriter corpusFile = new FileWriter(corpusFileName);
+		File fileDirectory = new File(entityDocs);
+		for (File file : fileDirectory.listFiles()) {
+			String fileName = file.getName();
+			String document = readDocumentAsString(entityDocs + fileName);
+			fileName = fileName.replace(".txt", "");
+			String [] words = document.split("\\|");
+			Map<Integer, Integer> wordsFrequency = new HashMap<Integer, Integer>();
+			for (String word : words) {
+			//	System.out.println(word);
+				int wordId = wordToIdMap.get(word);
+				int preFreq = wordsFrequency.get(wordId) != null ? wordsFrequency.get(wordId) : 0;
+				wordsFrequency.put(wordId, preFreq + 1);
+			} // end of for
+			for (Map.Entry<Integer, Integer> entry : wordsFrequency.entrySet()) {
+				int wordId = entry.getKey();
+				int wordFreq = entry.getValue();
+				corpusFile.write(docToIdMap.get(fileName) + " " + wordId + " " + wordFreq + "\n");
+			} // end of for
+			
+		} // end of for (File)
+		corpusFile.close();
+		
+	} // end of makeCorpus
+	
+	public List<String> readDocument(String filename) {
+		List<String> content = new ArrayList<String>();
+		try {
+			BufferedReader br = new BufferedReader(new FileReader(filename));
+			String line = "";
+			while ((line = br.readLine()) != null) {
+				content.add(line);
+			} // end of while
+//			System.out.println(content);
+			br.close();
+		} catch (FileNotFoundException e) {
+			e.printStackTrace();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		return content;
+	} // end of readDocument
+	
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 	public void processEntities() throws IOException {
 		System.out.println("Connecting to Virtuoso ... ");
 		virtGraph = connectToVirtuoso();
@@ -1357,65 +1432,7 @@ public class entityProcessing {
 	} // end of processEntities
 	
 	
-	public void makeCorpus() throws IOException {
-		List<String> docToId = readDocument(docToIdFileName);
-		Map<String,Integer> docToIdMap = new HashMap<String,Integer>();
-		for (String line : docToId) {
-			String [] tokens = line.split(" ");
-			String docName = tokens[0];
-			String docId = tokens[1];
-			docToIdMap.put(docName, Integer.parseInt(docId));
-		} // end of for
-		List<String> wordToId = readDocument(wordToIdFileName);
-		Map<String,Integer> wordToIdMap = new HashMap<String,Integer>();
-		for (String line : wordToId) {
-			String [] tokens = line.split(" ");
-			String wordName = tokens[0];
-			String wordId = tokens[tokens.length-1];
-			wordToIdMap.put(wordName, Integer.parseInt(wordId));
-		} // end of for
-		FileWriter corpusFile = new FileWriter(corpusFileName);
-		File fileDirectory = new File(entityDocs);
-		for (File file : fileDirectory.listFiles()) {
-			String fileName = file.getName();
-			String document = readDocumentAsString(entityDocs + fileName);
-			fileName = fileName.replace(".txt", "");
-			String [] words = document.split("\\|");
-			Map<Integer, Integer> wordsFrequency = new HashMap<Integer, Integer>();
-			for (String word : words) {
-			//	System.out.println(word);
-				int wordId = wordToIdMap.get(word);
-				int preFreq = wordsFrequency.get(wordId) != null ? wordsFrequency.get(wordId) : 0;
-				wordsFrequency.put(wordId, preFreq + 1);
-			} // end of for
-			for (Map.Entry<Integer, Integer> entry : wordsFrequency.entrySet()) {
-				int wordId = entry.getKey();
-				int wordFreq = entry.getValue();
-				corpusFile.write(docToIdMap.get(fileName) + " " + wordId + " " + wordFreq + "\n");
-			} // end of for
-			
-		} // end of for (File)
-		corpusFile.close();
-		
-	} // end of makeCorpus
 	
-	public List<String> readDocument(String filename) {
-		List<String> content = new ArrayList<String>();
-		try {
-			BufferedReader br = new BufferedReader(new FileReader(filename));
-			String line = "";
-			while ((line = br.readLine()) != null) {
-				content.add(line);
-			} // end of while
-//			System.out.println(content);
-			br.close();
-		} catch (FileNotFoundException e) {
-			e.printStackTrace();
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
-		return content;
-	} // end of readDocument
 	
 	public String readDocumentAsString(String filename) {
 		String content = "";
