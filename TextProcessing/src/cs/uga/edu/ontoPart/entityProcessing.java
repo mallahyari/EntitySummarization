@@ -238,7 +238,8 @@ public class entityProcessing {
 				queryString1.append("FILTER (?p NOT IN (<http://dbpedia.org/property/d> ) ) ");
 				queryString1.append("FILTER (?p NOT IN (<http://dbpedia.org/property/b> ) ) ");
 				queryString1.append("FILTER (?p NOT IN (<http://dbpedia.org/property/washpo> ) ) ");
-		
+				queryString1.append("FILTER (?p NOT IN (<http://www.w3.org/2000/01/rdf-schema#label> ) ) ");
+				
 				queryString1.append("}  ");
 				//System.out.println(queryString1);
 				Query sparql1 = QueryFactory.create(queryString1.toString());
@@ -283,6 +284,7 @@ public class entityProcessing {
 					queryString2.append("FILTER (?p NOT IN (<http://dbpedia.org/property/d> ) ) ");
 					queryString2.append("FILTER (?p NOT IN (<http://dbpedia.org/property/b> ) ) ");
 					queryString2.append("FILTER (?p NOT IN (<http://dbpedia.org/property/washpo> ) ) ");
+					queryString2.append("FILTER (?p NOT IN (<http://www.w3.org/2000/01/rdf-schema#label> ) ) ");
 					
 					
 					
