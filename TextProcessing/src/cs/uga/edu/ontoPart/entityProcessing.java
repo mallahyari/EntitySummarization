@@ -86,6 +86,9 @@ public class entityProcessing {
 	private static final String wordToIdFileName = "/home/mehdi/ontoPart/evaluation/wordToID.txt";
 	//Map each entity (doc) to ID
 	private static final String docToIdFileName = "/home/mehdi/ontoPart/evaluation/docToId.txt"; 
+	
+	private static final String predicateObjectPairToIdFileName = "/home/mehdi/ontoPart/evaluation/predicateObjectPairToID.txt";
+	
 	private static final String rangeToIdFileName = "/home/mehdi/ontoPart/evaluation/rangeToId.txt";
 	private static final String domainToIdFileName = "/home/mehdi/ontoPart/evaluation/domainToId.txt";
 	
@@ -174,6 +177,7 @@ public class entityProcessing {
 
 		
 		FileWriter wordToIdFile = new FileWriter(wordToIdFileName); //"/home/mehdi/ontoPart/evaluation/wordToID.txt";
+		FileWriter predicateObjectPair = new FileWriter(predicateObjectPairToIdFileName); //"/home/mehdi/ontoPart/evaluation/predicateObjectPairToID.txt";
 		
 		FileWriter predicateToIdFile = new FileWriter(predicateToIdFileName); //"/home/mehdi/ontoPart/evaluation/predicateToId.txt"; 
 		FileWriter predicateObjectFile = new FileWriter(predicateObjectFileName);
@@ -228,7 +232,7 @@ public class entityProcessing {
 				queryString1.append("FILTER (?p NOT IN (<http://dbpedia.org/property/percentage> ) ) ");
 				queryString1.append("FILTER (?p NOT IN (<http://dbpedia.org/property/seats> ) ) ");
 				queryString1.append("FILTER (?p NOT IN (<http://dbpedia.org/property/width> ) ) ");
-				
+				queryString1.append("FILTER (?p NOT IN (<http://dbpedia.org/property/map> ) ) ");
 				queryString1.append("}  ");
 				//System.out.println(queryString1);
 				Query sparql1 = QueryFactory.create(queryString1.toString());
@@ -247,7 +251,7 @@ public class entityProcessing {
 				//extract their predicate and objects
 				predicateObjectVec.clear();
 				
-				if (numberOfPredicate>30 ){
+				if (numberOfPredicate>30 && subjectName.length()>5){
 					StringBuffer queryString2 = new StringBuffer();
 					queryString2.append("SELECT ?p ?o FROM <" + GRAPH + "> WHERE { ");
 					queryString2.append("<" + uriPrefix + subjectName + ">" + " ?p ?o . ");
@@ -267,19 +271,14 @@ public class entityProcessing {
 					queryString2.append("FILTER (?p NOT IN (<http://dbpedia.org/property/percentage> ) ) ");
 					queryString2.append("FILTER (?p NOT IN (<http://dbpedia.org/property/seats> ) ) ");
 					queryString2.append("FILTER (?p NOT IN (<http://dbpedia.org/property/width> ) ) ");
-					
-					
-						
-					
+					queryString2.append("FILTER (?p NOT IN (<http://dbpedia.org/property/map> ) ) ");
 					queryString2.append("}  ");
 					Query sparql2 = QueryFactory.create(queryString2.toString());
 					VirtuosoQueryExecution vqe2 = VirtuosoQueryExecutionFactory.create (sparql2, virtGraph);
 					ResultSet results2 = vqe2.execSelect();
 							
 					while (results2.hasNext()) {
-							Set<String> objectCategories = new HashSet<String>();
-							//to keep literal similar words extracted from ENR
-							Set<String> literalCategories = new HashSet<String>();
+						
 							
 							QuerySolution result2 = results2.nextSolution();
 							RDFNode predicate = result2.get("p");
@@ -319,64 +318,51 @@ public class entityProcessing {
 							//Store pair of predicate*object with ID
 							if (predicateObjectIdMap.get(predicateName+"*"+objectName) == null) {
 								predicateObjectIdMap.put(predicateName+"*"+objectName, prediateObjectIdGenerator);
-								wordToIdFile.write(objectName + " " + prediateObjectIdGenerator + "\n");
+								predicateObjectPair.write(objectName + " " + prediateObjectIdGenerator + "\n");
 								prediateObjectIdGenerator++;
 							}
 							
 							
 							
 							} //end while
+					
+					//Create bag of words for each subject
 					FileWriter entityFileDocs = new FileWriter(entityDocs+ subjectName+".txt");
 					for (String myUnit: predicateObjectVec){
 						entityFileDocs.write(myUnit+" | ");
-					}entityFileDocs.close();
-				}// end if
+					}
+					entityFileDocs.close();
+					
+					
+					//if a class has an entity then it will be added into classNametoID file 
+					if (subjectName.length()>5  && classNameToIdMap.get(className) == null) {
+						classNameToIdMap.put(className, classIdGenerator);
+						classToIdFile.write(className + " " + classIdGenerator + "\n");
+						classIdGenerator++;
+					}
+					
+					
+					if (subjectName.length()>5 && subjectNameToIdMap.get(subjectName) == null) {
+						subjectNameToIdMap.put(subjectName, subjectIdGenerator);
+						subjectToIdFile.write(subjectName + " " + subjectIdGenerator + "\n");
+						subjectIdGenerator++;
+						//System.out.println(subjectName+ "  predicateNume " +numberOfPredicate);
+						
+					}
+				
+				}// end if predicate number
 				
 				
 				System.out.println("XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX");
 				
-				//if a class has an entity then it will be added into classNametoID file 
-				if (subjectName.length()>5 && numberOfPredicate> 30 && classNameToIdMap.get(className) == null) {
-					classNameToIdMap.put(className, classIdGenerator);
-					classToIdFile.write(className + " " + classIdGenerator + "\n");
-					classIdGenerator++;
-				}
-				
-				
-				
-				
-					
-				
-				
-				
-				
-				
-				//if subject name length is greater that 5 then it will be added into set
-				if (subjectName.length()>5) {
-				subjectNames.add(subjectName);
-				}
-				if (subjectName.length()>5 && numberOfPredicate> 30 && subjectNameToIdMap.get(subjectName) == null) {
-					subjectNameToIdMap.put(subjectName, subjectIdGenerator);
-					subjectToIdFile.write(subjectName + " " + subjectIdGenerator + "\n");
-					subjectIdGenerator++;
-					//System.out.println(subjectName+ "  predicateNume " +numberOfPredicate);
-					
-				}
-				
-				
-			
 			} // end of while
 		}// end of while
 		//Write into file all subjects extracted from classes	
-		FileWriter docFile = new FileWriter(entityList +"entityList.txt");
-		for (String mySubject : subjectNames){
-		docFile.write(mySubject+ "\n");
-		}
-		docFile.close();
+		
 		br.close();
 		subjectToIdFile.close();
 		classToIdFile.close();
-		
+		predicateObjectPair.close();
 		
 		
 	} // end of createEntityList
