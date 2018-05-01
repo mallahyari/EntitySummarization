@@ -414,7 +414,7 @@ public class entityProcessing {
 			String [] words = document.split("\\|");
 			Map<Integer, Integer> wordsFrequency = new HashMap<Integer, Integer>();
 			for (String word : words) {
-			//	System.out.println(word);
+				System.out.println(word);
 				int wordId = wordToIdMap.get(word);
 				int preFreq = wordsFrequency.get(wordId) != null ? wordsFrequency.get(wordId) : 0;
 				wordsFrequency.put(wordId, preFreq + 1);
