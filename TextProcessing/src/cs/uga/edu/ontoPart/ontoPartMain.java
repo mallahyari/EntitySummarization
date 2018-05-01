@@ -97,7 +97,8 @@ public class ontoPartMain {
 		
 		
 		entityProcessing createMyEntityList = new entityProcessing();
-		createMyEntityList.createEntityList();
+		//createMyEntityList.createEntityList();
+		createMyEntityList.makeCorpus();
 		
 		
 		
