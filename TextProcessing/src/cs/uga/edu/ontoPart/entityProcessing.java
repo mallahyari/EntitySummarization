@@ -322,19 +322,19 @@ public class entityProcessing {
 							//Store ONLY predicate with ID
 							if (predicateToIdMap.get(predicateName) == null) {
 								predicateToIdMap.put(predicateName, prediateIdGenerator);
-								predicateToIdFile.write(predicateName + " | " + prediateIdGenerator + "\n");
+								predicateToIdFile.write(predicateName + " || " + prediateIdGenerator + "\n");
 								prediateIdGenerator++;
 							}
 							//Store ONLY object with ID
 							if (wordToIdMap.get(objectName) == null) {
 								wordToIdMap.put(objectName, wordIdGenerator);
-								wordToIdFile.write(objectName + " | " + wordIdGenerator + "\n");
+								wordToIdFile.write(objectName + " || " + wordIdGenerator + "\n");
 								wordIdGenerator++;
 							}
 							//Store pair of predicate*object with ID
 							if (predicateObjectIdMap.get(predicateName+"*"+objectName) == null) {
 								predicateObjectIdMap.put(predicateName+"*"+objectName, prediateObjectIdGenerator);
-								predicateObjectPair.write(predicateName+"*"+objectName + " | " + prediateObjectIdGenerator + "\n");
+								predicateObjectPair.write(predicateName+"*"+objectName + " || " + prediateObjectIdGenerator + "\n");
 								prediateObjectIdGenerator++;
 							}
 							
@@ -392,7 +392,7 @@ public class entityProcessing {
 		
 		Map<String,Integer> docToIdMap = new HashMap<String,Integer>();
 		for (String line : docToId) {
-			String [] tokens = line.split(" | ");
+			String [] tokens = line.split(" || ");
 			String docName = tokens[0];
 			String docId = tokens[1];
 			docToIdMap.put(docName, Integer.parseInt(docId));
@@ -402,7 +402,7 @@ public class entityProcessing {
 		List<String> wordToId = readDocument(wordToIdFileName);
 		Map<String,Integer> wordToIdMap = new HashMap<String,Integer>();
 		for (String line : wordToId) {
-			String [] tokens = line.split(" | ");
+			String [] tokens = line.split(" || ");
 			String wordName = tokens[0];
 			String wordId = tokens[tokens.length-1];
 			wordToIdMap.put(wordName, Integer.parseInt(wordId));
