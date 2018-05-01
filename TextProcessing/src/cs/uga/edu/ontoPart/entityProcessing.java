@@ -390,7 +390,7 @@ public class entityProcessing {
 		List<String> docToId = readDocument(docToIdFileName);
 		Map<String,Integer> docToIdMap = new HashMap<String,Integer>();
 		for (String line : docToId) {
-			String [] tokens = line.split(" ");
+			String [] tokens = line.split(" | ");
 			String docName = tokens[0];
 			String docId = tokens[1];
 			docToIdMap.put(docName, Integer.parseInt(docId));
@@ -400,7 +400,7 @@ public class entityProcessing {
 		List<String> wordToId = readDocument(wordToIdFileName);
 		Map<String,Integer> wordToIdMap = new HashMap<String,Integer>();
 		for (String line : wordToId) {
-			String [] tokens = line.split(" ");
+			String [] tokens = line.split(" | ");
 			String wordName = tokens[0];
 			String wordId = tokens[tokens.length-1];
 			wordToIdMap.put(wordName, Integer.parseInt(wordId));
