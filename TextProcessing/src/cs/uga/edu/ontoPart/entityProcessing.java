@@ -414,6 +414,7 @@ public class entityProcessing {
 			String fileName = file.getName();
 			String document = readDocumentAsString(entityDocs + fileName);
 			fileName = fileName.replace(".txt", "");
+			System.out.println(fileName);
 			String [] words = document.split("\\|");
 			System.out.println(words);
 			Map<Integer, Integer> wordsFrequency = new HashMap<Integer, Integer>();
