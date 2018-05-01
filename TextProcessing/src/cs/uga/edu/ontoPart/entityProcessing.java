@@ -387,7 +387,9 @@ public class entityProcessing {
 
 	public void makeCorpus() throws IOException {
 		//docToIdFileName = "/home/mehdi/ontoPart/evaluation/docToId.txt"
-		List<String> docToId = readDocument(docToIdFileName);
+	//	List<String> docToId = readDocument(docToIdFileName);
+		List<String> docToId = readDocument(predicateObjectPairToIdFileName);
+		
 		Map<String,Integer> docToIdMap = new HashMap<String,Integer>();
 		for (String line : docToId) {
 			String [] tokens = line.split(" | ");
