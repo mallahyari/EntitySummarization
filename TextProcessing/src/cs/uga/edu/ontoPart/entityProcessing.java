@@ -326,11 +326,12 @@ public class entityProcessing {
 							
 							
 							} //end while
+					FileWriter entityFileDocs = new FileWriter(entityDocs+ subjectName+".txt");
+					for (String myUnit: predicateObjectVec){
+						entityFileDocs.write(myUnit+" | ");
+					}entityFileDocs.close();
 				}// end if
-				FileWriter entityFileDocs = new FileWriter(entityDocs+ subjectName+".txt");
-				for (String myUnit: predicateObjectVec){
-					entityFileDocs.write(myUnit+" | ");
-				}entityFileDocs.close();
+				
 				
 				System.out.println("XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX");
 				
