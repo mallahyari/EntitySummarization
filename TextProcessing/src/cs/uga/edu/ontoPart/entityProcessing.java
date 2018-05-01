@@ -313,8 +313,8 @@ public class entityProcessing {
 							String objectName = objectNameRaw.toString().substring(index3 + 1);
 							System.out.println(subjectName+"  Predicate "+predicateName + "    "+ objectName);
 							
-							objectName=objectName.replace("*"," ");
-							objectName=objectName.replace("\n", " ");
+							objectName=objectName.replace("*","");
+							objectName=objectName.replace("\n", "");
 							objectName=objectName.replace("@en", "");
 							predicateObjectVec.add(predicateName + "*"+ objectName);
 							
@@ -322,19 +322,19 @@ public class entityProcessing {
 							//Store ONLY predicate with ID
 							if (predicateToIdMap.get(predicateName) == null) {
 								predicateToIdMap.put(predicateName, prediateIdGenerator);
-								predicateToIdFile.write(predicateName + " " + prediateIdGenerator + "\n");
+								predicateToIdFile.write(predicateName + " | " + prediateIdGenerator + "\n");
 								prediateIdGenerator++;
 							}
 							//Store ONLY object with ID
 							if (wordToIdMap.get(objectName) == null) {
 								wordToIdMap.put(objectName, wordIdGenerator);
-								wordToIdFile.write(objectName + " " + wordIdGenerator + "\n");
+								wordToIdFile.write(objectName + " | " + wordIdGenerator + "\n");
 								wordIdGenerator++;
 							}
 							//Store pair of predicate*object with ID
 							if (predicateObjectIdMap.get(predicateName+"*"+objectName) == null) {
 								predicateObjectIdMap.put(predicateName+"*"+objectName, prediateObjectIdGenerator);
-								predicateObjectPair.write(predicateName+"*"+objectName + " " + prediateObjectIdGenerator + "\n");
+								predicateObjectPair.write(predicateName+"*"+objectName + " | " + prediateObjectIdGenerator + "\n");
 								prediateObjectIdGenerator++;
 							}
 							
