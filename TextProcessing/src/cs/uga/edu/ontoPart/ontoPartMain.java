@@ -68,7 +68,7 @@ public class ontoPartMain {
 		
 //******************************************************\\
 		
-		ontoPartModel entSum = new ontoPartModel();
+	//	ontoPartModel entSum = new ontoPartModel();
 		//entSum.initializeMatrices();
 		// Gibbs Sampling Initialization and Run //
 		//entSum.initializeGibbsSampling();
