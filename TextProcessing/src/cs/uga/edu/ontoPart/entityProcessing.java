@@ -299,8 +299,9 @@ public class entityProcessing {
 							String objectName = objectNameRaw.toString().substring(index3 + 1);
 							System.out.println(subjectName+"  Predicate "+predicateName + "    "+ objectName);
 							
-							
-							predicateObjectVec.add(predicateName + "*"+ objectName.replace("@en", ""));
+							objectName.replace("*"," ");
+							objectName.replace("@en", "");
+							predicateObjectVec.add(predicateName + "*"+ objectName);
 							
 							
 							//Store ONLY predicate with ID
@@ -370,6 +371,7 @@ public class entityProcessing {
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 	public void makeCorpus() throws IOException {
+		//docToIdFileName = "/home/mehdi/ontoPart/evaluation/docToId.txt"
 		List<String> docToId = readDocument(docToIdFileName);
 		Map<String,Integer> docToIdMap = new HashMap<String,Integer>();
 		for (String line : docToId) {
