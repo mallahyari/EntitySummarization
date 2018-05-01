@@ -299,8 +299,8 @@ public class entityProcessing {
 							String objectName = objectNameRaw.toString().substring(index3 + 1);
 							System.out.println(subjectName+"  Predicate "+predicateName + "    "+ objectName);
 							
-							objectName.replace("*"," ");
-							objectName.replace("@en", "");
+							objectName=objectName.replace("*"," ");
+							objectName=objectName.replace("@en", "");
 							predicateObjectVec.add(predicateName + "*"+ objectName);
 							
 							
