@@ -300,6 +300,7 @@ public class entityProcessing {
 							System.out.println(subjectName+"  Predicate "+predicateName + "    "+ objectName);
 							
 							objectName=objectName.replace("*"," ");
+							objectName=objectName.replace("\n", " ");
 							objectName=objectName.replace("@en", "");
 							predicateObjectVec.add(predicateName + "*"+ objectName);
 							
