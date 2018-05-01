@@ -397,7 +397,9 @@ public class entityProcessing {
 		} // end of for
 		
 		//"wordToIdFileName" stores ONLY objects to ID while "predicateObjectPairToIdFileName" stores pair of predicate*object with ID
-		List<String> wordToId = readDocument(wordToIdFileName);
+		//List<String> wordToId = readDocument(wordToIdFileName);
+		List<String> wordToId = readDocument(predicateObjectPairToIdFileName);
+		
 		Map<String,Integer> wordToIdMap = new HashMap<String,Integer>();
 		for (String line : wordToId) {
 			String [] tokens = line.split(" || ");
