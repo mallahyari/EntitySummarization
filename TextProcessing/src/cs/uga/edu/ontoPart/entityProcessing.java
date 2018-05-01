@@ -403,6 +403,7 @@ public class entityProcessing {
 			String [] tokens = line.split(" || ");
 			String wordName = tokens[0];
 			String wordId = tokens[tokens.length-1];
+			System.out.println(wordId);
 			wordToIdMap.put(wordName, Integer.parseInt(wordId));
 		} // end of for
 		FileWriter corpusFile = new FileWriter(corpusFileName);
