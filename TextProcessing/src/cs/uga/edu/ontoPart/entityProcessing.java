@@ -396,21 +396,21 @@ public class entityProcessing {
 			String docName = tokens[0];
 			String docId = tokens[1];
 			docToIdMap.put(docName, Integer.parseInt(docId));
-			System.out.println(docName);
+		//	System.out.println(docName);
 		} // end of for
 		
-//		//"wordToIdFileName" stores ONLY objects to ID while "predicateObjectPairToIdFileName" stores pair of predicate*object with ID
-//		//List<String> wordToId = readDocument(wordToIdFileName);
-//		List<String> wordToId = readDocument(predicateObjectPairToIdFileName);
-//		
-//		Map<String,Integer> wordToIdMap = new HashMap<String,Integer>();
-//		for (String line : wordToId) {
-//			String [] tokens = line.split(" || ");
-//			String wordName = tokens[0];
-//			String wordId = tokens[tokens.length-1];
-//			System.out.println(wordId);
-//			wordToIdMap.put(wordName, Integer.parseInt(wordId));
-//		} // end of for
+		//"wordToIdFileName" stores ONLY objects to ID while "predicateObjectPairToIdFileName" stores pair of predicate*object with ID
+		//List<String> wordToId = readDocument(wordToIdFileName);
+		List<String> wordToId = readDocument(predicateObjectPairToIdFileName);
+		
+		Map<String,Integer> wordToIdMap = new HashMap<String,Integer>();
+		for (String line : wordToId) {
+			String [] tokens = line.split(" || ");
+			String wordName = tokens[0];
+			String wordId = tokens[tokens.length-1];
+			System.out.println(wordName+"XXXXXX"+wordId);
+			wordToIdMap.put(wordName, Integer.parseInt(wordId));
+		} // end of for
 //		FileWriter corpusFile = new FileWriter(corpusFileName);
 //		File fileDirectory = new File(entityDocs);
 //		for (File file : fileDirectory.listFiles()) {
