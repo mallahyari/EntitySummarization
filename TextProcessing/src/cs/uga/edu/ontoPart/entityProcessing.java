@@ -175,6 +175,7 @@ public class entityProcessing {
 		Set<String> literalObject=new HashSet<>();
 		Set<String> realObject=new HashSet<>();
 
+		FileWriter entNameOnlyFile = new FileWriter(entityNameOnly); //"/home/mehdi/ontoPart/evaluation/entNameOnly.txt";
 		
 		FileWriter wordToIdFile = new FileWriter(wordToIdFileName); //"/home/mehdi/ontoPart/evaluation/wordToID.txt";
 		FileWriter predicateObjectPair = new FileWriter(predicateObjectPairToIdFileName); //"/home/mehdi/ontoPart/evaluation/predicateObjectPairToID.txt";
@@ -324,19 +325,19 @@ public class entityProcessing {
 							//Store ONLY predicate with ID
 							if (predicateToIdMap.get(predicateName) == null) {
 								predicateToIdMap.put(predicateName, prediateIdGenerator);
-								predicateToIdFile.write(predicateName + " || " + prediateIdGenerator + "\n");
+								predicateToIdFile.write(predicateName + " " + prediateIdGenerator + "\n");
 								prediateIdGenerator++;
 							}
 							//Store ONLY object with ID
 							if (wordToIdMap.get(objectName) == null) {
 								wordToIdMap.put(objectName, wordIdGenerator);
-								wordToIdFile.write(objectName + " || " + wordIdGenerator + "\n");
+								wordToIdFile.write(objectName + " " + wordIdGenerator + "\n");
 								wordIdGenerator++;
 							}
 							//Store pair of predicate*object with ID
 							if (predicateObjectIdMap.get(predicateName+"*"+objectName) == null) {
 								predicateObjectIdMap.put(predicateName+"*"+objectName, prediateObjectIdGenerator);
-								predicateObjectPair.write(predicateName+"*"+objectName + " || " + prediateObjectIdGenerator + "\n");
+								predicateObjectPair.write(predicateName+"*"+objectName + " " + prediateObjectIdGenerator + "\n");
 								prediateObjectIdGenerator++;
 							}
 							
@@ -363,6 +364,8 @@ public class entityProcessing {
 					if (subjectName.length()>5 && subjectNameToIdMap.get(subjectName) == null) {
 						subjectNameToIdMap.put(subjectName, subjectIdGenerator);
 						subjectToIdFile.write(subjectName + " " + subjectIdGenerator + "\n");
+						entNameOnlyFile.write(subjectName + "\n");
+						
 						subjectIdGenerator++;
 						//System.out.println(subjectName+ "  predicateNume " +numberOfPredicate);
 						
@@ -381,84 +384,78 @@ public class entityProcessing {
 		subjectToIdFile.close();
 		classToIdFile.close();
 		predicateObjectPair.close();
-		
+		entNameOnlyFile.close();
 		
 	} // end of createEntityList
 	
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
-	public void makeCorpus() throws IOException {
-		//docToIdFileName = "/home/mehdi/ontoPart/evaluation/docToId.txt"
-		List<String> docToId = readDocument(docToIdFileName);	
-		Map<String,Integer> docToIdMap = new HashMap<String,Integer>();
-		for (String line : docToId) {
-			String [] tokens = line.split(" ");
-			String docName = tokens[0];
-			String docId = tokens[1];
-			docToIdMap.put(docName, Integer.parseInt(docId));
-		//	System.out.println(docName);
-		} // end of for
-		
-		//"wordToIdFileName" stores ONLY objects to ID while "predicateObjectPairToIdFileName" stores pair of predicate*object with ID
-		//List<String> wordToId = readDocument(wordToIdFileName);
-		List<String> wordToId = readDocument(predicateObjectPairToIdFileName);
-		
-		Map<String,Integer> wordToIdMap = new HashMap<String,Integer>();
-		for (String line : wordToId) {
-			System.out.println(line);
+	public void corpusMaker() throws NumberFormatException, IOException{
+		int countEntity=0;
+		BufferedReader brObject=null;
+		FileReader frObject=null;
+		Map<String, Integer> mapWordToID =new HashMap<String,Integer>();
+			String strObject;
 			
-			String [] tokens = line.split("||");
-			String wordName = tokens[0];
-			String wordId = tokens[tokens.length-1];
-			System.out.println(tokens[0]);
-			System.out.println("vvvvvvvvvvv"+tokens[tokens.length-1]);
-			System.out.println(wordId+"XXXXXX"+wordName);
-			wordToIdMap.put(wordName, Integer.parseInt(wordId));
-		} // end of for
-//		FileWriter corpusFile = new FileWriter(corpusFileName);
-//		File fileDirectory = new File(entityDocs);
-//		for (File file : fileDirectory.listFiles()) {
-//			String fileName = file.getName();
-//			String document = readDocumentAsString(entityDocs + fileName);
-//			fileName = fileName.replace(".txt", "");
-//			System.out.println(fileName);
-//			String [] words = document.split("\\|");
-//			System.out.println(words);
-//			Map<Integer, Integer> wordsFrequency = new HashMap<Integer, Integer>();
-//			for (String word : words) {
-//				System.out.println(word);
-//				int wordId = wordToIdMap.get(word);
-//				int preFreq = wordsFrequency.get(wordId) != null ? wordsFrequency.get(wordId) : 0;
-//				wordsFrequency.put(wordId, preFreq + 1);
-//			} // end of for
-//			for (Map.Entry<Integer, Integer> entry : wordsFrequency.entrySet()) {
-//				int wordId = entry.getKey();
-//				int wordFreq = entry.getValue();
-//				corpusFile.write(docToIdMap.get(fileName) + " " + wordId + " " + wordFreq + "\n");
-//			} // end of for
-//			
-//		} // end of for (File)
-//		corpusFile.close();
+			//predicateObjectPairToIdFileName word=pair of predicate and object
+			brObject = new BufferedReader(new FileReader(predicateObjectPairToIdFileName));
+			while ((strObject = brObject.readLine()) != null) {
+				 String[] kvPair = strObject.split("  ");
+				    mapWordToID.put(kvPair[0], Integer.valueOf(kvPair[1]));
+			
+			} //End While
+			BufferedReader br = null;
+			FileReader fr = null;
+			String entityLine;
+				br = new BufferedReader(new FileReader(entityNameOnly));
+				while ((entityLine = br.readLine()) != null) {
+					
+					BufferedReader brEntity = null;
+					FileReader frEntity = null;
+					String entityDoc;
+					brEntity = new BufferedReader(new FileReader(entityDocs+entityLine+".txt"));
+				
+					String mystr=brEntity.readLine();
+					
+					String trimmed = mystr.trim().replaceAll(" | ", " ");
+				    String[] a = trimmed.split(" ");
+				    ArrayList<Integer> p = new ArrayList<>();
+				    for (int i = 0; i < a.length; i++) {
+				        if (p.contains(i)) {
+				            continue;
+				        }
+				        int d = 1;
+				        for (int j = i+1; j < a.length; j++) {
+				            if (a[i].equals(a[j])) {
+				                d += 1;
+				                p.add(j);
+				            }
+				        }
+				        int value=0;
+				        if(mapWordToID.containsKey(a[i])){
+				        value=mapWordToID.get(a[i]);
+				        System.out.println("Count of "+value+"  "+a[i]+" is:"+d);
+				     
+				        // Writing Corpus
+					 BufferedWriter bw1 = null;
+					 	try {
+					      
+					         bw1 = new BufferedWriter(new FileWriter(corpusFileName, true));
+					         	bw1.write(countEntity + " " + value+" "+ d);
+								bw1.newLine();
+								
+							} catch (IOException e) {
+								
+								e.printStackTrace();
+							}
+							bw1.close();
+				
+				        }
+				       
+				    }
+				    countEntity++;
+				}
 		
-	} // end of makeCorpus
-	
-	public List<String> readDocument(String filename) {
-		List<String> content = new ArrayList<String>();
-		try {
-			BufferedReader br = new BufferedReader(new FileReader(filename));
-			String line = "";
-			while ((line = br.readLine()) != null) {
-				content.add(line);
-			} // end of while
-//			System.out.println(content);
-			br.close();
-		} catch (FileNotFoundException e) {
-			e.printStackTrace();
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
-		return content;
-	} // end of readDocument
+	}
 	
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -1689,73 +1686,6 @@ public class entityProcessing {
 		
 		
 		
-		
-		
-		public void corpusMaker() throws NumberFormatException, IOException{
-			int countEntity=0;
-			BufferedReader brObject=null;
-			FileReader frObject=null;
-			Map<String, Integer> mapWordToID =new HashMap<String,Integer>();
-				String strObject;
-				brObject = new BufferedReader(new FileReader(wordToIdFileName));
-				while ((strObject = brObject.readLine()) != null) {
-					 String[] kvPair = strObject.split("  ");
-					    mapWordToID.put(kvPair[0], Integer.valueOf(kvPair[1]));
-				
-				} //End While
-				BufferedReader br = null;
-				FileReader fr = null;
-				String entityLine;
-					br = new BufferedReader(new FileReader(entityNameOnly));
-					while ((entityLine = br.readLine()) != null) {
-						
-						BufferedReader brEntity = null;
-						FileReader frEntity = null;
-						String entityDoc;
-						brEntity = new BufferedReader(new FileReader(entityDocs+entityLine+".txt"));
-					
-						String mystr=brEntity.readLine();
-						
-						String trimmed = mystr.trim().replaceAll(" | ", " ");
-					    String[] a = trimmed.split(" ");
-					    ArrayList<Integer> p = new ArrayList<>();
-					    for (int i = 0; i < a.length; i++) {
-					        if (p.contains(i)) {
-					            continue;
-					        }
-					        int d = 1;
-					        for (int j = i+1; j < a.length; j++) {
-					            if (a[i].equals(a[j])) {
-					                d += 1;
-					                p.add(j);
-					            }
-					        }
-					        int value=0;
-					        if(mapWordToID.containsKey(a[i])){
-					        value=mapWordToID.get(a[i]);
-					        System.out.println("Count of "+value+"  "+a[i]+" is:"+d);
-					     
-					        // Writing Corpus
-						 BufferedWriter bw1 = null;
-						 	try {
-						      
-						         bw1 = new BufferedWriter(new FileWriter(corpusFileName, true));
-						         	bw1.write(countEntity + " " + value+" "+ d);
-									bw1.newLine();
-									
-								} catch (IOException e) {
-									
-									e.printStackTrace();
-								}
-								bw1.close();
-					
-					        }
-					       
-					    }
-					    countEntity++;
-					}
-			
-		}
 		
 		
 		//Making Predicate list text file
