@@ -253,7 +253,6 @@ public class entityProcessing {
 					String myPredicateNum = subject1.toString().substring(0,index1 );
 					numberOfPredicate=Integer.parseInt(myPredicateNum);
 					
-				//	System.out.println(subjectName+ "  pTotal " +myPredicateNum);
 				}
 				//Only extract/select entities where the number of its predicate is greater that 30 and 
 				//extract their predicate and objects
@@ -322,24 +321,25 @@ public class entityProcessing {
 							objectName=objectName.replace(")", "");
 							objectName=objectName.replace("(", "");
 							objectName=objectName.replaceAll("\\s+"," ");
-							
 							objectName=objectName.trim();
+							
+							//Vector of predicate object pair to add into bag of word for each entity (doc)
 							predicateObjectVec.add(predicateName + "*"+ objectName);
 							
 							
-							//Store ONLY predicate with ID
+							//Store ONLY predicate with ID (unique pair)
 							if (predicateToIdMap.get(predicateName) == null) {
 								predicateToIdMap.put(predicateName, prediateIdGenerator);
 								predicateToIdFile.write(predicateName + " " + prediateIdGenerator + "\n");
 								prediateIdGenerator++;
 							}
-							//Store ONLY object with ID
+							//Store ONLY object with ID (unique pair)
 							if (wordToIdMap.get(objectName) == null) {
 								wordToIdMap.put(objectName, wordIdGenerator);
 								wordToIdFile.write(objectName + " " + wordIdGenerator + "\n");
 								wordIdGenerator++;
 							}
-							//Store pair of predicate*object with ID
+							//Store pair of predicate*object with ID (unique pair)
 							if (predicateObjectIdMap.get(predicateName+"*"+objectName) == null) {
 								predicateObjectIdMap.put(predicateName+"*"+objectName, prediateObjectIdGenerator);
 								predicateObjectPair.write(predicateName+"*"+objectName + "    " + prediateObjectIdGenerator + "\n");
@@ -350,7 +350,7 @@ public class entityProcessing {
 							
 							} //end while
 					
-					//Create bag of words for each subject
+					//Create bag of words for each subject, entity (doc). write into file.
 					FileWriter entityFileDocs = new FileWriter(entityDocs+ subjectName+".txt");
 					for (String myUnit: predicateObjectVec){
 						entityFileDocs.write(myUnit+" | ");
@@ -359,14 +359,14 @@ public class entityProcessing {
 					
 					
 					//if a class has an entity then it will be added into classNametoID file 
-					if (subjectName.length()>5  && classNameToIdMap.get(className) == null) {
+					if ( classNameToIdMap.get(className) == null) {
 						classNameToIdMap.put(className, classIdGenerator);
 						classToIdFile.write(className + " " + classIdGenerator + "\n");
 						classIdGenerator++;
 					}
 					
 					
-					if (subjectName.length()>5 && subjectNameToIdMap.get(subjectName) == null) {
+					if ( subjectNameToIdMap.get(subjectName) == null) {
 						subjectNameToIdMap.put(subjectName, subjectIdGenerator);
 						subjectToIdFile.write(subjectName + " " + subjectIdGenerator + "\n");
 						entNameOnlyFile.write(subjectName + "\n");
@@ -405,7 +405,6 @@ public class entityProcessing {
 			brObject = new BufferedReader(new FileReader(predicateObjectPairToIdFileName));
 			while ((strObject = brObject.readLine()) != null) {
 				 String[] kvPair = strObject.split("    ");
-				 System.out.println(kvPair[0] +"cccccccccc"+ kvPair[1]);
 				    mapWordToID.put(kvPair[0], Integer.valueOf(kvPair[1].trim()));
 			
 			} //End While
