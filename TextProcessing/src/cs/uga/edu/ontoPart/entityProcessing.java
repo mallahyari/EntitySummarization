@@ -402,7 +402,7 @@ public class entityProcessing {
 			brObject = new BufferedReader(new FileReader(predicateObjectPairToIdFileName));
 			while ((strObject = brObject.readLine()) != null) {
 				 String[] kvPair = strObject.split("    ");
-				 System.out.println(kvPair[0] +"cccccccccc"+ kvPair[0]);
+				 System.out.println(kvPair[0] +"cccccccccc"+ kvPair[1]);
 				    mapWordToID.put(kvPair[0], Integer.valueOf(kvPair[1].trim()));
 			
 			} //End While
