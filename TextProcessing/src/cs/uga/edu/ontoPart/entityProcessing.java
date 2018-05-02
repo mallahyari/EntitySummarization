@@ -150,8 +150,6 @@ public class entityProcessing {
 		System.out.println("Connecting to Virtuoso ... ");
 		virtGraph = connectToVirtuoso();
 		System.out.println("Successfully Connected to Virtuoso!\n");
-		String className = "";
-		
 		FileWriter classToIdFile = new FileWriter(classIdFileName); //"/home/mehdi/ontoPart/evaluation/classListandID.txt";
 		FileWriter subjectToIdFile = new FileWriter(docToIdFileName); // "/home/mehdi/ontoPart/evaluation/docToId.txt";
 		FileWriter subjectIdCatIdFile = new FileWriter(subjectIdCatIdFileName); //"/home/mehdi/ontoPart/evaluation/subjectIdCatId.txt";
@@ -164,7 +162,7 @@ public class entityProcessing {
 		FileWriter literalObjectFile=new FileWriter(literalObjectFileName);
 		FileWriter realObjectFile=new FileWriter(realObjectFileName);
 		
-		BufferedReader br = new BufferedReader(new FileReader(classNameOnly));
+		
 		Set<String> subjectNames = new HashSet<String>();
 		Map<String, Integer> subjectNameToIdMap = new HashMap<String,Integer>();
 		Map<String, Integer> classNameToIdMap = new HashMap<String,Integer>();
@@ -191,7 +189,9 @@ public class entityProcessing {
 		
 		
 		
-		
+		String className = "";
+		BufferedReader br = new BufferedReader(new FileReader(classNameOnly));
+
 	
 		//Read list of classes from a text file  and extract entity from that class
 		while ((className = br.readLine()) != null) {
@@ -383,30 +383,7 @@ public class entityProcessing {
 						subjectIdGenerator++;
 						//System.out.println(subjectName+ "  predicateNume " +numberOfPredicate);
 					}
-					//************* extract Category ***************\\
-					StringBuffer queryString4 = new StringBuffer();
-					queryString4.append("SELECT ?o FROM <" + GRAPH + "> WHERE { "); // uriPrefix = "http://dbpedia.org/resource/"
-					queryString4.append("<" + uriPrefix + subjectName + ">" + " <http://purl.org/dc/terms/subject> ?o . ");
-					queryString4.append("}  ");
-					Query sparql4 = QueryFactory.create(queryString4.toString());
-					VirtuosoQueryExecution vqe4 = VirtuosoQueryExecutionFactory.create (sparql4, virtGraph);
-					ResultSet results4 = vqe4.execSelect();
-							
-					while (results4.hasNext()) {
-						    QuerySolution result4 = results4.nextSolution();
-						    RDFNode object4 = result4.get("o");
-							int index4 = object4.toString().lastIndexOf(":");
-							String objectCategoryName = object4.toString().substring(index4 + 1);
-							if ( CategoryNameToIdMap.get(objectCategoryName) == null) {
-								CategoryNameToIdMap.put(objectCategoryName, CategoryIdGenerator);
-								CategoryIdFile.write(objectCategoryName + " " + CategoryIdGenerator + "\n");
-								CategoryIdGenerator++;
-								}
-							System.out.println(subjectName + "&&&&&&&&&&&&&&&&&&& "+objectCategoryName+"\n");
-							subjectIdCatIdFile.write(subjectNameToIdMap.get(subjectName) + " "+ CategoryNameToIdMap.get(objectCategoryName)+"\n");
-							
-			             }//end while
-					//************* END extract Category ***************\\
+					
 					
 					
 					
@@ -418,7 +395,44 @@ public class entityProcessing {
 				
 			} // end of while
 		}// end of while
-		//Write into file all subjects extracted from classes	
+	
+		//************* extract Category ***************\\
+		//entityNameOnly = "/home/mehdi/ontoPart/evaluation/entNameOnly.txt";
+		String subjectName1 = "";
+		BufferedReader br1 = new BufferedReader(new FileReader(entityNameOnly));
+		//Read list of subjects from a text file  
+		while ((subjectName1 = br.readLine()) != null) {
+		StringBuffer queryString4 = new StringBuffer();
+		queryString4.append("SELECT ?o FROM <" + GRAPH + "> WHERE { "); // uriPrefix = "http://dbpedia.org/resource/"
+		queryString4.append("<" + uriPrefix + subjectName1 + ">" + " <http://purl.org/dc/terms/subject> ?o . ");
+		queryString4.append("}  ");
+		Query sparql4 = QueryFactory.create(queryString4.toString());
+		VirtuosoQueryExecution vqe4 = VirtuosoQueryExecutionFactory.create (sparql4, virtGraph);
+		ResultSet results4 = vqe4.execSelect();
+				
+		while (results4.hasNext()) {
+			    QuerySolution result4 = results4.nextSolution();
+			    RDFNode object4 = result4.get("o");
+				int index4 = object4.toString().lastIndexOf(":");
+				String objectCategoryName = object4.toString().substring(index4 + 1);
+				if ( CategoryNameToIdMap.get(objectCategoryName) == null) {
+					CategoryNameToIdMap.put(objectCategoryName, CategoryIdGenerator);
+					CategoryIdFile.write(objectCategoryName + " " + CategoryIdGenerator + "\n");
+					CategoryIdGenerator++;
+					}
+				System.out.println(subjectName1 + "&&&&&&&&&&&&&&&&&&& "+objectCategoryName+"\n");
+				subjectIdCatIdFile.write(subjectNameToIdMap.get(subjectName1) + " "+ CategoryNameToIdMap.get(objectCategoryName)+"\n");
+				
+             }//end while
+		}//end while
+		//************* END extract Category ***************\\
+		
+		
+		
+		
+		
+		
+		
 		
 		br.close();
 		subjectToIdFile.close();
