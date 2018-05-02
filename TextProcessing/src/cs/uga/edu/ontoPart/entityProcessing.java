@@ -405,7 +405,6 @@ public class entityProcessing {
 		classToIdFile.close();
 		predicateObjectPair.close();
 		entNameOnlyFile.close();
-		subjectIdCatIdFile.close();
 		
 		
 		//************* extract Category ***************\\
@@ -438,6 +437,8 @@ public class entityProcessing {
              }//end while
 		}//end while
 		br1.close();
+		subjectIdCatIdFile.close();
+		
 		//************* END extract Category ***************\\
 		
 		
