@@ -105,6 +105,8 @@ public class entityProcessing {
 	//private static final String subjectIdFileName = "/home/mehdi/ontoPart/evaluation/entityListandID.txt";
 	private static final String predicateObjectIdFileName = "/home/mehdi/ontoPart/evaluation/predicateObjectID.txt";
 	
+	private static final String subjectIdCatIdFileName = "/home/mehdi/ontoPart/evaluation/subjectIdCatId.txt";
+	private static final String categoryIdFileName = "/home/mehdi/ontoPart/evaluation/CategoryId.txt";
 	
 	
 	protected String objectPredicateFileName = "/home/mehdi/ontoPart/evaluation/objectPredicate.ser";
@@ -152,19 +154,23 @@ public class entityProcessing {
 		
 		FileWriter classToIdFile = new FileWriter(classIdFileName); //"/home/mehdi/ontoPart/evaluation/classListandID.txt";
 		FileWriter subjectToIdFile = new FileWriter(docToIdFileName); // "/home/mehdi/ontoPart/evaluation/docToId.txt";
+		FileWriter subjectIdCatIdFile = new FileWriter(subjectIdCatIdFileName); //"/home/mehdi/ontoPart/evaluation/subjectIdCatId.txt";
+		FileWriter CategoryIdFile = new FileWriter(categoryIdFileName); //"/home/mehdi/ontoPart/evaluation/subjectIdCatId.txt";
+		FileWriter entNameOnlyFile = new FileWriter(entityNameOnly); //"/home/mehdi/ontoPart/evaluation/entNameOnly.txt";
+		FileWriter wordToIdFile = new FileWriter(wordToIdFileName); //"/home/mehdi/ontoPart/evaluation/wordToID.txt";
+		FileWriter predicateObjectPair = new FileWriter(predicateObjectPairToIdFileName); //"/home/mehdi/ontoPart/evaluation/predicateObjectPairToID.txt";
+		FileWriter predicateToIdFile = new FileWriter(predicateToIdFileName); //"/home/mehdi/ontoPart/evaluation/predicateToId.txt"; 
+		FileWriter predicateObjectFile = new FileWriter(predicateObjectFileName);
+		FileWriter literalObjectFile=new FileWriter(literalObjectFileName);
+		FileWriter realObjectFile=new FileWriter(realObjectFileName);
 		
 		BufferedReader br = new BufferedReader(new FileReader(classNameOnly));
 		Set<String> subjectNames = new HashSet<String>();
 		Map<String, Integer> subjectNameToIdMap = new HashMap<String,Integer>();
 		Map<String, Integer> classNameToIdMap = new HashMap<String,Integer>();
-		 Vector<String> predicateObjectVec = new Vector<String>();
-		int subjectIdGenerator = 0;
-		int classIdGenerator=0;
-		int prediateIdGenerator = 0;
-		int prediateObjectIdGenerator = 0;
-		
-		int wordIdGenerator = 0;
-		int docIdGenerator = 0;
+		Vector<String> predicateObjectVec = new Vector<String>();
+		Map<String, Integer> CategoryNameToIdMap = new HashMap<String,Integer>();
+		Map<Integer, Integer> subjectIdCatIdMap = new HashMap<Integer,Integer>();
 		Map<String, Integer> wordToIdMap = new HashMap<String,Integer>();
 		Map<String, Integer> predicateToIdMap = new HashMap<String,Integer>();
 		Map<String, Integer> predicateObjectIdMap = new HashMap<String,Integer>();
@@ -175,15 +181,14 @@ public class entityProcessing {
 		Set<String> literalObject=new HashSet<>();
 		Set<String> realObject=new HashSet<>();
 
-		FileWriter entNameOnlyFile = new FileWriter(entityNameOnly); //"/home/mehdi/ontoPart/evaluation/entNameOnly.txt";
+		int CategoryIdGenerator=0;
+		int subjectIdGenerator = 0;
+		int classIdGenerator=0;
+		int prediateIdGenerator = 0;
+		int prediateObjectIdGenerator = 0;
+		int wordIdGenerator = 0;
+		int docIdGenerator = 0;
 		
-		FileWriter wordToIdFile = new FileWriter(wordToIdFileName); //"/home/mehdi/ontoPart/evaluation/wordToID.txt";
-		FileWriter predicateObjectPair = new FileWriter(predicateObjectPairToIdFileName); //"/home/mehdi/ontoPart/evaluation/predicateObjectPairToID.txt";
-		
-		FileWriter predicateToIdFile = new FileWriter(predicateToIdFileName); //"/home/mehdi/ontoPart/evaluation/predicateToId.txt"; 
-		FileWriter predicateObjectFile = new FileWriter(predicateObjectFileName);
-		FileWriter literalObjectFile=new FileWriter(literalObjectFileName);
-		FileWriter realObjectFile=new FileWriter(realObjectFileName);
 		
 		
 		
@@ -377,8 +382,33 @@ public class entityProcessing {
 						
 						subjectIdGenerator++;
 						//System.out.println(subjectName+ "  predicateNume " +numberOfPredicate);
-						
 					}
+					//************* extract Category ***************\\
+					StringBuffer queryString4 = new StringBuffer();
+					queryString4.append("SELECT ?o FROM <" + GRAPH + "> WHERE { "); // uriPrefix = "http://dbpedia.org/resource/"
+					queryString4.append("<" + uriPrefix + subjectName + ">" + " <http://purl.org/dc/terms/subject> ?o . ");
+					queryString4.append("}  ");
+					Query sparql4 = QueryFactory.create(queryString4.toString());
+					VirtuosoQueryExecution vqe4 = VirtuosoQueryExecutionFactory.create (sparql, virtGraph);
+					ResultSet results4 = vqe4.execSelect();
+							
+					while (results4.hasNext()) {
+						    QuerySolution result4 = results4.nextSolution();
+						    RDFNode object4 = result4.get("o");
+							int index4 = object4.toString().lastIndexOf(":");
+							String objectCategoryName = object4.toString().substring(index4 + 1);
+							if ( CategoryNameToIdMap.get(objectCategoryName) == null) {
+								CategoryNameToIdMap.put(objectCategoryName, CategoryIdGenerator);
+								CategoryIdFile.write(objectCategoryName + " " + CategoryIdGenerator + "\n");
+								CategoryIdGenerator++;
+								}
+							subjectIdCatIdFile.write(subjectNameToIdMap.get(subjectName) + " "+ CategoryNameToIdMap.get(objectCategoryName)+"\n");
+							
+			             }//end while
+					//************* END extract Category ***************\\
+					
+					
+					
 				
 				}// end if predicate number
 				
@@ -394,6 +424,8 @@ public class entityProcessing {
 		classToIdFile.close();
 		predicateObjectPair.close();
 		entNameOnlyFile.close();
+		subjectIdCatIdFile.close();
+		
 		
 	} // end of createEntityList
 	
@@ -469,15 +501,7 @@ public class entityProcessing {
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 	
-	
-	
-	
-	
-	
-	
-	
-	
-	
+/////////////////////////////////////////////////////////	
 	public void processEntities() throws IOException {
 		System.out.println("Connecting to Virtuoso ... ");
 		virtGraph = connectToVirtuoso();

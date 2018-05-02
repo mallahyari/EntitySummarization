@@ -95,7 +95,7 @@ public class ontoPartMain {
 //		entLDA2.run();
 //		
 		
-		
+		//OntoPart Project ** Pre-processing phase in order to make documents (entitis) and main corpus
 		entityProcessing createMyEntityList = new entityProcessing();
 		createMyEntityList.createEntityList();
 		createMyEntityList.corpusMaker();
