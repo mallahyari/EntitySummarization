@@ -321,6 +321,7 @@ public class entityProcessing {
 							objectName=objectName.replace("@en", "");
 							objectName=objectName.replace(")", "");
 							objectName=objectName.replace("(", "");
+							objectName=objectName.trim();
 							predicateObjectVec.add(predicateName + "*"+ objectName);
 							
 							
