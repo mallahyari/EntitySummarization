@@ -389,7 +389,7 @@ public class entityProcessing {
 					queryString4.append("<" + uriPrefix + subjectName + ">" + " <http://purl.org/dc/terms/subject> ?o . ");
 					queryString4.append("}  ");
 					Query sparql4 = QueryFactory.create(queryString4.toString());
-					VirtuosoQueryExecution vqe4 = VirtuosoQueryExecutionFactory.create (sparql, virtGraph);
+					VirtuosoQueryExecution vqe4 = VirtuosoQueryExecutionFactory.create (sparql4, virtGraph);
 					ResultSet results4 = vqe4.execSelect();
 							
 					while (results4.hasNext()) {
