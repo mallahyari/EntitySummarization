@@ -405,10 +405,12 @@ public class entityProcessing {
 		
 		Map<String,Integer> wordToIdMap = new HashMap<String,Integer>();
 		for (String line : wordToId) {
+			System.out.println(line);
+			
 			String [] tokens = line.split("||");
 			String wordName = tokens[0];
-			//String wordId = tokens[tokens.length-1];
-			String wordId = tokens[1];
+			String wordId = tokens[tokens.length-1];
+			
 			System.out.println(wordId+"XXXXXX"+wordName);
 			wordToIdMap.put(wordName, Integer.parseInt(wordId));
 		} // end of for
