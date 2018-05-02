@@ -410,7 +410,8 @@ public class entityProcessing {
 			String [] tokens = line.split("||");
 			String wordName = tokens[0];
 			String wordId = tokens[tokens.length-1];
-			
+			System.out.println(tokens[0]);
+			System.out.println("vvvvvvvvvvv"+tokens[1]);
 			System.out.println(wordId+"XXXXXX"+wordName);
 			wordToIdMap.put(wordName, Integer.parseInt(wordId));
 		} // end of for
