@@ -217,7 +217,6 @@ public class entityProcessing {
 				StringBuffer queryString1 = new StringBuffer();
 				queryString1.append("select   (count(?p)as ?pTotal) FROM <" + GRAPH + "> WHERE { ");
 				queryString1.append("<http://dbpedia.org/resource/" + subjectName +"> ?p ?o.  " );
-				queryString1.append("FILTER (?p NOT IN (<http://dbpedia.org/ontology/profession> ) ) ");
 				queryString1.append("FILTER (?p NOT IN (<http://www.w3.org/1999/02/22-rdf-syntax-ns#type> ) ) ");
 				queryString1.append("FILTER (?p NOT IN (<http://www.w3.org/2002/07/owl#sameAs> ) )");
 				queryString1.append("FILTER (?p NOT IN (<http://purl.org/dc/terms/subject> ) )");
@@ -266,7 +265,6 @@ public class entityProcessing {
 					StringBuffer queryString2 = new StringBuffer();
 					queryString2.append("SELECT ?p ?o FROM <" + GRAPH + "> WHERE { ");
 					queryString2.append("<" + uriPrefix + subjectName + ">" + " ?p ?o . ");
-					queryString2.append("FILTER (?p NOT IN (<http://dbpedia.org/ontology/profession> ) ) ");
 					queryString2.append("FILTER (?p NOT IN (<http://www.w3.org/1999/02/22-rdf-syntax-ns#type> ) ) ");
 					queryString2.append("FILTER (?p NOT IN (<http://www.w3.org/2002/07/owl#sameAs> ) )");
 					queryString2.append("FILTER (?p NOT IN (<http://purl.org/dc/terms/subject> ) )");
