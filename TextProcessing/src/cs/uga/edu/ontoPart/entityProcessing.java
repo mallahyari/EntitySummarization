@@ -437,6 +437,7 @@ public class entityProcessing {
 				
              }//end while
 		}//end while
+		br1.close();
 		//************* END extract Category ***************\\
 		
 		
