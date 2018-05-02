@@ -396,44 +396,45 @@ public class entityProcessing {
 			String docName = tokens[0];
 			String docId = tokens[1];
 			docToIdMap.put(docName, Integer.parseInt(docId));
+			System.out.println(docName);
 		} // end of for
 		
-		//"wordToIdFileName" stores ONLY objects to ID while "predicateObjectPairToIdFileName" stores pair of predicate*object with ID
-		//List<String> wordToId = readDocument(wordToIdFileName);
-		List<String> wordToId = readDocument(predicateObjectPairToIdFileName);
-		
-		Map<String,Integer> wordToIdMap = new HashMap<String,Integer>();
-		for (String line : wordToId) {
-			String [] tokens = line.split(" || ");
-			String wordName = tokens[0];
-			String wordId = tokens[tokens.length-1];
-			System.out.println(wordId);
-			wordToIdMap.put(wordName, Integer.parseInt(wordId));
-		} // end of for
-		FileWriter corpusFile = new FileWriter(corpusFileName);
-		File fileDirectory = new File(entityDocs);
-		for (File file : fileDirectory.listFiles()) {
-			String fileName = file.getName();
-			String document = readDocumentAsString(entityDocs + fileName);
-			fileName = fileName.replace(".txt", "");
-			System.out.println(fileName);
-			String [] words = document.split("\\|");
-			System.out.println(words);
-			Map<Integer, Integer> wordsFrequency = new HashMap<Integer, Integer>();
-			for (String word : words) {
-				System.out.println(word);
-				int wordId = wordToIdMap.get(word);
-				int preFreq = wordsFrequency.get(wordId) != null ? wordsFrequency.get(wordId) : 0;
-				wordsFrequency.put(wordId, preFreq + 1);
-			} // end of for
-			for (Map.Entry<Integer, Integer> entry : wordsFrequency.entrySet()) {
-				int wordId = entry.getKey();
-				int wordFreq = entry.getValue();
-				corpusFile.write(docToIdMap.get(fileName) + " " + wordId + " " + wordFreq + "\n");
-			} // end of for
-			
-		} // end of for (File)
-		corpusFile.close();
+//		//"wordToIdFileName" stores ONLY objects to ID while "predicateObjectPairToIdFileName" stores pair of predicate*object with ID
+//		//List<String> wordToId = readDocument(wordToIdFileName);
+//		List<String> wordToId = readDocument(predicateObjectPairToIdFileName);
+//		
+//		Map<String,Integer> wordToIdMap = new HashMap<String,Integer>();
+//		for (String line : wordToId) {
+//			String [] tokens = line.split(" || ");
+//			String wordName = tokens[0];
+//			String wordId = tokens[tokens.length-1];
+//			System.out.println(wordId);
+//			wordToIdMap.put(wordName, Integer.parseInt(wordId));
+//		} // end of for
+//		FileWriter corpusFile = new FileWriter(corpusFileName);
+//		File fileDirectory = new File(entityDocs);
+//		for (File file : fileDirectory.listFiles()) {
+//			String fileName = file.getName();
+//			String document = readDocumentAsString(entityDocs + fileName);
+//			fileName = fileName.replace(".txt", "");
+//			System.out.println(fileName);
+//			String [] words = document.split("\\|");
+//			System.out.println(words);
+//			Map<Integer, Integer> wordsFrequency = new HashMap<Integer, Integer>();
+//			for (String word : words) {
+//				System.out.println(word);
+//				int wordId = wordToIdMap.get(word);
+//				int preFreq = wordsFrequency.get(wordId) != null ? wordsFrequency.get(wordId) : 0;
+//				wordsFrequency.put(wordId, preFreq + 1);
+//			} // end of for
+//			for (Map.Entry<Integer, Integer> entry : wordsFrequency.entrySet()) {
+//				int wordId = entry.getKey();
+//				int wordFreq = entry.getValue();
+//				corpusFile.write(docToIdMap.get(fileName) + " " + wordId + " " + wordFreq + "\n");
+//			} // end of for
+//			
+//		} // end of for (File)
+//		corpusFile.close();
 		
 	} // end of makeCorpus
 	
