@@ -200,7 +200,7 @@ public class entityProcessing {
 			queryString.append("SELECT ?s FROM <" + GRAPH + "> WHERE { ");
 			queryString.append(" ?s a <" + uriClassPrefix + className + ">   " );
 			queryString.append("}   Limit 3");
-			System.out.println(queryString);
+			//System.out.println(queryString);
 			Query sparql = QueryFactory.create(queryString.toString());
 			VirtuosoQueryExecution vqe = VirtuosoQueryExecutionFactory.create (sparql, virtGraph);
 			ResultSet results = vqe.execSelect();
@@ -322,7 +322,7 @@ public class entityProcessing {
 							
 							int index3 = objectNameRaw.toString().lastIndexOf("/");
 							String objectName = objectNameRaw.toString().substring(index3 + 1);
-							System.out.println(subjectName+"  Predicate "+predicateName + "    "+ objectName);
+							//System.out.println(subjectName+"  Predicate "+predicateName + "    "+ objectName);
 							
 							objectName=objectName.replace("*","");
 							objectName=objectName.replace("\n", "");
@@ -402,6 +402,7 @@ public class entityProcessing {
 								CategoryIdFile.write(objectCategoryName + " " + CategoryIdGenerator + "\n");
 								CategoryIdGenerator++;
 								}
+							System.out.println(subjectName + "&&&&&&&&&&&&&&&&&&& "+objectCategoryName+"\n");
 							subjectIdCatIdFile.write(subjectNameToIdMap.get(subjectName) + " "+ CategoryNameToIdMap.get(objectCategoryName)+"\n");
 							
 			             }//end while
@@ -413,7 +414,7 @@ public class entityProcessing {
 				}// end if predicate number
 				
 				
-				System.out.println("XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX");
+				//System.out.println("XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX");
 				
 			} // end of while
 		}// end of while
@@ -474,7 +475,7 @@ public class entityProcessing {
 				        int value=0;
 				        if(mapWordToID.containsKey(a[i])){
 				        value=mapWordToID.get(a[i]);
-				        System.out.println("Count of "+value+"  "+a[i]+" is:"+d);
+				       // System.out.println("Count of "+value+"  "+a[i]+" is:"+d);
 				     
 				        // Writing Corpus
 					 BufferedWriter bw1 = null;
