@@ -241,7 +241,7 @@ public class entityProcessing {
 				queryString1.append("FILTER (?p NOT IN (<http://dbpedia.org/property/washpo> ) ) ");
 				queryString1.append("FILTER (?p NOT IN (<http://www.w3.org/2000/01/rdf-schema#label> ) ) ");
 				queryString1.append("FILTER (?p NOT IN (<http://dbpedia.org/property/imageSize> ) ) ");
-				queryString1.append("FILTER (?p NOT IN (<	http://dbpedia.org/ontology/height> ) ) ");
+				queryString1.append("FILTER (?p NOT IN (<http://dbpedia.org/ontology/height> ) ) ");
 				
 				
 				
@@ -290,7 +290,7 @@ public class entityProcessing {
 					queryString2.append("FILTER (?p NOT IN (<http://dbpedia.org/property/washpo> ) ) ");
 					queryString2.append("FILTER (?p NOT IN (<http://www.w3.org/2000/01/rdf-schema#label> ) ) ");
 					queryString2.append("FILTER (?p NOT IN (<http://dbpedia.org/property/imageSize> ) ) ");
-					queryString2.append("FILTER (?p NOT IN (<	http://dbpedia.org/ontology/height> ) ) ");
+					queryString2.append("FILTER (?p NOT IN (<http://dbpedia.org/ontology/height> ) ) ");
 					
 					
 				
