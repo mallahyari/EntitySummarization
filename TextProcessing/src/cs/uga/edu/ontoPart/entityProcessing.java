@@ -337,7 +337,7 @@ public class entityProcessing {
 							//Store pair of predicate*object with ID
 							if (predicateObjectIdMap.get(predicateName+"*"+objectName) == null) {
 								predicateObjectIdMap.put(predicateName+"*"+objectName, prediateObjectIdGenerator);
-								predicateObjectPair.write(predicateName+"*"+objectName + " " + prediateObjectIdGenerator + "\n");
+								predicateObjectPair.write(predicateName+"*"+objectName + "  " + prediateObjectIdGenerator + "\n");
 								prediateObjectIdGenerator++;
 							}
 							
