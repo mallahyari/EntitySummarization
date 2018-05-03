@@ -159,8 +159,7 @@ public class entityProcessing {
 		FileWriter predicateObjectPair = new FileWriter(predicateObjectPairToIdFileName); //"/home/mehdi/ontoPart/evaluation/predicateObjectPairToID.txt";
 		FileWriter predicateToIdFile = new FileWriter(predicateToIdFileName); //"/home/mehdi/ontoPart/evaluation/predicateToId.txt"; 
 		FileWriter predicateObjectFile = new FileWriter(predicateObjectFileName);
-		FileWriter literalObjectFile=new FileWriter(literalObjectFileName);
-		FileWriter realObjectFile=new FileWriter(realObjectFileName);
+		
 		
 		
 		Set<String> subjectNames = new HashSet<String>();
