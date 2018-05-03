@@ -187,12 +187,9 @@ public class entityProcessing {
 		int wordIdGenerator = 0;
 		int docIdGenerator = 0;
 		
-		
-		
 		String className = "";
 		BufferedReader br = new BufferedReader(new FileReader(classNameOnly));
 
-	
 		//Read list of classes from a text file  and extract entity from that class
 		while ((className = br.readLine()) != null) {
 			//Connecting to Virtuoso to extract predicates and objects
@@ -205,10 +202,6 @@ public class entityProcessing {
 			VirtuosoQueryExecution vqe = VirtuosoQueryExecutionFactory.create (sparql, virtGraph);
 			ResultSet results = vqe.execSelect();
 			
-			
-			
-			
-		
 		int numberOfPredicate=0;
 		// For each subject (entity) extract number of useful predicates
 			while (results.hasNext()) {
@@ -246,10 +239,8 @@ public class entityProcessing {
 				queryString1.append("FILTER (?p NOT IN (<http://www.w3.org/2000/01/rdf-schema#label> ) ) ");
 				queryString1.append("FILTER (?p NOT IN (<http://dbpedia.org/property/imageSize> ) ) ");
 				queryString1.append("FILTER (?p NOT IN (<http://dbpedia.org/ontology/height> ) ) ");
-				
-				
-				
 				queryString1.append("}  ");
+				
 				//System.out.println(queryString1);
 				Query sparql1 = QueryFactory.create(queryString1.toString());
 				VirtuosoQueryExecution vqe1 = VirtuosoQueryExecutionFactory.create (sparql1, virtGraph);
@@ -303,8 +294,6 @@ public class entityProcessing {
 					ResultSet results2 = vqe2.execSelect();
 							
 					while (results2.hasNext()) {
-						
-							
 							QuerySolution result2 = results2.nextSolution();
 							RDFNode predicate = result2.get("p");
 							RDFNode object = result2.get("o");
@@ -384,23 +373,13 @@ public class entityProcessing {
 						//System.out.println(subjectName+ "  predicateNume " +numberOfPredicate);
 					}
 				
-					
-					
-					
-				
 				}// end if predicate number
-				
-				
-				//System.out.println("XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX");
-				
+					
 			} // end of while
-			
-			
-		
-			
+				
 		}// end of while for class
 	
-				br.close();
+		br.close();
 		subjectToIdFile.close();
 		classToIdFile.close();
 		predicateObjectPair.close();
