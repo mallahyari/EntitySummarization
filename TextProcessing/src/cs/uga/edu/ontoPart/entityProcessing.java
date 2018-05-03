@@ -410,7 +410,7 @@ public class entityProcessing {
 					CategoryIdFile.write(objectCategoryName + " " + CategoryIdGenerator + "\n");
 					CategoryIdGenerator++;
 					}
-				System.out.println(subjectName1 + "&&&&&&&&&&&&&&&&&&& "+objectCategoryName+"\n");
+				//System.out.println(subjectName1 + "&&&&&&&&&&&&&&&&&&& "+objectCategoryName+"\n");
 				subjectIdCatIdFile.write(subjectNameToIdMap.get(subjectName1) + " "+ CategoryNameToIdMap.get(objectCategoryName)+"\n");
 				
              }//end while
