@@ -161,7 +161,7 @@ public class entityProcessing {
 		FileWriter predicateObjectFile = new FileWriter(predicateObjectFileName);
 		
 		
-		
+		Set<String> predicateObjectSet = new HashSet<String>();
 		Set<String> subjectNames = new HashSet<String>();
 		Map<String, Integer> subjectNameToIdMap = new HashMap<String,Integer>();
 		Map<String, Integer> classNameToIdMap = new HashMap<String,Integer>();
@@ -323,6 +323,7 @@ public class entityProcessing {
 							
 							//Vector of predicate object pair to add into bag of word for each entity (doc)
 							predicateObjectVec.add(predicateName + "*"+ objectName);
+							predicateObjectSet.add(predicateName + "*"+ objectName);
 							
 							
 							//Store ONLY predicate with ID (unique pair)
@@ -377,7 +378,15 @@ public class entityProcessing {
 					
 			} // end of while
 				
-		}// end of while for class
+		}// end of while for class list
+		
+		int kk=0;
+		FileWriter POIdFile = new FileWriter("/home/mehdi/ontoPart/evaluation/POID.txt"); //"/home/mehdi/ontoPart/evaluation/predicateToId.txt"; 
+		for (String K: predicateObjectSet){
+			POIdFile.write(K +"     "+kk);
+		}
+		POIdFile.close();
+
 	
 		br.close();
 		subjectToIdFile.close();
