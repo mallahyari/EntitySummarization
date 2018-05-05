@@ -160,6 +160,7 @@ public class ModelParameters {
 			BufferedReader br = new BufferedReader(new FileReader(filename));
 			String line = "";
 			while ((line = br.readLine()) != null) {
+				System.out.println(line);
 				corpus.add(line);
 			} // end of while
 			br.close();
