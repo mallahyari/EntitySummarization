@@ -341,7 +341,7 @@ public class entityProcessing {
 							//Store pair of predicate*object with ID (unique pair)
 							if (predicateObjectIdMap.get(predicateName+"*"+objectName) == null) {
 								predicateObjectIdMap.put(predicateName+"*"+objectName, prediateObjectIdGenerator);
-								predicateObjectPair.write(predicateName+"*"+objectName + "|**|" + prediateObjectIdGenerator + "\n");
+								predicateObjectPair.write(predicateName+"*"+objectName + "###" + prediateObjectIdGenerator + "\n");
 								prediateObjectIdGenerator++;
 							}
 							
@@ -446,7 +446,7 @@ public class entityProcessing {
 			//predicateObjectPairToIdFileName word=pair of predicate and object
 			brObject = new BufferedReader(new FileReader(predicateObjectPairToIdFileName));
 			while ((strObject = brObject.readLine()) != null) {
-				 String[] kvPair = strObject.split("|**|");
+				 String[] kvPair = strObject.split("###");
 				    mapWordToID.put(kvPair[0], Integer.valueOf(kvPair[1].trim()));
 			
 			} //End While
