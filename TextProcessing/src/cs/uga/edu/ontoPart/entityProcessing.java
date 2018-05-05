@@ -80,7 +80,7 @@ public class entityProcessing {
 
 	private static final String entityFile = "/home/mehdi/ontoPart/evaluation/instances.txt";
 	private static final String entityNameOnly = "/home/mehdi/ontoPart/evaluation/entNameOnly.txt";
-	private static final String classNameOnly = "/home/mehdi/ontoPart/evaluation/classNameOnly.txt";
+	private static final String classNameOnly = "/home/mehdi/ontoPart/evaluation/className/classNameOnly.txt";
 	private static final String predicateStopWords = "/home/mehdi/ontoPart/evaluation/predicateStopWords.txt";
 	// Map each object (word) to an ID
 	private static final String wordToIdFileName = "/home/mehdi/ontoPart/evaluation/wordToID.txt";
