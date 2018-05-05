@@ -31,14 +31,14 @@ public class ModelParameters {
 	public int [] docIds = null;
 	public int [] wordIds = null;
 	public int [] wordsCounts = null;
-	public int D = 0;
-	public int W = 0;
+	public int D = 0; //numberOfEntity /Documents
+	public int W = 0; //sizeOfVocabulary(Object)
 //	public int T = 22;
 	public int T1 = 57;
 	public int T2 = 133;
 	public int P = 0; 
 	public int C = 0;//classes 
-	public int N = 0;
+	public int N = 0; //numberOfAllObjects(Words)
 	public int nIterations = 2000;
 	int burnIn = 200;
 	public double ALPHA = 60.0 / 390;
@@ -49,7 +49,7 @@ public class ModelParameters {
 	public String corpusFilename = "/home/mehdi/ontoPart/evaluation/corpus.txt";
 	public String entitiesFilename = "/home/mehdi/ontoPart/evaluation/entNameOnly.txt";
 	public String corpusStatFilename = "/home/mehdi/ontoPart/evaluation/corpusStatistics.txt";
-	public String predicateFilename = "/home/mehdi/ontoPart/evaluation/predicateToId.txt";
+//	public String predicateFilename = "/home/mehdi/ontoPart/evaluation/predicateToId.txt";
 	public String classFilename = "/home/mehdi/ontoPart/evaluation/classListandID.txt";
 
 //	public String corpusFilename = "/home/mehdi/taxonomyProject/preprocessedFiles/corpus.txt";
@@ -74,6 +74,9 @@ public class ModelParameters {
 //		for (int i = 0; i < 7104; i++) {
 //			td.add(i);
 //		}
+		
+		System.out.println("corpos size:"+corpus.size());
+		
 		for (int i = 0;i < corpus.size();i++) {
 			String [] tokens = corpus.get(i).split(" ");
 			docIds [i] = Integer.parseInt(tokens [0]);
@@ -88,7 +91,8 @@ public class ModelParameters {
 //		}
 		D = uniqueDocIds.size() ;
 		W = uniqueWordIds.size();
-
+		System.out.println("D:"+D +"         W:"+W);
+		
 		BufferedWriter bw1 = null;
 		try {
 
