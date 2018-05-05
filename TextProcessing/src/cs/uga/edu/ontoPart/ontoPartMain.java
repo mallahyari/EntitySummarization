@@ -99,6 +99,8 @@ public class ontoPartMain {
 		entityProcessing createMyEntityList = new entityProcessing();
 		createMyEntityList.createEntityList();
 		createMyEntityList.corpusMaker();
+		ModelParameters myinitialization=new ModelParameters();
+		
 		
 		
 		

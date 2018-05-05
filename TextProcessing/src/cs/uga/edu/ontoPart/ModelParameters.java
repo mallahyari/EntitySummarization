@@ -37,6 +37,7 @@ public class ModelParameters {
 	public int T1 = 57;
 	public int T2 = 133;
 	public int P = 0; 
+	public int C = 0;//classes 
 	public int N = 0;
 	public int nIterations = 2000;
 	int burnIn = 200;
@@ -49,6 +50,8 @@ public class ModelParameters {
 	public String entitiesFilename = "/home/mehdi/ontoPart/evaluation/entNameOnly.txt";
 	public String corpusStatFilename = "/home/mehdi/ontoPart/evaluation/corpusStatistics.txt";
 	public String predicateFilename = "/home/mehdi/ontoPart/evaluation/predicateToId.txt";
+	public String classFilename = "/home/mehdi/ontoPart/evaluation/classListandID.txt";
+
 //	public String corpusFilename = "/home/mehdi/taxonomyProject/preprocessedFiles/corpus.txt";
 //	public String entitiesFilename = "/home/mehdi/taxonomyProject/preprocessedFiles/corpusConceptsSr.txt";
 //	public String corpusStatFilename = "/home/mehdi/taxonomyProject/preprocessedFiles/corpusStatistics.txt";
@@ -109,13 +112,13 @@ public class ModelParameters {
 
 		BufferedReader reader=null;
 		try {
-			reader = new BufferedReader(new FileReader(predicateFilename));
+			reader = new BufferedReader(new FileReader(classFilename));
 		} catch (FileNotFoundException e) {
 			e.printStackTrace();
 		}
 		
 		try {
-			while (reader.readLine() != null) P++;
+			while (reader.readLine() != null) C++;
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
@@ -124,7 +127,7 @@ public class ModelParameters {
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
-		System.out.println("Number of Predicate =" + P);
+		System.out.println("Number of Predicate =" + C);
 	} // end of initializeParameters
 	
 	public void fillArrays() {
