@@ -256,7 +256,7 @@ public class entityProcessing {
 				//extract their predicate and objects
 				predicateObjectVec.clear();
 				
-				if (numberOfPredicate>50 && subjectName.length()>5){
+				if (numberOfPredicate>40 && subjectName.length()>5){
 					System.out.println(className + "      subjectName:"+ subjectName);
 					StringBuffer queryString2 = new StringBuffer();
 					queryString2.append("SELECT ?p ?o FROM <" + GRAPH + "> WHERE { ");
@@ -319,11 +319,13 @@ public class entityProcessing {
 							objectName=objectName.replace(")", "");
 							objectName=objectName.replace("(", "");
 							objectName=objectName.replaceAll("\\s+"," ");
+							objectName=objectName.trim();
 							objectName=objectName.replaceAll(" ","_");
+							
 							if (objectName.length()>20){
 							objectName=objectName.substring(0, 20);
 							}
-							objectName=objectName.trim();
+							
 							
 							//Vector of predicate object pair to add into bag of word for each entity (doc)
 							predicateObjectVec.add(predicateName + "*"+ objectName);
