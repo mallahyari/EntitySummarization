@@ -256,7 +256,7 @@ public class entityProcessing {
 				//extract their predicate and objects
 				predicateObjectVec.clear();
 				
-				if (numberOfPredicate>30 && subjectName.length()>5){
+				if (numberOfPredicate>50 && subjectName.length()>5){
 					System.out.println(className + "      subjectName:"+ subjectName);
 					StringBuffer queryString2 = new StringBuffer();
 					queryString2.append("SELECT ?p ?o FROM <" + GRAPH + "> WHERE { ");
