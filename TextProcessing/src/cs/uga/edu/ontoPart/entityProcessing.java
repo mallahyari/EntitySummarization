@@ -383,7 +383,8 @@ public class entityProcessing {
 		int kk=0;
 		FileWriter POIdFile = new FileWriter("/home/mehdi/ontoPart/evaluation/POID.txt"); //"/home/mehdi/ontoPart/evaluation/predicateToId.txt"; 
 		for (String K: predicateObjectSet){
-			POIdFile.write(K +"     "+kk);
+			POIdFile.write(K +"     "+kk+"\n");
+			kk++;
 		}
 		POIdFile.close();
 
