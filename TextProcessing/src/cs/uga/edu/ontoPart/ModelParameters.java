@@ -33,11 +33,11 @@ public class ModelParameters {
 	public int [] wordsCounts = null;
 	public int D = 0; //numberOfEntity /Documents
 	public int W = 0; //sizeOfVocabulary(Object)
-//	public int T = 22;
+	public int T = 0; //number of topics
 	public int T1 = 57;
 	public int T2 = 133;
 	public int P = 0; 
-	public int C = 0;//classes 
+	public int C = 0;//Number of all classes 
 	public int N = 0; //numberOfAllObjects(Words)
 	public int nIterations = 2000;
 	int burnIn = 200;
@@ -70,10 +70,8 @@ public class ModelParameters {
 		wordsCounts = new int [corpus.size()];
 		Set<Integer> uniqueWordIds = new HashSet<Integer>();
 		Set<Integer> uniqueDocIds = new HashSet<Integer>();
-//		Set<Integer> td = new HashSet<Integer>();
-//		for (int i = 0; i < 7104; i++) {
-//			td.add(i);
-//		}
+		Set<Integer> classIds = new HashSet<Integer>(); //Set of classIds
+		
 		
 		System.out.println("corpos size:"+corpus.size());
 		
@@ -112,26 +110,29 @@ public class ModelParameters {
 		}
 		System.out.println("D: " + D + " W: " + W + " N: " + N);
 
-		//Counting number of Predicate or P 
+		//Counting number of classes C, reading text file and extract number of classes. 
 
-		BufferedReader reader=null;
-		try {
-			reader = new BufferedReader(new FileReader(classFilename));
-		} catch (FileNotFoundException e) {
-			e.printStackTrace();
-		}
-		
-		try {
-			while (reader.readLine() != null) C++;
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
-		try {
-			reader.close();
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
-		System.out.println("Number of Predicate =" + C);
+			BufferedReader reader=null;
+			try {
+				reader = new BufferedReader(new FileReader(classFilename));
+			} catch (FileNotFoundException e) {
+				e.printStackTrace();
+			}
+			
+			try {
+				while (reader.readLine() != null) {
+					classIds.add(C); //Filling classIds Set. 
+					C++;
+				}
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+			try {
+				reader.close();
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+			System.out.println("Number of Classes =" + C);
 	} // end of initializeParameters
 	
 	public void fillArrays() {
