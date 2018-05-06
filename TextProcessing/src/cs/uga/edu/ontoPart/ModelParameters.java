@@ -20,7 +20,7 @@ import java.util.Set;
 /**
  * @author mehdi
  *
- *
+ * updated for ontoPart
  *
  */
 public class ModelParameters {
@@ -87,52 +87,55 @@ public class ModelParameters {
 //		for (int i: td){
 //			if (!uniqueDocIds.contains(i)) System.out.println(i);
 //		}
+
 		D = uniqueDocIds.size() ;
 		W = uniqueWordIds.size();
 		System.out.println("D:"+D +"         W:"+W);
 		
-		BufferedWriter bw1 = null;
+		//Counting number of classes C, reading text file and extract number of classes. 
+
+		BufferedReader reader=null;
 		try {
-
-			bw1 = new BufferedWriter(new FileWriter(corpusStatFilename, true));
-			bw1.write(  "numberOfEntity, sizeOfVocabulary(Object), numberOfAllObjects(Words)");
-			bw1.newLine();
-			bw1.write(  D + " " + W + " " + N);
-
+			reader = new BufferedReader(new FileReader(classFilename));
+		} catch (FileNotFoundException e) {
+			e.printStackTrace();
+		}
+		
+		try {
+			while (reader.readLine() != null) {
+				classIds.add(C); //Filling classIds Set. 
+				C++;
+			}
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
-
+		try {
+			reader.close();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		System.out.println("Number of Classes =" + C);
+		
+		
+		
+		
+		BufferedWriter bw1 = null;
+		try {
+			bw1 = new BufferedWriter(new FileWriter(corpusStatFilename, true));
+			bw1.write(  "numberOfEntity, sizeOfVocabulary(Object), numberOfAllObjects(Words), number of classes");
+			bw1.newLine();
+			bw1.write(  D + " " + W + " " + N + " " + C);
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
 		try {
 			bw1.close();
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
-		System.out.println("D: " + D + " W: " + W + " N: " + N);
+		System.out.println("D: " + D + " W: " + W + " N: " + N + " C: " + C);
 
-		//Counting number of classes C, reading text file and extract number of classes. 
-
-			BufferedReader reader=null;
-			try {
-				reader = new BufferedReader(new FileReader(classFilename));
-			} catch (FileNotFoundException e) {
-				e.printStackTrace();
-			}
-			
-			try {
-				while (reader.readLine() != null) {
-					classIds.add(C); //Filling classIds Set. 
-					C++;
-				}
-			} catch (IOException e) {
-				e.printStackTrace();
-			}
-			try {
-				reader.close();
-			} catch (IOException e) {
-				e.printStackTrace();
-			}
-			System.out.println("Number of Classes =" + C);
+		
 	} // end of initializeParameters
 	
 	public void fillArrays() {
