@@ -190,59 +190,7 @@ public class ontoPartModel {
 	} // end of runGibbsSampling
 	
 	/////////////////////////////////////////////////////////////////////////////////
-	//	public void samplePredicateAndTypeAssignment_OLD(int did, int pid, int t1id, int t2id, int wid, int w_i) {
-//		Set<Integer> wordTypes = objectTotypeMap.get(wid);
-//		double[] pr = null;
-//		int prSize = P * T2;
-//		//int [] eids = new int [diEnts.length];
-//		pr = allocateMemory(pr, prSize);
-//		updateCounts(did, pid, t2id, wid, -1);
-//		for (int ctr = 0; ctr < P; ctr++) {
-////			Set<Integer> predicateDomain = predicateDomainMap.get(ctr) != null ? predicateDomainMap.get(ctr) : new HashSet<Integer>() ;
-//			Set<Integer> predicateRange  = predicateRangeMap.get(ctr)  != null ? predicateRangeMap.get(ctr) : new HashSet<Integer>();
-////			System.out.println("id:" + ctr + ", wid: " + wid + " " + predicateRange);
-//			// probability of predicate
-//			double pr_p = (Npd[did][ctr] + ALPHA) / (Nd[did] + P * ALPHA);
-//			for (int t_i = 0; t_i < T2; t_i++) {
-//				if(predicateRange.contains(t_i) && wordTypes.contains(t_i)){
-////				if(predicateDomain.contains(t_i) && predicateRange.contains(t_i) && wordTypes.contains(t_i)){
-//					// probability of subject type
-////					double pr_t1 = (Nt1p[ctr][t_i] + BETA) / (Np1[ctr] + T1 * BETA);
-//					// probability of object type
-//					double pr_t2 = (Nt2p[ctr][t_i] + BETA) / (Np2[ctr] + T2 * BETA);
-//					// probability of object
-//					double pr_w = (Nwt2[t_i][wid] + GAMMA) / (Nt2[t_i] + W * GAMMA);
-//					pr [ctr * T2 + t_i] = pr_p * pr_t2 * pr_w;
-////					pr [ctr * T2 + t_i] = pr_p * pr_t1 * pr_t2 * pr_w;
-//				} // end of if 
-//			} // end of for t_i
-//		} // end of for ctr
-//		int pairIndex = sample(pr, randomGenerator.nextDouble());
-//		if (pairIndex == -1) {
-////			System.out.println("-1");
-//			pairIndex = randomGenerator.nextInt(pr.length);
-//		}
-//		int newPredicate = pairIndex / T2;
-////		int newSubjectType = pairIndex % T2;
-//		int newObjectType = pairIndex % T2;
-//		p[w_i] = newPredicate;
-////		z1[w_i] = newSubjectType;
-//		z2[w_i] = newObjectType;
-//		updateCounts(did, newPredicate, newObjectType, wid, +1);
-////		updateCounts(did, newPredicate, newSubjectType, newObjectType, wid, +1);
-//		
-////		if (pairIndex != -1) {
-////			int newEntity = diEnts[pairIndex / T];
-////			int newTopic = pairIndex % T;
-////			e[w_i] = newEntity;
-////			z[w_i] = newTopic;
-////			updateCounts(did, newEntity, newTopic, wid, +1);
-////		}else {
-////			updateCounts(did, eid, tid, wid, +1);
-////		}
-//	} // end of samplePredicateAndTypeAssignment_OLD
-//	
-	
+
 
 	
 	
