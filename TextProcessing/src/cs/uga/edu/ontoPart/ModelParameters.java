@@ -43,6 +43,7 @@ public class ModelParameters {
 	int burnIn = 200;
 	public double ALPHA = 60.0 / 390;
 	public final double BETA  = 0.01;
+	public final double ZETA  = 0.01;
 //	public final double TAU = 50.0 / T;
 //	public final double EPSILON = 0.9;
 	public final double gamma = 0.01	;
