@@ -157,7 +157,7 @@ public class ModelParameters {
 //		double dt = (System.currentTimeMillis() - st);// / 1000.;
 //		System.out.println("time: " + dt);
 		System.out.println("done!");
-		System.out.println("done!" + d[5]);
+		System.out.println("done!" + d +"\n" + w);
 		
 	} // end of fillArrays
 	
