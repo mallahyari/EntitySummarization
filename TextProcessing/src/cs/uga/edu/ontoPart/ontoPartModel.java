@@ -201,26 +201,24 @@ public class ontoPartModel {
 			double sum = 0;
 				
 			for (int ctr = 0; ctr < T; ctr++) {
-				
-				for (int c = 0; c < C; c++) {
-				
-				if (classWord.contains(ctr)) {
-					// probability of topic P(z)
-					double pr_t = (Ntd[did][ctr] + ALPHA) / (Nd[did] +  ALPHA);
-					if (pr_t == 0)
-						System.out.println("==== ");
-					// probability of class P(c|z)
-					double pr_c = (Nct[cid][ctr] + BETA) / (Nt[did] +  BETA);
-					if (pr_c == 0)
-						System.out.println("==== ");
-					// probability of word   P(w|c)
-					double pr_w = (Nwc[ctr][wid] +  ZETA) / (Nc[ctr] +  ZETA);
-					if (pr_w == 0)
-						System.out.println("==== ");
-					pr [ctr] = pr_t *pr_c* pr_w;
-					sum += pr[ctr];
-				} // end of if
-				}// end of for Class
+				// probability of topic P(z)
+				double pr_t = (Ntd[did][ctr] + ALPHA) / (Nd[did] +  ALPHA);
+				if (pr_t == 0)
+					System.out.println("==== ");
+						for (int c = 0; c < C; c++) {
+								if (classWord.contains(ctr)) {
+									// probability of class P(c|z)
+									double pr_c = (Nct[cid][ctr] + BETA) / (Nt[did] +  BETA);
+									if (pr_c == 0)
+										System.out.println("==== ");
+									// probability of word   P(w|c)
+									double pr_w = (Nwc[ctr][wid] +  ZETA) / (Nc[ctr] +  ZETA);
+									if (pr_w == 0)
+										System.out.println("==== ");
+									pr [ctr] = pr_t *pr_c* pr_w;
+									sum += pr[ctr];
+								} // end of if
+						}// end of for Class
 			} // end of for ctr topic
 			if(sum == 0)
 				System.out.println("===="); 
@@ -228,13 +226,9 @@ public class ontoPartModel {
 			p[w_i] = newPredicate;
 			updateCounts(did, newPredicate, wid, +1);
 		} // end of samplePredicateAndTypeAssignment
-	
-	
-	
-	
-	
-	
 	////////////////////////////////////////////////////////////////////////////////
+
+	
 	public void samplePredicateAssignment(int did, int pid, int wid, int w_i) {
 	//	System.out.println(wid);
 		Set<Integer> wordPredicate = objectToPredicateMap.get(wid);
@@ -264,16 +258,17 @@ public class ontoPartModel {
 		updateCounts(did, newPredicate, wid, +1);
 	} // end of samplePredicateAndTypeAssignment
 	
-	/////////////////////////////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////////////////////////
 	public void updateCounts(int dId,int tId,int cId,   int wId, int val) {
 		Ntd[dId][tId]=Ntd[dId][tId]+ val;
-		Nct[tId][cId]=Nct[tId][cId]+val;
-		Nwc[cId][wId]=Nwc[cId][wId]+val;
+		Nct[tId][cId]=Nct[tId][cId]+ val;
+		Nwc[cId][wId]=Nwc[cId][wId]+ val;
 		
 		Nd[dId] = Nd[dId] + val;
 		Nt[tId] = Nt[tId] + val;
 		Nc[cId] = Nc[cId] + val;
 		} // end of updateCounts
+/////////////////////////////////////////////////////////////////////////////////
 
 	public void updateCounts(int dId, int pId, int wId, int val) {
 		Npd[dId][pId] = Npd[dId][pId] + val;
@@ -384,7 +379,33 @@ public boolean hasValue(int[] arr, int val) {
 		return -1;
 	} // end of sample
 	
+/////////////////////////////////////////////////////////
+	public void computeTheta1() {
+		for (int d_i = 0; d_i < D; d_i++) {
+			for (int t_i = 0; t_i < T; t_i++) {
+				theta[d_i][t_i] = Math.round(((Ntd[d_i][t_i] + ALPHA) / (Nd[d_i] + P * ALPHA)) * 10000) / 10000.;
+//				theta[d_i][p_i] = Math.round(((Npd[d_i][p_i] + alphaMat[d_i][p_i]) / (Np[d_i] + sumAlpha[d_i])) * 10000) / 10000.;
+			} // end of for t_i
+		} // end of for e_i
+	} // end of computeTheta
+	
+	public void computePhi1() {
+		for (int t_i = 0; t_i < T; t_i++) {
+			for (int c_i = 0; c_i < C; c_i++) {
+				phi[t_i][c_i] = Math.round(((Nct[t_i][c_i] +  BETA) / (Nt[c_i] + sumPredObjWeight[c_i] * BETA)) * 10000) / 10000.;
+			} // end of for e_i
+		} // end of for d_i
+	} // end of computeZeta
 
+	public void computeZeta() {
+		for (int c_i = 0; c_i < C; c_i++) {
+			for (int w_i = 0; w_i < W; w_i++) {
+				zeta[c_i][w_i] = Math.round(((Nwc[c_i][w_i] +  BETA) / (Nc[w_i] + sumPredObjWeight[c_i] * BETA)) * 10000) / 10000.;
+			} // end of for e_i
+		} // end of for d_i
+	} // end of computeZeta
+
+//////////////////////////////////////////////////////
 	public void computeTheta() {
 		for (int d_i = 0; d_i < D; d_i++) {
 			for (int p_i = 0; p_i < P; p_i++) {
