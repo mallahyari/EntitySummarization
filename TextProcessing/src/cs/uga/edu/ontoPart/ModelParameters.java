@@ -157,8 +157,9 @@ public class ModelParameters {
 //		double dt = (System.currentTimeMillis() - st);// / 1000.;
 //		System.out.println("time: " + dt);
 		System.out.println("done!");
-		System.out.println("done!" + d +"\n" + w);
-		
+		for (int y=0 ; y<w.length; y++){
+		System.out.println("done!" + "\n" + w[y]);
+		}
 	} // end of fillArrays
 	
 	public List<String> readFile(String filename) {
