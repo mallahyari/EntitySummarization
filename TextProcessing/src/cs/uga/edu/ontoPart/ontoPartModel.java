@@ -210,7 +210,7 @@ public class ontoPartModel {
 					if (pr_t == 0)
 						System.out.println("==== ");
 					// probability of class P(c|z)
-					double pr_c = (Nct[did][ctr] + BETA) / (Nt[did] +  BETA);
+					double pr_c = (Nct[cid][ctr] + BETA) / (Nt[did] +  BETA);
 					if (pr_c == 0)
 						System.out.println("==== ");
 					// probability of word   P(w|c)
