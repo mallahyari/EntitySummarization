@@ -678,6 +678,7 @@ public void categoryMaker(){
 //				} // end of for
 				
 				
+			
 				
 				// Extract Similar words
 				// if you want to include similar words in the document, write the similar words to the doc file
