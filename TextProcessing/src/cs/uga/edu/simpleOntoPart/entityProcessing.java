@@ -405,10 +405,11 @@ public class entityProcessing {
 		   String value = predicateObjectIdMap.get(key).toString();
 		  
 		   System.out.println(key + " " + value);
-			String [] tokens = key.split(" || ");
-			domains=getPredicateDomain("http://dbpedia.org/ontology/"+tokens[0]);
+			String [] tokens1 = key.split(" || ");
+			System.out.println("tokenss " +tokens1[0]);
+			domains=getPredicateDomain("http://dbpedia.org/ontology/"+tokens1[0]);
 			for(String mydom : domains){
-				System.out.println("Domain for  " +tokens[0]+":::"+ value);
+				System.out.println("Domain for  " +tokens1[0]+":::"+ value);
 			}
 		}
 
