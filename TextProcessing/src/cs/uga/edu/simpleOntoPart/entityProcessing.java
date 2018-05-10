@@ -388,14 +388,14 @@ public class entityProcessing {
 				
 		}// end of while for class list
 		
-		int kk=0;
-		FileWriter POIdFile = new FileWriter("/home/mehdi/simpleOntoPart/evaluation/POID.txt"); //"/home/mehdi/simpleOntoPart/evaluation/predicateToId.txt"; 
-		for (String K: predicateObjectSet){
-			POIdFile.write(K +"     "+kk+"\n");
-			kk++;
-		}
-		POIdFile.close();
-
+//		int kk=0;
+//		FileWriter POIdFile = new FileWriter("/home/mehdi/simpleOntoPart/evaluation/POID.txt"); //"/home/mehdi/simpleOntoPart/evaluation/predicateToId.txt"; 
+//		for (String K: predicateObjectSet){
+//			POIdFile.write(K +"     "+kk+"\n");
+//			kk++;
+//		}
+//		POIdFile.close();
+		System.out.println("Size of predicate-object map"+ predicateObjectIdMap.size() +  "\n  Class Map " +classNameToIdMap.size());
 	
 		br.close();
 		subjectToIdFile.close();
@@ -513,9 +513,81 @@ public class entityProcessing {
 	}
 	
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-public void categoryMaker(){
 	
-}
+//	//************* extract Predicate-Object X Class Matrix ***************\\
+//			//entityNameOnly = "/home/mehdi/simpleOntoPart/evaluation/predicateObjectPairToID.txt";
+//	public void predicateObjectClassMatrix() throws IOException{
+//
+//		Map<String, Integer> predicateObjectIdMap = new HashMap<String,Integer>();
+//		Map<String, Integer> classIdMap = new HashMap<String,Integer>();
+//		String predicateObjectpair = "";
+//		BufferedReader br1 = new BufferedReader(new FileReader(predicateObjectPairToIdFileName));
+//		//Read list of subjects from a text file  
+//		while ((predicateObjectpair = br1.readLine()) != null) {
+//			String [] tokens = predicateObjectpair.split(" ");
+//			tokens [0] = Integer.parseInt(tokens [0]);
+//		
+//		}
+//		
+//		
+////		savePredicateToObjectMap(predicateToObjectMap, predicateObjectFileName);
+//		saveObjectToPredicateMap(objectToPredicateMap, objectPredicateFileName);
+//		System.out.println("predicates: " + predicateToIdMap.size() + "    " + objectToPredicateMap.size());
+//		Set<Integer> st = objectToPredicateMap.keySet();
+//		// create the lambda matrix
+//		int numOfPredicates = predicateToIdMap.size();
+//		int numOfObjects    = wordToIdMap.size();
+//		predicateObjectWeight = new int[numOfPredicates][numOfObjects];
+//		
+//		for (int i = 0; i < numOfPredicates; i++) {
+//			for (int j = 0; j < numOfObjects; j++) {
+//				Set<String> cats = objectToCategoryMap.get(j) != null ? objectToCategoryMap.get(j) : new HashSet<String>();
+//				if (objectToPredicateMap.get(j) != null && objectToPredicateMap.get(j).contains(i) && !cats.isEmpty()) {
+//					predicateObjectWeight[i][j] = cats.size(); 
+//				}else {
+//					predicateObjectWeight[i][j] = 1; 
+//				}
+//			} // end of for (j)
+//		} // end of for (i)
+		
+		
+		
+		
+	//}
+	
+	
+	private Set<String> getPredicateRange(String predicateUrl) {
+		StringBuffer queryString = new StringBuffer();
+		queryString.append("SELECT ?ran FROM <" + GRAPH + "> WHERE { ");
+		queryString.append("<" + predicateUrl + ">" + " <http://www.w3.org/2000/01/rdf-schema#range> ?ran . } ");
+		Query sparql = QueryFactory.create(queryString.toString());
+		VirtuosoQueryExecution vqe = VirtuosoQueryExecutionFactory.create (sparql, virtGraph);
+		ResultSet results = vqe.execSelect();
+		Set<String> types = new HashSet<String>();
+		while (results.hasNext()) {
+			QuerySolution result = results.nextSolution();
+			int index = result.getResource("ran").toString().lastIndexOf("/");
+			types.add(result.getResource("ran").toString().substring(index + 1));
+		} // end of while
+		return types;
+	} // end of getPredicateRange
+	
+	private Set<String> getPredicateDomain(String predicateUrl) {
+		StringBuffer queryString = new StringBuffer();
+		queryString.append("SELECT ?dom FROM <" + GRAPH + "> WHERE { ");
+		queryString.append("<" + predicateUrl + ">" + " <http://www.w3.org/2000/01/rdf-schema#domain> ?dom . } ");
+		Query sparql = QueryFactory.create(queryString.toString());
+		VirtuosoQueryExecution vqe = VirtuosoQueryExecutionFactory.create (sparql, virtGraph);
+		ResultSet results = vqe.execSelect();
+		Set<String> types = new HashSet<String>();
+		while (results.hasNext()) {
+			QuerySolution result = results.nextSolution();
+			int index = result.getResource("dom").toString().lastIndexOf("/");
+			types.add(result.getResource("dom").toString().substring(index));
+		} // end of while
+		return types;
+	} // end of getPredicateDomain
+
 	
 /////////////////////////////////////////////////////////	
 	public void processEntities() throws IOException {
@@ -863,11 +935,11 @@ public void categoryMaker(){
 		
 		
 		br.close();
-//		savePredicateToObjectMap(predicateToObjectMap, predicateObjectFileName);
-		saveObjectToPredicateMap(objectToPredicateMap, objectPredicateFileName);
-		System.out.println("predicates: " + predicateToIdMap.size() + "    " + objectToPredicateMap.size());
+////		savePredicateToObjectMap(predicateToObjectMap, predicateObjectFileName);
+//		saveObjectToPredicateMap(objectToPredicateMap, objectPredicateFileName);
+//		System.out.println("predicates: " + predicateToIdMap.size() + "    " + objectToPredicateMap.size());
 //		Set<Integer> st = objectToPredicateMap.keySet();
-		// create the lambda matrix
+//		// create the lambda matrix
 //		int numOfPredicates = predicateToIdMap.size();
 //		int numOfObjects    = wordToIdMap.size();
 //		predicateObjectWeight = new int[numOfPredicates][numOfObjects];
@@ -1529,38 +1601,7 @@ public void categoryMaker(){
 	} // end of readDocument
 	
 	
-	private Set<String> getPredicateRange(String predicateUrl) {
-		StringBuffer queryString = new StringBuffer();
-		queryString.append("SELECT ?ran FROM <" + GRAPH + "> WHERE { ");
-		queryString.append("<" + predicateUrl + ">" + " <http://www.w3.org/2000/01/rdf-schema#range> ?ran . } ");
-		Query sparql = QueryFactory.create(queryString.toString());
-		VirtuosoQueryExecution vqe = VirtuosoQueryExecutionFactory.create (sparql, virtGraph);
-		ResultSet results = vqe.execSelect();
-		Set<String> types = new HashSet<String>();
-		while (results.hasNext()) {
-			QuerySolution result = results.nextSolution();
-			int index = result.getResource("ran").toString().lastIndexOf("/");
-			types.add(result.getResource("ran").toString().substring(index + 1));
-		} // end of while
-		return types;
-	} // end of getPredicateRange
 	
-	private Set<String> getPredicateDomain(String predicateUrl) {
-		StringBuffer queryString = new StringBuffer();
-		queryString.append("SELECT ?dom FROM <" + GRAPH + "> WHERE { ");
-		queryString.append("<" + predicateUrl + ">" + " <http://www.w3.org/2000/01/rdf-schema#domain> ?dom . } ");
-		Query sparql = QueryFactory.create(queryString.toString());
-		VirtuosoQueryExecution vqe = VirtuosoQueryExecutionFactory.create (sparql, virtGraph);
-		ResultSet results = vqe.execSelect();
-		Set<String> types = new HashSet<String>();
-		while (results.hasNext()) {
-			QuerySolution result = results.nextSolution();
-			int index = result.getResource("dom").toString().lastIndexOf("/");
-			types.add(result.getResource("dom").toString().substring(index));
-		} // end of while
-		return types;
-	} // end of getPredicateDomain
-
 
 	private Set<String> getEntityTypes(String entiyUrl) {
 		StringBuffer queryString = new StringBuffer();
