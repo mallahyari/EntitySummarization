@@ -396,14 +396,20 @@ public class entityProcessing {
 //		}
 //		POIdFile.close();
 		System.out.println("Size of predicate-object map"+ predicateObjectIdMap.size() +  "\n  Class Map " +classNameToIdMap.size());
-	
+		Set<String> domains = new HashSet<String>();
 		Iterator iterator = predicateObjectIdMap.keySet().iterator();
 		  
 		while (iterator.hasNext()) {
+			domains.clear();
 		   String key = iterator.next().toString();
 		   String value = predicateObjectIdMap.get(key).toString();
 		  
 		   System.out.println(key + " " + value);
+			String [] tokens = key.split("*");
+			domains=getPredicateDomain("http://dbpedia.org/ontology/"+tokens[0]);
+			for(String mydom : domains){
+				System.out.println("Domain for  " +tokens[0]+":::"+ value);
+			}
 		}
 
 	//Set<Integer> st = predicateObjectIdMap.keySet();
