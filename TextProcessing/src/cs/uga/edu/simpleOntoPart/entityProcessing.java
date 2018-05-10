@@ -351,7 +351,7 @@ public class entityProcessing {
 								predicateObjectIdMap.put(predicateName+" || "+objectName, prediateObjectIdGenerator);
 								predicateObjectPair.write(predicateName+" || "+objectName + "    " + prediateObjectIdGenerator + "\n");
 								prediateObjectIdGenerator++;
-								predicateObjectPairSet.add(predicateName+"****"+objectName);
+								
 							}
 							
 							
@@ -397,25 +397,6 @@ public class entityProcessing {
 //		}
 //		POIdFile.close();
 		System.out.println("Size of predicate-object map"+ predicateObjectIdMap.size() +  "\n  Class Map " +classNameToIdMap.size());
-		Set<String> domains = new HashSet<String>();
-	for (String mypair: predicateObjectPairSet){
-		
-		
-		  String[] items = mypair.split("****");
-	      List<String> itemList = Arrays.asList(items);
-	      System.out.println(itemList);
-		
-		
-
-//		String [] tokens1 = mypair.split("||");
-//		String part1=tokens1[0];
-//		System.out.println(part1);
-//		domains=getPredicateDomain("http://dbpedia.org/ontology/"+"starring");
-//		for(String mydom : domains){
-//			System.out.println("Domain forsssss  " +mydom);
-//		}
-		
-	}
 			
 		
 
@@ -489,6 +470,30 @@ public class entityProcessing {
 		
 		
 	} // end of createEntityList
+	
+public void createPredicateObjectPairClassMatrix() throws IOException{
+	
+	File myfile = new File(predicateObjectPairToIdFileName);
+
+    BufferedReader br = new BufferedReader(new FileReader(myfile));
+
+    String readLine = "";
+
+    System.out.println("Reading file using Buffered Reader");
+
+    while ((readLine = br.readLine()) != null) {
+        System.out.println(readLine);
+        String[] mystr=readLine.toString().split("||");
+        System.out.println(mystr[0]);
+    }
+}
+	
+	
+	
+	
+	
+	
+	
 	
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 	public void corpusMaker() throws NumberFormatException, IOException{
