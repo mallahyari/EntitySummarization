@@ -357,6 +357,7 @@ public class entityProcessing {
 							
 							
 							
+							
 							} //end while
 					
 					//Create bag of words for each subject, entity (doc). write into file.
