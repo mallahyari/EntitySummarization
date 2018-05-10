@@ -352,6 +352,7 @@ public class entityProcessing {
 								predicateObjectPair.write(predicateName+"@"+objectName + "    " + prediateObjectIdGenerator + "\n");
 								prediateObjectIdGenerator++;
 								
+								
 							}
 							
 							
