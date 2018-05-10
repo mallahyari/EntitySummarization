@@ -351,7 +351,7 @@ public class entityProcessing {
 								predicateObjectIdMap.put(predicateName+" || "+objectName, prediateObjectIdGenerator);
 								predicateObjectPair.write(predicateName+" || "+objectName + "    " + prediateObjectIdGenerator + "\n");
 								prediateObjectIdGenerator++;
-								predicateObjectPairSet.add(predicateName+"||"+objectName);
+								predicateObjectPairSet.add(predicateName+"****"+objectName);
 							}
 							
 							
@@ -401,7 +401,7 @@ public class entityProcessing {
 	for (String mypair: predicateObjectPairSet){
 		
 		
-		  String[] items = mypair.split("||");
+		  String[] items = mypair.split("****");
 	      List<String> itemList = Arrays.asList(items);
 	      System.out.println(itemList);
 		
