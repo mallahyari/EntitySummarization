@@ -349,7 +349,7 @@ public class entityProcessing {
 							//Store pair of predicate*object with ID (unique pair)
 							if (predicateObjectIdMap.get(predicateName+" || "+objectName) == null) {
 								predicateObjectIdMap.put(predicateName+" || "+objectName, prediateObjectIdGenerator);
-								predicateObjectPair.write(predicateName+" || "+objectName + "    " + prediateObjectIdGenerator + "\n");
+								predicateObjectPair.write(predicateName+"@"+objectName + "    " + prediateObjectIdGenerator + "\n");
 								prediateObjectIdGenerator++;
 								
 							}
@@ -483,7 +483,7 @@ public void createPredicateObjectPairClassMatrix() throws IOException{
 
     while ((readLine = br.readLine()) != null) {
         System.out.println(readLine);
-        String[] mystr=readLine.toString().split("||");
+        String[] mystr=readLine.toString().split("@");
         System.out.println(mystr[0]);
     }
 }
