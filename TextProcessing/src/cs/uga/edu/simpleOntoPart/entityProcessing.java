@@ -347,9 +347,9 @@ public class entityProcessing {
 								wordIdGenerator++;
 							}
 							//Store pair of predicate*object with ID (unique pair)
-							if (predicateObjectIdMap.get(predicateName+"*"+objectName) == null) {
-								predicateObjectIdMap.put(predicateName+"*"+objectName, prediateObjectIdGenerator);
-								predicateObjectPair.write(predicateName+"*"+objectName + "    " + prediateObjectIdGenerator + "\n");
+							if (predicateObjectIdMap.get(predicateName+" || "+objectName) == null) {
+								predicateObjectIdMap.put(predicateName+" || "+objectName, prediateObjectIdGenerator);
+								predicateObjectPair.write(predicateName+" || "+objectName + "    " + prediateObjectIdGenerator + "\n");
 								prediateObjectIdGenerator++;
 							}
 							
@@ -405,11 +405,11 @@ public class entityProcessing {
 		   String value = predicateObjectIdMap.get(key).toString();
 		  
 		   System.out.println(key + " " + value);
-			String [] tokens = key.split("*");
-			domains=getPredicateDomain("http://dbpedia.org/ontology/"+tokens[0]);
-			for(String mydom : domains){
-				System.out.println("Domain for  " +tokens[0]+":::"+ value);
-			}
+			String [] tokens = key.split(" || ");
+//			domains=getPredicateDomain("http://dbpedia.org/ontology/"+tokens[0]);
+//			for(String mydom : domains){
+//				System.out.println("Domain for  " +tokens[0]+":::"+ value);
+//			}
 		}
 
 	//Set<Integer> st = predicateObjectIdMap.keySet();
