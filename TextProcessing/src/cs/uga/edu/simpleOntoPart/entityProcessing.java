@@ -487,9 +487,31 @@ public void createPredicateObjectPairClassMatrix() throws IOException{
         predicateObjectPairSet=getPredicateDomain("http://dbpedia.org/ontology/"+mystr[0]);
         for (String mydom: predicateObjectPairSet){
         	 System.out.println("domain: "+mydom);
+        	
         }
         
     }
+        
+        
+        
+        
+        File myclassfile = new File(classIdFileName);
+    	BufferedReader brc = new BufferedReader(new FileReader(myclassfile));
+    	String readLineclass = "";
+    	Set<String> classSet = new HashSet<String>();
+
+            while ((readLineclass = brc.readLine()) != null) {
+            	
+            String[] mystrClass=readLineclass.toString().split(" ");
+     
+            classSet.add(mystrClass[0]);
+           
+            
+        }
+            for (String myclass: classSet){
+           	 System.out.println("Class: "+myclass);
+           	
+           }
 }
 	
 	
