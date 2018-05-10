@@ -409,6 +409,13 @@ public class entityProcessing {
 			System.out.println(mystr[0]);
 		}
 		
+		Set <String> keysClass=classNameToIdMap.keySet();
+		for (String j : keysClass){
+			System.out.println("i Class: "+ j +":  "+ classNameToIdMap.get(j));
+			String [] mystrClass=j.split(" ");
+			System.out.println(mystrClass[0]);
+		}
+		
 		
 		
 		
