@@ -99,7 +99,7 @@ public class simpleOntoMain {
 		entityProcessing createMyEntityList = new entityProcessing();
 		createMyEntityList.createEntityList();
 		createMyEntityList.corpusMaker();
-		simpleOntoParameters myinitialization=new simpleOntoParameters();
+	//	simpleOntoParameters myinitialization=new simpleOntoParameters();
 		
 		
 		
