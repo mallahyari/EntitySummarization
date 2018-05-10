@@ -160,7 +160,6 @@ public class entityProcessing {
 		FileWriter predicateToIdFile = new FileWriter(predicateToIdFileName); //"/home/mehdi/simpleOntoPart/evaluation/predicateToId.txt"; 
 		FileWriter predicateObjectFile = new FileWriter(predicateObjectFileName);
 		
-		Set<String> predicateObjectPairSet = new HashSet<String>();
 		Set<String> predicateObjectSet = new HashSet<String>();
 		Set<String> subjectNames = new HashSet<String>();
 		Map<String, Integer> subjectNameToIdMap = new HashMap<String,Integer>();
@@ -477,17 +476,19 @@ public class entityProcessing {
 public void createPredicateObjectPairClassMatrix() throws IOException{
 	
 	File myfile = new File(predicateObjectPairToIdFileName);
+	BufferedReader br = new BufferedReader(new FileReader(myfile));
+	String readLine = "";
+	Set<String> predicateObjectPairSet = new HashSet<String>();
 
-    BufferedReader br = new BufferedReader(new FileReader(myfile));
-
-    String readLine = "";
-
-    System.out.println("Reading file using Buffered Reader");
-
-    while ((readLine = br.readLine()) != null) {
-        System.out.println(readLine);
+        while ((readLine = br.readLine()) != null) {
+        	predicateObjectPairSet.clear();
         String[] mystr=readLine.toString().split("@");
         System.out.println(mystr[0]);
+        predicateObjectPairSet=getPredicateDomain("http://dbpedia.org/ontology/"+mystr[0]);
+        for (String mydom: predicateObjectPairSet){
+        	 System.out.println(mydom);
+        }
+        
     }
 }
 	
