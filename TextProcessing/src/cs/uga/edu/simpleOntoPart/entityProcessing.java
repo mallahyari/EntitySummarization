@@ -160,7 +160,7 @@ public class entityProcessing {
 		FileWriter predicateToIdFile = new FileWriter(predicateToIdFileName); //"/home/mehdi/simpleOntoPart/evaluation/predicateToId.txt"; 
 		FileWriter predicateObjectFile = new FileWriter(predicateObjectFileName);
 		
-		
+		Set<String> predicateObjectPairSet = new HashSet<String>();
 		Set<String> predicateObjectSet = new HashSet<String>();
 		Set<String> subjectNames = new HashSet<String>();
 		Map<String, Integer> subjectNameToIdMap = new HashMap<String,Integer>();
@@ -351,6 +351,7 @@ public class entityProcessing {
 								predicateObjectIdMap.put(predicateName+" || "+objectName, prediateObjectIdGenerator);
 								predicateObjectPair.write(predicateName+" || "+objectName + "    " + prediateObjectIdGenerator + "\n");
 								prediateObjectIdGenerator++;
+								predicateObjectPairSet.add(predicateName+" || "+objectName);
 							}
 							
 							
@@ -397,24 +398,18 @@ public class entityProcessing {
 //		POIdFile.close();
 		System.out.println("Size of predicate-object map"+ predicateObjectIdMap.size() +  "\n  Class Map " +classNameToIdMap.size());
 		Set<String> domains = new HashSet<String>();
-		Iterator iterator = predicateObjectIdMap.keySet().iterator();
-		  
-		while (iterator.hasNext()) {
-			domains.clear();
-		   String key = iterator.next().toString();
-		   String value = predicateObjectIdMap.get(key).toString();
-		  
-		   String mystr =key.toString();
-		   
-		   System.out.println(mystr);
-			String [] tokens1 = mystr.split(" || ");
-			String part1=tokens1[0];
-			System.out.println(part1);
-			domains=getPredicateDomain("http://dbpedia.org/ontology/"+"starring");
-			for(String mydom : domains){
-				System.out.println("Domain forsssss  " +mydom);
-			}
-		}
+	for (String mypair: predicateObjectPairSet){
+		String [] tokens1 = mypair.split(" || ");
+		String part1=tokens1[0];
+		System.out.println(part1);
+//		domains=getPredicateDomain("http://dbpedia.org/ontology/"+"starring");
+//		for(String mydom : domains){
+//			System.out.println("Domain forsssss  " +mydom);
+//		}
+		
+	}
+			
+		
 
 	//Set<Integer> st = predicateObjectIdMap.keySet();
 	// create the lambda matrix
