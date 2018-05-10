@@ -412,7 +412,7 @@ public class entityProcessing {
 			System.out.println(part1);
 			domains=getPredicateDomain("http://dbpedia.org/ontology/"+"starring");
 			for(String mydom : domains){
-				System.out.println("Domain forsssss  " +part1+":::"+ value);
+				System.out.println("Domain forsssss  " +mydom);
 			}
 		}
 
