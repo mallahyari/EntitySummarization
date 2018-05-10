@@ -410,9 +410,9 @@ public class entityProcessing {
 			String [] tokens1 = mystr.split(" || ");
 			String part1=tokens1[0];
 			System.out.println(part1);
-			domains=getPredicateDomain("http://dbpedia.org/ontology/"+part1);
+			domains=getPredicateDomain("http://dbpedia.org/ontology/"+"starring");
 			for(String mydom : domains){
-				System.out.println("Domain for  " +part1+":::"+ value);
+				System.out.println("Domain forsssss  " +part1+":::"+ value);
 			}
 		}
 
