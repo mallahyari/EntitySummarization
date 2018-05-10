@@ -195,7 +195,7 @@ public class entityProcessing {
 			StringBuffer queryString = new StringBuffer();
 			queryString.append("SELECT ?s FROM <" + GRAPH + "> WHERE { ");
 			queryString.append(" ?s a <" + uriClassPrefix + className + ">   " );
-			queryString.append("}   Limit 50");
+			queryString.append("}   Limit 1");
 			//System.out.println(queryString);
 			Query sparql = QueryFactory.create(queryString.toString());
 			VirtuosoQueryExecution vqe = VirtuosoQueryExecutionFactory.create (sparql, virtGraph);
@@ -397,6 +397,40 @@ public class entityProcessing {
 //		POIdFile.close();
 		System.out.println("Size of predicate-object map"+ predicateObjectIdMap.size() +  "\n  Class Map " +classNameToIdMap.size());
 	
+		Iterator iterator = predicateObjectIdMap.keySet().iterator();
+		  
+		while (iterator.hasNext()) {
+		   String key = iterator.next().toString();
+		   String value = predicateObjectIdMap.get(key).toString();
+		  
+		   System.out.println(key + " " + value);
+		}
+
+	//Set<Integer> st = predicateObjectIdMap.keySet();
+	// create the lambda matrix
+	int numOfPredicates = predicateToIdMap.size();
+	int numOfObjects    = wordToIdMap.size();
+	predicateObjectWeight = new int[numOfPredicates][numOfObjects];
+	
+	for (int i = 0; i < numOfPredicates; i++) {
+		for (int j = 0; j < numOfObjects; j++) {
+			Set<String> cats = objectToCategoryMap.get(j) != null ? objectToCategoryMap.get(j) : new HashSet<String>();
+			if (objectToPredicateMap.get(j) != null && objectToPredicateMap.get(j).contains(i) && !cats.isEmpty()) {
+				predicateObjectWeight[i][j] = cats.size(); 
+			}else {
+				predicateObjectWeight[i][j] = 1; 
+			}
+		} // end of for (j)
+	} // end of for (i)
+		
+		
+		
+		
+		
+		
+		
+		
+		
 		br.close();
 		subjectToIdFile.close();
 		classToIdFile.close();
