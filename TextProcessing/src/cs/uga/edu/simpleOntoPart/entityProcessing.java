@@ -486,7 +486,7 @@ public void createPredicateObjectPairClassMatrix() throws IOException{
         System.out.println(mystr[0]);
         predicateObjectPairSet=getPredicateDomain("http://dbpedia.org/ontology/"+mystr[0]);
         for (String mydom: predicateObjectPairSet){
-        	 System.out.println(mydom);
+        	 System.out.println("domain: "+mydom);
         }
         
     }
