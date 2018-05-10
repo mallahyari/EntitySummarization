@@ -351,7 +351,7 @@ public class entityProcessing {
 								predicateObjectIdMap.put(predicateName+" || "+objectName, prediateObjectIdGenerator);
 								predicateObjectPair.write(predicateName+" || "+objectName + "    " + prediateObjectIdGenerator + "\n");
 								prediateObjectIdGenerator++;
-								predicateObjectPairSet.add(predicateName+" || "+objectName);
+								predicateObjectPairSet.add(predicateName+"||"+objectName);
 							}
 							
 							
@@ -399,7 +399,7 @@ public class entityProcessing {
 		System.out.println("Size of predicate-object map"+ predicateObjectIdMap.size() +  "\n  Class Map " +classNameToIdMap.size());
 		Set<String> domains = new HashSet<String>();
 	for (String mypair: predicateObjectPairSet){
-		String [] tokens1 = mypair.split(" || ");
+		String [] tokens1 = mypair.split("||");
 		String part1=tokens1[0];
 		System.out.println(part1);
 //		domains=getPredicateDomain("http://dbpedia.org/ontology/"+"starring");
