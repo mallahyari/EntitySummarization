@@ -406,10 +406,10 @@ public class entityProcessing {
 		  
 		   System.out.println(key + " " + value);
 			String [] tokens = key.split(" || ");
-//			domains=getPredicateDomain("http://dbpedia.org/ontology/"+tokens[0]);
-//			for(String mydom : domains){
-//				System.out.println("Domain for  " +tokens[0]+":::"+ value);
-//			}
+			domains=getPredicateDomain("http://dbpedia.org/ontology/"+tokens[0]);
+			for(String mydom : domains){
+				System.out.println("Domain for  " +tokens[0]+":::"+ value);
+			}
 		}
 
 	//Set<Integer> st = predicateObjectIdMap.keySet();
