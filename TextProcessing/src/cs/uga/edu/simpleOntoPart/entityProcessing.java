@@ -346,8 +346,8 @@ public class entityProcessing {
 								wordIdGenerator++;
 							}
 							//Store pair of predicate*object with ID (unique pair)
-							if (predicateObjectIdMap.get(predicateName+" || "+objectName) == null) {
-								predicateObjectIdMap.put(predicateName+" || "+objectName, prediateObjectIdGenerator);
+							if (predicateObjectIdMap.get(predicateName+"@"+objectName) == null) {
+								predicateObjectIdMap.put(predicateName+"@"+objectName, prediateObjectIdGenerator);
 								predicateObjectPair.write(predicateName+"@"+objectName + "    " + prediateObjectIdGenerator + "\n");
 								prediateObjectIdGenerator++;
 								
@@ -400,6 +400,17 @@ public class entityProcessing {
 //		POIdFile.close();
 		System.out.println("Size of predicate-object map"+ predicateObjectIdMap.size() +  "\n  Class Map " +classNameToIdMap.size());
 			
+		
+		
+		Set <String> keys=predicateObjectIdMap.keySet();
+		for (String i : keys){
+			System.out.println("i"+ i +":  "+ predicateObjectIdMap.get(i));
+			String [] mystr=i.split("@");
+			System.out.println(mystr[0]);
+		}
+		
+		
+		
 		
 
 	//Set<Integer> st = predicateObjectIdMap.keySet();
