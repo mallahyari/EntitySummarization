@@ -399,7 +399,8 @@ public class entityProcessing {
 		System.out.println("Size of predicate-object map"+ predicateObjectIdMap.size() +  "\n  Class Map " +classNameToIdMap.size());
 		Set<String> domains = new HashSet<String>();
 	for (String mypair: predicateObjectPairSet){
-		System.out.println(mypair.toString().split("||"));
+		String v =mypair.toString();
+		System.out.println(v.toString().split("||"));
 //		String [] tokens1 = mypair.split("||");
 //		String part1=tokens1[0];
 //		System.out.println(part1);
