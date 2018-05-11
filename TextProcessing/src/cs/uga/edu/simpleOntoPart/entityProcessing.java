@@ -554,9 +554,9 @@ public class entityProcessing {
 	private Set<String> getInstances(String predicateName, String className) {
 		StringBuffer queryString = new StringBuffer();
 		queryString.append("SELECT ?s FROM <" + GRAPH + "> WHERE { ");
-		queryString.append("?s a <http://dbpedia.org/ontology/" + className + ">");
+		queryString.append("?s a <http://dbpedia.org/ontology/" + className + ">     ");
 		queryString.append("?s ?p ?o . ");
-		queryString.append("FILTER (?p IN (<http://dbpedia.org/ontology/" + predicateName + ">");
+		queryString.append("FILTER (?p IN (<http://dbpedia.org/ontology/" + predicateName + "> ) )");
 		queryString.append("} ");
 		
 		Query sparql = QueryFactory.create(queryString.toString());
