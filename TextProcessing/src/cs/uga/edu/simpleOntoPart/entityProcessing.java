@@ -497,7 +497,7 @@ public class entityProcessing {
 				Set<String> instanceSet = new HashSet<String>();
 				instanceSet=getInstances(myPredicate[0],classNameToIdMap1.get(j));
 				System.out.println(i +"     "+ j+ "    "+instanceSet.size() + "          SubjectName Size:"+ subjectNames.size());
-				subjectNames.retainAll(instanceSet);
+			//	subjectNames.retainAll(instanceSet);
 				System.out.println("common:"+subjectNames.size());
 //				if (subjectNames.size() > 1){
 //					predicateObjectClassWeight[i][j] = subjectNames.size(); 
