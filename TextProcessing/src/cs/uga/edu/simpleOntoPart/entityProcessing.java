@@ -201,7 +201,7 @@ public class entityProcessing {
 			StringBuffer queryString = new StringBuffer();
 			queryString.append("SELECT ?s FROM <" + GRAPH + "> WHERE { ");
 			queryString.append(" ?s a <" + uriClassPrefix + className + ">   " );
-			queryString.append("}   Limit 3");
+			queryString.append("}   Limit 15");
 			//System.out.println(queryString);
 			Query sparql = QueryFactory.create(queryString.toString());
 			VirtuosoQueryExecution vqe = VirtuosoQueryExecutionFactory.create (sparql, virtGraph);
@@ -370,8 +370,7 @@ public class entityProcessing {
 						entityFileDocs.write(myUnit+" | ");
 					}
 					entityFileDocs.close();
-					System.out.println(subjectNamesSet.add(subjectName.toString()) + "XXXXXXXXXXXXXXXXXXXXXX "+ subjectName.toString() + " VVVVVVV " + subjectNamesSet.size());
-
+				subjectNamesSet.add(subjectName.toString());
 					
 					//if a class has an entity then it will be added into classNametoID file 
 					if ( classNameToIdMap.get(className) == null) {
