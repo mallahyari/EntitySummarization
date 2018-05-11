@@ -142,6 +142,7 @@ public class entityProcessing {
 	private int domainNumber=0;
 	private int rangeNumber=0;
 	protected int[][] predicateObjectWeight = null;
+	protected int[][] predicateObjectClassWeight = null;
 	///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 	
 	
@@ -414,9 +415,9 @@ public class entityProcessing {
 		}
 		Set <Integer> keys1=predicateObjectIdMap1.keySet();
 		for (int k : keys1){
-			System.out.println("k:"+ k +":  "+ predicateObjectIdMap1.get(k));
+			//System.out.println("k:"+ k +":  "+ predicateObjectIdMap1.get(k));
 			String [] mystr1=predicateObjectIdMap1.get(k).split("@");
-			System.out.println("salam::"+mystr1[0]);
+			//System.out.println("salam::"+mystr1[0]);
 			}
 		
 		
@@ -430,30 +431,54 @@ public class entityProcessing {
 		}
 		Set <Integer> keysClass1=classNameToIdMap1.keySet();
 		for (int p : keysClass1){
-			System.out.println("p:"+ p +":  "+ classNameToIdMap1.get(p));
+			//System.out.println("p:"+ p +":  "+ classNameToIdMap1.get(p));
 			String mystrClass1=classNameToIdMap1.get(p);
-			System.out.println("salam classam::"+mystrClass1);
+			//System.out.println("salam classam::"+mystrClass1);
 			}
+	
+		
+		//Set<Integer> st = predicateObjectIdMap.keySet();
+		// create the lambda matrix
+		int numOfPredicateObjects = predicateObjectIdMap1.size();
+		int numOfClass    = classNameToIdMap1.size();
+		predicateObjectClassWeight = new int[numOfPredicateObjects][numOfClass];
+		
+		for (int i = 0; i < numOfPredicateObjects; i++) {
+			System.out.println(i+"**********"+ predicateObjectIdMap.get(i));
+			for (int j = 0; j < numOfClass; j++) {
+//				Set<String> cats = objectToCategoryMap.get(j) != null ? objectToCategoryMap.get(j) : new HashSet<String>();
+//				if (objectToPredicateMap.get(j) != null && objectToPredicateMap.get(j).contains(i) && !cats.isEmpty()) {
+//					predicateObjectClassWeight[i][j] = cats.size(); 
+//				}else {
+//					predicateObjectClassWeight[i][j] = 1; 
+//				}
+			} // end of for (j)
+		} // end of for (i)
+		
+		
+		
+		
+		
 		
 		
 		
 
-	//Set<Integer> st = predicateObjectIdMap.keySet();
-	// create the lambda matrix
-	int numOfPredicates = predicateToIdMap.size();
-	int numOfObjects    = wordToIdMap.size();
-	predicateObjectWeight = new int[numOfPredicates][numOfObjects];
-	
-	for (int i = 0; i < numOfPredicates; i++) {
-		for (int j = 0; j < numOfObjects; j++) {
-			Set<String> cats = objectToCategoryMap.get(j) != null ? objectToCategoryMap.get(j) : new HashSet<String>();
-			if (objectToPredicateMap.get(j) != null && objectToPredicateMap.get(j).contains(i) && !cats.isEmpty()) {
-				predicateObjectWeight[i][j] = cats.size(); 
-			}else {
-				predicateObjectWeight[i][j] = 1; 
-			}
-		} // end of for (j)
-	} // end of for (i)
+//	//Set<Integer> st = predicateObjectIdMap.keySet();
+//	// create the lambda matrix
+//	int numOfPredicates = predicateToIdMap.size();
+//	int numOfObjects    = wordToIdMap.size();
+//	predicateObjectWeight = new int[numOfPredicates][numOfObjects];
+//	
+//	for (int i = 0; i < numOfPredicates; i++) {
+//		for (int j = 0; j < numOfObjects; j++) {
+//			Set<String> cats = objectToCategoryMap.get(j) != null ? objectToCategoryMap.get(j) : new HashSet<String>();
+//			if (objectToPredicateMap.get(j) != null && objectToPredicateMap.get(j).contains(i) && !cats.isEmpty()) {
+//				predicateObjectWeight[i][j] = cats.size(); 
+//			}else {
+//				predicateObjectWeight[i][j] = 1; 
+//			}
+//		} // end of for (j)
+//	} // end of for (i)
 		
 		
 		
