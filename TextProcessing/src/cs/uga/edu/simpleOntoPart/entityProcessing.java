@@ -439,13 +439,23 @@ public class entityProcessing {
 		
 		//Set<Integer> st = predicateObjectIdMap.keySet();
 		// create the lambda matrix
-		int numOfPredicateObjects = predicateObjectIdMap1.size();
-		int numOfClass    = classNameToIdMap1.size();
+		int numOfPredicateObjects = 3;//predicateObjectIdMap1.size();
+		int numOfClass    = 3; //classNameToIdMap1.size();
 		predicateObjectClassWeight = new int[numOfPredicateObjects][numOfClass];
 		
 		for (int i = 0; i < numOfPredicateObjects; i++) {
-			System.out.println(i+"**********"+ predicateObjectIdMap1.get(i));
+			//System.out.println(i+"**********"+ predicateObjectIdMap1.get(i));
+			String []myPredicate=predicateObjectIdMap1.get(i).split("@");
+			
 			for (int j = 0; j < numOfClass; j++) {
+				Set<String> instanceSet = new HashSet<String>();
+				
+				instanceSet=getInstances(myPredicate[0],classNameToIdMap1.get(j));
+				
+				System.out.println(i +"     "+ j+ "    "+instanceSet.size());
+				
+				
+				
 //				Set<String> cats = objectToCategoryMap.get(j) != null ? objectToCategoryMap.get(j) : new HashSet<String>();
 //				if (objectToPredicateMap.get(j) != null && objectToPredicateMap.get(j).contains(i) && !cats.isEmpty()) {
 //					predicateObjectClassWeight[i][j] = cats.size(); 
@@ -534,6 +544,37 @@ public class entityProcessing {
 		
 	} // end of createEntityList
 	
+/////////////////////////////////////////////
+	
+	
+
+
+
+	
+	private Set<String> getInstances(String predicateName, String className) {
+		StringBuffer queryString = new StringBuffer();
+		queryString.append("SELECT ?s FROM <" + GRAPH + "> WHERE { ");
+		queryString.append("?s a <http://dbpedia.org/ontology/" + className + ">");
+		queryString.append("?s ?p ?o . ");
+		queryString.append("FILTER (?p IN (<http://dbpedia.org/ontology/" + predicateName + ">");
+		queryString.append("} ");
+		
+		Query sparql = QueryFactory.create(queryString.toString());
+		VirtuosoQueryExecution vqe = VirtuosoQueryExecutionFactory.create (sparql, virtGraph);
+		ResultSet results = vqe.execSelect();
+		Set<String> types = new HashSet<String>();
+		while (results.hasNext()) {
+			QuerySolution result = results.nextSolution();
+			int index = result.getResource("s").toString().lastIndexOf("/");
+			types.add(result.getResource("s").toString().substring(index+1));
+		} // end of while
+		return types;
+	} // end of getPredicateDomain
+
+	
+	
+	
+////////////////////////////////////////////////////////////////////////////////////////////	
 public void createPredicateObjectPairClassMatrix() throws IOException{
 	
 	File myfile = new File(predicateObjectPairToIdFileName);
@@ -552,11 +593,7 @@ public void createPredicateObjectPairClassMatrix() throws IOException{
         }
         
     }
-        
-        
-        
-        
-        File myclassfile = new File(classIdFileName);
+          File myclassfile = new File(classIdFileName);
     	BufferedReader brc = new BufferedReader(new FileReader(myclassfile));
     	String readLineclass = "";
     	Set<String> classSet = new HashSet<String>();
@@ -574,14 +611,6 @@ public void createPredicateObjectPairClassMatrix() throws IOException{
            	
            }
 }
-	
-	
-	
-	
-	
-	
-	
-	
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 	public void corpusMaker() throws NumberFormatException, IOException{
 		int countEntity=0;
