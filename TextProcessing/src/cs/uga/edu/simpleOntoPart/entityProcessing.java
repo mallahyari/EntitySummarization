@@ -111,6 +111,8 @@ public class entityProcessing {
 	
 	protected String objectPredicateFileName = "/home/mehdi/simpleOntoPart/evaluation/objectPredicate.ser";
 	protected final String predicateObjectWeightFileName = "/home/mehdi/simpleOntoPart/evaluation/predicateObjectWeight.ser";
+	protected final String predicateObjectClassWeightFileName = "/home/mehdi/simpleOntoPart/evaluation/predicateObjectClassWeight.ser";
+	
 	
 	//Holding all documents (Entities) in entityDocs folder
 	private static final String entityList = "/home/mehdi/simpleOntoPart/evaluation/";
@@ -431,8 +433,8 @@ public class entityProcessing {
 			}
 	
 		// create the lambda matrix
-		int numOfPredicateObjects = 3;//predicateObjectIdMap1.size();
-		int numOfClass    = 3; //classNameToIdMap1.size();
+		int numOfPredicateObjects = predicateObjectIdMap1.size();
+		int numOfClass    = classNameToIdMap1.size();
 		predicateObjectClassWeight = new int[numOfPredicateObjects][numOfClass];
 		
 		for (int i = 0; i < numOfPredicateObjects; i++) {
@@ -442,9 +444,9 @@ public class entityProcessing {
 			for (int j = 0; j < numOfClass; j++) {
 				Set<String> instanceSet = new HashSet<String>();
 				instanceSet=getInstances(myPredicate[0],classNameToIdMap1.get(j));
-				System.out.println(i +"     "+ j+ "    "+instanceSet.size());
+				//System.out.println(i +"     "+ j+ "    "+instanceSet.size());
 				subjectNames.retainAll(instanceSet);
-				System.out.println(subjectNames.size());
+				//System.out.println(subjectNames.size());
 				if (subjectNames.size() > 1){
 					predicateObjectClassWeight[i][j] = subjectNames.size(); 
 				}else{
@@ -454,6 +456,7 @@ public class entityProcessing {
 			} // end of for (j)
 		} // end of for (i)
 		
+		saveMatrix(predicateObjectClassWeight, predicateObjectClassWeightFileName);
 //////////////////////END of Making predicate*object pair X class matrix as an extra knowledge		
 		
 		
