@@ -381,6 +381,7 @@ public class entityProcessing {
 					if ( subjectNameToIdMap.get(subjectName) == null) {
 						subjectNameToIdMap.put(subjectName, subjectIdGenerator);
 						subjectToIdFile.write(subjectName + " " + subjectIdGenerator + "\n");
+						subjectNames.add(subjectName);
 						entNameOnlyFile.write(subjectName + "\n");
 						
 						subjectIdGenerator++;
@@ -453,6 +454,7 @@ public class entityProcessing {
 				instanceSet=getInstances(myPredicate[0],classNameToIdMap1.get(j));
 				
 				System.out.println(i +"     "+ j+ "    "+instanceSet.size());
+				System.out.println(subjectNames.retainAll(instanceSet));
 				
 				
 				
