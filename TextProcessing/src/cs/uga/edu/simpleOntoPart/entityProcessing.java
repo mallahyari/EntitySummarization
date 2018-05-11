@@ -454,9 +454,8 @@ public class entityProcessing {
 				instanceSet=getInstances(myPredicate[0],classNameToIdMap1.get(j));
 				
 				System.out.println(i +"     "+ j+ "    "+instanceSet.size());
-				System.out.println(subjectNames.retainAll(instanceSet));
-				
-				
+			subjectNames.retainAll(instanceSet);
+				System.out.println(subjectNames.size());
 				
 //				Set<String> cats = objectToCategoryMap.get(j) != null ? objectToCategoryMap.get(j) : new HashSet<String>();
 //				if (objectToPredicateMap.get(j) != null && objectToPredicateMap.get(j).contains(i) && !cats.isEmpty()) {
