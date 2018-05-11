@@ -370,7 +370,7 @@ public class entityProcessing {
 						entityFileDocs.write(myUnit+" | ");
 					}
 					entityFileDocs.close();
-					System.out.println(subjectNamesSet.add(subjectName.toString()) + "XXXXXXXXXXXXXXXXXXXXXX "+ subjectName.toString());
+					System.out.println(subjectNamesSet.add(subjectName.toString()) + "XXXXXXXXXXXXXXXXXXXXXX "+ subjectName.toString() + " VVVVVVV " + subjectNamesSet.size());
 
 					
 					//if a class has an entity then it will be added into classNametoID file 
