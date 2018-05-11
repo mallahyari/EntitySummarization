@@ -483,7 +483,7 @@ public class entityProcessing {
 		int numOfPredicateObjects =200;// predicateObjectIdMap1.size();
 		int numOfClass    = 30;//classNameToIdMap1.size();
 		predicateObjectClassWeight = new int[numOfPredicateObjects][numOfClass];
-		
+		Set<String> instanceSet = new HashSet<String>();
 		for (int i = 0; i < numOfPredicateObjects; i++) {
 			//System.out.println(i+"**********"+ predicateObjectIdMap1.get(i));
 			String []myPredicate=predicateObjectIdMap1.get(i).split("@");
@@ -491,15 +491,26 @@ public class entityProcessing {
 			System.out.println("          SubjectNameSETTTTTT Size:"+ subjectNamesSet.size());
 			
 			System.out.println("          SubjectNameSSSS Size:"+ subjectNames.size());
+
+			System.out.println("         XXXXXXXXXXXXXXXXMMMMMMMMMMMMMMMMMMMMMXXXXXXXXXXXXXXXXXXX");
+
+			subjectNames=subjectNamesSet;
+			System.out.println("          SubjectNameSETTTTTT Size:"+ subjectNamesSet.size());
+			
+			System.out.println("          SubjectNameSSSS Size:"+ subjectNames.size());
+
+			
+			
 			
 			for (int j = 0; j < numOfClass; j++) {
 			//	subjectNames=subjectNamesSet;
-				Set<String> instanceSet = new HashSet<String>();
+				
 				instanceSet=getInstances(myPredicate[0],classNameToIdMap1.get(j));
 				System.out.println(i +"     "+ j+ "    "+instanceSet.size() + "          SubjectName Size:"+ subjectNames.size() + "          SubjectNameSeTTTT Size:"+ subjectNamesSet.size());
 			//	subjectNames.retainAll(instanceSet);
 				System.out.println("common:"+subjectNames.size());
 				subjectNames.clear();
+				instanceSet.clear();
 //				if (subjectNames.size() > 1){
 //					predicateObjectClassWeight[i][j] = subjectNames.size(); 
 //					System.out.println(subjectNames.size());
