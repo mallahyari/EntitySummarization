@@ -170,6 +170,7 @@ public class entityProcessing {
 		Map<String, Integer> wordToIdMap = new HashMap<String,Integer>();
 		Map<String, Integer> predicateToIdMap = new HashMap<String,Integer>();
 		Map<String, Integer> predicateObjectIdMap = new HashMap<String,Integer>();
+		Map<Integer, String> predicateObjectIdMap1 = new HashMap<Integer, String>();
 		
 		Map<Integer, Set<Integer>> predicateToObjectMap = new HashMap<Integer,Set<Integer>>();
 		Map<Integer, Set<String>> objectToCategoryMap = new HashMap<Integer,Set<String>>();
@@ -350,9 +351,7 @@ public class entityProcessing {
 								predicateObjectIdMap.put(predicateName+"@"+objectName, prediateObjectIdGenerator);
 								predicateObjectPair.write(predicateName+"@"+objectName + "    " + prediateObjectIdGenerator + "\n");
 								prediateObjectIdGenerator++;
-								
-								
-							}
+								}
 							//
 							
 							//
@@ -403,11 +402,24 @@ public class entityProcessing {
 		
 		
 		Set <String> keys=predicateObjectIdMap.keySet();
+		
 		for (String i : keys){
-			System.out.println("i"+ i +":  "+ predicateObjectIdMap.get(i));
+			//System.out.println("i"+ i +":  "+ predicateObjectIdMap.get(i));
 			String [] mystr=i.split("@");
-			System.out.println(mystr[0]);
+		//	System.out.println(mystr[0]);
+			predicateObjectIdMap1.put(predicateObjectIdMap.get(i), i);
+			
 		}
+		Set <Integer> keys1=predicateObjectIdMap1.keySet();
+		for (int k : keys1){
+			System.out.println("k:"+ k +":  "+ predicateObjectIdMap1.get(k));
+			String [] mystr1=predicateObjectIdMap1.get(k).split("@");
+			System.out.println("salam::"+mystr1[0]);
+			
+			
+		}
+		
+		
 		
 		Set <String> keysClass=classNameToIdMap.keySet();
 		for (String j : keysClass){
