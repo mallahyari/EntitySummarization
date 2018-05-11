@@ -444,7 +444,7 @@ public class entityProcessing {
 		predicateObjectClassWeight = new int[numOfPredicateObjects][numOfClass];
 		
 		for (int i = 0; i < numOfPredicateObjects; i++) {
-			System.out.println(i+"**********"+ predicateObjectIdMap.get(i));
+			System.out.println(i+"**********"+ predicateObjectIdMap1.get(i));
 			for (int j = 0; j < numOfClass; j++) {
 //				Set<String> cats = objectToCategoryMap.get(j) != null ? objectToCategoryMap.get(j) : new HashSet<String>();
 //				if (objectToPredicateMap.get(j) != null && objectToPredicateMap.get(j).contains(i) && !cats.isEmpty()) {
