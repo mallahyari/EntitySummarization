@@ -370,7 +370,7 @@ public class entityProcessing {
 						entityFileDocs.write(myUnit+" | ");
 					}
 					entityFileDocs.close();
-					
+					subjectNames.add(subjectName);
 					
 					//if a class has an entity then it will be added into classNametoID file 
 					if ( classNameToIdMap.get(className) == null) {
@@ -383,7 +383,7 @@ public class entityProcessing {
 					if ( subjectNameToIdMap.get(subjectName) == null) {
 						subjectNameToIdMap.put(subjectName, subjectIdGenerator);
 						subjectToIdFile.write(subjectName + " " + subjectIdGenerator + "\n");
-						subjectNames.add(subjectName);
+						
 						entNameOnlyFile.write(subjectName + "\n");
 						
 						subjectIdGenerator++;
