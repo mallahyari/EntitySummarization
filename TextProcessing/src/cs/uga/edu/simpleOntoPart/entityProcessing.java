@@ -164,6 +164,8 @@ public class entityProcessing {
 		Set<String> subjectNames = new HashSet<String>();
 		Map<String, Integer> subjectNameToIdMap = new HashMap<String,Integer>();
 		Map<String, Integer> classNameToIdMap = new HashMap<String,Integer>();
+		Map<Integer, String> classNameToIdMap1 = new HashMap<Integer, String>();
+
 		Vector<String> predicateObjectVec = new Vector<String>();
 		Map<String, Integer> CategoryNameToIdMap = new HashMap<String,Integer>();
 		Map<Integer, Integer> subjectIdCatIdMap = new HashMap<Integer,Integer>();
@@ -415,19 +417,23 @@ public class entityProcessing {
 			System.out.println("k:"+ k +":  "+ predicateObjectIdMap1.get(k));
 			String [] mystr1=predicateObjectIdMap1.get(k).split("@");
 			System.out.println("salam::"+mystr1[0]);
-			
-			
-		}
+			}
 		
 		
 		
 		Set <String> keysClass=classNameToIdMap.keySet();
 		for (String j : keysClass){
-			System.out.println("i Class: "+ j +":  "+ classNameToIdMap.get(j));
+			//System.out.println("i Class: "+ j +":  "+ classNameToIdMap.get(j));
 			String [] mystrClass=j.split(" ");
-			System.out.println(mystrClass[0]);
+			//System.out.println(mystrClass[0]);
+			classNameToIdMap1.put(classNameToIdMap.get(j), j);
 		}
-		
+		Set <Integer> keysClass1=classNameToIdMap1.keySet();
+		for (int p : keysClass1){
+			System.out.println("p:"+ p +":  "+ classNameToIdMap1.get(p));
+			String mystrClass1=classNameToIdMap1.get(p);
+			System.out.println("salam classam::"+mystrClass1);
+			}
 		
 		
 		
