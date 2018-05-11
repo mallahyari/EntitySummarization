@@ -487,24 +487,23 @@ public class entityProcessing {
 		for (int i = 0; i < numOfPredicateObjects; i++) {
 			//System.out.println(i+"**********"+ predicateObjectIdMap1.get(i));
 			String []myPredicate=predicateObjectIdMap1.get(i).split("@");
-			subjectNames=subjectNamesSet;
+			subjectNames.addAll(subjectNamesSet);
 			System.out.println("          SubjectNameSETTTTTT Size:"+ subjectNamesSet.size());
 			
 			System.out.println("          SubjectNameSSSS Size:"+ subjectNames.size());
 
 			System.out.println("         XXXXXXXXXXXXXXXXMMMMMMMMMMMMMMMMMMMMMXXXXXXXXXXXXXXXXXXX");
 
-			subjectNames=subjectNamesSet;
-			System.out.println("          SubjectNameSETTTTTT Size:"+ subjectNamesSet.size());
-			
-			System.out.println("          SubjectNameSSSS Size:"+ subjectNames.size());
-
-			
 			
 			
 			for (int j = 0; j < numOfClass; j++) {
-			//	subjectNames=subjectNamesSet;
+				subjectNames.addAll(subjectNamesSet);
+				System.out.println("          SubjectNameSETTTTTT Size:"+ subjectNamesSet.size());
 				
+				System.out.println("          SubjectNameSSSS Size:"+ subjectNames.size());
+
+				System.out.println("         XXXXXXXXXXXXXXXXMMMMMMMMMMMMMMMMMMMMMXXXXXXXXXXXXXXXXXXX");
+
 				instanceSet=getInstances(myPredicate[0],classNameToIdMap1.get(j));
 				System.out.println(i +"     "+ j+ "    "+instanceSet.size() + "          SubjectName Size:"+ subjectNames.size() + "          SubjectNameSeTTTT Size:"+ subjectNamesSet.size());
 			//	subjectNames.retainAll(instanceSet);
