@@ -361,6 +361,7 @@ public class entityProcessing {
 							
 							//
 							
+							System.out.println(subjectNames.add(subjectName.toString()) + "ccccccc "+ subjectName.toString());
 							
 							} //end while
 					
@@ -370,7 +371,7 @@ public class entityProcessing {
 						entityFileDocs.write(myUnit+" | ");
 					}
 					entityFileDocs.close();
-					subjectNames.add(subjectName);
+					
 					
 					//if a class has an entity then it will be added into classNametoID file 
 					if ( classNameToIdMap.get(className) == null) {
@@ -449,62 +450,62 @@ public class entityProcessing {
 		
 		//************* END extract Category ***************\\
 		
-
-		//////////////////////Making predicate*object pair X class matrix as an extra knowledge
-		System.out.println("Size of predicate-object map"+ predicateObjectIdMap.size() +  "\n  Class Map " +classNameToIdMap.size());
-		Set <String> keys=predicateObjectIdMap.keySet();
-		for (String i : keys){
-			String [] mystr=i.split("@");
-			predicateObjectIdMap1.put(predicateObjectIdMap.get(i), i);
-			}
-		Set <Integer> keys1=predicateObjectIdMap1.keySet();
-		for (int k : keys1){
-			//System.out.println("k:"+ k +":  "+ predicateObjectIdMap1.get(k));
-			String [] mystr1=predicateObjectIdMap1.get(k).split("@");
-			//System.out.println("salam::"+mystr1[0]);
-			}
-		
-		Set <String> keysClass=classNameToIdMap.keySet();
-		for (String j : keysClass){
-			//System.out.println("i Class: "+ j +":  "+ classNameToIdMap.get(j));
-			String [] mystrClass=j.split(" ");
-			//System.out.println(mystrClass[0]);
-			classNameToIdMap1.put(classNameToIdMap.get(j), j);
-			}
-		Set <Integer> keysClass1=classNameToIdMap1.keySet();
-		for (int p : keysClass1){
-			//System.out.println("p:"+ p +":  "+ classNameToIdMap1.get(p));
-			String mystrClass1=classNameToIdMap1.get(p);
-			//System.out.println("salam classam::"+mystrClass1);
-			}
-	
-		// create the lambda matrix
-		int numOfPredicateObjects =200;// predicateObjectIdMap1.size();
-		int numOfClass    = 30;//classNameToIdMap1.size();
-		predicateObjectClassWeight = new int[numOfPredicateObjects][numOfClass];
-		
-		for (int i = 0; i < numOfPredicateObjects; i++) {
-			//System.out.println(i+"**********"+ predicateObjectIdMap1.get(i));
-			String []myPredicate=predicateObjectIdMap1.get(i).split("@");
-			
-			for (int j = 0; j < numOfClass; j++) {
-				Set<String> instanceSet = new HashSet<String>();
-				instanceSet=getInstances(myPredicate[0],classNameToIdMap1.get(j));
-				System.out.println(i +"     "+ j+ "    "+instanceSet.size() + "          SubjectName Size:"+ subjectNames.size());
-				subjectNames.retainAll(instanceSet);
-				System.out.println("common:"+subjectNames.size());
-//				if (subjectNames.size() > 1){
-//					predicateObjectClassWeight[i][j] = subjectNames.size(); 
-//					System.out.println(subjectNames.size());
-//				}else{
-//					predicateObjectClassWeight[i][j]=1;
-//				}
-//				
-			} // end of for (j)
-		} // end of for (i)
-		
-//		saveMatrix(predicateObjectClassWeight, predicateObjectClassWeightFileName);
-//////////////////////END of Making predicate*object pair X class matrix as an extra knowledge		
+//
+////////////////////////Making predicate*object pair X class matrix as an extra knowledge
+//		System.out.println("Size of predicate-object map"+ predicateObjectIdMap.size() +  "\n  Class Map " +classNameToIdMap.size());
+//		Set <String> keys=predicateObjectIdMap.keySet();
+//		for (String i : keys){
+//			String [] mystr=i.split("@");
+//			predicateObjectIdMap1.put(predicateObjectIdMap.get(i), i);
+//			}
+//		Set <Integer> keys1=predicateObjectIdMap1.keySet();
+//		for (int k : keys1){
+//			//System.out.println("k:"+ k +":  "+ predicateObjectIdMap1.get(k));
+//			String [] mystr1=predicateObjectIdMap1.get(k).split("@");
+//			//System.out.println("salam::"+mystr1[0]);
+//			}
+//		
+//		Set <String> keysClass=classNameToIdMap.keySet();
+//		for (String j : keysClass){
+//			//System.out.println("i Class: "+ j +":  "+ classNameToIdMap.get(j));
+//			String [] mystrClass=j.split(" ");
+//			//System.out.println(mystrClass[0]);
+//			classNameToIdMap1.put(classNameToIdMap.get(j), j);
+//			}
+//		Set <Integer> keysClass1=classNameToIdMap1.keySet();
+//		for (int p : keysClass1){
+//			//System.out.println("p:"+ p +":  "+ classNameToIdMap1.get(p));
+//			String mystrClass1=classNameToIdMap1.get(p);
+//			//System.out.println("salam classam::"+mystrClass1);
+//			}
+//	
+//		// create the lambda matrix
+//		int numOfPredicateObjects =200;// predicateObjectIdMap1.size();
+//		int numOfClass    = 30;//classNameToIdMap1.size();
+//		predicateObjectClassWeight = new int[numOfPredicateObjects][numOfClass];
+//		
+//		for (int i = 0; i < numOfPredicateObjects; i++) {
+//			//System.out.println(i+"**********"+ predicateObjectIdMap1.get(i));
+//			String []myPredicate=predicateObjectIdMap1.get(i).split("@");
+//			
+//			for (int j = 0; j < numOfClass; j++) {
+//				Set<String> instanceSet = new HashSet<String>();
+//				instanceSet=getInstances(myPredicate[0],classNameToIdMap1.get(j));
+//				System.out.println(i +"     "+ j+ "    "+instanceSet.size() + "          SubjectName Size:"+ subjectNames.size());
+//				subjectNames.retainAll(instanceSet);
+//				System.out.println("common:"+subjectNames.size());
+////				if (subjectNames.size() > 1){
+////					predicateObjectClassWeight[i][j] = subjectNames.size(); 
+////					System.out.println(subjectNames.size());
+////				}else{
+////					predicateObjectClassWeight[i][j]=1;
+////				}
+////				
+//			} // end of for (j)
+//		} // end of for (i)
+//		
+////		saveMatrix(predicateObjectClassWeight, predicateObjectClassWeightFileName);
+////////////////////////END of Making predicate*object pair X class matrix as an extra knowledge		
 
 		
 		
