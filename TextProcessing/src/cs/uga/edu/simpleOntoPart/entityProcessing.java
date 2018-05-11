@@ -487,13 +487,13 @@ public class entityProcessing {
 		for (int i = 0; i < numOfPredicateObjects; i++) {
 			//System.out.println(i+"**********"+ predicateObjectIdMap1.get(i));
 			String []myPredicate=predicateObjectIdMap1.get(i).split("@");
-			
+			subjectNames=subjectNamesSet;
 			for (int j = 0; j < numOfClass; j++) {
 				Set<String> instanceSet = new HashSet<String>();
 				instanceSet=getInstances(myPredicate[0],classNameToIdMap1.get(j));
-				System.out.println(i +"     "+ j+ "    "+instanceSet.size() + "          SubjectName Size:"+ subjectNamesSet.size());
-				subjectNamesSet.retainAll(instanceSet);
-				System.out.println("common:"+subjectNamesSet.size());
+				System.out.println(i +"     "+ j+ "    "+instanceSet.size() + "          SubjectName Size:"+ subjectNames.size());
+				subjectNames.retainAll(instanceSet);
+				System.out.println("common:"+subjectNames.size());
 //				if (subjectNames.size() > 1){
 //					predicateObjectClassWeight[i][j] = subjectNames.size(); 
 //					System.out.println(subjectNames.size());
