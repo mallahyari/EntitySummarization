@@ -490,7 +490,7 @@ public class entityProcessing {
 			for (int j = 0; j < numOfClass; j++) {
 				Set<String> instanceSet = new HashSet<String>();
 				instanceSet=getInstances(myPredicate[0],classNameToIdMap1.get(j));
-				System.out.println(i +"     "+ j+ "    "+instanceSet.size());
+				System.out.println(i +"     "+ j+ "    "+instanceSet.size() + "          SubjectName Size:"+ subjectNames.size());
 				subjectNames.retainAll(instanceSet);
 				System.out.println("common:"+subjectNames.size());
 //				if (subjectNames.size() > 1){
