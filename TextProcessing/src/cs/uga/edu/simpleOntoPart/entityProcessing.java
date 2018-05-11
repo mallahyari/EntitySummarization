@@ -489,6 +489,7 @@ public class entityProcessing {
 			String []myPredicate=predicateObjectIdMap1.get(i).split("@");
 			subjectNames=subjectNamesSet;
 			for (int j = 0; j < numOfClass; j++) {
+				subjectNames=subjectNamesSet;
 				Set<String> instanceSet = new HashSet<String>();
 				instanceSet=getInstances(myPredicate[0],classNameToIdMap1.get(j));
 				System.out.println(i +"     "+ j+ "    "+instanceSet.size() + "          SubjectName Size:"+ subjectNames.size());
