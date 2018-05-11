@@ -506,8 +506,8 @@ public class entityProcessing {
 
 				instanceSet=getInstances(myPredicate[0],classNameToIdMap1.get(j));
 				System.out.println(i +"     "+ j+ "    "+instanceSet.size() + "          SubjectName Size:"+ subjectNames.size() + "          SubjectNameSeTTTT Size:"+ subjectNamesSet.size());
-			//	subjectNames.retainAll(instanceSet);
-				System.out.println("common:"+subjectNames.size());
+				subjectNames.retainAll(instanceSet);
+				System.out.println("common commoncommoncommoncommoncommoncommoncommoncommoncommon:"+subjectNames.size());
 				subjectNames.clear();
 				instanceSet.clear();
 //				if (subjectNames.size() > 1){
