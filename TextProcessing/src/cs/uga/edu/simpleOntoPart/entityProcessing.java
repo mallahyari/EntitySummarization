@@ -165,6 +165,7 @@ public class entityProcessing {
 		
 		Set<String> predicateObjectSet = new HashSet<String>();
 		Set<String> subjectNames = new HashSet<String>();
+		Set<String> subjectNamesSet = new HashSet<String>();
 		Map<String, Integer> subjectNameToIdMap = new HashMap<String,Integer>();
 		Map<String, Integer> classNameToIdMap = new HashMap<String,Integer>();
 		Map<Integer, String> classNameToIdMap1 = new HashMap<Integer, String>();
@@ -362,6 +363,7 @@ public class entityProcessing {
 							//
 							
 							System.out.println(subjectNames.add(subjectName.toString()) + "ccccccc "+ subjectName.toString());
+							System.out.println(subjectNamesSet.add(subjectName.toString()) + "XXXXXXXXXXXXXXXXXXXXXX "+ subjectName.toString());
 							
 							} //end while
 					
