@@ -200,7 +200,7 @@ public class entityProcessing {
 			StringBuffer queryString = new StringBuffer();
 			queryString.append("SELECT ?s FROM <" + GRAPH + "> WHERE { ");
 			queryString.append(" ?s a <" + uriClassPrefix + className + ">   " );
-			queryString.append("}   Limit 1");
+			queryString.append("}   Limit 3");
 			//System.out.println(queryString);
 			Query sparql = QueryFactory.create(queryString.toString());
 			VirtuosoQueryExecution vqe = VirtuosoQueryExecutionFactory.create (sparql, virtGraph);
@@ -262,7 +262,7 @@ public class entityProcessing {
 				//extract their predicate and objects
 				predicateObjectVec.clear();
 				
-				if (numberOfPredicate>40 && subjectName.length()>5){
+				if (numberOfPredicate>30 && subjectName.length()>5){
 					System.out.println(className + "      subjectName:"+ subjectName);
 					StringBuffer queryString2 = new StringBuffer();
 					queryString2.append("SELECT ?p ?o FROM <" + GRAPH + "> WHERE { ");
@@ -449,6 +449,7 @@ public class entityProcessing {
 				//System.out.println(subjectNames.size());
 				if (subjectNames.size() > 1){
 					predicateObjectClassWeight[i][j] = subjectNames.size(); 
+					System.out.println(subjectNames.size());
 				}else{
 					predicateObjectClassWeight[i][j]=1;
 				}
@@ -518,7 +519,7 @@ public class entityProcessing {
 		queryString.append("?s ?p ?o . ");
 		queryString.append("FILTER (?p IN (<http://dbpedia.org/ontology/" + predicateName + "> ) )");
 		queryString.append("} ");
-		System.out.println(queryString);
+		//System.out.println(queryString);
 		
 		Query sparql = QueryFactory.create(queryString.toString());
 		VirtuosoQueryExecution vqe = VirtuosoQueryExecutionFactory.create (sparql, virtGraph);
