@@ -362,10 +362,7 @@ public class entityProcessing {
 							
 							//
 							
-							System.out.println(subjectNames.add(subjectName.toString()) + "ccccccc "+ subjectName.toString());
-							System.out.println(subjectNamesSet.add(subjectName.toString()) + "XXXXXXXXXXXXXXXXXXXXXX "+ subjectName.toString());
-							
-							} //end while
+						} //end while
 					
 					//Create bag of words for each subject, entity (doc). write into file.
 					FileWriter entityFileDocs = new FileWriter(entityDocs+ subjectName+".txt");
@@ -373,7 +370,8 @@ public class entityProcessing {
 						entityFileDocs.write(myUnit+" | ");
 					}
 					entityFileDocs.close();
-					
+					System.out.println(subjectNamesSet.add(subjectName.toString()) + "XXXXXXXXXXXXXXXXXXXXXX "+ subjectName.toString());
+
 					
 					//if a class has an entity then it will be added into classNametoID file 
 					if ( classNameToIdMap.get(className) == null) {
