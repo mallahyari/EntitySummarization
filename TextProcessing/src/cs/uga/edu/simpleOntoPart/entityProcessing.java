@@ -230,8 +230,10 @@ public class entityProcessing {
 			 queryString.append("FILTER (?p NOT IN (<http://dbpedia.org/ontology/height> ) ) ");
 			 queryString.append("FILTER (?p NOT IN (<http://dbpedia.org/property/report> ) ) ");
 			 queryString.append("FILTER (?p NOT IN (<http://dbpedia.org/ontology/wikiPageDisambiguates> ) ) ");
-			
+				
 			 queryString.append("FILTER(!isLiteral(?o) ) ");
+			 queryString.append("FILTER regex(?s, \"http://dbpedia.org/resource/\")");
+				
 			 queryString.append("}   GROUP BY ?s ");
 			 //queryString.append("    HAVING((COUNT(?p) > 30) AND (COUNT(?p) <60)) ");
 			 queryString.append("    HAVING(COUNT(?p) > 30 ) ");
@@ -239,7 +241,7 @@ public class entityProcessing {
 			 queryString.append("   Order By DESC (?pCount) ");
 			 queryString.append("   limit 80 ");
 			 
-			
+		
 					
 		//	System.out.println(queryString);
 			Query sparql = QueryFactory.create(queryString.toString());
@@ -258,7 +260,6 @@ public class entityProcessing {
 				int index = subject.toString().lastIndexOf("/");
 				String subjectName = subject.toString().substring(index + 1);
 				
-
 				predicateObjectVec.clear();
 				
 		
@@ -292,11 +293,12 @@ public class entityProcessing {
 					queryString2.append("FILTER (?p NOT IN (<http://dbpedia.org/ontology/height> ) ) ");
 					queryString2.append("FILTER (?p NOT IN (<http://dbpedia.org/property/report> ) ) ");
 					queryString2.append("FILTER (?p NOT IN (<http://dbpedia.org/ontology/wikiPageDisambiguates> ) ) ");
-					
 					queryString2.append("FILTER(!isLiteral(?o) ) ");
+					queryString2.append("FILTER regex(?s, \"http://dbpedia.org/resource/\")");
 					
 					
 					
+			
 					queryString2.append("}  ");
 					Query sparql2 = QueryFactory.create(queryString2.toString());
 					VirtuosoQueryExecution vqe2 = VirtuosoQueryExecutionFactory.create (sparql2, virtGraph);
