@@ -232,7 +232,7 @@ public class entityProcessing {
 			 queryString.append("FILTER (?p NOT IN (<http://dbpedia.org/ontology/wikiPageDisambiguates> ) ) ");
 				
 			 queryString.append("FILTER(!isLiteral(?o) ) ");
-			 queryString.append("FILTER(regex(?s, '^http://dbpedia.org/resource/','i'))  ");
+			// queryString.append("FILTER(regex(?s, '^http://dbpedia.org/resource/','i'))  ");
 				
 			 queryString.append(" }   GROUP BY ?s ");
 			 //queryString.append("    HAVING((COUNT(?p) > 30) AND (COUNT(?p) <60)) ");
@@ -259,6 +259,11 @@ public class entityProcessing {
 				//Finding the position of the last "/"	and take only predicate name
 				int index = subject.toString().lastIndexOf("/");
 				String subjectName = subject.toString().substring(index + 1);
+				
+				if (!subjectName.toString().contains("http://dbpedia.org/resource/")){
+					System.out.println("BREAKINGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGG"+subjectName);
+					break;
+				}
 				
 				predicateObjectVec.clear();
 				
