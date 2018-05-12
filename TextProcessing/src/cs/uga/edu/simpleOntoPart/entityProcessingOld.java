@@ -71,7 +71,7 @@ import virtuoso.jena.driver.VirtuosoQueryExecutionFactory;
 // comment 2
 
 
-public class entityProcessing { 
+public class entityProcessingOld { 
 	
 	private final String uriPrefix = "http://dbpedia.org/resource/";
 	private final String uriClassPrefix = "http://dbpedia.org/ontology/";
@@ -199,44 +199,9 @@ public class entityProcessing {
 		while ((className = br.readLine()) != null) {
 			//Connecting to Virtuoso to extract predicates and objects
 			StringBuffer queryString = new StringBuffer();
-			queryString.append("SELECT ?s (COUNT(?p) as ?pCount)  FROM <" + GRAPH + "> WHERE { ");
+			queryString.append("SELECT ?s FROM <" + GRAPH + "> WHERE { ");
 			queryString.append(" ?s a <" + uriClassPrefix + className + ">   " );
-			queryString.append(" ?s ?p ?o .   " );
-			queryString.append("FILTER (?p NOT IN (<http://www.w3.org/1999/02/22-rdf-syntax-ns#type> ) ) ");
-			 queryString.append("FILTER (?p NOT IN (<http://www.w3.org/2002/07/owl#sameAs> ) )");
-			 queryString.append("FILTER (?p NOT IN (<http://purl.org/dc/terms/subject> ) )");
-			 queryString.append("FILTER (?p NOT IN (<http://dbpedia.org/ontology/wikiPageWikiLink> ) ) ");
-			 queryString.append("FILTER (?p NOT IN (<http://dbpedia.org/ontology/wikiPageExternalLink> ) ) ");
-			 queryString.append("FILTER (?p NOT IN (<http://dbpedia.org/ontology/abstract> ) ) ");
-			 queryString.append("FILTER (?p NOT IN (<http://www.w3.org/2000/01/rdf-schema#comment> ) ) ");
-			 queryString.append("FILTER (?p NOT IN (<http://dbpedia.org/ontology/thumbnail> ) ) ");
-			 queryString.append("FILTER (?p NOT IN (<http://xmlns.com/foaf/0.1/depiction> ) ) ");
-			 queryString.append("FILTER (?p NOT IN (<http://xmlns.com/foaf/0.1/isPrimaryTopicOf> ) ) ");
-			 queryString.append("FILTER (?p NOT IN (<http://dbpedia.org/property/image> ) ) ");
-			 queryString.append("FILTER (?p NOT IN (<http://dbpedia.org/property/mapImage> ) ) ");
-			 queryString.append("FILTER (?p NOT IN (<http://dbpedia.org/property/percentage> ) ) ");
-			 queryString.append("FILTER (?p NOT IN (<http://dbpedia.org/property/seats> ) ) ");
-			 queryString.append("FILTER (?p NOT IN (<http://dbpedia.org/property/width> ) ) ");
-			 queryString.append("FILTER (?p NOT IN (<http://dbpedia.org/property/map> ) ) ");
-			 queryString.append("FILTER (?p NOT IN (<http://dbpedia.org/property/length> ) ) ");
-			 queryString.append("FILTER (?p NOT IN (<http://xmlns.com/foaf/0.1/homepage> ) ) ");
-			 queryString.append("FILTER (?p NOT IN (<http://dbpedia.org/property/d> ) ) ");
-			 queryString.append("FILTER (?p NOT IN (<http://dbpedia.org/property/b> ) ) ");
-			 queryString.append("FILTER (?p NOT IN (<http://dbpedia.org/property/washpo> ) ) ");
-			 queryString.append("FILTER (?p NOT IN (<http://www.w3.org/2000/01/rdf-schema#label> ) ) ");
-			 queryString.append("FILTER (?p NOT IN (<http://dbpedia.org/property/imageSize> ) ) ");
-			 queryString.append("FILTER (?p NOT IN (<http://dbpedia.org/ontology/height> ) ) ");
-			 queryString.append("FILTER (?p NOT IN (<http://dbpedia.org/property/report> ) ) ");
-			 queryString.append("FILTER (?p NOT IN (<http://dbpedia.org/ontology/wikiPageDisambiguates> ) ) ");
-			
-			 queryString.append("FILTER(!isLiteral(?o) ) ");
-			 queryString.append("}   GROUP BY ?s ");
-			 queryString.append("    HAVING(COUNT(?p) > 30 AND COUNT(?p) <60) ");
-			 queryString.append("   Order By DESC (?pCount) ");
-			 queryString.append("   limit 1 ");
-			 
-			
-					
+			queryString.append("}   Limit 70");
 			//System.out.println(queryString);
 			Query sparql = QueryFactory.create(queryString.toString());
 			VirtuosoQueryExecution vqe = VirtuosoQueryExecutionFactory.create (sparql, virtGraph);
@@ -252,56 +217,56 @@ public class entityProcessing {
 				int index = subject.toString().lastIndexOf("/");
 				String subjectName = subject.toString().substring(index + 1);
 				
-//				StringBuffer queryString1 = new StringBuffer();
-//				queryString1.append("select   (count(?p)as ?pTotal) FROM <" + GRAPH + "> WHERE { ");
-//				queryString1.append("<http://dbpedia.org/resource/" + subjectName +"> ?p ?o.  " );
-//				queryString1.append("FILTER (?p NOT IN (<http://www.w3.org/1999/02/22-rdf-syntax-ns#type> ) ) ");
-//				queryString1.append("FILTER (?p NOT IN (<http://www.w3.org/2002/07/owl#sameAs> ) )");
-//				queryString1.append("FILTER (?p NOT IN (<http://purl.org/dc/terms/subject> ) )");
-//				queryString1.append("FILTER (?p NOT IN (<http://dbpedia.org/ontology/wikiPageWikiLink> ) ) ");
-//				queryString1.append("FILTER (?p NOT IN (<http://dbpedia.org/ontology/wikiPageExternalLink> ) ) ");
-//				queryString1.append("FILTER (?p NOT IN (<http://dbpedia.org/ontology/abstract> ) ) ");
-//				queryString1.append("FILTER (?p NOT IN (<http://www.w3.org/2000/01/rdf-schema#comment> ) ) ");
-//				queryString1.append("FILTER (?p NOT IN (<http://dbpedia.org/ontology/thumbnail> ) ) ");
-//				queryString1.append("FILTER (?p NOT IN (<http://xmlns.com/foaf/0.1/depiction> ) ) ");
-//				queryString1.append("FILTER (?p NOT IN (<http://xmlns.com/foaf/0.1/isPrimaryTopicOf> ) ) ");
-//				queryString1.append("FILTER (?p NOT IN (<http://dbpedia.org/property/image> ) ) ");
-//				queryString1.append("FILTER (?p NOT IN (<http://dbpedia.org/property/mapImage> ) ) ");
-//				queryString1.append("FILTER (?p NOT IN (<http://dbpedia.org/property/percentage> ) ) ");
-//				queryString1.append("FILTER (?p NOT IN (<http://dbpedia.org/property/seats> ) ) ");
-//				queryString1.append("FILTER (?p NOT IN (<http://dbpedia.org/property/width> ) ) ");
-//				queryString1.append("FILTER (?p NOT IN (<http://dbpedia.org/property/map> ) ) ");
-//				queryString1.append("FILTER (?p NOT IN (<http://dbpedia.org/property/length> ) ) ");
-//				queryString1.append("FILTER (?p NOT IN (<http://xmlns.com/foaf/0.1/homepage> ) ) ");
-//				queryString1.append("FILTER (?p NOT IN (<http://dbpedia.org/property/d> ) ) ");
-//				queryString1.append("FILTER (?p NOT IN (<http://dbpedia.org/property/b> ) ) ");
-//				queryString1.append("FILTER (?p NOT IN (<http://dbpedia.org/property/washpo> ) ) ");
-//				queryString1.append("FILTER (?p NOT IN (<http://www.w3.org/2000/01/rdf-schema#label> ) ) ");
-//				queryString1.append("FILTER (?p NOT IN (<http://dbpedia.org/property/imageSize> ) ) ");
-//				queryString1.append("FILTER (?p NOT IN (<http://dbpedia.org/ontology/height> ) ) ");
-//				queryString1.append("FILTER (?p NOT IN (<http://dbpedia.org/property/report> ) ) ");
-//				queryString1.append("FILTER (?p NOT IN (<http://dbpedia.org/ontology/wikiPageDisambiguates> ) ) ");
-//				
-//				queryString1.append("FILTER(!isLiteral(?o) ) ");
-//				queryString1.append("}  ");
-//				
-//				//System.out.println(queryString1);
-//				Query sparql1 = QueryFactory.create(queryString1.toString());
-//				VirtuosoQueryExecution vqe1 = VirtuosoQueryExecutionFactory.create (sparql1, virtGraph);
-//				ResultSet results1 = vqe1.execSelect();
-//				if (results1.hasNext()) {
-//					QuerySolution result1 = results1.nextSolution();
-//					RDFNode subject1 = result1.get("pTotal");
-//					int index1 = subject1.toString().lastIndexOf("^^");
-//					String myPredicateNum = subject1.toString().substring(0,index1 );
-//					numberOfPredicate=Integer.parseInt(myPredicateNum);
-//					
-//				}
+				StringBuffer queryString1 = new StringBuffer();
+				queryString1.append("select   (count(?p)as ?pTotal) FROM <" + GRAPH + "> WHERE { ");
+				queryString1.append("<http://dbpedia.org/resource/" + subjectName +"> ?p ?o.  " );
+				queryString1.append("FILTER (?p NOT IN (<http://www.w3.org/1999/02/22-rdf-syntax-ns#type> ) ) ");
+				queryString1.append("FILTER (?p NOT IN (<http://www.w3.org/2002/07/owl#sameAs> ) )");
+				queryString1.append("FILTER (?p NOT IN (<http://purl.org/dc/terms/subject> ) )");
+				queryString1.append("FILTER (?p NOT IN (<http://dbpedia.org/ontology/wikiPageWikiLink> ) ) ");
+				queryString1.append("FILTER (?p NOT IN (<http://dbpedia.org/ontology/wikiPageExternalLink> ) ) ");
+				queryString1.append("FILTER (?p NOT IN (<http://dbpedia.org/ontology/abstract> ) ) ");
+				queryString1.append("FILTER (?p NOT IN (<http://www.w3.org/2000/01/rdf-schema#comment> ) ) ");
+				queryString1.append("FILTER (?p NOT IN (<http://dbpedia.org/ontology/thumbnail> ) ) ");
+				queryString1.append("FILTER (?p NOT IN (<http://xmlns.com/foaf/0.1/depiction> ) ) ");
+				queryString1.append("FILTER (?p NOT IN (<http://xmlns.com/foaf/0.1/isPrimaryTopicOf> ) ) ");
+				queryString1.append("FILTER (?p NOT IN (<http://dbpedia.org/property/image> ) ) ");
+				queryString1.append("FILTER (?p NOT IN (<http://dbpedia.org/property/mapImage> ) ) ");
+				queryString1.append("FILTER (?p NOT IN (<http://dbpedia.org/property/percentage> ) ) ");
+				queryString1.append("FILTER (?p NOT IN (<http://dbpedia.org/property/seats> ) ) ");
+				queryString1.append("FILTER (?p NOT IN (<http://dbpedia.org/property/width> ) ) ");
+				queryString1.append("FILTER (?p NOT IN (<http://dbpedia.org/property/map> ) ) ");
+				queryString1.append("FILTER (?p NOT IN (<http://dbpedia.org/property/length> ) ) ");
+				queryString1.append("FILTER (?p NOT IN (<http://xmlns.com/foaf/0.1/homepage> ) ) ");
+				queryString1.append("FILTER (?p NOT IN (<http://dbpedia.org/property/d> ) ) ");
+				queryString1.append("FILTER (?p NOT IN (<http://dbpedia.org/property/b> ) ) ");
+				queryString1.append("FILTER (?p NOT IN (<http://dbpedia.org/property/washpo> ) ) ");
+				queryString1.append("FILTER (?p NOT IN (<http://www.w3.org/2000/01/rdf-schema#label> ) ) ");
+				queryString1.append("FILTER (?p NOT IN (<http://dbpedia.org/property/imageSize> ) ) ");
+				queryString1.append("FILTER (?p NOT IN (<http://dbpedia.org/ontology/height> ) ) ");
+				queryString1.append("FILTER (?p NOT IN (<http://dbpedia.org/property/report> ) ) ");
+				queryString1.append("FILTER (?p NOT IN (<http://dbpedia.org/ontology/wikiPageDisambiguates> ) ) ");
+				
+				queryString1.append("FILTER(!isLiteral(?o) ) ");
+				queryString1.append("}  ");
+				
+				//System.out.println(queryString1);
+				Query sparql1 = QueryFactory.create(queryString1.toString());
+				VirtuosoQueryExecution vqe1 = VirtuosoQueryExecutionFactory.create (sparql1, virtGraph);
+				ResultSet results1 = vqe1.execSelect();
+				if (results1.hasNext()) {
+					QuerySolution result1 = results1.nextSolution();
+					RDFNode subject1 = result1.get("pTotal");
+					int index1 = subject1.toString().lastIndexOf("^^");
+					String myPredicateNum = subject1.toString().substring(0,index1 );
+					numberOfPredicate=Integer.parseInt(myPredicateNum);
+					
+				}
 				//Only extract/select entities where the number of its predicate is greater that 30 and 
 				//extract their predicate and objects
 				predicateObjectVec.clear();
 				
-			//	if (numberOfPredicate>20 && subjectName.length()>5){
+				if (numberOfPredicate>20 && subjectName.length()>5){
 					System.out.println(className + "      subjectName:"+ subjectName);
 					StringBuffer queryString2 = new StringBuffer();
 					queryString2.append("SELECT ?p ?o FROM <" + GRAPH + "> WHERE { ");
@@ -431,7 +396,7 @@ public class entityProcessing {
 						//System.out.println(subjectName+ "  predicateNume " +numberOfPredicate);
 					}
 				
-			//	}// end if predicate number
+				}// end if predicate number
 					
 			} // end of while
 				
