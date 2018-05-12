@@ -260,7 +260,7 @@ public class entityProcessing {
 				int index = subject.toString().lastIndexOf("/");
 				String subjectName = subject.toString().substring(index + 1);
 				
-				if (!subject.toString().contains("http://dbpedia.org/resource/")){
+				if (subjectName.equals("_20_Love_Songs") || subjectName.equals("08_Ricklingen") || subjectName.equals("_GMT400__1") || subjectName.equals("Millbrae_line")|| subjectName.equals("Sr._High_School")|| subjectName.equals("stay_night")){
 					System.out.println("BREAKINGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGG"+subject.toString());
 					continue;
 				}
