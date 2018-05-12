@@ -332,9 +332,7 @@ public class entityProcessing {
 							objectName=objectName.trim();
 							//objectName=objectName.replaceAll(" ","_");
 							
-							if (objectName.length()>20){
-							objectName=objectName.substring(0, 20);
-							}
+							
 							
 							
 							//Vector of predicate object pair to add into bag of word for each entity (doc)
