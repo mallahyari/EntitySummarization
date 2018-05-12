@@ -200,7 +200,7 @@ public class entityProcessing {
 			//Connecting to Virtuoso to extract predicates and objects
 			StringBuffer queryString = new StringBuffer();
 			queryString.append("SELECT ?s (COUNT(?p) as ?pCount)  FROM <" + GRAPH + "> WHERE { ");
-			queryString.append(" ?s a <" + uriClassPrefix + className + ">   " );
+			queryString.append(" ?s a <" + uriClassPrefix + className + ">.  " );
 			queryString.append(" ?s ?p ?o .   " );
 			queryString.append("FILTER (?p NOT IN (<http://www.w3.org/1999/02/22-rdf-syntax-ns#type> ) ) ");
 			 queryString.append("FILTER (?p NOT IN (<http://www.w3.org/2002/07/owl#sameAs> ) )");
