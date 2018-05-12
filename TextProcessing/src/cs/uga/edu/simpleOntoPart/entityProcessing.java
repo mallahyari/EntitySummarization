@@ -232,7 +232,7 @@ public class entityProcessing {
 			 queryString.append("FILTER (?p NOT IN (<http://dbpedia.org/ontology/wikiPageDisambiguates> ) ) ");
 				
 			 queryString.append("FILTER(!isLiteral(?o) ) ");
-			 queryString.append("FILTER regex(?s, \"http://dbpedia.org/resource/\")");
+			 //queryString.append("FILTER regex(?s, \"http://dbpedia.org/resource/\")");
 				
 			 queryString.append("}   GROUP BY ?s ");
 			 //queryString.append("    HAVING((COUNT(?p) > 30) AND (COUNT(?p) <60)) ");
@@ -294,7 +294,7 @@ public class entityProcessing {
 					queryString2.append("FILTER (?p NOT IN (<http://dbpedia.org/property/report> ) ) ");
 					queryString2.append("FILTER (?p NOT IN (<http://dbpedia.org/ontology/wikiPageDisambiguates> ) ) ");
 					queryString2.append("FILTER(!isLiteral(?o) ) ");
-					queryString2.append("FILTER regex(?s, \"http://dbpedia.org/resource/\")");
+				//	queryString2.append("FILTER regex(?s, \"http://dbpedia.org/resource/\")");
 					
 					
 					
