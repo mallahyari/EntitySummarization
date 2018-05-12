@@ -254,57 +254,11 @@ public class entityProcessing {
 				int index = subject.toString().lastIndexOf("/");
 				String subjectName = subject.toString().substring(index + 1);
 				
-//				StringBuffer queryString1 = new StringBuffer();
-//				queryString1.append("select   (count(?p)as ?pTotal) FROM <" + GRAPH + "> WHERE { ");
-//				queryString1.append("<http://dbpedia.org/resource/" + subjectName +"> ?p ?o.  " );
-//				queryString1.append("FILTER (?p NOT IN (<http://www.w3.org/1999/02/22-rdf-syntax-ns#type> ) ) ");
-//				queryString1.append("FILTER (?p NOT IN (<http://www.w3.org/2002/07/owl#sameAs> ) )");
-//				queryString1.append("FILTER (?p NOT IN (<http://purl.org/dc/terms/subject> ) )");
-//				queryString1.append("FILTER (?p NOT IN (<http://dbpedia.org/ontology/wikiPageWikiLink> ) ) ");
-//				queryString1.append("FILTER (?p NOT IN (<http://dbpedia.org/ontology/wikiPageExternalLink> ) ) ");
-//				queryString1.append("FILTER (?p NOT IN (<http://dbpedia.org/ontology/abstract> ) ) ");
-//				queryString1.append("FILTER (?p NOT IN (<http://www.w3.org/2000/01/rdf-schema#comment> ) ) ");
-//				queryString1.append("FILTER (?p NOT IN (<http://dbpedia.org/ontology/thumbnail> ) ) ");
-//				queryString1.append("FILTER (?p NOT IN (<http://xmlns.com/foaf/0.1/depiction> ) ) ");
-//				queryString1.append("FILTER (?p NOT IN (<http://xmlns.com/foaf/0.1/isPrimaryTopicOf> ) ) ");
-//				queryString1.append("FILTER (?p NOT IN (<http://dbpedia.org/property/image> ) ) ");
-//				queryString1.append("FILTER (?p NOT IN (<http://dbpedia.org/property/mapImage> ) ) ");
-//				queryString1.append("FILTER (?p NOT IN (<http://dbpedia.org/property/percentage> ) ) ");
-//				queryString1.append("FILTER (?p NOT IN (<http://dbpedia.org/property/seats> ) ) ");
-//				queryString1.append("FILTER (?p NOT IN (<http://dbpedia.org/property/width> ) ) ");
-//				queryString1.append("FILTER (?p NOT IN (<http://dbpedia.org/property/map> ) ) ");
-//				queryString1.append("FILTER (?p NOT IN (<http://dbpedia.org/property/length> ) ) ");
-//				queryString1.append("FILTER (?p NOT IN (<http://xmlns.com/foaf/0.1/homepage> ) ) ");
-//				queryString1.append("FILTER (?p NOT IN (<http://dbpedia.org/property/d> ) ) ");
-//				queryString1.append("FILTER (?p NOT IN (<http://dbpedia.org/property/b> ) ) ");
-//				queryString1.append("FILTER (?p NOT IN (<http://dbpedia.org/property/washpo> ) ) ");
-//				queryString1.append("FILTER (?p NOT IN (<http://www.w3.org/2000/01/rdf-schema#label> ) ) ");
-//				queryString1.append("FILTER (?p NOT IN (<http://dbpedia.org/property/imageSize> ) ) ");
-//				queryString1.append("FILTER (?p NOT IN (<http://dbpedia.org/ontology/height> ) ) ");
-//				queryString1.append("FILTER (?p NOT IN (<http://dbpedia.org/property/report> ) ) ");
-//				queryString1.append("FILTER (?p NOT IN (<http://dbpedia.org/ontology/wikiPageDisambiguates> ) ) ");
-//				
-//				queryString1.append("FILTER(!isLiteral(?o) ) ");
-//				queryString1.append("}  ");
-//				
-//				//System.out.println(queryString1);
-//				Query sparql1 = QueryFactory.create(queryString1.toString());
-//				VirtuosoQueryExecution vqe1 = VirtuosoQueryExecutionFactory.create (sparql1, virtGraph);
-//				ResultSet results1 = vqe1.execSelect();
-//				if (results1.hasNext()) {
-//					QuerySolution result1 = results1.nextSolution();
-//					RDFNode subject1 = result1.get("pTotal");
-//					int index1 = subject1.toString().lastIndexOf("^^");
-//					String myPredicateNum = subject1.toString().substring(0,index1 );
-//					numberOfPredicate=Integer.parseInt(myPredicateNum);
-//					
-//				}
-				//Only extract/select entities where the number of its predicate is greater that 30 and 
-				//extract their predicate and objects
+
 				predicateObjectVec.clear();
 				
 			//	if (numberOfPredicate>20 && subjectName.length()>5){
-					System.out.println(className + "      subjectName:"+ subjectName);
+					//System.out.println(className + "      subjectName:"+ subjectName);
 					StringBuffer queryString2 = new StringBuffer();
 					queryString2.append("SELECT ?p ?o FROM <" + GRAPH + "> WHERE { ");
 					queryString2.append("<" + uriPrefix + subjectName + ">" + " ?p ?o . ");
@@ -343,8 +297,9 @@ public class entityProcessing {
 					Query sparql2 = QueryFactory.create(queryString2.toString());
 					VirtuosoQueryExecution vqe2 = VirtuosoQueryExecutionFactory.create (sparql2, virtGraph);
 					ResultSet results2 = vqe2.execSelect();
-							
+							int numberOfInstances=0;
 					while (results2.hasNext()) {
+						numberOfInstances++;
 							QuerySolution result2 = results2.nextSolution();
 							RDFNode predicate = result2.get("p");
 							RDFNode object = result2.get("o");
@@ -411,10 +366,12 @@ public class entityProcessing {
 					FileWriter entityFileDocs = new FileWriter(entityDocs+ subjectName+".txt");
 					for (String myUnit: predicateObjectVec){
 						entityFileDocs.write(myUnit+" | ");
-					}
+						}
 					entityFileDocs.close();
 				subjectNamesSet.add(subjectName.toString());
-					
+				
+				System.out.println(className + "  :  "+ numberOfInstances);
+				
 					//if a class has an entity then it will be added into classNametoID file 
 					if ( classNameToIdMap.get(className) == null) {
 						classNameToIdMap.put(className, classIdGenerator);
