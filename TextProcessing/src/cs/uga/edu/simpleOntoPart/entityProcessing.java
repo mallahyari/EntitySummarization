@@ -232,9 +232,9 @@ public class entityProcessing {
 			 queryString.append("FILTER (?p NOT IN (<http://dbpedia.org/ontology/wikiPageDisambiguates> ) ) ");
 				
 			 queryString.append("FILTER(!isLiteral(?o) ) ");
-			 //queryString.append("FILTER regex(?s, \"http://dbpedia.org/resource/\")");
+			 queryString.append("FILTER(regex(?s, 'http://dbpedia.org/resource/'))  ");
 				
-			 queryString.append("}   GROUP BY ?s ");
+			 queryString.append(" }   GROUP BY ?s ");
 			 //queryString.append("    HAVING((COUNT(?p) > 30) AND (COUNT(?p) <60)) ");
 			 queryString.append("    HAVING(COUNT(?p) > 30 ) ");
 				
