@@ -260,9 +260,9 @@ public class entityProcessing {
 				int index = subject.toString().lastIndexOf("/");
 				String subjectName = subject.toString().substring(index + 1);
 				
-				if (!subjectName.toString().contains("http://dbpedia.org/resource/")){
-					System.out.println("BREAKINGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGG"+subjectName);
-					break;
+				if (!subject.toString().contains("http://dbpedia.org/resource/")){
+					System.out.println("BREAKINGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGG"+subject.toString());
+					continue;
 				}
 				
 				predicateObjectVec.clear();
