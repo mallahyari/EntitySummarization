@@ -231,8 +231,8 @@ public class entityProcessing {
 			
 			 queryString.append("FILTER(!isLiteral(?o) ) ");
 			 queryString.append("}   GROUP BY ?s ");
-			 //queryString.append("    HAVING(COUNT(?p) > 30 AND COUNT(?p) <60) ");
-			 queryString.append("    HAVING(COUNT(?p) > 30 ) ");
+			 queryString.append("    HAVING((COUNT(?p) > 30) AND (COUNT(?p) <60)) ");
+			 //queryString.append("    HAVING(COUNT(?p) > 30 ) ");
 				
 			 queryString.append("   Order By DESC (?pCount) ");
 			 queryString.append("   limit 1 ");
