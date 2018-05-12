@@ -197,6 +197,8 @@ public class entityProcessing {
 
 		//Read list of classes from a text file  and extract entity from that class
 		while ((className = br.readLine()) != null) {
+			int numberOfInstances=0;
+			
 			//Connecting to Virtuoso to extract predicates and objects
 			StringBuffer queryString = new StringBuffer();
 			queryString.append("SELECT ?s (COUNT(?p) as ?pCount)  FROM <" + GRAPH + "> WHERE { ");
@@ -247,6 +249,8 @@ public class entityProcessing {
 		int numberOfPredicate=0;
 		// For each subject (entity) extract number of useful predicates
 			while (results.hasNext()) {
+				 numberOfInstances++;
+				
 				QuerySolution result = results.nextSolution();
 				RDFNode subject = result.get("s");
 				
@@ -297,9 +301,9 @@ public class entityProcessing {
 					Query sparql2 = QueryFactory.create(queryString2.toString());
 					VirtuosoQueryExecution vqe2 = VirtuosoQueryExecutionFactory.create (sparql2, virtGraph);
 					ResultSet results2 = vqe2.execSelect();
-							int numberOfInstances=0;
+						
 					while (results2.hasNext()) {
-						numberOfInstances++;
+						
 							QuerySolution result2 = results2.nextSolution();
 							RDFNode predicate = result2.get("p");
 							RDFNode object = result2.get("o");
@@ -370,7 +374,6 @@ public class entityProcessing {
 					entityFileDocs.close();
 				subjectNamesSet.add(subjectName.toString());
 				
-				System.out.println(className + "  :  "+ numberOfInstances);
 				
 					//if a class has an entity then it will be added into classNametoID file 
 					if ( classNameToIdMap.get(className) == null) {
@@ -393,8 +396,10 @@ public class entityProcessing {
 			//	}// end if predicate number
 					
 			} // end of while
+			System.out.println(className + "  :  "+ numberOfInstances);
+			
 				
-		}// end of while for class list
+		}// end of while for READING from class list text file
 		
 //		int kk=0;
 //		FileWriter POIdFile = new FileWriter("/home/mehdi/simpleOntoPart/evaluation/POID.txt"); //"/home/mehdi/simpleOntoPart/evaluation/predicateToId.txt"; 
