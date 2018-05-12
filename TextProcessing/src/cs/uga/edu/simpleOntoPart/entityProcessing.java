@@ -237,7 +237,7 @@ public class entityProcessing {
 			 
 			
 					
-			//System.out.println(queryString);
+			System.out.println(queryString);
 			Query sparql = QueryFactory.create(queryString.toString());
 			VirtuosoQueryExecution vqe = VirtuosoQueryExecutionFactory.create (sparql, virtGraph);
 			ResultSet results = vqe.execSelect();
