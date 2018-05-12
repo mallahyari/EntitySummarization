@@ -235,11 +235,11 @@ public class entityProcessing {
 			 queryString.append("    HAVING(COUNT(?p) > 30 ) ");
 				
 			 queryString.append("   Order By DESC (?pCount) ");
-			 queryString.append("   limit 1 ");
+			 queryString.append("   limit 50 ");
 			 
 			
 					
-			System.out.println(queryString);
+		//	System.out.println(queryString);
 			Query sparql = QueryFactory.create(queryString.toString());
 			VirtuosoQueryExecution vqe = VirtuosoQueryExecutionFactory.create (sparql, virtGraph);
 			ResultSet results = vqe.execSelect();
