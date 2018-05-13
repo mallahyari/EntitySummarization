@@ -610,7 +610,7 @@ public void createPredicateObjectPairClassMatrix() throws IOException{
          // create the lambda matrix
                 Set<String> subjectNames = new HashSet<String>();
                 int numOfPredicateObjects = predicateObjectIdMap1.size();
-    		int numOfClass    = 30;//classNameToIdMap1.size();
+    		int numOfClass    = classNameToIdMap1.size();
     		predicateObjectClassWeight = new int[numOfPredicateObjects][numOfClass];
     		Set<String> instanceSet = new HashSet<String>();
     		for (int i = 0; i < numOfPredicateObjects; i++) {
