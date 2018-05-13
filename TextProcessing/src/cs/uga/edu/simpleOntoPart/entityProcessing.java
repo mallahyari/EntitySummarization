@@ -271,7 +271,7 @@ public class entityProcessing {
 				predicateObjectVec.clear();
 				
 		
-				System.out.println(className + "      subjectName:"+ subjectName);
+			//	System.out.println(className + "      subjectName:"+ subjectName);
 					StringBuffer queryString2 = new StringBuffer();
 					queryString2.append("SELECT ?p ?o FROM <" + GRAPH + "> WHERE { ");
 					//queryString2.append("<" + uriPrefix + subjectName + ">" + " ?p ?o . ");
@@ -407,7 +407,7 @@ public class entityProcessing {
 			//	}// end if predicate number
 					
 			} // end of while
-			System.out.println(className + "  :  "+ numberOfInstances);
+			//System.out.println(className + "  :  "+ numberOfInstances);
 			
 				
 		}// end of while for READING from class list text file
@@ -552,6 +552,8 @@ public class entityProcessing {
 			int index = result.getResource("s").toString().lastIndexOf("/");
 			types.add(result.getResource("s").toString().substring(index+1));
 		} // end of while
+		
+		System.out.println(className+ ":::: " +predicateName+" ***********size"+ types.size() );
 		return types;
 	} // end of getPredicateDomain
 
