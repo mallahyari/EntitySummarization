@@ -230,7 +230,9 @@ public class entityProcessing {
 			 queryString.append("FILTER (?p NOT IN (<http://dbpedia.org/ontology/height> ) ) ");
 			 queryString.append("FILTER (?p NOT IN (<http://dbpedia.org/property/report> ) ) ");
 			 queryString.append("FILTER (?p NOT IN (<http://dbpedia.org/ontology/wikiPageDisambiguates> ) ) ");
-				
+			 queryString.append("FILTER (?p NOT IN (<http://dbpedia.org/property/website> ) ) ");
+					
+			 
 			 queryString.append("FILTER(!isLiteral(?o) ) ");
 			// queryString.append("FILTER(regex(?s, '^http://dbpedia.org/resource/','i'))  ");
 				
@@ -301,6 +303,7 @@ public class entityProcessing {
 					queryString2.append("FILTER (?p NOT IN (<http://dbpedia.org/ontology/height> ) ) ");
 					queryString2.append("FILTER (?p NOT IN (<http://dbpedia.org/property/report> ) ) ");
 					queryString2.append("FILTER (?p NOT IN (<http://dbpedia.org/ontology/wikiPageDisambiguates> ) ) ");
+					 queryString2.append("FILTER (?p NOT IN (<http://dbpedia.org/property/website> ) ) ");
 					queryString2.append("FILTER(!isLiteral(?o) ) ");
 				//	queryString2.append("FILTER regex(?s, \"http://dbpedia.org/resource/\")");
 					
