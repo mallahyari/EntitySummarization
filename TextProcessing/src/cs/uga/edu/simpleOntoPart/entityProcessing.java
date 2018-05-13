@@ -265,6 +265,7 @@ public class entityProcessing {
 //					continue;
 //				}
 				
+				
 				predicateObjectVec.clear();
 				
 		
