@@ -260,10 +260,10 @@ public class entityProcessing {
 				int index = subject.toString().lastIndexOf("/");
 				String subjectName = subject.toString().substring(index + 1);
 				
-				if (subjectName.equals("_20_Love_Songs") || subjectName.equals("08_Ricklingen") || subjectName.equals("_GMT400__1") || subjectName.equals("Millbrae_line")|| subjectName.equals("Sr._High_School")|| subjectName.equals("stay_night")){
-					System.out.println("BREAKINGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGG"+subject.toString());
-					continue;
-				}
+//				if (subjectName.equals("_20_Love_Songs") || subjectName.equals("08_Ricklingen") || subjectName.equals("_GMT400__1") || subjectName.equals("Millbrae_line")|| subjectName.equals("Sr._High_School")|| subjectName.equals("stay_night")){
+//					System.out.println("BREAKINGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGG"+subject.toString());
+//					continue;
+//				}
 				
 				predicateObjectVec.clear();
 				
@@ -271,7 +271,9 @@ public class entityProcessing {
 				System.out.println(className + "      subjectName:"+ subjectName);
 					StringBuffer queryString2 = new StringBuffer();
 					queryString2.append("SELECT ?p ?o FROM <" + GRAPH + "> WHERE { ");
-					queryString2.append("<" + uriPrefix + subjectName + ">" + " ?p ?o . ");
+					//queryString2.append("<" + uriPrefix + subjectName + ">" + " ?p ?o . ");
+					queryString2.append("<" +  subject + ">" + " ?p ?o . ");
+					
 					queryString2.append("FILTER (?p NOT IN (<http://www.w3.org/1999/02/22-rdf-syntax-ns#type> ) ) ");
 					queryString2.append("FILTER (?p NOT IN (<http://www.w3.org/2002/07/owl#sameAs> ) )");
 					queryString2.append("FILTER (?p NOT IN (<http://purl.org/dc/terms/subject> ) )");
