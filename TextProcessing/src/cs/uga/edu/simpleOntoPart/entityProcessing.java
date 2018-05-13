@@ -541,7 +541,7 @@ public class entityProcessing {
 		queryString.append("?s ?p ?o . ");
 		queryString.append("FILTER (?p IN (<http://dbpedia.org/ontology/" + predicateName + "> ) )");
 		queryString.append("} ");
-		//System.out.println(queryString);
+		System.out.println(queryString);
 		
 		Query sparql = QueryFactory.create(queryString.toString());
 		VirtuosoQueryExecution vqe = VirtuosoQueryExecutionFactory.create (sparql, virtGraph);
