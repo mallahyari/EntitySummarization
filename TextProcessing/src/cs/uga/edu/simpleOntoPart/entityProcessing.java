@@ -239,7 +239,7 @@ public class entityProcessing {
 			 queryString.append("    HAVING(COUNT(?p) > 30 ) ");
 				
 			 queryString.append("   Order By DESC (?pCount) ");
-			 queryString.append("   limit 80 ");
+			 queryString.append("   limit 120 ");
 			 
 		
 					
