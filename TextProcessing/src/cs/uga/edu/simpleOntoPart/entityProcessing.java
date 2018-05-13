@@ -617,14 +617,14 @@ public void createPredicateObjectPairClassMatrix() throws IOException{
     			//System.out.println(i+"**********"+ predicateObjectIdMap1.get(i));
     			String []myPredicate=predicateObjectIdMap1.get(i).split("@");
     			subjectNames.addAll(subjectNameSet);
-    			System.out.println(i+"********** Predicate"+ myPredicate[0]);
+    			//System.out.println(i+"********** Predicate"+ myPredicate[0]);
     			
     			
     			for (int j = 0; j < numOfClass; j++) {
     				subjectNames.addAll(subjectNameSet);
-    				System.out.println(j+"********** classsssss"+ classNameToIdMap1.get(j));
-    			//	instanceSet=getInstances(myPredicate[0],classNameToIdMap1.get(j));
-    			//	System.out.println(i +"     "+ j+ "    "+instanceSet.size() + "          SubjectName Size:"+ subjectNames.size() + "          SubjectNameSeTTTT Size:"+ subjectNameSet.size());
+    			//	System.out.println(j+"********** classsssss"+ classNameToIdMap1.get(j));
+    				instanceSet=getInstances(myPredicate[0],classNameToIdMap1.get(j));
+    				System.out.println("********** Predicate"+ myPredicate[0] +"********** classsssss"+ classNameToIdMap1.get(j)+" instance set   "+instanceSet.size()  );
     				//subjectNames.retainAll(instanceSet);
     				//System.out.println("common commoncommoncommoncommoncommoncommoncommoncommoncommon:"+subjectNames.size());
     				//subjectNames.clear();
