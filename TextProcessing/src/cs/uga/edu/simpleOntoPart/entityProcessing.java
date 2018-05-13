@@ -573,12 +573,15 @@ public void createPredicateObjectPairClassMatrix() throws IOException{
         	predicateObjectPairSet.clear();
         String[] mystr=readLine.toString().split("    ");
         System.out.println(mystr[0]+"XXXXXX"+mystr[1]);
+        predicateObjectIdMap1.put(Integer.parseInt(mystr[1]), mystr[0]);
+       
         
 //        predicateObjectPairSet=getPredicateDomain("http://dbpedia.org/ontology/"+mystr[0]);
 //        for (String mydom: predicateObjectPairSet){
 //        	 System.out.println("domain: "+mydom);
 //        	
 //        }
+        System.out.println(predicateObjectIdMap1.size());
         
     }
           File myclassfile = new File(classIdFileName);
