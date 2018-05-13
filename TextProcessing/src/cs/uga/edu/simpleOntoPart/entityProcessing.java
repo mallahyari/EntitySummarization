@@ -609,7 +609,7 @@ public void createPredicateObjectPairClassMatrix() throws IOException{
             
          // create the lambda matrix
                 Set<String> subjectNames = new HashSet<String>();
-                int numOfPredicateObjects =200;// predicateObjectIdMap1.size();
+                int numOfPredicateObjects = predicateObjectIdMap1.size();
     		int numOfClass    = 30;//classNameToIdMap1.size();
     		predicateObjectClassWeight = new int[numOfPredicateObjects][numOfClass];
     		Set<String> instanceSet = new HashSet<String>();
@@ -620,15 +620,15 @@ public void createPredicateObjectPairClassMatrix() throws IOException{
     			System.out.println(i+"********** Predicate"+ myPredicate[0]);
     			
     			
-    			for (int j = 0; j < numOfClass; j++) {
-    				subjectNames.addAll(subjectNameSet);
+    			//for (int j = 0; j < numOfClass; j++) {
+    			//	subjectNames.addAll(subjectNameSet);
     				
     			//	instanceSet=getInstances(myPredicate[0],classNameToIdMap1.get(j));
-    				System.out.println(i +"     "+ j+ "    "+instanceSet.size() + "          SubjectName Size:"+ subjectNames.size() + "          SubjectNameSeTTTT Size:"+ subjectNameSet.size());
+    			//	System.out.println(i +"     "+ j+ "    "+instanceSet.size() + "          SubjectName Size:"+ subjectNames.size() + "          SubjectNameSeTTTT Size:"+ subjectNameSet.size());
     				//subjectNames.retainAll(instanceSet);
     				//System.out.println("common commoncommoncommoncommoncommoncommoncommoncommoncommon:"+subjectNames.size());
-    				subjectNames.clear();
-    				instanceSet.clear();
+    				//subjectNames.clear();
+    				//instanceSet.clear();
 //    				if (subjectNames.size() > 1){
 //    					predicateObjectClassWeight[i][j] = subjectNames.size(); 
 //    					System.out.println(subjectNames.size());
@@ -636,7 +636,7 @@ public void createPredicateObjectPairClassMatrix() throws IOException{
 //    					predicateObjectClassWeight[i][j]=1;
 //    				}
 //    				
-    			} // end of for (j)
+    			//} // end of for (j)
     		} // end of for (i)
             
            
