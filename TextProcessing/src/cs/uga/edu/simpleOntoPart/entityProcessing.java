@@ -535,6 +535,10 @@ public class entityProcessing {
 ///////////////////////////////////////////// Retuen number of instances based on passed predicate name and class Name for subject
 	
 	private Set<String> getInstances(String predicateName, String className) {
+		System.out.println("Connecting to Virtuoso ... ");
+		virtGraph = connectToVirtuoso();
+		
+		
 		StringBuffer queryString = new StringBuffer();
 		queryString.append("SELECT ?s FROM <" + GRAPH + "> WHERE { ");
 		queryString.append(" ?s a <http://dbpedia.org/ontology/" + className + ">  .   ");
@@ -614,34 +618,32 @@ public void createPredicateObjectPairClassMatrix() throws IOException{
     		predicateObjectClassWeight = new int[numOfPredicateObjects][numOfClass];
     		Set<String> instanceSet = new HashSet<String>();
     		
-    		instanceSet=getInstances("Album","genre");
     		
-    		
-//    		for (int i = 0; i < numOfPredicateObjects; i++) {
-//    			//System.out.println(i+"**********"+ predicateObjectIdMap1.get(i));
-//    			String []myPredicate=predicateObjectIdMap1.get(i).split("@");
-//    			subjectNames.addAll(subjectNameSet);
-//    			//System.out.println(i+"********** Predicate"+ myPredicate[0]);
-//    			
-//    			
-//    			for (int j = 0; j < numOfClass; j++) {
-//    				subjectNames.addAll(subjectNameSet);
-//    			//	System.out.println(j+"********** classsssss"+ classNameToIdMap1.get(j));
-//    				instanceSet=getInstances(myPredicate[0],classNameToIdMap1.get(j));
-//    				System.out.println("********** Predicate"+ myPredicate[0] +"********** classsssss"+ classNameToIdMap1.get(j)+" instance set   "+instanceSet.size()  );
-//    				//subjectNames.retainAll(instanceSet);
-//    				//System.out.println("common commoncommoncommoncommoncommoncommoncommoncommoncommon:"+subjectNames.size());
-//    				//subjectNames.clear();
-//    				//instanceSet.clear();
-////    				if (subjectNames.size() > 1){
-////    					predicateObjectClassWeight[i][j] = subjectNames.size(); 
-////    					System.out.println(subjectNames.size());
-////    				}else{
-////    					predicateObjectClassWeight[i][j]=1;
-////    				}
-////    				
-//    			} // end of for (j)
-//    		} // end of for (i)
+    		for (int i = 0; i < numOfPredicateObjects; i++) {
+    			//System.out.println(i+"**********"+ predicateObjectIdMap1.get(i));
+    			String []myPredicate=predicateObjectIdMap1.get(i).split("@");
+    			subjectNames.addAll(subjectNameSet);
+    			//System.out.println(i+"********** Predicate"+ myPredicate[0]);
+    			
+    			
+    			for (int j = 0; j < numOfClass; j++) {
+    				subjectNames.addAll(subjectNameSet);
+    			//	System.out.println(j+"********** classsssss"+ classNameToIdMap1.get(j));
+    				instanceSet=getInstances(myPredicate[0],classNameToIdMap1.get(j));
+    				System.out.println("********** Predicate"+ myPredicate[0] +"********** classsssss"+ classNameToIdMap1.get(j)+" instance set   "+instanceSet.size()  );
+    				//subjectNames.retainAll(instanceSet);
+    				//System.out.println("common commoncommoncommoncommoncommoncommoncommoncommoncommon:"+subjectNames.size());
+    				//subjectNames.clear();
+    				//instanceSet.clear();
+//    				if (subjectNames.size() > 1){
+//    					predicateObjectClassWeight[i][j] = subjectNames.size(); 
+//    					System.out.println(subjectNames.size());
+//    				}else{
+//    					predicateObjectClassWeight[i][j]=1;
+//    				}
+//    				
+    			} // end of for (j)
+    		} // end of for (i)
             
            
 }
