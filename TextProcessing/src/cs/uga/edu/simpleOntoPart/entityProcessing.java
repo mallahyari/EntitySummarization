@@ -540,7 +540,7 @@ public class entityProcessing {
 		queryString.append(" ?s a <http://dbpedia.org/ontology/" + className + ">  .   ");
 		queryString.append("?s ?p ?o . ");
 		queryString.append("FILTER (?p IN (<http://dbpedia.org/ontology/" + predicateName + "> ) )");
-		queryString.append("} ");
+		queryString.append("} Limit 1000 ");
 		System.out.println(queryString);
 		
 		Query sparql = QueryFactory.create(queryString.toString());
@@ -613,31 +613,35 @@ public void createPredicateObjectPairClassMatrix() throws IOException{
     		int numOfClass    = classNameToIdMap1.size();
     		predicateObjectClassWeight = new int[numOfPredicateObjects][numOfClass];
     		Set<String> instanceSet = new HashSet<String>();
-    		for (int i = 0; i < numOfPredicateObjects; i++) {
-    			//System.out.println(i+"**********"+ predicateObjectIdMap1.get(i));
-    			String []myPredicate=predicateObjectIdMap1.get(i).split("@");
-    			subjectNames.addAll(subjectNameSet);
-    			//System.out.println(i+"********** Predicate"+ myPredicate[0]);
-    			
-    			
-    			for (int j = 0; j < numOfClass; j++) {
-    				subjectNames.addAll(subjectNameSet);
-    			//	System.out.println(j+"********** classsssss"+ classNameToIdMap1.get(j));
-    				instanceSet=getInstances(myPredicate[0],classNameToIdMap1.get(j));
-    				System.out.println("********** Predicate"+ myPredicate[0] +"********** classsssss"+ classNameToIdMap1.get(j)+" instance set   "+instanceSet.size()  );
-    				//subjectNames.retainAll(instanceSet);
-    				//System.out.println("common commoncommoncommoncommoncommoncommoncommoncommoncommon:"+subjectNames.size());
-    				//subjectNames.clear();
-    				//instanceSet.clear();
-//    				if (subjectNames.size() > 1){
-//    					predicateObjectClassWeight[i][j] = subjectNames.size(); 
-//    					System.out.println(subjectNames.size());
-//    				}else{
-//    					predicateObjectClassWeight[i][j]=1;
-//    				}
-//    				
-    			} // end of for (j)
-    		} // end of for (i)
+    		
+    		instanceSet=getInstances("Album","genre");
+    		
+    		
+//    		for (int i = 0; i < numOfPredicateObjects; i++) {
+//    			//System.out.println(i+"**********"+ predicateObjectIdMap1.get(i));
+//    			String []myPredicate=predicateObjectIdMap1.get(i).split("@");
+//    			subjectNames.addAll(subjectNameSet);
+//    			//System.out.println(i+"********** Predicate"+ myPredicate[0]);
+//    			
+//    			
+//    			for (int j = 0; j < numOfClass; j++) {
+//    				subjectNames.addAll(subjectNameSet);
+//    			//	System.out.println(j+"********** classsssss"+ classNameToIdMap1.get(j));
+//    				instanceSet=getInstances(myPredicate[0],classNameToIdMap1.get(j));
+//    				System.out.println("********** Predicate"+ myPredicate[0] +"********** classsssss"+ classNameToIdMap1.get(j)+" instance set   "+instanceSet.size()  );
+//    				//subjectNames.retainAll(instanceSet);
+//    				//System.out.println("common commoncommoncommoncommoncommoncommoncommoncommoncommon:"+subjectNames.size());
+//    				//subjectNames.clear();
+//    				//instanceSet.clear();
+////    				if (subjectNames.size() > 1){
+////    					predicateObjectClassWeight[i][j] = subjectNames.size(); 
+////    					System.out.println(subjectNames.size());
+////    				}else{
+////    					predicateObjectClassWeight[i][j]=1;
+////    				}
+////    				
+//    			} // end of for (j)
+//    		} // end of for (i)
             
            
 }
