@@ -231,8 +231,6 @@ public class entityProcessing {
 			 queryString.append("FILTER (?p NOT IN (<http://dbpedia.org/property/report> ) ) ");
 			 queryString.append("FILTER (?p NOT IN (<http://dbpedia.org/ontology/wikiPageDisambiguates> ) ) ");
 			 queryString.append("FILTER (?p NOT IN (<http://dbpedia.org/property/website> ) ) ");
-					
-			 
 			 queryString.append("FILTER(!isLiteral(?o) ) ");
 			// queryString.append("FILTER(regex(?s, '^http://dbpedia.org/resource/','i'))  ");
 				
@@ -262,19 +260,11 @@ public class entityProcessing {
 				int index = subject.toString().lastIndexOf("/");
 				String subjectName = subject.toString().substring(index + 1);
 				
-//				if (subjectName.equals("_20_Love_Songs") || subjectName.equals("08_Ricklingen") || subjectName.equals("_GMT400__1") || subjectName.equals("Millbrae_line")|| subjectName.equals("Sr._High_School")|| subjectName.equals("stay_night")){
-//					System.out.println("BREAKINGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGG"+subject.toString());
-//					continue;
-//				}
-				
-				
 				predicateObjectVec.clear();
 				
 		
-			//	System.out.println(className + "      subjectName:"+ subjectName);
 					StringBuffer queryString2 = new StringBuffer();
 					queryString2.append("SELECT ?p ?o FROM <" + GRAPH + "> WHERE { ");
-					//queryString2.append("<" + uriPrefix + subjectName + ">" + " ?p ?o . ");
 					queryString2.append("<" +  subject + ">" + " ?p ?o . ");
 					
 					queryString2.append("FILTER (?p NOT IN (<http://www.w3.org/1999/02/22-rdf-syntax-ns#type> ) ) ");
@@ -303,13 +293,9 @@ public class entityProcessing {
 					queryString2.append("FILTER (?p NOT IN (<http://dbpedia.org/ontology/height> ) ) ");
 					queryString2.append("FILTER (?p NOT IN (<http://dbpedia.org/property/report> ) ) ");
 					queryString2.append("FILTER (?p NOT IN (<http://dbpedia.org/ontology/wikiPageDisambiguates> ) ) ");
-					 queryString2.append("FILTER (?p NOT IN (<http://dbpedia.org/property/website> ) ) ");
+					queryString2.append("FILTER (?p NOT IN (<http://dbpedia.org/property/website> ) ) ");
 					queryString2.append("FILTER(!isLiteral(?o) ) ");
 				//	queryString2.append("FILTER regex(?s, \"http://dbpedia.org/resource/\")");
-					
-					
-					
-			
 					queryString2.append("}  ");
 					Query sparql2 = QueryFactory.create(queryString2.toString());
 					VirtuosoQueryExecution vqe2 = VirtuosoQueryExecutionFactory.create (sparql2, virtGraph);
@@ -345,9 +331,6 @@ public class entityProcessing {
 							objectName=objectName.trim();
 							//objectName=objectName.replaceAll(" ","_");
 							
-							
-							
-							
 							//Vector of predicate object pair to add into bag of word for each entity (doc)
 							predicateObjectVec.add(predicateName + "*"+ objectName);
 							predicateObjectSet.add(predicateName + "*"+ objectName);
@@ -371,10 +354,7 @@ public class entityProcessing {
 								predicateObjectPair.write(predicateName+"@"+objectName + "    " + prediateObjectIdGenerator + "\n");
 								prediateObjectIdGenerator++;
 								}
-							//
-							
-							//
-							
+						
 						} //end while
 					
 					//Create bag of words for each subject, entity (doc). write into file.
@@ -412,18 +392,7 @@ public class entityProcessing {
 				
 		}// end of while for READING from class list text file
 		
-//		int kk=0;
-//		FileWriter POIdFile = new FileWriter("/home/mehdi/simpleOntoPart/evaluation/POID.txt"); //"/home/mehdi/simpleOntoPart/evaluation/predicateToId.txt"; 
-//		for (String K: predicateObjectSet){
-//			POIdFile.write(K +"     "+kk+"\n");
-//			kk++;
-//		}
-//		POIdFile.close();
-				
-		
-		
-		
-				
+
 		br.close();
 		subjectToIdFile.close();
 		classToIdFile.close();
@@ -466,86 +435,77 @@ public class entityProcessing {
 		//************* END extract Category ***************\\
 		
 
-//////////////////////Making predicate*object pair X class matrix as an extra knowledge
-		System.out.println("Size of predicate-object map"+ predicateObjectIdMap.size() +  "\n  Class Map " +classNameToIdMap.size());
-		Set <String> keys=predicateObjectIdMap.keySet();
-		for (String i : keys){
-			String [] mystr=i.split("@");
-			predicateObjectIdMap1.put(predicateObjectIdMap.get(i), i);
-			}
-		Set <Integer> keys1=predicateObjectIdMap1.keySet();
-		for (int k : keys1){
-			//System.out.println("k:"+ k +":  "+ predicateObjectIdMap1.get(k));
-			String [] mystr1=predicateObjectIdMap1.get(k).split("@");
-			//System.out.println("salam::"+mystr1[0]);
-			}
-		
-		Set <String> keysClass=classNameToIdMap.keySet();
-		for (String j : keysClass){
-			//System.out.println("i Class: "+ j +":  "+ classNameToIdMap.get(j));
-			String [] mystrClass=j.split(" ");
-			//System.out.println(mystrClass[0]);
-			classNameToIdMap1.put(classNameToIdMap.get(j), j);
-			}
-		Set <Integer> keysClass1=classNameToIdMap1.keySet();
-		for (int p : keysClass1){
-			//System.out.println("p:"+ p +":  "+ classNameToIdMap1.get(p));
-			String mystrClass1=classNameToIdMap1.get(p);
-			//System.out.println("salam classam::"+mystrClass1);
-			}
-	
-		// create the lambda matrix
-		int numOfPredicateObjects =200;// predicateObjectIdMap1.size();
-		int numOfClass    = 30;//classNameToIdMap1.size();
-		predicateObjectClassWeight = new int[numOfPredicateObjects][numOfClass];
-		Set<String> instanceSet = new HashSet<String>();
-		for (int i = 0; i < numOfPredicateObjects; i++) {
-			//System.out.println(i+"**********"+ predicateObjectIdMap1.get(i));
-			String []myPredicate=predicateObjectIdMap1.get(i).split("@");
-			subjectNames.addAll(subjectNamesSet);
-			
-			
-			
-			for (int j = 0; j < numOfClass; j++) {
-				subjectNames.addAll(subjectNamesSet);
-				
-				instanceSet=getInstances(myPredicate[0],classNameToIdMap1.get(j));
-				System.out.println(i +"     "+ j+ "    "+instanceSet.size() + "          SubjectName Size:"+ subjectNames.size() + "          SubjectNameSeTTTT Size:"+ subjectNamesSet.size());
-				subjectNames.retainAll(instanceSet);
-				System.out.println("common commoncommoncommoncommoncommoncommoncommoncommoncommon:"+subjectNames.size());
-				subjectNames.clear();
-				instanceSet.clear();
-//				if (subjectNames.size() > 1){
-//					predicateObjectClassWeight[i][j] = subjectNames.size(); 
-//					System.out.println(subjectNames.size());
-//				}else{
-//					predicateObjectClassWeight[i][j]=1;
-//				}
+////////////////////////Making predicate*object pair X class matrix as an extra knowledge
+//		System.out.println("Size of predicate-object map"+ predicateObjectIdMap.size() +  "\n  Class Map " +classNameToIdMap.size());
+//		Set <String> keys=predicateObjectIdMap.keySet();
+//		for (String i : keys){
+//			String [] mystr=i.split("@");
+//			predicateObjectIdMap1.put(predicateObjectIdMap.get(i), i);
+//			}
+//		Set <Integer> keys1=predicateObjectIdMap1.keySet();
+//		for (int k : keys1){
+//			//System.out.println("k:"+ k +":  "+ predicateObjectIdMap1.get(k));
+//			String [] mystr1=predicateObjectIdMap1.get(k).split("@");
+//			//System.out.println("salam::"+mystr1[0]);
+//			}
+//		
+//		Set <String> keysClass=classNameToIdMap.keySet();
+//		for (String j : keysClass){
+//			//System.out.println("i Class: "+ j +":  "+ classNameToIdMap.get(j));
+//			String [] mystrClass=j.split(" ");
+//			//System.out.println(mystrClass[0]);
+//			classNameToIdMap1.put(classNameToIdMap.get(j), j);
+//			}
+//		Set <Integer> keysClass1=classNameToIdMap1.keySet();
+//		for (int p : keysClass1){
+//			//System.out.println("p:"+ p +":  "+ classNameToIdMap1.get(p));
+//			String mystrClass1=classNameToIdMap1.get(p);
+//			//System.out.println("salam classam::"+mystrClass1);
+//			}
+//	
+//		// create the lambda matrix
+//		int numOfPredicateObjects =200;// predicateObjectIdMap1.size();
+//		int numOfClass    = 30;//classNameToIdMap1.size();
+//		predicateObjectClassWeight = new int[numOfPredicateObjects][numOfClass];
+//		Set<String> instanceSet = new HashSet<String>();
+//		for (int i = 0; i < numOfPredicateObjects; i++) {
+//			//System.out.println(i+"**********"+ predicateObjectIdMap1.get(i));
+//			String []myPredicate=predicateObjectIdMap1.get(i).split("@");
+//			subjectNames.addAll(subjectNamesSet);
+//			for (int j = 0; j < numOfClass; j++) {
+//				subjectNames.addAll(subjectNamesSet);
 //				
-			} // end of for (j)
-		} // end of for (i)
-		
-//		saveMatrix(predicateObjectClassWeight, predicateObjectClassWeightFileName);
-//////////////////////END of Making predicate*object pair X class matrix as an extra knowledge		
-
-		
-		
-	} // end of createEntityList
+//				instanceSet=getInstances(myPredicate[0],classNameToIdMap1.get(j));
+//				System.out.println(i +"     "+ j+ "    "+instanceSet.size() + "          SubjectName Size:"+ subjectNames.size() + "          SubjectNameSeTTTT Size:"+ subjectNamesSet.size());
+//				subjectNames.retainAll(instanceSet);
+//				System.out.println("common commoncommoncommoncommoncommoncommoncommoncommoncommon:"+subjectNames.size());
+//				subjectNames.clear();
+//				instanceSet.clear();
+////				if (subjectNames.size() > 1){
+////					predicateObjectClassWeight[i][j] = subjectNames.size(); 
+////					System.out.println(subjectNames.size());
+////				}else{
+////					predicateObjectClassWeight[i][j]=1;
+////				}
+////				
+//			} // end of for (j)
+//		} // end of for (i)
+//		
+////		saveMatrix(predicateObjectClassWeight, predicateObjectClassWeightFileName);
+////////////////////////END of Making predicate*object pair X class matrix as an extra knowledge		
+} // end of createEntityList
 	
 ///////////////////////////////////////////// Retuen number of instances based on passed predicate name and class Name for subject
-	
 	private Set<String> getInstances(String predicateName, String className) {
 		System.out.println("Connecting to Virtuoso ... ");
 		virtGraph = connectToVirtuoso();
-		
 		
 		StringBuffer queryString = new StringBuffer();
 		queryString.append("SELECT ?s FROM <" + GRAPH + "> WHERE { ");
 		queryString.append(" ?s a <http://dbpedia.org/ontology/" + className + ">  .   ");
 		queryString.append("?s ?p ?o . ");
 		queryString.append("FILTER (?p IN (<http://dbpedia.org/ontology/" + predicateName + "> ) )");
-		queryString.append("} Limit 1000 ");
-		System.out.println(queryString);
+		queryString.append("} ");
 		
 		Query sparql = QueryFactory.create(queryString.toString());
 		VirtuosoQueryExecution vqe = VirtuosoQueryExecutionFactory.create (sparql, virtGraph);
@@ -561,9 +521,6 @@ public class entityProcessing {
 		return types;
 	} // end of getPredicateDomain
 
-	
-	
-	
 ////////////////////////////////////////////////////////////////////////////////////////////	
 public void createPredicateObjectPairClassMatrix() throws IOException{
 	
@@ -576,77 +533,53 @@ public void createPredicateObjectPairClassMatrix() throws IOException{
         while ((readLine = br.readLine()) != null) {
         	predicateObjectPairSet.clear();
         String[] mystr=readLine.toString().split("    ");
-    //    System.out.println(mystr[0]+"XXXXXX"+mystr[1]);
         predicateObjectIdMap1.put(Integer.parseInt(mystr[1]), mystr[0]);
-       
-        
-
-//        System.out.println(predicateObjectIdMap1.size());
-        
-    }
-        
-        
-          File myclassfile = new File(classIdFileName);
+        }
+        File myclassfile = new File(classIdFileName);
     	BufferedReader brc = new BufferedReader(new FileReader(myclassfile));
     	String readLineclass = "";
-    	
     	Map<Integer, String> classNameToIdMap1 = new HashMap<Integer, String>();
             while ((readLineclass = brc.readLine()) != null) {
            String[] mystrClass=readLineclass.toString().split(" ");
            classNameToIdMap1.put(Integer.parseInt(mystrClass[1]), mystrClass[0]);
-           
-        }
-            
-            
-            File mySubjectfile = new File(docToIdFileName);
-        	BufferedReader brS = new BufferedReader(new FileReader(mySubjectfile));
-        	String readLineSubject = "";
-        	
-        	Set<String> subjectNameSet = new HashSet<String>();
+            }
+        File mySubjectfile = new File(docToIdFileName);
+        BufferedReader brS = new BufferedReader(new FileReader(mySubjectfile));
+        String readLineSubject = "";
+        Set<String> subjectNameSet = new HashSet<String>();
                 while ((readLineSubject = brS.readLine()) != null) {
                String[] mystrsubject=readLineSubject.toString().split(" ");
                subjectNameSet.add( mystrsubject[0]);
-               
-               
             }
-            //    System.out.println("subject Name    "+ subjectNameSet.size());
-            
          // create the lambda matrix
                 Set<String> subjectNames = new HashSet<String>();
                 int numOfPredicateObjects = predicateObjectIdMap1.size();
-    		int numOfClass    = classNameToIdMap1.size();
-    		predicateObjectClassWeight = new int[numOfPredicateObjects][numOfClass];
-    		Set<String> instanceSet = new HashSet<String>();
-    		
-    		
-    		for (int i = 0; i < numOfPredicateObjects; i++) {
-    			//System.out.println(i+"**********"+ predicateObjectIdMap1.get(i));
+                int numOfClass    = classNameToIdMap1.size();
+                predicateObjectClassWeight = new int[numOfPredicateObjects][numOfClass];
+                Set<String> instanceSet = new HashSet<String>();
+                
+          for (int i = 0; i < numOfPredicateObjects; i++) {
     			String []myPredicate=predicateObjectIdMap1.get(i).split("@");
     			subjectNames.addAll(subjectNameSet);
-    			//System.out.println(i+"********** Predicate"+ myPredicate[0]);
-    			
     			
     			for (int j = 0; j < numOfClass; j++) {
     				subjectNames.addAll(subjectNameSet);
-    			//	System.out.println(j+"********** classsssss"+ classNameToIdMap1.get(j));
     				instanceSet=getInstances(myPredicate[0],classNameToIdMap1.get(j));
     				System.out.println("********** Predicate"+ myPredicate[0] +"********** classsssss"+ classNameToIdMap1.get(j)+" instance set   "+instanceSet.size()  );
-    				//subjectNames.retainAll(instanceSet);
-    				//System.out.println("common commoncommoncommoncommoncommoncommoncommoncommoncommon:"+subjectNames.size());
-    				//subjectNames.clear();
-    				//instanceSet.clear();
-//    				if (subjectNames.size() > 1){
-//    					predicateObjectClassWeight[i][j] = subjectNames.size(); 
-//    					System.out.println(subjectNames.size());
-//    				}else{
-//    					predicateObjectClassWeight[i][j]=1;
-//    				}
-//    				
+    				subjectNames.retainAll(instanceSet);
+    				System.out.println("common commoncommoncommoncommoncommoncommoncommoncommoncommon:"+subjectNames.size());
+    				
+    				if (subjectNames.size() > 1){
+    					predicateObjectClassWeight[i][j] = subjectNames.size(); 
+    					System.out.println(subjectNames.size());
+    				}else{
+    					predicateObjectClassWeight[i][j]=1;
+    				}
+    				subjectNames.clear();
+    				instanceSet.clear();
     			} // end of for (j)
     		} // end of for (i)
-            
-           
-}
+}// end of createPredicateObjectPairClassMatrix function.
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 	public void corpusMaker() throws NumberFormatException, IOException{
 		int countEntity=0;
