@@ -567,16 +567,18 @@ public void createPredicateObjectPairClassMatrix() throws IOException{
 	BufferedReader br = new BufferedReader(new FileReader(myfile));
 	String readLine = "";
 	Set<String> predicateObjectPairSet = new HashSet<String>();
-
+	Map<Integer, String> predicateObjectIdMap1 = new HashMap<Integer, String>();
+	
         while ((readLine = br.readLine()) != null) {
         	predicateObjectPairSet.clear();
-        String[] mystr=readLine.toString().split("@");
-        System.out.println(mystr[0]);
-        predicateObjectPairSet=getPredicateDomain("http://dbpedia.org/ontology/"+mystr[0]);
-        for (String mydom: predicateObjectPairSet){
-        	 System.out.println("domain: "+mydom);
-        	
-        }
+        String[] mystr=readLine.toString().split("    ");
+        System.out.println(mystr[0]+"XXXXXX"+mystr[1]);
+        
+//        predicateObjectPairSet=getPredicateDomain("http://dbpedia.org/ontology/"+mystr[0]);
+//        for (String mydom: predicateObjectPairSet){
+//        	 System.out.println("domain: "+mydom);
+//        	
+//        }
         
     }
           File myclassfile = new File(classIdFileName);
@@ -667,9 +669,9 @@ public void createPredicateObjectPairClassMatrix() throws IOException{
 	}
 	
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-	
-//	//************* extract Predicate-Object X Class Matrix ***************\\
-//			//entityNameOnly = "/home/mehdi/simpleOntoPart/evaluation/predicateObjectPairToID.txt";
+//	
+////	//************* extract Predicate-Object X Class Matrix ***************\\
+////			//entityNameOnly = "/home/mehdi/simpleOntoPart/evaluation/predicateObjectPairToID.txt";
 //	public void predicateObjectClassMatrix() throws IOException{
 //
 //		Map<String, Integer> predicateObjectIdMap = new HashMap<String,Integer>();
@@ -684,30 +686,27 @@ public void createPredicateObjectPairClassMatrix() throws IOException{
 //		}
 //		
 //		
-////		savePredicateToObjectMap(predicateToObjectMap, predicateObjectFileName);
-//		saveObjectToPredicateMap(objectToPredicateMap, objectPredicateFileName);
-//		System.out.println("predicates: " + predicateToIdMap.size() + "    " + objectToPredicateMap.size());
-//		Set<Integer> st = objectToPredicateMap.keySet();
-//		// create the lambda matrix
-//		int numOfPredicates = predicateToIdMap.size();
-//		int numOfObjects    = wordToIdMap.size();
-//		predicateObjectWeight = new int[numOfPredicates][numOfObjects];
+//////		savePredicateToObjectMap(predicateToObjectMap, predicateObjectFileName);
+////		saveObjectToPredicateMap(objectToPredicateMap, objectPredicateFileName);
+////		System.out.println("predicates: " + predicateToIdMap.size() + "    " + objectToPredicateMap.size());
+////		Set<Integer> st = objectToPredicateMap.keySet();
+////		// create the lambda matrix
+////		int numOfPredicates = predicateToIdMap.size();
+////		int numOfObjects    = wordToIdMap.size();
+////		predicateObjectWeight = new int[numOfPredicates][numOfObjects];
+////		
+////		for (int i = 0; i < numOfPredicates; i++) {
+////			for (int j = 0; j < numOfObjects; j++) {
+////				Set<String> cats = objectToCategoryMap.get(j) != null ? objectToCategoryMap.get(j) : new HashSet<String>();
+////				if (objectToPredicateMap.get(j) != null && objectToPredicateMap.get(j).contains(i) && !cats.isEmpty()) {
+////					predicateObjectWeight[i][j] = cats.size(); 
+////				}else {
+////					predicateObjectWeight[i][j] = 1; 
+////				}
+////			} // end of for (j)
+////		} // end of for (i)
 //		
-//		for (int i = 0; i < numOfPredicates; i++) {
-//			for (int j = 0; j < numOfObjects; j++) {
-//				Set<String> cats = objectToCategoryMap.get(j) != null ? objectToCategoryMap.get(j) : new HashSet<String>();
-//				if (objectToPredicateMap.get(j) != null && objectToPredicateMap.get(j).contains(i) && !cats.isEmpty()) {
-//					predicateObjectWeight[i][j] = cats.size(); 
-//				}else {
-//					predicateObjectWeight[i][j] = 1; 
-//				}
-//			} // end of for (j)
-//		} // end of for (i)
-		
-		
-		
-		
-	//}
+//		}
 	
 	
 	private Set<String> getPredicateRange(String predicateUrl) {
