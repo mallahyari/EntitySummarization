@@ -584,23 +584,67 @@ public void createPredicateObjectPairClassMatrix() throws IOException{
         System.out.println(predicateObjectIdMap1.size());
         
     }
+        
+        
           File myclassfile = new File(classIdFileName);
     	BufferedReader brc = new BufferedReader(new FileReader(myclassfile));
     	String readLineclass = "";
-    	Set<String> classSet = new HashSet<String>();
-
+    	
+    	Map<Integer, String> classNameToIdMap1 = new HashMap<Integer, String>();
             while ((readLineclass = brc.readLine()) != null) {
-            	
-            String[] mystrClass=readLineclass.toString().split(" ");
-     
-            classSet.add(mystrClass[0]);
+           String[] mystrClass=readLineclass.toString().split(" ");
+           classNameToIdMap1.put(Integer.parseInt(mystrClass[1]), mystrClass[0]);
            
-            
         }
-            for (String myclass: classSet){
-           	 System.out.println("Class: "+myclass);
-           	
-           }
+            
+            
+            File mySubjectfile = new File(docToIdFileName);
+        	BufferedReader brS = new BufferedReader(new FileReader(mySubjectfile));
+        	String readLineSubject = "";
+        	
+        	Set<String> subjectNameSet = new HashSet<String>();
+                while ((readLineSubject = brS.readLine()) != null) {
+               String[] mystrsubject=readLineSubject.toString().split(" ");
+               subjectNameSet.add( mystrsubject[0]);
+               System.out.println("subject Name    "+ mystrsubject[0]);
+               
+               
+            }
+                System.out.println("subject Name    "+ subjectNameSet.size());
+            
+         // create the lambda matrix
+                Set<String> subjectNames = new HashSet<String>();
+                int numOfPredicateObjects =200;// predicateObjectIdMap1.size();
+    		int numOfClass    = 30;//classNameToIdMap1.size();
+    		predicateObjectClassWeight = new int[numOfPredicateObjects][numOfClass];
+    		Set<String> instanceSet = new HashSet<String>();
+    		for (int i = 0; i < numOfPredicateObjects; i++) {
+    			//System.out.println(i+"**********"+ predicateObjectIdMap1.get(i));
+    			String []myPredicate=predicateObjectIdMap1.get(i).split("@");
+    			subjectNames.addAll(subjectNameSet);
+    			
+    			
+    			
+    			for (int j = 0; j < numOfClass; j++) {
+    				subjectNames.addAll(subjectNameSet);
+    				
+    				instanceSet=getInstances(myPredicate[0],classNameToIdMap1.get(j));
+    				System.out.println(i +"     "+ j+ "    "+instanceSet.size() + "          SubjectName Size:"+ subjectNames.size() + "          SubjectNameSeTTTT Size:"+ subjectNameSet.size());
+    				subjectNames.retainAll(instanceSet);
+    				System.out.println("common commoncommoncommoncommoncommoncommoncommoncommoncommon:"+subjectNames.size());
+    				subjectNames.clear();
+    				instanceSet.clear();
+//    				if (subjectNames.size() > 1){
+//    					predicateObjectClassWeight[i][j] = subjectNames.size(); 
+//    					System.out.println(subjectNames.size());
+//    				}else{
+//    					predicateObjectClassWeight[i][j]=1;
+//    				}
+//    				
+    			} // end of for (j)
+    		} // end of for (i)
+            
+           
 }
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 	public void corpusMaker() throws NumberFormatException, IOException{
