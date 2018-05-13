@@ -572,16 +572,12 @@ public void createPredicateObjectPairClassMatrix() throws IOException{
         while ((readLine = br.readLine()) != null) {
         	predicateObjectPairSet.clear();
         String[] mystr=readLine.toString().split("    ");
-        System.out.println(mystr[0]+"XXXXXX"+mystr[1]);
+    //    System.out.println(mystr[0]+"XXXXXX"+mystr[1]);
         predicateObjectIdMap1.put(Integer.parseInt(mystr[1]), mystr[0]);
        
         
-//        predicateObjectPairSet=getPredicateDomain("http://dbpedia.org/ontology/"+mystr[0]);
-//        for (String mydom: predicateObjectPairSet){
-//        	 System.out.println("domain: "+mydom);
-//        	
-//        }
-        System.out.println(predicateObjectIdMap1.size());
+
+//        System.out.println(predicateObjectIdMap1.size());
         
     }
         
@@ -606,11 +602,10 @@ public void createPredicateObjectPairClassMatrix() throws IOException{
                 while ((readLineSubject = brS.readLine()) != null) {
                String[] mystrsubject=readLineSubject.toString().split(" ");
                subjectNameSet.add( mystrsubject[0]);
-               System.out.println("subject Name    "+ mystrsubject[0]);
                
                
             }
-                System.out.println("subject Name    "+ subjectNameSet.size());
+            //    System.out.println("subject Name    "+ subjectNameSet.size());
             
          // create the lambda matrix
                 Set<String> subjectNames = new HashSet<String>();
@@ -622,16 +617,16 @@ public void createPredicateObjectPairClassMatrix() throws IOException{
     			//System.out.println(i+"**********"+ predicateObjectIdMap1.get(i));
     			String []myPredicate=predicateObjectIdMap1.get(i).split("@");
     			subjectNames.addAll(subjectNameSet);
-    			
+    			System.out.println(i+"********** Predicate"+ myPredicate[0]);
     			
     			
     			for (int j = 0; j < numOfClass; j++) {
     				subjectNames.addAll(subjectNameSet);
     				
-    				instanceSet=getInstances(myPredicate[0],classNameToIdMap1.get(j));
+    			//	instanceSet=getInstances(myPredicate[0],classNameToIdMap1.get(j));
     				System.out.println(i +"     "+ j+ "    "+instanceSet.size() + "          SubjectName Size:"+ subjectNames.size() + "          SubjectNameSeTTTT Size:"+ subjectNameSet.size());
-    				subjectNames.retainAll(instanceSet);
-    				System.out.println("common commoncommoncommoncommoncommoncommoncommoncommoncommon:"+subjectNames.size());
+    				//subjectNames.retainAll(instanceSet);
+    				//System.out.println("common commoncommoncommoncommoncommoncommoncommoncommoncommon:"+subjectNames.size());
     				subjectNames.clear();
     				instanceSet.clear();
 //    				if (subjectNames.size() > 1){
