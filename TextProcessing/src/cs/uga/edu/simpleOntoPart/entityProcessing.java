@@ -329,8 +329,8 @@ public class entityProcessing {
 							//objectName=objectName.replaceAll(" ","_");
 							
 							//Vector of predicate object pair to add into bag of word for each entity (doc)
-							predicateObjectVec.add(predicateName + "*"+ objectName);
-							predicateObjectSet.add(predicateName + "*"+ objectName);
+							predicateObjectVec.add(predicateName + "@"+ objectName);
+							predicateObjectSet.add(predicateName + "@"+ objectName);
 							
 							
 							//Store ONLY predicate with ID (unique pair)
@@ -632,7 +632,7 @@ public void makeCorpus() throws IOException {
 		String wordName = tokens[0];
 		String wordId = tokens[tokens.length-1];
 		wordToIdMap.put(wordName, Integer.parseInt(wordId));
-		 System.out.println(wordName+ Integer.parseInt(wordId));
+		 System.out.println(wordName+"  W ID   "+ Integer.parseInt(wordId));
 		 
 	} // end of for
 	FileWriter corpusFile = new FileWriter(corpusFileName);
@@ -644,7 +644,7 @@ public void makeCorpus() throws IOException {
 		String [] words = document.split("\\|");
 		Map<Integer, Integer> wordsFrequency = new HashMap<Integer, Integer>();
 		for (String word : words) {
-		    System.out.println(word);
+		    System.out.println("Wordsssss    "+word);
 			int wordId = wordToIdMap.get(word);
 			int preFreq = wordsFrequency.get(wordId) != null ? wordsFrequency.get(wordId) : 0;
 			wordsFrequency.put(wordId, preFreq + 1);
