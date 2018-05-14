@@ -605,15 +605,16 @@ public void corpusMaker() throws NumberFormatException, IOException{
 //predicateObjectPairToIdFileName word=pair of predicate and object
 		brObject = new BufferedReader(new FileReader(predicateObjectPairToIdFileName));
 		while ((strObject = brObject.readLine()) != null) {
-		String[] kvPair = strObject.split("    ");
-		mapWordToID.put(kvPair[0], Integer.valueOf(kvPair[1].trim()));
-		System.out.println(kvPair[1]);
-		} //End While
+					String[] kvPair = strObject.split("    ");
+					mapWordToID.put(kvPair[0], Integer.valueOf(kvPair[1].trim()));
+					//System.out.println(kvPair[1]);
+						} //End While
 		BufferedReader br = null;
 		FileReader fr = null;
 		String entityLine;
 		br = new BufferedReader(new FileReader(entityNameOnly));
-while ((entityLine = br.readLine()) != null) {
+		
+		while ((entityLine = br.readLine()) != null) {
 					BufferedReader brEntity = null;
 					FileReader frEntity = null;
 					String entityDoc;
@@ -621,8 +622,10 @@ while ((entityLine = br.readLine()) != null) {
 					
 					String mystr=brEntity.readLine();
 					System.out.println(mystr);
+					
 					String trimmed = mystr.trim().replaceAll(" | ", " ");
 					System.out.println("TRIMMED : "+trimmed);
+					
 					String[] a = trimmed.split(" ");
 					ArrayList<Integer> p = new ArrayList<>();
 					for (int i = 0; i < a.length; i++) {
@@ -659,7 +662,7 @@ while ((entityLine = br.readLine()) != null) {
 					
 					}
 					countEntity++;
-}
+		}//end of while 
 
 }
 
