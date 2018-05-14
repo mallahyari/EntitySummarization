@@ -36,12 +36,12 @@ public class simpleOntoParameters {
 	public int T = 0; //number of topics
 	public int T1 = 57;
 	public int T2 = 133;
-	public int P = 0; 
+	public int P = 10; 
 	public int C = 0;//Number of all classes 
 	public int N = 0; //numberOfAllObjects(Words)
 	public int nIterations = 2000;
 	int burnIn = 200;
-	public double ALPHA = 50.0 / 390;
+	public double ALPHA = 50.0 / 390; //Alpha=50/K  K is the number of topics
 	public final double BETA  = 0.01;
 	public final double ZETA  = 0.01;
 //	public final double TAU = 50.0 / T;
