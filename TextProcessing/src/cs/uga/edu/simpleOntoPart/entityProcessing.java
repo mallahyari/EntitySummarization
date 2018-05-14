@@ -662,7 +662,7 @@ public void corpusMaker() throws NumberFormatException, IOException{
 					      
 					         bw1 = new BufferedWriter(new FileWriter(corpusFileName, true));
 					         	bw1.write(countEntity + " " + value+" "+ d);
-					         	System.out.println("AMIN  "+countEntity );
+					         	System.out.println("AMIN & count "+countEntity+ d );
 								bw1.newLine();
 								
 							} catch (IOException e) {
