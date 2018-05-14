@@ -637,6 +637,7 @@ public void corpusMaker() throws NumberFormatException, IOException{
 					System.out.println("\n TRIMMMMIED"+trimmed);
 					
 				    String[] a = trimmed.split(" ");
+				    System.out.println("AMIN  "+a[0]);
 				    ArrayList<Integer> p = new ArrayList<>();
 				    for (int i = 0; i < a.length; i++) {
 				        if (p.contains(i)) {
