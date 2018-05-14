@@ -611,8 +611,10 @@ public void corpusMaker() throws NumberFormatException, IOException{
 			//predicateObjectPairToIdFileName word=pair of predicate and object
 			brObject = new BufferedReader(new FileReader(predicateObjectPairToIdFileName));
 			while ((strObject = brObject.readLine()) != null) {
+				System.out.println(strObject);
 				 String[] kvPair = strObject.split("    ");
 				    mapWordToID.put(kvPair[0], Integer.valueOf(kvPair[1].trim()));
+				    System.out.println(kvPair[0] + "*****************"+ kvPair[1]);
 			
 			} //End While
 			BufferedReader br = null;
