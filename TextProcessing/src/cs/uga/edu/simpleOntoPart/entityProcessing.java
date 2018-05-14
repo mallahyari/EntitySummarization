@@ -357,7 +357,7 @@ public class entityProcessing {
 					//Create bag of words for each subject, entity (doc). write into file.
 					FileWriter entityFileDocs = new FileWriter(entityDocs+ subjectName+".txt");
 					for (String myUnit: predicateObjectVec){
-						entityFileDocs.write(myUnit+" | ");
+						entityFileDocs.write(myUnit+" I ");
 						}
 					entityFileDocs.close();
 				subjectNamesSet.add(subjectName.toString());
@@ -624,7 +624,7 @@ public void corpusMaker() throws NumberFormatException, IOException {
 					String mystr=brEntity.readLine();
 					System.out.println(mystr);
 					
-					String trimmed = mystr.trim().replaceAll("\\ | ", " ");
+					String trimmed = mystr.trim().replaceAll("\\ I ", " ");
 					System.out.println("TRIMMED : "+trimmed);
 					
 					String[] a = trimmed.split(" ");
