@@ -261,12 +261,9 @@ public class entityProcessing {
 				String subjectName = subject.toString().substring(index + 1);
 				
 				predicateObjectVec.clear();
-				
-		
 					StringBuffer queryString2 = new StringBuffer();
 					queryString2.append("SELECT ?p ?o FROM <" + GRAPH + "> WHERE { ");
 					queryString2.append("<" +  subject + ">" + " ?p ?o . ");
-					
 					queryString2.append("FILTER (?p NOT IN (<http://www.w3.org/1999/02/22-rdf-syntax-ns#type> ) ) ");
 					queryString2.append("FILTER (?p NOT IN (<http://www.w3.org/2002/07/owl#sameAs> ) )");
 					queryString2.append("FILTER (?p NOT IN (<http://purl.org/dc/terms/subject> ) )");
@@ -388,19 +385,14 @@ public class entityProcessing {
 					
 			} // end of while
 			//System.out.println(className + "  :  "+ numberOfInstances);
-			
-				
 		}// end of while for READING from class list text file
-		
-
 		br.close();
 		subjectToIdFile.close();
 		classToIdFile.close();
 		predicateObjectPair.close();
 		entNameOnlyFile.close();
 		
-		
-		//************* extract Category ***************\\
+//************* extract Category ***************\\
 		//entityNameOnly = "/home/mehdi/simpleOntoPart/evaluation/entNameOnly.txt";
 		String subjectName1 = "";
 		BufferedReader br1 = new BufferedReader(new FileReader(entityNameOnly));
@@ -431,8 +423,7 @@ public class entityProcessing {
 		}//end while
 		br1.close();
 		subjectIdCatIdFile.close();
-		
-		//************* END extract Category ***************\\
+//************* END extract Category ***************\\
 		
 
 ////////////////////////Making predicate*object pair X class matrix as an extra knowledge
@@ -492,10 +483,11 @@ public class entityProcessing {
 //		} // end of for (i)
 //		
 ////		saveMatrix(predicateObjectClassWeight, predicateObjectClassWeightFileName);
-////////////////////////END of Making predicate*object pair X class matrix as an extra knowledge		
+////////////////////////END of Making predicate*object pair X class matrix as an extra knowledge	
+		
 } // end of createEntityList
 	
-///////////////////////////////////////////// Retuen number of instances based on passed predicate name and class Name for subject
+//////////////////////// Retuen number of instances based on passed predicate name and class Name for subject
 	private Set<String> getInstances(String predicateName, String className) {
 		System.out.println("Connecting to Virtuoso ... ");
 		virtGraph = connectToVirtuoso();
@@ -565,9 +557,8 @@ public void createPredicateObjectPairClassMatrix() throws IOException{
     			for (int j = 0; j < numOfClass; j++) {
     				subjectNames.addAll(subjectNameSet);
     				instanceSet=getInstances(myPredicate[0],classNameToIdMap1.get(j));
-    				System.out.println("********** Predicate"+ myPredicate[0] +"********** classsssss"+ classNameToIdMap1.get(j)+" instance set   "+instanceSet.size()  );
+    				//System.out.println("********** Predicate"+ myPredicate[0] +"********** classsssss"+ classNameToIdMap1.get(j)+" instance set   "+instanceSet.size()  );
     				subjectNames.retainAll(instanceSet);
-    				System.out.println("common commoncommoncommoncommoncommoncommoncommoncommoncommon:"+subjectNames.size());
     				
     				if (subjectNames.size() > 1){
     					predicateObjectClassWeight[i][j] = subjectNames.size(); 
@@ -579,6 +570,8 @@ public void createPredicateObjectPairClassMatrix() throws IOException{
     				instanceSet.clear();
     			} // end of for (j)
     		} // end of for (i)
+          saveMatrix(predicateObjectClassWeight, predicateObjectClassWeightFileName);
+          System.out.println("Matrix predicateObjectClassWeight has been created.");
 }// end of createPredicateObjectPairClassMatrix function.
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 	public void corpusMaker() throws NumberFormatException, IOException{
@@ -649,46 +642,7 @@ public void createPredicateObjectPairClassMatrix() throws IOException{
 		
 	}
 	
-//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//	
-////	//************* extract Predicate-Object X Class Matrix ***************\\
-////			//entityNameOnly = "/home/mehdi/simpleOntoPart/evaluation/predicateObjectPairToID.txt";
-//	public void predicateObjectClassMatrix() throws IOException{
-//
-//		Map<String, Integer> predicateObjectIdMap = new HashMap<String,Integer>();
-//		Map<String, Integer> classIdMap = new HashMap<String,Integer>();
-//		String predicateObjectpair = "";
-//		BufferedReader br1 = new BufferedReader(new FileReader(predicateObjectPairToIdFileName));
-//		//Read list of subjects from a text file  
-//		while ((predicateObjectpair = br1.readLine()) != null) {
-//			String [] tokens = predicateObjectpair.split(" ");
-//			tokens [0] = Integer.parseInt(tokens [0]);
-//		
-//		}
-//		
-//		
-//////		savePredicateToObjectMap(predicateToObjectMap, predicateObjectFileName);
-////		saveObjectToPredicateMap(objectToPredicateMap, objectPredicateFileName);
-////		System.out.println("predicates: " + predicateToIdMap.size() + "    " + objectToPredicateMap.size());
-////		Set<Integer> st = objectToPredicateMap.keySet();
-////		// create the lambda matrix
-////		int numOfPredicates = predicateToIdMap.size();
-////		int numOfObjects    = wordToIdMap.size();
-////		predicateObjectWeight = new int[numOfPredicates][numOfObjects];
-////		
-////		for (int i = 0; i < numOfPredicates; i++) {
-////			for (int j = 0; j < numOfObjects; j++) {
-////				Set<String> cats = objectToCategoryMap.get(j) != null ? objectToCategoryMap.get(j) : new HashSet<String>();
-////				if (objectToPredicateMap.get(j) != null && objectToPredicateMap.get(j).contains(i) && !cats.isEmpty()) {
-////					predicateObjectWeight[i][j] = cats.size(); 
-////				}else {
-////					predicateObjectWeight[i][j] = 1; 
-////				}
-////			} // end of for (j)
-////		} // end of for (i)
-//		
-//		}
-	
+
 	
 	private Set<String> getPredicateRange(String predicateUrl) {
 		StringBuffer queryString = new StringBuffer();
