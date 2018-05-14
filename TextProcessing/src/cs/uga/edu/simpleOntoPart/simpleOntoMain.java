@@ -101,7 +101,7 @@ public class simpleOntoMain {
 		System.out.println("MyEntityList Done!"); 
 	    createMyEntityList.corpusMaker();
 	    System.out.println("corpusMaker Done!"); 
-		//simpleOntoParameters myinitialization=new simpleOntoParameters();
+		simpleOntoParameters myinitialization=new simpleOntoParameters();
 		
 		//createMyEntityList.createPredicateObjectPairTopicMatrix(158234,10);
 		

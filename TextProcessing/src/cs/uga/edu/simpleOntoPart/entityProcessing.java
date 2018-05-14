@@ -594,6 +594,7 @@ System.out.println("Matrix predicateObjectClassWeight has been created.");
 
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 public void corpusMaker() throws NumberFormatException, IOException{
 		int countEntity=0;
 		BufferedReader brObject=null;
@@ -602,41 +603,41 @@ public void corpusMaker() throws NumberFormatException, IOException{
 		String strObject;
 
 //predicateObjectPairToIdFileName word=pair of predicate and object
-			brObject = new BufferedReader(new FileReader(predicateObjectPairToIdFileName));
-			while ((strObject = brObject.readLine()) != null) {
-			String[] kvPair = strObject.split("    ");
-			mapWordToID.put(kvPair[0], Integer.valueOf(kvPair[1].trim()));
-			System.out.println(kvPair[1]);
-			} //End While
-	BufferedReader br = null;
-	FileReader fr = null;
-	String entityLine;
-	br = new BufferedReader(new FileReader(entityNameOnly));
+		brObject = new BufferedReader(new FileReader(predicateObjectPairToIdFileName));
+		while ((strObject = brObject.readLine()) != null) {
+		String[] kvPair = strObject.split("    ");
+		mapWordToID.put(kvPair[0], Integer.valueOf(kvPair[1].trim()));
+		System.out.println(kvPair[1]);
+		} //End While
+		BufferedReader br = null;
+		FileReader fr = null;
+		String entityLine;
+		br = new BufferedReader(new FileReader(entityNameOnly));
 while ((entityLine = br.readLine()) != null) {
-				
-				BufferedReader brEntity = null;
-				FileReader frEntity = null;
-				String entityDoc;
-				brEntity = new BufferedReader(new FileReader(entityDocs+entityLine+".txt"));
-				
-				String mystr=brEntity.readLine();
-				
-				String trimmed = mystr.trim().replaceAll(" | ", " ");
-				String[] a = trimmed.split(" ");
-				ArrayList<Integer> p = new ArrayList<>();
-				for (int i = 0; i < a.length; i++) {
-					if (p.contains(i)) {
-					continue;
-					}
-				int d = 1;
-				for (int j = i+1; j < a.length; j++) {
-					if (a[i].equals(a[j])) {
-					d += 1;
-					p.add(j);
-					}
-				}
-				int value=0;
-				if(mapWordToID.containsKey(a[i])){
+					BufferedReader brEntity = null;
+					FileReader frEntity = null;
+					String entityDoc;
+					brEntity = new BufferedReader(new FileReader(entityDocs+entityLine+".txt"));
+					
+					String mystr=brEntity.readLine();
+					System.out.println(mystr);
+					String trimmed = mystr.trim().replaceAll(" | ", " ");
+					System.out.println("TRIMMED : "+trimmed);
+					String[] a = trimmed.split(" ");
+					ArrayList<Integer> p = new ArrayList<>();
+					for (int i = 0; i < a.length; i++) {
+						if (p.contains(i)) {
+						continue;
+						}
+					int d = 1;
+						for (int j = i+1; j < a.length; j++) {
+							if (a[i].equals(a[j])) {
+							d += 1;
+							p.add(j);
+							}
+						}
+					int value=0;
+					if(mapWordToID.containsKey(a[i])){
 					value=mapWordToID.get(a[i]);
 					System.out.println("Count of "+value+"  "+a[i]+" is:"+d);
 					
@@ -650,14 +651,14 @@ while ((entityLine = br.readLine()) != null) {
 					
 					} catch (IOException e) {
 					
-						e.printStackTrace();
+					e.printStackTrace();
 					}
-						bw1.close();
-				
-				}
-				
-				}
-				countEntity++;
+					bw1.close();
+					
+					}
+					
+					}
+					countEntity++;
 }
 
 }
