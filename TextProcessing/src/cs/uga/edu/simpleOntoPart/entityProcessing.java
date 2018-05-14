@@ -611,10 +611,10 @@ public void corpusMaker() throws NumberFormatException, IOException{
 			//predicateObjectPairToIdFileName word=pair of predicate and object
 			brObject = new BufferedReader(new FileReader(predicateObjectPairToIdFileName));
 			while ((strObject = brObject.readLine()) != null) {
-				System.out.println(strObject);
+			//	System.out.println(strObject);
 				 String[] kvPair = strObject.split("    ");
 				    mapWordToID.put(kvPair[0], Integer.valueOf(kvPair[1].trim()));
-				    System.out.println(kvPair[0] + "*****************"+ kvPair[1]);
+				//    System.out.println(kvPair[0] + "*****************"+ kvPair[1]);
 			
 			} //End While
 			BufferedReader br = null;
@@ -629,8 +629,11 @@ public void corpusMaker() throws NumberFormatException, IOException{
 					brEntity = new BufferedReader(new FileReader(entityDocs+entityLine+".txt"));
 				
 					String mystr=brEntity.readLine();
+					System.out.println(mystr);
 					
 					String trimmed = mystr.trim().replaceAll(" | ", " ");
+					System.out.println(trimmed);
+					
 				    String[] a = trimmed.split(" ");
 				    ArrayList<Integer> p = new ArrayList<>();
 				    for (int i = 0; i < a.length; i++) {
