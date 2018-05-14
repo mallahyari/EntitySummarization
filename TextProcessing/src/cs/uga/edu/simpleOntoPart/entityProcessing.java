@@ -618,8 +618,8 @@ public void corpusMaker() throws NumberFormatException, IOException{
 					BufferedReader brEntity = null;
 					FileReader frEntity = null;
 					String entityDoc;
-					brEntity = new BufferedReader(new FileReader(entityDocs+entityLine+".txt"));
-					
+					brEntity = new BufferedReader(new FileReader(entityDocs+entityLine+ ".txt"));
+					System.out.println(entityLine);
 					String mystr=brEntity.readLine();
 					System.out.println(mystr);
 					
@@ -629,20 +629,21 @@ public void corpusMaker() throws NumberFormatException, IOException{
 					String[] a = trimmed.split(" ");
 					ArrayList<Integer> p = new ArrayList<>();
 					for (int i = 0; i < a.length; i++) {
-						if (p.contains(i)) {
-						continue;
-						}
+						System.out.println("a  : "+i+ a[i]);
+								if (p.contains(i)) {
+								continue;
+								}
 					int d = 1;
 						for (int j = i+1; j < a.length; j++) {
 							if (a[i].equals(a[j])) {
-							d += 1;
-							p.add(j);
+								d += 1;
+								p.add(j);
 							}
 						}
 					int value=0;
 					if(mapWordToID.containsKey(a[i])){
-					value=mapWordToID.get(a[i]);
-					System.out.println("Count of "+value+"  "+a[i]+" is:"+d);
+						value=mapWordToID.get(a[i]);
+						System.out.println("Count of "+value+"  "+a[i]+" is:"+d);
 					
 					// Writing Corpus
 					BufferedWriter bw1 = null;
