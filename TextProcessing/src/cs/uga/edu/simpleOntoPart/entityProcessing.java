@@ -357,7 +357,7 @@ public class entityProcessing {
 					//Create bag of words for each subject, entity (doc). write into file.
 					FileWriter entityFileDocs = new FileWriter(entityDocs+ subjectName+".txt");
 					for (String myUnit: predicateObjectVec){
-						entityFileDocs.write(myUnit+" | ");
+						entityFileDocs.write(myUnit+"#");
 						}
 					entityFileDocs.close();
 				subjectNamesSet.add(subjectName.toString());
@@ -631,7 +631,7 @@ public void corpusMaker() throws NumberFormatException, IOException{
 					String mystr=brEntity.readLine();
 					System.out.println("\n STRING"+mystr);
 					
-					String trimmed = mystr.trim().replaceAll(" | ", " ");
+					String trimmed = mystr.trim().replaceAll("#", " ");
 					
 					//String trimmed = mystr.trim().replaceAll(" | ", " ");
 					System.out.println("\n TRIMMMMIED"+trimmed);
@@ -824,10 +824,15 @@ public void corpusMaker() throws NumberFormatException, IOException{
 						myLiteral=myLiteral.replace("\n", " ");
 						literalObject.add(myLiteral);
 						myLiteral=myLiteral.replace(" ", "_");
-						//if(myLiteral.contains("http://")||myLiteral.contains("https://")||myLiteral.length()<4||myLiteral.contains(".jpg")||myLiteral.contains(".png")||myLiteral.contains(".svg"))continue;
-
-						//objectName=object.toString();
-						//System.out.println("Literal: "+entityName+"  "+predicateName+"  "+ myLiteral);
+						
+						
+						
+						
+						
+						
+						
+						
+						
 						objectName=myLiteral;
 						
 
