@@ -489,9 +489,7 @@ public class entityProcessing {
 	
 //////////////////////// Retuen number of instances based on passed predicate name and class Name for subject
 	private Set<String> getInstances(String predicateName, String className) {
-		System.out.println("Connecting to Virtuoso ... ");
-		virtGraph = connectToVirtuoso();
-		
+	
 		StringBuffer queryString = new StringBuffer();
 		queryString.append("SELECT ?s FROM <" + GRAPH + "> WHERE { ");
 		queryString.append(" ?s a <http://dbpedia.org/ontology/" + className + ">  .   ");
@@ -509,12 +507,14 @@ public class entityProcessing {
 			types.add(result.getResource("s").toString().substring(index+1));
 		} // end of while
 		
-		System.out.println(className+ ":::: " +predicateName+" ***********size"+ types.size() );
+		//System.out.println(className+ ":::: " +predicateName+" ***********size"+ types.size() );
 		return types;
 	} // end of getPredicateDomain
 
 ////////////////////////////////////////////////////////////////////////////////////////////	
 public void createPredicateObjectPairClassMatrix() throws IOException{
+	System.out.println("Connecting to Virtuoso ... ");
+	virtGraph = connectToVirtuoso();
 	
 	File myfile = new File(predicateObjectPairToIdFileName);
 	BufferedReader br = new BufferedReader(new FileReader(myfile));
@@ -562,7 +562,7 @@ public void createPredicateObjectPairClassMatrix() throws IOException{
     				
     				if (subjectNames.size() > 1){
     					predicateObjectClassWeight[i][j] = subjectNames.size(); 
-    					System.out.println(subjectNames.size());
+    				//	System.out.println(subjectNames.size());
     				}else{
     					predicateObjectClassWeight[i][j]=1;
     				}
