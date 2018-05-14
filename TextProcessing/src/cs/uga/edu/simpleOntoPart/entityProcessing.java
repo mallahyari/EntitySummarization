@@ -650,6 +650,7 @@ public void makeCorpus() throws IOException {
 			wordsFrequency.put(wordId, preFreq + 1);
 		} // end of for
 		for (Map.Entry<Integer, Integer> entry : wordsFrequency.entrySet()) {
+		
 			int wordId = entry.getKey();
 			int wordFreq = entry.getValue();
 			corpusFile.write(docToIdMap.get(fileName) + " " + wordId + " " + wordFreq + "\n");

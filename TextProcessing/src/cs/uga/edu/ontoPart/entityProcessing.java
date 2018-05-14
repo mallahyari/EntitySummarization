@@ -486,7 +486,7 @@ public class entityProcessing {
 				        int value=0;
 				        if(mapWordToID.containsKey(a[i])){
 				        value=mapWordToID.get(a[i]);
-				        System.out.println("Count of "+value+"  "+a[i]+" is:"+d);
+				        System.out.println("Count of VCVCVCVCVCVC"+value+"  "+a[i]+" is:"+d);
 				     
 				        // Writing Corpus
 					 BufferedWriter bw1 = null;
