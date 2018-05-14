@@ -604,6 +604,7 @@ public void corpusMaker() throws NumberFormatException, IOException{
 		int countEntity=0;
 		BufferedReader brObject=null;
 		FileReader frObject=null;
+		System.out.println("Hello corpus maker");
 		Map<String, Integer> mapWordToID =new HashMap<String,Integer>();
 			String strObject;
 			
