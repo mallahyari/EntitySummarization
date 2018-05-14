@@ -454,7 +454,7 @@ public class entityProcessing {
 			while ((strObject = brObject.readLine()) != null) {
 				 String[] kvPair = strObject.split("    ");
 				    mapWordToID.put(kvPair[0], Integer.valueOf(kvPair[1].trim()));
-			
+			System.out.println(kvPair[1]);
 			} //End While
 			BufferedReader br = null;
 			FileReader fr = null;
