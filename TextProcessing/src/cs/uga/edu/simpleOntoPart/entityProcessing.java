@@ -629,9 +629,9 @@ public void corpusMaker() throws NumberFormatException, IOException{
 					brEntity = new BufferedReader(new FileReader(entityDocs+entityLine+".txt"));
 				
 					String mystr=brEntity.readLine();
-					System.out.println(mystr);
+					System.out.println("\n STRING"+mystr);
 					
-					String trimmed = mystr.trim().replaceAll(" | ", " ");
+					String trimmed = mystr.trim().replaceAll("|", " ");
 					System.out.println("\n TRIMMMMIED"+trimmed);
 					
 				    String[] a = trimmed.split(" ");
