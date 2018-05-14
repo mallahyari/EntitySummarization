@@ -632,7 +632,7 @@ public void corpusMaker() throws NumberFormatException, IOException{
 					System.out.println(mystr);
 					
 					String trimmed = mystr.trim().replaceAll(" | ", " ");
-					System.out.println(trimmed);
+					System.out.println("\n TRIMMMMIED"+trimmed);
 					
 				    String[] a = trimmed.split(" ");
 				    ArrayList<Integer> p = new ArrayList<>();
