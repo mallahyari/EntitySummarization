@@ -547,6 +547,7 @@ public void createPredicateObjectPairClassMatrix() throws IOException{
                 Set<String> subjectNames = new HashSet<String>();
                 int numOfPredicateObjects = predicateObjectIdMap1.size();
                 int numOfClass    = classNameToIdMap1.size();
+                System.out.println("Predicate*Object number:  "+numOfPredicateObjects +"\n Class Number: "+ numOfClass);
                 predicateObjectClassWeight = new int[numOfPredicateObjects][numOfClass];
                 Set<String> instanceSet = new HashSet<String>();
                 
