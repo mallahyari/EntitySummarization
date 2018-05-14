@@ -582,10 +582,10 @@ public void createPredicateObjectPairTopicMatrix(int predicateObject, int topic)
 
 for (int i = 0; i < predicateObject; i++) {
 for (int j = 0; j < topic; j++) {
-	predicateObjectClassWeight[i][j]=1;
+	predicateObjectWeight[i][j]=1;
 		} // end of for (j)
 	} // end of for (i)
-	saveMatrix(predicateObjectClassWeight, predicateObjectClassWeightFileName);
+	saveMatrix(predicateObjectWeight, predicateObjectClassWeightFileName);
 System.out.println("Matrix predicateObjectClassWeight has been created.");
 }// end of createPredicateObjectPairClassMatrix function.
 ///////////////////////
