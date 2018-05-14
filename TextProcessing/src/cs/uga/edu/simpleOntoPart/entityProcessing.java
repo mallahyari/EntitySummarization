@@ -357,7 +357,7 @@ public class entityProcessing {
 					//Create bag of words for each subject, entity (doc). write into file.
 					FileWriter entityFileDocs = new FileWriter(entityDocs+ subjectName+".txt");
 					for (String myUnit: predicateObjectVec){
-						entityFileDocs.write(myUnit+"|");
+						entityFileDocs.write(myUnit+" | ");
 						}
 					entityFileDocs.close();
 				subjectNamesSet.add(subjectName.toString());
