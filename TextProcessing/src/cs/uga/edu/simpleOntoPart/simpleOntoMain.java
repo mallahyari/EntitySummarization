@@ -98,7 +98,7 @@ public class simpleOntoMain {
 		//OntoPart Project ** Pre-processing phase in order to make documents (entitis) and main corpus
 		entityProcessing createMyEntityList = new entityProcessing();
 	//	createMyEntityList.createEntityList();
-	  //  createMyEntityList.corpusMaker();
+	    createMyEntityList.corpusMaker();
 		simpleOntoParameters myinitialization=new simpleOntoParameters();
 		
 		createMyEntityList.createPredicateObjectPairTopicMatrix(158234,10);
