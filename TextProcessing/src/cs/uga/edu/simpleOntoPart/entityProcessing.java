@@ -239,7 +239,7 @@ public class entityProcessing {
 			 queryString.append("    HAVING(COUNT(?p) > 30 ) ");
 				
 			 queryString.append("   Order By DESC (?pCount) ");
-			 queryString.append("   limit 80 ");
+			 queryString.append("   limit 1 ");
 			 
 		
 					
@@ -644,7 +644,7 @@ public void corpusMaker() throws NumberFormatException, IOException{
 				        int value=0;
 				        if(mapWordToID.containsKey(a[i])){
 				        value=mapWordToID.get(a[i]);
-				       // System.out.println("Count of "+value+"  "+a[i]+" is:"+d);
+				        System.out.println("Count of "+value+"  "+a[i]+" is:"+d);
 				     
 				        // Writing Corpus
 					 BufferedWriter bw1 = null;
