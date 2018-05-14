@@ -99,9 +99,9 @@ public class simpleOntoMain {
 		entityProcessing createMyEntityList = new entityProcessing();
 	//	createMyEntityList.createEntityList();
 	    createMyEntityList.corpusMaker();
-		simpleOntoParameters myinitialization=new simpleOntoParameters();
+		//simpleOntoParameters myinitialization=new simpleOntoParameters();
 		
-		createMyEntityList.createPredicateObjectPairTopicMatrix(158234,10);
+		//createMyEntityList.createPredicateObjectPairTopicMatrix(158234,10);
 		
 	    
 		
