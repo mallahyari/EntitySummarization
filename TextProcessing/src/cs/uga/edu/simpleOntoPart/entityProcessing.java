@@ -655,14 +655,14 @@ public void corpusMaker() throws NumberFormatException, IOException{
 				        int value=0;
 				        if(mapWordToID.containsKey(a[i])){
 				        value=mapWordToID.get(a[i]);
-				        System.out.println("Count of "+value+"  "+a[i]+" is:"+d);
-				     
-				        // Writing Corpus
-					 BufferedWriter bw1 = null;
+				        	System.out.println("Count of the "+value+"  "+a[i]+" is:"+d);
+				        	// Writing Corpus
+				        	BufferedWriter bw1 = null;
 					 	try {
 					      
 					         bw1 = new BufferedWriter(new FileWriter(corpusFileName, true));
 					         	bw1.write(countEntity + " " + value+" "+ d);
+					         	System.out.println("AMIN  "+countEntity );
 								bw1.newLine();
 								
 							} catch (IOException e) {
