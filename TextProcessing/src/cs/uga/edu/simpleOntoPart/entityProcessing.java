@@ -506,7 +506,6 @@ public class entityProcessing {
 			int index = result.getResource("s").toString().lastIndexOf("/");
 			types.add(result.getResource("s").toString().substring(index+1));
 		} // end of while
-		
 		//System.out.println(className+ ":::: " +predicateName+" ***********size"+ types.size() );
 		return types;
 	} // end of getPredicateDomain
@@ -575,7 +574,33 @@ public void createPredicateObjectPairClassMatrix() throws IOException{
           System.out.println("Matrix predicateObjectClassWeight has been created.");
 }// end of createPredicateObjectPairClassMatrix function.
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-	public void corpusMaker() throws NumberFormatException, IOException{
+	
+////////////////////////////////////////////////////////////////////////////////////////////
+public void createPredicateObjectPairTopicMatrix(int predicateObject, int topic) throws IOException{
+
+// create the lambda matrix
+
+for (int i = 0; i < predicateObject; i++) {
+for (int j = 0; j < topic; j++) {
+	predicateObjectClassWeight[i][j]=1;
+		} // end of for (j)
+	} // end of for (i)
+	saveMatrix(predicateObjectClassWeight, predicateObjectClassWeightFileName);
+System.out.println("Matrix predicateObjectClassWeight has been created.");
+}// end of createPredicateObjectPairClassMatrix function.
+///////////////////////
+
+
+
+
+
+
+
+
+
+
+
+public void corpusMaker() throws NumberFormatException, IOException{
 		int countEntity=0;
 		BufferedReader brObject=null;
 		FileReader frObject=null;

@@ -41,7 +41,7 @@ public class simpleOntoParameters {
 	public int N = 0; //numberOfAllObjects(Words)
 	public int nIterations = 2000;
 	int burnIn = 200;
-	public double ALPHA = 60.0 / 390;
+	public double ALPHA = 50.0 / 390;
 	public final double BETA  = 0.01;
 	public final double ZETA  = 0.01;
 //	public final double TAU = 50.0 / T;
