@@ -646,6 +646,7 @@ public void corpusMaker() throws NumberFormatException, IOException{
 				        }
 				        int d = 1;
 				        for (int j = i+1; j < a.length; j++) {
+				        	 System.out.println("AMIN  "+a[i] );
 				            if (a[i].equals(a[j])) {
 				                d += 1;
 				                p.add(j);
