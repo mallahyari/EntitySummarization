@@ -595,7 +595,7 @@ System.out.println("Matrix predicateObjectClassWeight has been created.");
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-public void corpusMaker() throws NumberFormatException, IOException{
+public void corpusMaker() throws NumberFormatException, IOException {
 		int countEntity=0;
 		BufferedReader brObject=null;
 		FileReader frObject=null;
@@ -647,16 +647,11 @@ public void corpusMaker() throws NumberFormatException, IOException{
 					
 					// Writing Corpus
 					BufferedWriter bw1 = null;
-					try {
-					
 					bw1 = new BufferedWriter(new FileWriter(corpusFileName, true));
 					bw1.write(countEntity + " " + value+" "+ d);
 					bw1.newLine();
 					
-					} catch (IOException e) {
 					
-					e.printStackTrace();
-					}
 					bw1.close();
 					
 					}
