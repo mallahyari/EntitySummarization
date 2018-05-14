@@ -610,10 +610,12 @@ public void createPredicateObjectPairClassMatrix() throws IOException{
 					FileReader frEntity = null;
 					String entityDoc;
 					brEntity = new BufferedReader(new FileReader(entityDocs+entityLine+".txt"));
-				
+					
 					String mystr=brEntity.readLine();
+					System.out.println(mystr);
 					
 					String trimmed = mystr.trim().replaceAll(" | ", " ");
+					System.out.println("Trimmed   : "+trimmed);
 				    String[] a = trimmed.split(" ");
 				    ArrayList<Integer> p = new ArrayList<>();
 				    for (int i = 0; i < a.length; i++) {
