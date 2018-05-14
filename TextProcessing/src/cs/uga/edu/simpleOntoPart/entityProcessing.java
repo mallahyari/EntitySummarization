@@ -632,6 +632,8 @@ public void corpusMaker() throws NumberFormatException, IOException{
 					System.out.println("\n STRING"+mystr);
 					
 					String trimmed = mystr.trim().replaceAll(" | ", " ");
+					
+					//String trimmed = mystr.trim().replaceAll(" | ", " ");
 					System.out.println("\n TRIMMMMIED"+trimmed);
 					
 				    String[] a = trimmed.split(" ");
