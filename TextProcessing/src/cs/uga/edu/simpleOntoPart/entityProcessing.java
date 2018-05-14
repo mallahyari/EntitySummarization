@@ -632,6 +632,8 @@ public void makeCorpus() throws IOException {
 		String wordName = tokens[0];
 		String wordId = tokens[tokens.length-1];
 		wordToIdMap.put(wordName, Integer.parseInt(wordId));
+		 System.out.println(wordName+ Integer.parseInt(wordId));
+		 
 	} // end of for
 	FileWriter corpusFile = new FileWriter(corpusFileName);
 	File fileDirectory = new File(entityDocs);
@@ -642,7 +644,7 @@ public void makeCorpus() throws IOException {
 		String [] words = document.split("\\|");
 		Map<Integer, Integer> wordsFrequency = new HashMap<Integer, Integer>();
 		for (String word : words) {
-		//	System.out.println(word);
+		    System.out.println(word);
 			int wordId = wordToIdMap.get(word);
 			int preFreq = wordsFrequency.get(wordId) != null ? wordsFrequency.get(wordId) : 0;
 			wordsFrequency.put(wordId, preFreq + 1);
