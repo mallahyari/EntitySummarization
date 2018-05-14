@@ -594,92 +594,6 @@ System.out.println("Matrix predicateObjectClassWeight has been created.");
 
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-public List<String> readDocument(String filename) {
-	List<String> content = new ArrayList<String>();
-	try {
-		BufferedReader br = new BufferedReader(new FileReader(filename));
-		String line = "";
-		while ((line = br.readLine()) != null) {
-			content.add(line);
-		} // end of while
-//		System.out.println(content);
-		br.close();
-	} catch (FileNotFoundException e) {
-		e.printStackTrace();
-	} catch (IOException e) {
-		e.printStackTrace();
-	}
-	return content;
-} // end of readDocument
-
-public void makeCorpus() throws IOException {
-	List<String> docToId = readDocument(docToIdFileName);
-	Map<String,Integer> docToIdMap = new HashMap<String,Integer>();
-	for (String line : docToId) {
-		String [] tokens = line.split(" ");
-		String docName = tokens[0];
-		String docId = tokens[1];
-		docToIdMap.put(docName, Integer.parseInt(docId));
-	} // end of for
-	
-	//predicateObjectPairToIdFileName
-	//wordToIdFileName
-	
-	List<String> wordToId = readDocument(predicateObjectPairToIdFileName);
-	Map<String,Integer> wordToIdMap = new HashMap<String,Integer>();
-	for (String line : wordToId) {
-		String [] tokens = line.split("    ");
-		String wordName = tokens[0];
-		String wordId = tokens[tokens.length-1];
-		wordToIdMap.put(wordName, Integer.parseInt(wordId));
-		 System.out.println(wordName+"  W ID   "+ Integer.parseInt(wordId));
-		 
-	} // end of for
-	FileWriter corpusFile = new FileWriter(corpusFileName);
-	File fileDirectory = new File(entityDocs);
-	for (File file : fileDirectory.listFiles()) {
-		String fileName = file.getName();
-		String document = readDocumentAsString(entityDocs + fileName);
-		fileName = fileName.replace(".txt", "");
-		String [] words = document.split("\\|");
-		Map<Integer, Integer> wordsFrequency = new HashMap<Integer, Integer>();
-		for (String word : words) {
-		    System.out.println("Wordsssss    "+word);
-			int wordId = wordToIdMap.get(word);
-			int preFreq = wordsFrequency.get(wordId) != null ? wordsFrequency.get(wordId) : 0;
-			wordsFrequency.put(wordId, preFreq + 1);
-		} // end of for
-		for (Map.Entry<Integer, Integer> entry : wordsFrequency.entrySet()) {
-		
-			int wordId = entry.getKey();
-			int wordFreq = entry.getValue();
-			corpusFile.write(docToIdMap.get(fileName) + " " + wordId + " " + wordFreq + "\n");
-		} // end of for
-		
-	} // end of for (File)
-	corpusFile.close();
-	
-} // end of makeCorpus
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 public void corpusMaker() throws NumberFormatException, IOException {
@@ -710,7 +624,7 @@ public void corpusMaker() throws NumberFormatException, IOException {
 					String mystr=brEntity.readLine();
 					System.out.println(mystr);
 					
-					String trimmed = mystr.trim().replaceAll(" # ", " ");
+					String trimmed = mystr.trim().replaceAll("\\|", " ");
 					System.out.println("TRIMMED : "+trimmed);
 					
 					String[] a = trimmed.split(" ");
