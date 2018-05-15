@@ -107,13 +107,13 @@ public class simpleOntoModel {
 		this.ALPHA = modelParameters.ALPHA;
 		this.BETA = modelParameters.BETA;
 		
-		System.out.println(P);
+		//System.out.println(P);
 		
 		randomGenerator = new Random();
 		predicateObjectWeight = entProc.loadIntMatrix(entProc.predicateObjectWeightFileName);
 		sumPredObjWeight = allocateMemory(sumPredObjWeight, P);
 		
-		System.out.println("Len   "+ predicateObjectWeight.length);
+		//System.out.println("Len   "+ predicateObjectWeight.length);
 		
 		for (int i = 0; i < predicateObjectWeight.length; i++) {
 			for (int j = 0; j < predicateObjectWeight[0].length; j++) {
