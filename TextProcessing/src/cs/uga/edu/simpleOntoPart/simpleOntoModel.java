@@ -257,6 +257,7 @@ public class simpleOntoModel {
 					String word = wordNames.get(w_i).split(" ")[0];
 					line += word + " " + predicateNames.get(p_i) + " " + phi [p_i][w_i] + ",";
 					if (probabilitySearch.get(word) == null) {
+						System.out.println("No thing Nullllllllllllllllllllllllllllllllllllllllllllllll");
 						Map<String,Double> preToProb = new HashMap<String,Double>();
 						preToProb.put(predicateNames.get(p_i), phi [p_i][w_i]);
 						probabilitySearch.put(word, preToProb);
