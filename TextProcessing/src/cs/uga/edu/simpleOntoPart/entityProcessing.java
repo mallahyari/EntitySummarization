@@ -329,8 +329,8 @@ public class entityProcessing {
 							//objectName=objectName.replaceAll(" ","_");
 							
 							//Vector of predicate object pair to add into bag of word for each entity (doc)
-							predicateObjectVec.add(predicateName + "*"+ objectName);
-							predicateObjectSet.add(predicateName + "*"+ objectName);
+							predicateObjectVec.add(predicateName + "@"+ objectName);
+							predicateObjectSet.add(predicateName + "@"+ objectName);
 							
 							
 							//Store ONLY predicate with ID (unique pair)
