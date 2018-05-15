@@ -107,13 +107,13 @@ public class simpleOntoMain {
 	//	createMyEntityList.createPredicateObjectPairTopicMatrix(20,125244);
 		
 		simpleOntoModel myOnto = new simpleOntoModel();
-//			myOnto.initializeMatrices();
+			myOnto.initializeMatrices();
 //		// Gibbs Sampling Initialization and Run //
-//			myOnto.initializeGibbsSampling();
-//			myOnto.run();
+		myOnto.initializeGibbsSampling();
+		myOnto.run();
 		
 			
-			myOnto.writeToCSV();
+		//	myOnto.writeToCSV();
 	}
 
 }
