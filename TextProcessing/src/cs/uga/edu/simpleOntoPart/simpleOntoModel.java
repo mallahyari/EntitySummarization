@@ -49,7 +49,7 @@ public class simpleOntoModel {
 	int D = 0;
 	int W = 0;
 //	int T = 0;  
-	int P = 0;
+	int P = 20;
 	int N = 0;
 	int nIterations = 0;
 	int burnIn = 0;
