@@ -106,6 +106,9 @@ public class simpleOntoModel {
 		this.burnIn = modelParameters.burnIn;
 		this.ALPHA = modelParameters.ALPHA;
 		this.BETA = modelParameters.BETA;
+		
+		System.out.println(P);
+		
 		randomGenerator = new Random();
 		predicateObjectWeight = entProc.loadIntMatrix(entProc.predicateObjectWeightFileName);
 		sumPredObjWeight = allocateMemory(sumPredObjWeight, P);
