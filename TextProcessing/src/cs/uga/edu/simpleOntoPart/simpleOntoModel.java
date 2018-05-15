@@ -219,7 +219,7 @@ public class simpleOntoModel {
 		
 		loadPosteriorDistribution();
 		List<String> entityNames = modelParameters.readFile("/home/mehdi/simpleOntoPart/evaluation/docToId.txt");
-	//	List<String> predicateNames = modelParameters.readFile("/home/mehdi/simpleOntoPart/evaluation/predicateToId.txt");
+		List<String> predicateNames = modelParameters.readFile("/home/mehdi/simpleOntoPart/evaluation/predicateToId.txt");
 		List<String> wordNames = modelParameters.readFile("/home/mehdi/simpleOntoPart/evaluation/predicateObjectPairToID.txt");
 		//List<String> wordNames = modelParameters.readFile("/home/mehdi/simpleOntoPart/evaluation/wordToID.txt");
 		
@@ -255,16 +255,16 @@ public class simpleOntoModel {
 				for (int p_i = 0; p_i < P; p_i++) {
 					phi [p_i][w_i] = (Math.round(phi [p_i][w_i] * 10000) / 10000.) / sumProb[p_i];
 					String word = wordNames.get(w_i).split(" ")[0];
-//					line += word + " " + predicateNames.get(p_i) + " " + phi [p_i][w_i] + ",";
-//					if (probabilitySearch.get(word) == null) {
-//						Map<String,Double> preToProb = new HashMap<String,Double>();
-//						preToProb.put(predicateNames.get(p_i), phi [p_i][w_i]);
-//						probabilitySearch.put(word, preToProb);
-//					}else {
-//						Map<String,Double> preToProb = probabilitySearch.get(word);
-//						preToProb.put(predicateNames.get(p_i), phi [p_i][w_i]);
-//						probabilitySearch.put(word, preToProb);
-//					}
+					line += word + " " + predicateNames.get(p_i) + " " + phi [p_i][w_i] + ",";
+					if (probabilitySearch.get(word) == null) {
+						Map<String,Double> preToProb = new HashMap<String,Double>();
+						preToProb.put(predicateNames.get(p_i), phi [p_i][w_i]);
+						probabilitySearch.put(word, preToProb);
+					}else {
+						Map<String,Double> preToProb = probabilitySearch.get(word);
+						preToProb.put(predicateNames.get(p_i), phi [p_i][w_i]);
+						probabilitySearch.put(word, preToProb);
+					}
 				} // end of for t_i
 				csvFile.write(line + "\n");
 				csvFile.flush();
