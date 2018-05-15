@@ -155,8 +155,12 @@ public class simpleOntoModel {
 					if ((w_i + 1) % showLine == 0) {
 						System.out.println((w_i + 1) + " done!.");
 					}
+					System.out.println(d [w_i]+" "+ p [w_i]+"   "+ w [w_i]+"CCCC "+ w_i);
 					samplePredicateAssignment(d [w_i], p [w_i], w [w_i], w_i);
 				} // end of for w_i
+				
+				
+				
 //				if ((itr + 1) >= burnIn) {
 //					optimizeParameter();
 //					computeAlpha();
@@ -216,7 +220,9 @@ public class simpleOntoModel {
 		loadPosteriorDistribution();
 		List<String> entityNames = modelParameters.readFile("/home/mehdi/simpleOntoPart/evaluation/docToId.txt");
 		List<String> predicateNames = modelParameters.readFile("/home/mehdi/simpleOntoPart/evaluation/predicateToId.txt");
-		List<String> wordNames = modelParameters.readFile("/home/mehdi/simpleOntoPart/evaluation/wordToID.txt");
+		List<String> wordNames = modelParameters.readFile("/home/mehdi/simpleOntoPart/evaluation/predicateObjectPairToID.txt");
+		//List<String> wordNames = modelParameters.readFile("/home/mehdi/simpleOntoPart/evaluation/wordToID.txt");
+		
 		double [] sumProb = null;
 		sumProb = allocateMemory(sumProb, D);
 		for (int d_i = 0; d_i < D; d_i++) {
