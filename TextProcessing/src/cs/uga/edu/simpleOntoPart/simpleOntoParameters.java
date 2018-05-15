@@ -122,7 +122,7 @@ public class simpleOntoParameters {
 		
 		BufferedWriter bw1 = null;
 		try {
-			bw1 = new BufferedWriter(new FileWriter(corpusStatFilename, true));
+			bw1 = new BufferedWriter(new FileWriter(corpusStatFilename));
 			bw1.write(  "numberOfEntity, sizeOfVocabulary(Object), numberOfAllObjects(Words), number of classes");
 			bw1.newLine();
 			bw1.write(  D + " " + W + " " + N + " " + C);
