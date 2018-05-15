@@ -155,7 +155,7 @@ public class simpleOntoModel {
 					if ((w_i + 1) % showLine == 0) {
 						System.out.println((w_i + 1) + " done!.");
 					}
-					System.out.println(d [w_i]+" "+ p [w_i]+"   "+ w [w_i]+"CCCC "+ w_i);
+				//	System.out.println(d [w_i]+" "+ p [w_i]+"   "+ w [w_i]+"CCCC "+ w_i);
 					samplePredicateAssignment(d [w_i], p [w_i], w [w_i], w_i);
 				} // end of for w_i
 				
