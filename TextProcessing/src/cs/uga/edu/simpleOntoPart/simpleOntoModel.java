@@ -137,7 +137,7 @@ public class simpleOntoModel {
 	} // end of saveCountMatrices
 
 	public void runGibbsSampling() {
-		objectToPredicateMap = entProc.loadPredicateToObjectMap(entProc.objectPredicateFileName);
+		//objectToPredicateMap = entProc.loadPredicateToObjectMap(entProc.objectPredicateFileName);
 		FileHandler fh;
 		try {
 			fh = new FileHandler("/home/mehdi/mylog.txt");
@@ -171,14 +171,14 @@ public class simpleOntoModel {
 	
 	public void samplePredicateAssignment(int did, int pid, int wid, int w_i) {
 	//	System.out.println(wid);
-		Set<Integer> wordPredicate = objectToPredicateMap.get(wid);
+	//	Set<Integer> wordPredicate = objectToPredicateMap.get(wid);
 		double[] pr = null;
 		pr = allocateMemory(pr, P);
 		updateCounts(did, pid, wid, -1);
 		double sum = 0;
 			
 		for (int ctr = 0; ctr < P; ctr++) {
-			if (wordPredicate.contains(ctr)) {
+		//	if (wordPredicate.contains(ctr)) {
 				// probability of predicate
 				double pr_p = (Npd[did][ctr] + ALPHA) / (Nd[did] + P * ALPHA);
 				if (pr_p == 0)
@@ -189,7 +189,7 @@ public class simpleOntoModel {
 					System.out.println("==== ");
 				pr [ctr] = pr_p * pr_w;
 				sum += pr[ctr];
-			} // end of if
+			//} // end of if
 		} // end of for ctr
 		if(sum == 0)
 			System.out.println("===="); 
