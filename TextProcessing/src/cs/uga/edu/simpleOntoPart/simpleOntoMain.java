@@ -106,7 +106,7 @@ public class simpleOntoMain {
 		
 	//	createMyEntityList.createPredicateObjectPairTopicMatrix(20,125244);
 		
-		simpleOntoModel myOnto = new simpleOntoModel();
+	//	simpleOntoModel myOnto = new simpleOntoModel();
 //			myOnto.initializeMatrices();
 //		// Gibbs Sampling Initialization and Run //
 	//	myOnto.initializeGibbsSampling();
