@@ -102,15 +102,15 @@ public class simpleOntoMain {
 //		System.out.println("MyEntityList Done!"); 
 //	    createMyEntityList.corpusMaker();
 //	    System.out.println("corpusMaker Done!"); 
-//		simpleOntoParameters myinitialization=new simpleOntoParameters();
+		simpleOntoParameters myinitialization=new simpleOntoParameters();
 		
 	//	createMyEntityList.createPredicateObjectPairTopicMatrix(20,125244);
 		
 		simpleOntoModel myOnto = new simpleOntoModel();
-			myOnto.initializeMatrices();
+//			myOnto.initializeMatrices();
 //		// Gibbs Sampling Initialization and Run //
-		myOnto.initializeGibbsSampling();
-		myOnto.run();
+	//	myOnto.initializeGibbsSampling();
+		//myOnto.run();
 		
 			
 		//	myOnto.writeToCSV();
