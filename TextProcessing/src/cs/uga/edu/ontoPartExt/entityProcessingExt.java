@@ -78,46 +78,46 @@ public class entityProcessingExt {
 	private final String wikiCategoryUriPrefix = "http://dbpedia.org/resource/Category:";
 	private VirtGraph virtGraph = null;
 
-	private static final String entityFile = "/home/mehdi/simpleOntoPart/evaluation/instances.txt";
-	private static final String entityNameOnly = "/home/mehdi/simpleOntoPart/evaluation/entNameOnly.txt";
-	private static final String classNameOnly = "/home/mehdi/simpleOntoPart/evaluation/className/classNameOnly.txt";
-	private static final String predicateStopWords = "/home/mehdi/simpleOntoPart/evaluation/predicateStopWords.txt";
+	private static final String entityFile = "/home/mehdi/ontoPartExt/evaluation/instances.txt";
+	private static final String entityNameOnly = "/home/mehdi/ontoPartExt/evaluation/entNameOnly.txt";
+	private static final String classNameOnly = "/home/mehdi/ontoPartExt/evaluation/className/classNameOnly.txt";
+	private static final String predicateStopWords = "/home/mehdi/ontoPartExt/evaluation/predicateStopWords.txt";
 	// Map each object (word) to an ID
-	private static final String wordToIdFileName = "/home/mehdi/simpleOntoPart/evaluation/wordToID.txt";
+	private static final String wordToIdFileName = "/home/mehdi/ontoPartExt/evaluation/wordToID.txt";
 	//Map each entity (doc) to ID
-	private static final String docToIdFileName = "/home/mehdi/simpleOntoPart/evaluation/docToId.txt"; 
+	private static final String docToIdFileName = "/home/mehdi/ontoPartExt/evaluation/docToId.txt"; 
 	
-	private static final String predicateObjectPairToIdFileName = "/home/mehdi/simpleOntoPart/evaluation/predicateObjectPairToID.txt";
+	private static final String predicateObjectPairToIdFileName = "/home/mehdi/ontoPartExt/evaluation/predicateObjectPairToID.txt";
 	
-	private static final String rangeToIdFileName = "/home/mehdi/simpleOntoPart/evaluation/rangeToId.txt";
-	private static final String domainToIdFileName = "/home/mehdi/simpleOntoPart/evaluation/domainToId.txt";
+	private static final String rangeToIdFileName = "/home/mehdi/ontoPartExt/evaluation/rangeToId.txt";
+	private static final String domainToIdFileName = "/home/mehdi/ontoPartExt/evaluation/domainToId.txt";
 	
-	private static final String predicateToIdFileName = "/home/mehdi/simpleOntoPart/evaluation/predicateToId.txt"; 
+	private static final String predicateToIdFileName = "/home/mehdi/ontoPartExt/evaluation/predicateToId.txt"; 
 	
-	private static final String corpusFileName = "/home/mehdi/simpleOntoPart/evaluation/corpus.txt"; 
-	private static final String objectToTypeMapFileName = "/home/mehdi/simpleOntoPart/evaluation/objToType.ser"; 
+	private static final String corpusFileName = "/home/mehdi/ontoPartExt/evaluation/corpus.txt"; 
+	private static final String objectToTypeMapFileName = "/home/mehdi/ontoPartExt/evaluation/objToType.ser"; 
 	
-	private static final String predicateDomainRangeFileName = "/home/mehdi/simpleOntoPart/evaluation/predicateDomainRange.txt"; 
-	private static final String predicateObjectFileName = "/home/mehdi/simpleOntoPart/evaluation/predicateObject.ser";
-	private static final String literalObjectFileName = "/home/mehdi/simpleOntoPart/evaluation/literalObjectName.txt";
-	private static final String realObjectFileName = "/home/mehdi/simpleOntoPart/evaluation/realObjectName.txt";
-	private static final String classIdFileName = "/home/mehdi/simpleOntoPart/evaluation/classListandID.txt";
-	//private static final String subjectIdFileName = "/home/mehdi/simpleOntoPart/evaluation/entityListandID.txt";
-	private static final String predicateObjectIdFileName = "/home/mehdi/simpleOntoPart/evaluation/predicateObjectID.txt";
+	private static final String predicateDomainRangeFileName = "/home/mehdi/ontoPartExt/evaluation/predicateDomainRange.txt"; 
+	private static final String predicateObjectFileName = "/home/mehdi/ontoPartExt/evaluation/predicateObject.ser";
+	private static final String literalObjectFileName = "/home/mehdi/ontoPartExt/evaluation/literalObjectName.txt";
+	private static final String realObjectFileName = "/home/mehdi/ontoPartExt/evaluation/realObjectName.txt";
+	private static final String classIdFileName = "/home/mehdi/ontoPartExt/evaluation/classListandID.txt";
+	//private static final String subjectIdFileName = "/home/mehdi/ontoPartExt/evaluation/entityListandID.txt";
+	private static final String predicateObjectIdFileName = "/home/mehdi/ontoPartExt/evaluation/predicateObjectID.txt";
 	
-	private static final String subjectIdCatIdFileName = "/home/mehdi/simpleOntoPart/evaluation/subjectIdCatId.txt";
-	private static final String categoryIdFileName = "/home/mehdi/simpleOntoPart/evaluation/CategoryId.txt";
+	private static final String subjectIdCatIdFileName = "/home/mehdi/ontoPartExt/evaluation/subjectIdCatId.txt";
+	private static final String categoryIdFileName = "/home/mehdi/ontoPartExt/evaluation/CategoryId.txt";
 	
 	
-	protected String objectPredicateFileName = "/home/mehdi/simpleOntoPart/evaluation/objectPredicate.ser";
-	protected final String predicateObjectWeightFileName = "/home/mehdi/simpleOntoPart/evaluation/predicateObjectWeight.ser";
-	protected final String predicateObjectClassWeightFileName = "/home/mehdi/simpleOntoPart/evaluation/predicateObjectClassWeight.ser";
+	protected String objectPredicateFileName = "/home/mehdi/ontoPartExt/evaluation/objectPredicate.ser";
+	protected final String predicateObjectWeightFileName = "/home/mehdi/ontoPartExt/evaluation/predicateObjectWeight.ser";
+	protected final String predicateObjectClassWeightFileName = "/home/mehdi/ontoPartExt/evaluation/predicateObjectClassWeight.ser";
 	
 	
 	//Holding all documents (Entities) in entityDocs folder
-	private static final String entityList = "/home/mehdi/simpleOntoPart/evaluation/";
-	private static final String entityDocs = "/home/mehdi/simpleOntoPart/evaluation/entityDocs/"; 
-	private static final String predicateList = "/home/mehdi/simpleOntoPart/evaluation/";
+	private static final String entityList = "/home/mehdi/ontoPartExt/evaluation/";
+	private static final String entityDocs = "/home/mehdi/ontoPartExt/evaluation/entityDocs/"; 
+	private static final String predicateList = "/home/mehdi/ontoPartExt/evaluation/";
 	
 
 
@@ -153,14 +153,14 @@ public class entityProcessingExt {
 		System.out.println("Connecting to Virtuoso ... ");
 		virtGraph = connectToVirtuoso();
 		System.out.println("Successfully Connected to Virtuoso!\n");
-		FileWriter classToIdFile = new FileWriter(classIdFileName); //"/home/mehdi/simpleOntoPart/evaluation/classListandID.txt";
-		FileWriter subjectToIdFile = new FileWriter(docToIdFileName); // "/home/mehdi/simpleOntoPart/evaluation/docToId.txt";
-		FileWriter subjectIdCatIdFile = new FileWriter(subjectIdCatIdFileName); //"/home/mehdi/simpleOntoPart/evaluation/subjectIdCatId.txt";
-		FileWriter CategoryIdFile = new FileWriter(categoryIdFileName); //"/home/mehdi/simpleOntoPart/evaluation/subjectIdCatId.txt";
-		FileWriter entNameOnlyFile = new FileWriter(entityNameOnly); //"/home/mehdi/simpleOntoPart/evaluation/entNameOnly.txt";
-		FileWriter wordToIdFile = new FileWriter(wordToIdFileName); //"/home/mehdi/simpleOntoPart/evaluation/wordToID.txt";
-		FileWriter predicateObjectPair = new FileWriter(predicateObjectPairToIdFileName); //"/home/mehdi/simpleOntoPart/evaluation/predicateObjectPairToID.txt";
-		FileWriter predicateToIdFile = new FileWriter(predicateToIdFileName); //"/home/mehdi/simpleOntoPart/evaluation/predicateToId.txt"; 
+		FileWriter classToIdFile = new FileWriter(classIdFileName); //"/home/mehdi/ontoPartExt/evaluation/classListandID.txt";
+		FileWriter subjectToIdFile = new FileWriter(docToIdFileName); // "/home/mehdi/ontoPartExt/evaluation/docToId.txt";
+		FileWriter subjectIdCatIdFile = new FileWriter(subjectIdCatIdFileName); //"/home/mehdi/ontoPartExt/evaluation/subjectIdCatId.txt";
+		FileWriter CategoryIdFile = new FileWriter(categoryIdFileName); //"/home/mehdi/ontoPartExt/evaluation/subjectIdCatId.txt";
+		FileWriter entNameOnlyFile = new FileWriter(entityNameOnly); //"/home/mehdi/ontoPartExt/evaluation/entNameOnly.txt";
+		FileWriter wordToIdFile = new FileWriter(wordToIdFileName); //"/home/mehdi/ontoPartExt/evaluation/wordToID.txt";
+		FileWriter predicateObjectPair = new FileWriter(predicateObjectPairToIdFileName); //"/home/mehdi/ontoPartExt/evaluation/predicateObjectPairToID.txt";
+		FileWriter predicateToIdFile = new FileWriter(predicateToIdFileName); //"/home/mehdi/ontoPartExt/evaluation/predicateToId.txt"; 
 		FileWriter predicateObjectFile = new FileWriter(predicateObjectFileName);
 		
 		Set<String> predicateObjectSet = new HashSet<String>();
@@ -393,7 +393,7 @@ public class entityProcessingExt {
 		entNameOnlyFile.close();
 		
 //************* extract Category ***************\\
-		//entityNameOnly = "/home/mehdi/simpleOntoPart/evaluation/entNameOnly.txt";
+		//entityNameOnly = "/home/mehdi/ontoPartExt/evaluation/entNameOnly.txt";
 		String subjectName1 = "";
 		BufferedReader br1 = new BufferedReader(new FileReader(entityNameOnly));
 		//Read list of subjects from a text file  

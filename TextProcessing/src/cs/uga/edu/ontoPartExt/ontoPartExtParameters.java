@@ -47,11 +47,11 @@ public class ontoPartExtParameters {
 //	public final double TAU = 50.0 / T;
 //	public final double EPSILON = 0.9;
 	public final double gamma = 0.01	;
-	public String corpusFilename = "/home/mehdi/simpleOntoPart/evaluation/corpus.txt";
-	public String entitiesFilename = "/home/mehdi/simpleOntoPart/evaluation/entNameOnly.txt";
-	public String corpusStatFilename = "/home/mehdi/simpleOntoPart/evaluation/corpusStatistics.txt";
+	public String corpusFilename = "/home/mehdi/ontoPartExt/evaluation/corpus.txt";
+	public String entitiesFilename = "/home/mehdi/ontoPartExt/evaluation/entNameOnly.txt";
+	public String corpusStatFilename = "/home/mehdi/ontoPartExt/evaluation/corpusStatistics.txt";
 //	public String predicateFilename = "/home/mehdi/ontoPart/evaluation/predicateToId.txt";
-	public String classFilename = "/home/mehdi/simpleOntoPart/evaluation/classListandID.txt";
+	public String classFilename = "/home/mehdi/ontoPartExt/evaluation/classListandID.txt";
 
 //	public String corpusFilename = "/home/mehdi/taxonomyProject/preprocessedFiles/corpus.txt";
 //	public String entitiesFilename = "/home/mehdi/taxonomyProject/preprocessedFiles/corpusConceptsSr.txt";

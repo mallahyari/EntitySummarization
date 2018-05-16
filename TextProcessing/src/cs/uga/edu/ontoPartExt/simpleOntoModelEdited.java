@@ -72,8 +72,8 @@ public class simpleOntoModelEdited {
 	Random randomGenerator = null;
 	entityProcessingExt entProc = null;
 	
-	private static final String docPredicateDomainRange = "/home/mehdi/simpleOntoPart/evaluation/predicateDomainRange.txt"; 
-	private static final String predicateObjectFileName = "/home/mehdi/simpleOntoPart/evaluation/predicateObject.ser"; 
+	private static final String docPredicateDomainRange = "/home/mehdi/ontoPartExt/evaluation/predicateDomainRange.txt"; 
+	private static final String predicateObjectFileName = "/home/mehdi/ontoPartExt/evaluation/predicateObject.ser"; 
 
 	
 	// Map to store each predicate with a set of corresponding Domain
@@ -85,7 +85,7 @@ public class simpleOntoModelEdited {
 	Map<Integer, Set<Integer>> objectTotypeMap = new HashMap<Integer,Set<Integer>>();
 	
 	
-	String corpusEntitiesFile = "/home/mehdi/simpleOntoPart/evaluation/corpusConceptsSr.txt";
+	String corpusEntitiesFile = "/home/mehdi/ontoPartExt/evaluation/corpusConceptsSr.txt";
 	
 	int showLine = 400000;
 	final Logger logger = Logger.getLogger(ontoPartExtModel.class.getName());
@@ -207,9 +207,9 @@ public class simpleOntoModelEdited {
 		Map <String, Map<String, Double>> probabilitySearch = new HashMap <String, Map<String, Double>>();
 		
 		loadPosteriorDistribution();
-		List<String> entityNames = modelParameters.readFile("/home/mehdi/simpleOntoPart/evaluation/docToId.txt");
-		List<String> predicateNames = modelParameters.readFile("/home/mehdi/simpleOntoPart/evaluation/predicateToId.txt");
-		List<String> wordNames = modelParameters.readFile("/home/mehdi/simpleOntoPart/evaluation/wordToID.txt");
+		List<String> entityNames = modelParameters.readFile("/home/mehdi/ontoPartExt/evaluation/docToId.txt");
+		List<String> predicateNames = modelParameters.readFile("/home/mehdi/ontoPartExt/evaluation/predicateToId.txt");
+		List<String> wordNames = modelParameters.readFile("/home/mehdi/ontoPartExt/evaluation/wordToID.txt");
 		double [] sumProb = null;
 		sumProb = allocateMemory(sumProb, D);
 		for (int d_i = 0; d_i < D; d_i++) {
@@ -218,7 +218,7 @@ public class simpleOntoModelEdited {
 			} // end of for t_i
 		} // end of for e_i
 		try {
-			FileWriter csvFile = new FileWriter("/home/mehdi/simpleOntoPart/evaluation/csv/theta.csv");
+			FileWriter csvFile = new FileWriter("/home/mehdi/ontoPartExt/evaluation/csv/theta.csv");
 			for (int d_i = 0; d_i < D; d_i++) {
 				String line = entityNames.get(d_i) + " ";
 				for (int p_i = 0; p_i < P; p_i++) {
@@ -236,7 +236,7 @@ public class simpleOntoModelEdited {
 					sumProb [p_i] += Math.round(phi [p_i][w_i] * 10000) / 10000.;
 				} // end of for w_i
 			} // end of for p_i
-			csvFile = new FileWriter("/home/mehdi/simpleOntoPart/evaluation/csv/phi.csv");
+			csvFile = new FileWriter("/home/mehdi/ontoPartExt/evaluation/csv/phi.csv");
 			for (int w_i = 0; w_i < W; w_i++) {
 				String line = "";
 				for (int p_i = 0; p_i < P; p_i++) {
