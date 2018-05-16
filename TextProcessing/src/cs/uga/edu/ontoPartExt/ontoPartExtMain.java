@@ -108,13 +108,13 @@ public class ontoPartExtMain {
 //		createMyEntityList.createPredicateObjectPairTopicMatrix(20,158234);
 		
 		ontoPartExtModel myOnto = new ontoPartExtModel();
-			myOnto.initializeMatrices();
-		// Gibbs Sampling Initialization and Run //
-		myOnto.initializeGibbsSampling();
-		myOnto.run();
+//			myOnto.initializeMatrices();
+//		// Gibbs Sampling Initialization and Run //
+//		myOnto.initializeGibbsSampling();
+//		myOnto.run();
 		
 			
-//			myOnto.writeToCSV();
+			myOnto.writeToCSV();
 	}
 
 }
