@@ -95,14 +95,14 @@ public class ontoPartExtMain {
 //		entLDA2.run();
 //		
 		
-//	**********************************ONTO PART************************************************	
+//	**********************************ONTO PART EXT************************************************	
 		//OntoPart Project ** Pre-processing phase in order to make documents (entitis) and main corpus
 		entityProcessingExt createMyEntityList = new entityProcessingExt();
-//		createMyEntityList.createEntityList();
-//		System.out.println("MyEntityList Done!"); 
-//	    createMyEntityList.corpusMaker();
-//	    System.out.println("corpusMaker Done!"); 
-	//	simpleOntoParameters myinitialization=new simpleOntoParameters();
+		createMyEntityList.createEntityList();
+		System.out.println("MyEntityList Done!"); 
+	    createMyEntityList.corpusMaker();
+	    System.out.println("corpusMaker Done!"); 
+		ontoPartExtParameters myinitialization=new ontoPartExtParameters();
 		
 	//	createMyEntityList.createPredicateObjectPairTopicMatrix(20,125244);
 		
@@ -113,7 +113,7 @@ public class ontoPartExtMain {
 //		myOnto.run();
 		
 			
-			myOnto.writeToCSV();
+//			myOnto.writeToCSV();
 	}
 
 }
