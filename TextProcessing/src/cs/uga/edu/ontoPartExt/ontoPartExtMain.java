@@ -97,9 +97,14 @@ public class ontoPartExtMain {
 		
 //	**********************************ONTO PART EXT************************************************	
 		//OntoPart Project ** Pre-processing phase in order to make documents (entitis) and main corpus
+		//		Running steps
+		//		1) line 106 to 110
+		//		2) Line  113
+		//		3) line 116-118-119
+		//		4) line 121
 		entityProcessingExt createMyEntityList = new entityProcessingExt();
-//		createMyEntityList.createEntityList();
-//		System.out.println("MyEntityList Done!"); 
+		createMyEntityList.createEntityList();
+		System.out.println("MyEntityList Done!"); 
 //	    createMyEntityList.corpusMaker();
 //	    System.out.println("corpusMaker Done!"); 
 //		ontoPartExtParameters myinitialization=new ontoPartExtParameters();
@@ -108,13 +113,12 @@ public class ontoPartExtMain {
 //		createMyEntityList.createPredicateObjectPairTopicMatrix(20,158234);
 		
 		ontoPartExtModel myOnto = new ontoPartExtModel();
-//			myOnto.initializeMatrices();
+//		myOnto.initializeMatrices();
 //		// Gibbs Sampling Initialization and Run //
 //		myOnto.initializeGibbsSampling();
 //		myOnto.run();
 		
-			
-			myOnto.writeToCSV();
+//		myOnto.writeToCSV();
 	}
 
 }

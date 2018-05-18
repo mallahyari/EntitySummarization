@@ -171,6 +171,7 @@ public class entityProcessingExt {
 		Map<Integer, String> classNameToIdMap1 = new HashMap<Integer, String>();
 
 		Vector<String> predicateObjectVec = new Vector<String>();
+		Vector<String> predicateVecWhole = new Vector<String>();
 		Map<String, Integer> CategoryNameToIdMap = new HashMap<String,Integer>();
 		Map<Integer, Integer> subjectIdCatIdMap = new HashMap<Integer,Integer>();
 		Map<String, Integer> wordToIdMap = new HashMap<String,Integer>();
@@ -331,7 +332,7 @@ public class entityProcessingExt {
 							//Vector of predicate object pair to add into bag of word for each entity (doc)
 							predicateObjectVec.add(predicateName + "@"+ objectName);
 							predicateObjectSet.add(predicateName + "@"+ objectName);
-							
+							predicateVecWhole.add(predicateName);
 							
 							//Store ONLY predicate with ID (unique pair)
 							if (predicateToIdMap.get(predicateName) == null) {
@@ -386,6 +387,29 @@ public class entityProcessingExt {
 			} // end of while
 			//System.out.println(className + "  :  "+ numberOfInstances);
 		}// end of while for READING from class list text file
+		
+		Map<String, Integer> predicateFrequency = new HashMap<String,Integer>();
+		
+		 for(String mystr: predicateVecWhole){
+	         if(predicateFrequency.containsKey(mystr)){
+	        	 predicateFrequency.put(mystr, predicateFrequency.get(mystr)+1 );
+	         }else{
+	        	 predicateFrequency.put(mystr, 1);
+	         }
+	    }
+		 
+		 Set<String> myKeys =predicateFrequency.keySet();
+		 for (String key:myKeys){
+			System.out.println(key + "      "+ predicateFrequency.get(key));
+		 }
+		 
+		
+		
+		
+		
+		
+		
+		
 		br.close();
 		subjectToIdFile.close();
 		classToIdFile.close();
