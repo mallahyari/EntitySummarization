@@ -427,7 +427,9 @@ public class entityProcessingExt {
 		//*****************************************************		 
 		//****** Calculate the Predicate-Object frequency *****\\		
 					Map<String, Integer> predicateObjectFrequency = new HashMap<String,Integer>();
+					int k=0;
 					 for(String mystr: predicateObjectListWhole){
+						 System.out.println("predicateObjectListWhole:   "+k+") "+ mystr);
 				         if(predicateObjectFrequency.containsKey(mystr)){
 				        	 predicateObjectFrequency.put(mystr, predicateObjectFrequency.get(mystr)+1 );
 				         }else{
@@ -438,6 +440,8 @@ public class entityProcessingExt {
 					 for (String key:myKeysPreObj){
 						System.out.println(key + "      "+ predicateObjectFrequency.get(key));
 					 }
+					 System.out.println("Size: "+ predicateObjectListWhole.size());
+					 
 			//****** END OF Calculate the Object frequency *****\\			 
 		
 		
