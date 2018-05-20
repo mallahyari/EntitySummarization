@@ -338,7 +338,7 @@ public class entityProcessingExt {
 							objectListWhole.add(objectName);
 							predicateObjectListWhole.add(predicateName + "@"+ objectName);
 							
-							System.out.println(subject+"   "+predicate.toString() +" @ "+object.toString());
+							//System.out.println(subject+"   "+predicate.toString() +" @ "+object.toString());
 							
 							
 							//Store ONLY predicate with ID (unique pair)
@@ -394,6 +394,9 @@ public class entityProcessingExt {
 			} // end of while
 			//System.out.println(className + "  :  "+ numberOfInstances);
 		}// end of while for READING from class list text file
+		
+		System.out.println("Predicate object Map"+predicateObjectIdMap.size());
+		System.out.println("Predicate object Set"+predicateObjectSet.size());
 //		
 ////****** Calculate the predicate frequency *****\\		
 //		Map<String, Integer> predicateFrequency = new HashMap<String,Integer>();
