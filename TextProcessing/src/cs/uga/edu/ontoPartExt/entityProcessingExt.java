@@ -430,6 +430,7 @@ public class entityProcessingExt {
 					int k=0;
 					 for(String mystr: predicateObjectListWhole){
 						 System.out.println("predicateObjectListWhole:   "+k+") "+ mystr);
+						 k++;
 				         if(predicateObjectFrequency.containsKey(mystr)){
 				        	 predicateObjectFrequency.put(mystr, predicateObjectFrequency.get(mystr)+1 );
 				         }else{
