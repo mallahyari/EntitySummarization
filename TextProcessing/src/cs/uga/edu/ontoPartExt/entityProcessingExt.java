@@ -242,7 +242,7 @@ public class entityProcessingExt {
 			 queryString.append("    HAVING(COUNT(?p) > 30 ) ");
 				
 			 queryString.append("   Order By DESC (?pCount) ");
-			 queryString.append("   limit 150 ");
+			 queryString.append("   limit 1 ");
 			 
 		
 					
@@ -338,7 +338,7 @@ public class entityProcessingExt {
 							objectListWhole.add(objectName);
 							predicateObjectListWhole.add(predicateName + "@"+ objectName);
 							
-							//System.out.println(subject+"   "+predicate.toString() +" @ "+object.toString());
+							System.out.println(subject+"   "+predicate.toString() +" @ "+object.toString());
 							
 							
 							//Store ONLY predicate with ID (unique pair)
