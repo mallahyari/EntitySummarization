@@ -171,8 +171,8 @@ public class entityProcessingExt {
 		Map<Integer, String> classNameToIdMap1 = new HashMap<Integer, String>();
 
 		Vector<String> predicateObjectVec = new Vector<String>();
-		Vector<String> predicateVecWhole = new Vector<String>();
-		Vector<String> objectVecWhole = new Vector<String>();
+		Vector<String> predicateListWhole = new Vector<String>();
+		ArrayList<String> objectListWhole = new ArrayList<String>();
 		Map<String, Integer> CategoryNameToIdMap = new HashMap<String,Integer>();
 		Map<Integer, Integer> subjectIdCatIdMap = new HashMap<Integer,Integer>();
 		Map<String, Integer> wordToIdMap = new HashMap<String,Integer>();
@@ -333,8 +333,8 @@ public class entityProcessingExt {
 							//Vector of predicate object pair to add into bag of word for each entity (doc)
 							predicateObjectVec.add(predicateName + "@"+ objectName);
 							predicateObjectSet.add(predicateName + "@"+ objectName);
-							predicateVecWhole.add(predicateName);
-							objectVecWhole.add(objectName);
+							predicateListWhole.add(predicateName);
+							objectListWhole.add(objectName);
 							
 							
 							//Store ONLY predicate with ID (unique pair)
@@ -391,36 +391,36 @@ public class entityProcessingExt {
 			//System.out.println(className + "  :  "+ numberOfInstances);
 		}// end of while for READING from class list text file
 		
-////****** Calculate the predicate frequency *****\\		
-//		Map<String, Integer> predicateFrequency = new HashMap<String,Integer>();
-//		 for(String mystr: predicateVecWhole){
-//	         if(predicateFrequency.containsKey(mystr)){
-//	        	 predicateFrequency.put(mystr, predicateFrequency.get(mystr)+1 );
-//	         }else{
-//	        	 predicateFrequency.put(mystr, 1);
-//	         }
-//	    }
-//		 Set<String> myKeys =predicateFrequency.keySet();
-//		 for (String key:myKeys){
-//			System.out.println(key + "      "+ predicateFrequency.get(key));
-//		 }
-////****** END OF Calculate the predicate frequency *****\\		
+//****** Calculate the predicate frequency *****\\		
+		Map<String, Integer> predicateFrequency = new HashMap<String,Integer>();
+		 for(String mystr: predicateListWhole){
+	         if(predicateFrequency.containsKey(mystr)){
+	        	 predicateFrequency.put(mystr, predicateFrequency.get(mystr)+1 );
+	         }else{
+	        	 predicateFrequency.put(mystr, 1);
+	         }
+	    }
+		 Set<String> myKeys =predicateFrequency.keySet();
+		 for (String key:myKeys){
+			System.out.println(key + "      "+ predicateFrequency.get(key));
+		 }
+//****** END OF Calculate the predicate frequency *****\\		
 
-//*****************************************************		 
-//****** Calculate the Object frequency *****\\		
-			Map<String, Integer> objectFrequency = new HashMap<String,Integer>();
-			 for(String mystr: objectVecWhole){
-		         if(objectFrequency.containsKey(mystr)){
-		        	 objectFrequency.put(mystr, objectFrequency.get(mystr)+1 );
-		         }else{
-		        	 objectFrequency.put(mystr, 1);
-		         }
-		    }
-			 Set<String> myKeysObj =objectFrequency.keySet();
-			 for (String key:myKeysObj){
-				System.out.println(key + "      "+ objectFrequency.get(key));
-			 }
-	//****** END OF Calculate the Object frequency *****\\			 
+////*****************************************************		 
+////****** Calculate the Object frequency *****\\		
+//			Map<String, Integer> objectFrequency = new HashMap<String,Integer>();
+//			 for(String mystr: objectListWhole){
+//		         if(objectFrequency.containsKey(mystr)){
+//		        	 objectFrequency.put(mystr, objectFrequency.get(mystr)+1 );
+//		         }else{
+//		        	 objectFrequency.put(mystr, 1);
+//		         }
+//		    }
+//			 Set<String> myKeysObj =objectFrequency.keySet();
+//			 for (String key:myKeysObj){
+//				System.out.println(key + "      "+ objectFrequency.get(key));
+//			 }
+//	//****** END OF Calculate the Object frequency *****\\			 
 		
 		
 		
