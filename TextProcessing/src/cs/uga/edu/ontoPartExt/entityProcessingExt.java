@@ -460,10 +460,16 @@ public class entityProcessingExt {
 					 Set<String> instanceSet = new HashSet<String>();
 					 Set<String> datasetAllInstances = new HashSet<String>();
 					// datasetAllInstances.addAll(subjectNamesSet);
+					 System.out.println("subjectNamesSet:  "+subjectNamesSet.size());
 					 for (String myPredObjPair : predicateObjectSet){
+						 
 						 datasetAllInstances.addAll(subjectNamesSet);
+						 System.out.println("datasetAllInstances:"+datasetAllInstances.size());
+						 
 						 String []predObj =myPredObjPair.split("@");
 						 instanceSet=getInstancesByPredObj(predObj[0],predObj[1]);
+						 System.out.println("instanceSet:   "+instanceSet.size());
+							
 						 datasetAllInstances.retainAll(instanceSet);
 						 System.out.println(predObj[0]+"@"+predObj[1]+"  Size: "+ datasetAllInstances.size());
 						 datasetAllInstances.clear();
