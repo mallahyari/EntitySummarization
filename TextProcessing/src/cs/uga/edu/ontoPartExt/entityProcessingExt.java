@@ -325,8 +325,7 @@ public class entityProcessingExt {
 							objectName=objectName.replace("*","");
 							objectName=objectName.replace("\n", "");
 							objectName=objectName.replace("@en", "");
-							objectName=objectName.replace(")", "");
-							objectName=objectName.replace("(", "");
+							
 							objectName=objectName.replaceAll("\\s+"," ");
 							objectName=objectName.trim();
 							//objectName=objectName.replaceAll(" ","_");
