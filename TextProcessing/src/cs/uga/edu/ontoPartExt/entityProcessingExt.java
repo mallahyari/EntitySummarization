@@ -655,6 +655,7 @@ queryString.append("FILTER (?p IN (<http://dbpedia.org/ontology/" + predicateNam
 queryString.append("FILTER (?o IN (<http://dbpedia.org/resource/" + objectName + "> ) )");
 
 queryString.append("} ");
+System.out.println(queryString);
 
 Query sparql = QueryFactory.create(queryString.toString());
 VirtuosoQueryExecution vqe = VirtuosoQueryExecutionFactory.create (sparql, virtGraph);
