@@ -337,7 +337,7 @@ public class entityProcessingExt {
 							objectListWhole.add(objectName);
 							predicateObjectListWhole.add(predicateName + "@"+ objectName);
 							
-							System.out.println(subject+"   "+predicate.toString() +" @ "+object.toString());
+							//System.out.println(subject+"   "+predicate.toString() +" @ "+object.toString());
 							
 							
 							//Store ONLY predicate with ID (unique pair)
@@ -459,27 +459,27 @@ public class entityProcessingExt {
 //					 
 ////****** END OF Calculate the Object frequency *****\\
 					 
-////*****************************************************		 
-////****** Calculate the Subject Frequency based on Predicate-Object *****\\							 
-//					 Set<String> instanceSet = new HashSet<String>();
-//					 Set<String> datasetAllInstances = new HashSet<String>();
-//					// datasetAllInstances.addAll(subjectNamesSet);
-//					 System.out.println("subjectNamesSet:  "+subjectNamesSet.size());
-//					 for (String myPredObjPair : predicateObjectSet){
-//						 
-//						 datasetAllInstances.addAll(subjectNamesSet);
-//						 System.out.println("datasetAllInstances:"+datasetAllInstances.size());
-//						 
-//						 String []predObj =myPredObjPair.split("@");
-//						 instanceSet=getInstancesByPredObj(predObj[0],predObj[1]);
-//						 System.out.println("instanceSet:   "+instanceSet.size());
-//							
-//						 datasetAllInstances.retainAll(instanceSet);
-//						 System.out.println(predObj[0]+"@"+predObj[1]+"  Size: "+ datasetAllInstances.size());
-//						 datasetAllInstances.clear();
-//					 }
-//
-//					//*****************************************************		 		
+//*****************************************************		 
+//****** Calculate the Subject Frequency based on Predicate-Object *****\\							 
+					 Set<String> instanceSet = new HashSet<String>();
+					 Set<String> datasetAllInstances = new HashSet<String>();
+					// datasetAllInstances.addAll(subjectNamesSet);
+					 System.out.println("subjectNamesSet:  "+subjectNamesSet.size());
+					 for (String myPredObjPair : predicateObjectSet){
+						 
+						 datasetAllInstances.addAll(subjectNamesSet);
+						 System.out.println("datasetAllInstances:"+datasetAllInstances.size());
+						 
+						 String []predObj =myPredObjPair.split("@");
+						 instanceSet=getInstancesByPredObj(predObj[0],predObj[1]);
+						 System.out.println("instanceSet:   "+instanceSet.size());
+							
+						 datasetAllInstances.retainAll(instanceSet);
+						 System.out.println(predObj[0]+"@"+predObj[1]+"  Size: "+ datasetAllInstances.size());
+						 datasetAllInstances.clear();
+					 }
+
+					//*****************************************************		 		
 		
 		
 		br.close();
@@ -613,7 +613,7 @@ private Set<String> getInstancesByPredObj(String predicateName, String objectNam
 StringBuffer queryString = new StringBuffer();
 queryString.append("SELECT ?s FROM <" + GRAPH + "> WHERE { ");
 queryString.append("?s ?p ?o . ");
-queryString.append("FILTER (?p IN (<http://dbpedia.org/ontology/" + predicateName + "> ) )");
+queryString.append("FILTER (?p IN (<http://dbpedia.org/ontology/" + predicateName + "> ) || ?p IN (<http://dbpedia.org/property/" + predicateName + "> ) )");
 queryString.append("FILTER (?o IN (<http://dbpedia.org/resource/" + objectName + "> ) )");
 
 queryString.append("} ");
