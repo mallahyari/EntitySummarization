@@ -366,7 +366,7 @@ public class entityProcessingExt {
 						entityFileDocs.write(myUnit+" I ");
 						}
 					entityFileDocs.close();
-				subjectNamesSet.add(subjectName.toString());
+					subjectNamesSet.add(subjectName.toString());
 				
 				
 					//if a class has an entity then it will be added into classNametoID file 
@@ -392,7 +392,7 @@ public class entityProcessingExt {
 			} // end of while
 			//System.out.println(className + "  :  "+ numberOfInstances);
 		}// end of while for READING from class list text file
-		
+//		
 ////****** Calculate the predicate frequency *****\\		
 //		Map<String, Integer> predicateFrequency = new HashMap<String,Integer>();
 //		 for(String mystr: predicateListWhole){
@@ -402,12 +402,16 @@ public class entityProcessingExt {
 //	        	 predicateFrequency.put(mystr, 1);
 //	         }
 //	    }
+//		 FileWriter PredicateFrequencyFW = new FileWriter("/home/mehdi/ontoPartExt/evaluation/myPFreq.txt");
+//			
 //		 Set<String> myKeys =predicateFrequency.keySet();
 //		 for (String key:myKeys){
 //			System.out.println(key + "      "+ predicateFrequency.get(key));
+//			PredicateFrequencyFW.write(key + "      "+ predicateFrequency.get(key)+ "\n");
 //		 }
+//		 PredicateFrequencyFW.close();
 ////****** END OF Calculate the predicate frequency *****\\		
-
+//
 ////*****************************************************		 
 ////****** Calculate the Object frequency *****\\		
 //			Map<String, Integer> objectFrequency = new HashMap<String,Integer>();
@@ -418,42 +422,53 @@ public class entityProcessingExt {
 //		        	 objectFrequency.put(mystr, 1);
 //		         }
 //		    }
+//			 FileWriter ObjectFrequencyFW = new FileWriter("/home/mehdi/ontoPartExt/evaluation/myOFreq.txt");
 //			 Set<String> myKeysObj =objectFrequency.keySet();
 //			 for (String key:myKeysObj){
 //				System.out.println(key + "      "+ objectFrequency.get(key));
+//				ObjectFrequencyFW.write(key + "      "+ objectFrequency.get(key)+ "\n");
 //			 }
+//			 ObjectFrequencyFW.close();
 //	//****** END OF Calculate the Object frequency *****\\			 
-		
-		//*****************************************************		 
-		//****** Calculate the Predicate-Object frequency *****\\		
-					Map<String, Integer> predicateObjectFrequency = new HashMap<String,Integer>();
-					int k=0;
-					 for(String mystr: predicateObjectListWhole){
-						 System.out.println("predicateObjectListWhole:   "+k+") "+ mystr);
-						 k++;
-				         if(predicateObjectFrequency.containsKey(mystr)){
-				        	 predicateObjectFrequency.put(mystr, predicateObjectFrequency.get(mystr)+1 );
-				         }else{
-				        	 predicateObjectFrequency.put(mystr, 1);
-				         }
-				    }
+//		
+////*****************************************************		 
+////****** Calculate the Predicate-Object frequency *****\\		
+//					Map<String, Integer> predicateObjectFrequency = new HashMap<String,Integer>();
+//					//int k=0;
+//					 for(String mystr: predicateObjectListWhole){
+//						// System.out.println("predicateObjectListWhole:   "+k+") "+ mystr);
+//						// k++;
+//				         if(predicateObjectFrequency.containsKey(mystr)){
+//				        	 predicateObjectFrequency.put(mystr, predicateObjectFrequency.get(mystr)+1 );
+//				         }else{
+//				        	 predicateObjectFrequency.put(mystr, 1);
+//				         }
+//				    }
+//					 FileWriter predicateObjectFrequencyFW = new FileWriter("/home/mehdi/ontoPartExt/evaluation/myPOFreq.txt");
+//					Set<String> myKeysPreObj =predicateObjectFrequency.keySet();
+//					 for (String key:myKeysPreObj){
+//						System.out.println(key + "      "+ predicateObjectFrequency.get(key));
+//						predicateObjectFrequencyFW.write(key + "      "+ predicateObjectFrequency.get(key)+ "\n");
+//					 }
+//					 System.out.println("Size: "+ predicateObjectListWhole.size());
+//					 predicateObjectFrequencyFW.close();
+//					 
+////****** END OF Calculate the Object frequency *****\\
 					 
-					 
-					 FileWriter predicateObjectFrequencyFW = new FileWriter("/home/mehdi/ontoPartExt/evaluation/myPOFreq.txt");
-						
-						
-					 Set<String> myKeysPreObj =predicateObjectFrequency.keySet();
-					 for (String key:myKeysPreObj){
-						System.out.println(key + "      "+ predicateObjectFrequency.get(key));
-						predicateObjectFrequencyFW.write(key + "      "+ predicateObjectFrequency.get(key)+ "\n");
+//*****************************************************		 
+//****** Calculate the Subject Frequency based on Predicate-Object *****\\							 
+					 Set<String> instanceSet = new HashSet<String>();
+					 Set<String> datasetAllInstances = new HashSet<String>();
+					// datasetAllInstances.addAll(subjectNamesSet);
+					 for (String myPredObjPair : predicateObjectSet){
+						 datasetAllInstances.addAll(subjectNamesSet);
+						 String []predObj =myPredObjPair.split("@");
+						 instanceSet=getInstancesByPredObj(predObj[0],predObj[1]);
+						 datasetAllInstances.retainAll(instanceSet);
+						 System.out.println(predObj[0]+"@"+predObj[1]+"  Size: "+ datasetAllInstances.size());
+						 datasetAllInstances.clear();
 					 }
-					 System.out.println("Size: "+ predicateObjectListWhole.size());
-					 predicateObjectFrequencyFW.close();
-					 
-			//****** END OF Calculate the Object frequency *****\\			 
-		
-		
-		
+
 		
 		
 		
@@ -579,9 +594,39 @@ public class entityProcessingExt {
 		} // end of while
 		//System.out.println(className+ ":::: " +predicateName+" ***********size"+ types.size() );
 		return types;
-	} // end of getPredicateDomain
+	} // end of get instances
 
 ////////////////////////////////////////////////////////////////////////////////////////////	
+////////////////////////Retuen number of instances based on passed predicate name and class Name for subject
+private Set<String> getInstancesByPredObj(String predicateName, String objectName) {
+
+StringBuffer queryString = new StringBuffer();
+queryString.append("SELECT ?s FROM <" + GRAPH + "> WHERE { ");
+queryString.append("?s ?p ?o . ");
+queryString.append("FILTER (?p IN (<http://dbpedia.org/ontology/" + predicateName + "> ) )");
+queryString.append("FILTER (?o IN (<http://dbpedia.org/resource/" + objectName + "> ) )");
+
+queryString.append("} ");
+
+	Query sparql = QueryFactory.create(queryString.toString());
+	VirtuosoQueryExecution vqe = VirtuosoQueryExecutionFactory.create (sparql, virtGraph);
+	ResultSet results = vqe.execSelect();
+	Set<String> types = new HashSet<String>();
+		while (results.hasNext()) {
+				QuerySolution result = results.nextSolution();
+				int index = result.getResource("s").toString().lastIndexOf("/");
+				types.add(result.getResource("s").toString().substring(index+1));
+		} // end of while
+//System.out.println(className+ ":::: " +predicateName+" ***********size"+ types.size() );
+return types;
+} // end of get instances
+
+////////////////////////////////////////////////////////////////////////////////////////////
+
+	
+	
+	
+	
 public void createPredicateObjectPairClassMatrix() throws IOException{
 	System.out.println("Connecting to Virtuoso ... ");
 	virtGraph = connectToVirtuoso();
