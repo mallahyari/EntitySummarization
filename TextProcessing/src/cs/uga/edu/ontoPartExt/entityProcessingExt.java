@@ -660,13 +660,12 @@ Query sparql = QueryFactory.create(queryString.toString());
 VirtuosoQueryExecution vqe = VirtuosoQueryExecutionFactory.create (sparql, virtGraph);
 ResultSet results = vqe.execSelect();
 int tf=0;
-		while (results.hasNext()) {
+		//while (results.hasNext()) {
 		QuerySolution result = results.nextSolution();
 		System.out.println(result.getResource("sTotal").toString());
-		tf = Integer.parseInt(result.getResource("sTotal").toString());
+		tf = 1;//Integer.parseInt(result.getResource("sTotal").toString());
 		
-		} // end of while
-//System.out.println(className+ ":::: " +predicateName+" ***********size"+ types.size() );
+		//} // end of while
 return tf;
 } // end of termFreqByPredObj
 
