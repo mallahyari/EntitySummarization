@@ -242,7 +242,7 @@ public class entityProcessingExt {
 			 queryString.append("    HAVING(COUNT(?p) > 30 ) ");
 				
 			 queryString.append("   Order By DESC (?pCount) ");
-			 queryString.append("   limit 150 ");
+			 queryString.append("   limit 1 ");
 			 
 		
 					
@@ -662,6 +662,7 @@ ResultSet results = vqe.execSelect();
 int tf=0;
 		while (results.hasNext()) {
 		QuerySolution result = results.nextSolution();
+		System.out.println(result.getResource("sTotal").toString());
 		tf = Integer.parseInt(result.getResource("sTotal").toString());
 		
 		} // end of while
