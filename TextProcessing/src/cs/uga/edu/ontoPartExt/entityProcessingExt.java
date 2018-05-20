@@ -649,26 +649,25 @@ return types;
 private int termFreqByPredObj(String predicateName, String objectName) {
 
 StringBuffer queryString = new StringBuffer();
-queryString.append("SELECT (count(?s)as ?sTotal)  FROM <" + GRAPH + "> WHERE { ");
+queryString.append("SELECT ?s  FROM <" + GRAPH + "> WHERE { ");
 queryString.append("?s ?p ?o . ");
 queryString.append("FILTER (?p IN (<http://dbpedia.org/ontology/" + predicateName + "> ) || ?p IN (<http://dbpedia.org/property/" + predicateName + "> ) )");
 queryString.append("FILTER (?o IN (<http://dbpedia.org/resource/" + objectName + "> ) )");
 
 queryString.append("} ");
-System.out.println(queryString);
 
 Query sparql = QueryFactory.create(queryString.toString());
 VirtuosoQueryExecution vqe = VirtuosoQueryExecutionFactory.create (sparql, virtGraph);
 ResultSet results = vqe.execSelect();
-int tf=0;
-		//while (results.hasNext()) {
-		QuerySolution result = results.nextSolution();
-		System.out.println(result.getResource("sTotal").toString());
-		tf = 1;//Integer.parseInt(result.getResource("sTotal").toString());
-		
-		//} // end of while
-return tf;
-} // end of termFreqByPredObj
+Set<String> types = new HashSet<String>();
+	while (results.hasNext()) {
+			QuerySolution result = results.nextSolution();
+			int index = result.getResource("s").toString().lastIndexOf("/");
+			types.add(result.getResource("s").toString().substring(index+1));
+	} // end of while
+
+return types.size();
+} // end of get instances
 
 ////////////////////////////////////////////////////////////////////////////////////////////
 
