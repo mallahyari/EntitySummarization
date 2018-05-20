@@ -437,11 +437,18 @@ public class entityProcessingExt {
 				        	 predicateObjectFrequency.put(mystr, 1);
 				         }
 				    }
+					 
+					 
+					 FileWriter predicateObjectFrequencyFW = new FileWriter("/home/mehdi/ontoPartExt/evaluation/myPOFreq.txt");
+						
+						
 					 Set<String> myKeysPreObj =predicateObjectFrequency.keySet();
 					 for (String key:myKeysPreObj){
 						System.out.println(key + "      "+ predicateObjectFrequency.get(key));
+						predicateObjectFrequencyFW.write(key + "      "+ predicateObjectFrequency.get(key)+ "\n");
 					 }
 					 System.out.println("Size: "+ predicateObjectListWhole.size());
+					 predicateObjectFrequencyFW.close();
 					 
 			//****** END OF Calculate the Object frequency *****\\			 
 		
