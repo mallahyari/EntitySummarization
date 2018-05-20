@@ -459,27 +459,40 @@ public class entityProcessingExt {
 //					 
 ////****** END OF Calculate the Object frequency *****\\
 					 
-//*****************************************************		 
-//****** Calculate the Subject Frequency based on Predicate-Object *****\\							 
-					 Set<String> instanceSet = new HashSet<String>();
-					 Set<String> datasetAllInstances = new HashSet<String>();
-					// datasetAllInstances.addAll(subjectNamesSet);
-					 System.out.println("subjectNamesSet:  "+subjectNamesSet.size());
-					 for (String myPredObjPair : predicateObjectSet){
-						 
-						 datasetAllInstances.addAll(subjectNamesSet);
-						 System.out.println("datasetAllInstances:"+datasetAllInstances.size());
-						 
-						 String []predObj =myPredObjPair.split("@");
-						 instanceSet=getInstancesByPredObj(predObj[0],predObj[1]);
-						 System.out.println("instanceSet:   "+instanceSet.size());
-							
-						 datasetAllInstances.retainAll(instanceSet);
-						 System.out.println(predObj[0]+"@"+predObj[1]+"  Size: "+ datasetAllInstances.size());
-						 datasetAllInstances.clear();
-					 }
-
-					//*****************************************************		 		
+////*****************************************************		 
+////****** Calculate the Subject Frequency based on Predicate-Object *****\\							 
+//					 Set<String> instanceSet = new HashSet<String>();
+//					 Set<String> datasetAllInstances = new HashSet<String>();
+//					// datasetAllInstances.addAll(subjectNamesSet);
+//					 System.out.println("subjectNamesSet:  "+subjectNamesSet.size());
+//					 for (String myPredObjPair : predicateObjectSet){
+//						 
+//						 datasetAllInstances.addAll(subjectNamesSet);
+//						 System.out.println("datasetAllInstances:"+datasetAllInstances.size());
+//						 
+//						 String []predObj =myPredObjPair.split("@");
+//						 instanceSet=getInstancesByPredObj(predObj[0],predObj[1]);
+//						 System.out.println("instanceSet:   "+instanceSet.size());
+//							
+//						 datasetAllInstances.retainAll(instanceSet);
+//						 System.out.println(predObj[0]+"@"+predObj[1]+"  Size: "+ datasetAllInstances.size());
+//						 datasetAllInstances.clear();
+//					 }
+//
+////*****************************************************		 		
+		
+		
+ int tf=0;
+ 
+ 
+ for (String myPredObjPair : predicateObjectSet){
+	String []predObj =myPredObjPair.split("@");
+	 tf=termFreqByPredObj(predObj[0],predObj[1]);
+	 System.out.println(predObj[0]+"@"+predObj[1]+ ":" + tf);
+	 
+	 }
+		
+		
 		
 		
 		br.close();
@@ -630,6 +643,31 @@ queryString.append("} ");
 //System.out.println(className+ ":::: " +predicateName+" ***********size"+ types.size() );
 return types;
 } // end of get instances
+
+////////////////////////////////////////////////////////////////////////////////////////////
+////////////////////////Retuen number of instances based on passed predicate name and class Name for subject
+private int termFreqByPredObj(String predicateName, String objectName) {
+
+StringBuffer queryString = new StringBuffer();
+queryString.append("SELECT (count(?s)as ?sTotal)  FROM <" + GRAPH + "> WHERE { ");
+queryString.append("?s ?p ?o . ");
+queryString.append("FILTER (?p IN (<http://dbpedia.org/ontology/" + predicateName + "> ) || ?p IN (<http://dbpedia.org/property/" + predicateName + "> ) )");
+queryString.append("FILTER (?o IN (<http://dbpedia.org/resource/" + objectName + "> ) )");
+
+queryString.append("} ");
+
+Query sparql = QueryFactory.create(queryString.toString());
+VirtuosoQueryExecution vqe = VirtuosoQueryExecutionFactory.create (sparql, virtGraph);
+ResultSet results = vqe.execSelect();
+int tf=0;
+		while (results.hasNext()) {
+		QuerySolution result = results.nextSolution();
+		tf = Integer.parseInt(result.getResource("sTotal").toString());
+		
+		} // end of while
+//System.out.println(className+ ":::: " +predicateName+" ***********size"+ types.size() );
+return tf;
+} // end of termFreqByPredObj
 
 ////////////////////////////////////////////////////////////////////////////////////////////
 
