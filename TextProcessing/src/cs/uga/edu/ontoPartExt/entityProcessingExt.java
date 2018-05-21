@@ -638,7 +638,7 @@ private Set<String> getInstancesByPredObj(String predicateName, String objectNam
 StringBuffer queryString = new StringBuffer();
 queryString.append("SELECT ?s FROM <" + GRAPH + "> WHERE { ");
 queryString.append("?s ?p ?o . ");
-queryString.append("FILTER (?p IN (<http://dbpedia.org/ontology/" + predicateName + "> ) || ?p IN (<http://dbpedia.org/property/" + predicateName + "> ) || ?o IN (<http://dbpedia.org/resource/" + objectName + "> ) )");
+queryString.append("FILTER (?p IN (<http://dbpedia.org/ontology/" + predicateName + "> ) || ?p IN (<http://dbpedia.org/property/" + predicateName + "> ) )");
 //queryString.append("FILTER (?o IN (<http://dbpedia.org/resource/" + objectName + "> ) )");
 
 queryString.append("} ");
