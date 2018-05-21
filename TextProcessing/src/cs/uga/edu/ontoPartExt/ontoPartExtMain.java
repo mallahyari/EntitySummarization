@@ -103,14 +103,14 @@ public class ontoPartExtMain {
 		//		3) line 116-118-119
 		//		4) line 121
 		entityProcessingExt createMyEntityList = new entityProcessingExt();
-		createMyEntityList.createEntityList();
-		System.out.println("MyEntityList Done!"); 
-	    createMyEntityList.corpusMaker();
-	    System.out.println("corpusMaker Done!"); 
-		ontoPartExtParameters myinitialization=new ontoPartExtParameters();
+//		createMyEntityList.createEntityList();
+//		System.out.println("MyEntityList Done!"); 
+//	    createMyEntityList.corpusMaker();
+//	    System.out.println("corpusMaker Done!"); 
+//		ontoPartExtParameters myinitialization=new ontoPartExtParameters();
 		
-		//Matrix size : Topic X Vocab size
-//		createMyEntityList.createPredicateObjectPairTopicMatrix(20,158234);
+		//Matrix size : Topic X Vocab size 20X 158234
+		createMyEntityList.createPredicateObjectPairTopicMatrix(20,186388);
 		
 //		ontoPartExtModel myOnto = new ontoPartExtModel();
 //		myOnto.initializeMatrices();
