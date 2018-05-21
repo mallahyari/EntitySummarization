@@ -321,6 +321,9 @@ public class entityProcessingExt {
 							int index3 = objectNameRaw.toString().lastIndexOf("/");
 							String objectName = objectNameRaw.toString().substring(index3 + 1);
 							//System.out.println(subjectName+"  Predicate "+predicateName + "    "+ objectName);
+							if (objectName.equals("") ||objectName.equals(" ")){
+								continue;
+							}
 							
 							objectName=objectName.replace("*","");
 							objectName=objectName.replace("\n", "");
