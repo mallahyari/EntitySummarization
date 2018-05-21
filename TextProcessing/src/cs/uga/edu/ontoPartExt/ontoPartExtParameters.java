@@ -39,7 +39,7 @@ public class ontoPartExtParameters {
 	public int P = 20; 
 	public int C = 0;//Number of all classes 
 	public int N = 0; //numberOfAllObjects(Words)
-	public int nIterations = 2000;
+	public int nIterations = 1000;
 	int burnIn = 200;
 	public double ALPHA = 0.01;//50.0 / 20; //Alpha=50/K  K is the number of topics
 	public final double BETA  = 0.01;
