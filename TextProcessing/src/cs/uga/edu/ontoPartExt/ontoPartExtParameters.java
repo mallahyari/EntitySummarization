@@ -41,7 +41,7 @@ public class ontoPartExtParameters {
 	public int N = 0; //numberOfAllObjects(Words)
 	public int nIterations = 2000;
 	int burnIn = 200;
-	public double ALPHA = 50.0 / 20; //Alpha=50/K  K is the number of topics
+	public double ALPHA = 0.01;//50.0 / 20; //Alpha=50/K  K is the number of topics
 	public final double BETA  = 0.01;
 	public final double ZETA  = 0.01;
 //	public final double TAU = 50.0 / T;

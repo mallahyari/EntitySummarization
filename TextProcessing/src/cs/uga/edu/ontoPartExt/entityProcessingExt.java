@@ -242,7 +242,7 @@ public class entityProcessingExt {
 			 queryString.append("    HAVING(COUNT(?p) > 30 ) ");
 				
 			 queryString.append("   Order By DESC (?pCount) ");
-			 queryString.append("   limit 1 ");
+			 queryString.append("   limit 200 ");
 			 
 		
 					
@@ -474,27 +474,27 @@ public class entityProcessingExt {
 //					 
 ////****** END OF Calculate the Object frequency *****\\
 					 
-//*****************************************************		 
-//****** Calculate the Subject Frequency based on Predicate-Object *****\\							 
-					 Set<String> instanceSet = new HashSet<String>();
-					 Set<String> datasetAllInstances = new HashSet<String>();
-					// datasetAllInstances.addAll(subjectNamesSet);
-					 System.out.println("subjectNamesSet:  "+subjectNamesSet.size());
-					 for (String myPredObjPair : predicateObjectSet){
-						 
-						 datasetAllInstances.addAll(subjectNamesSet);
-						 System.out.println("datasetAllInstances:"+datasetAllInstances.size());
-						 
-						 String []predObj =myPredObjPair.split("@");
-						 instanceSet=getInstancesByPredObj(predObj[0],predObj[1]);
-						 System.out.println("instances from KB:   "+instanceSet.size());
-							
-						 datasetAllInstances.retainAll(instanceSet);
-						 System.out.println(predObj[0]+"@"+predObj[1]+"  Size common: "+ datasetAllInstances.size());
-						 datasetAllInstances.clear();
-					 }
-
-//*****************************************************		 		
+////*****************************************************		 
+////****** Calculate the Subject Frequency based on Predicate-Object *****\\							 
+//					 Set<String> instanceSet = new HashSet<String>();
+//					 Set<String> datasetAllInstances = new HashSet<String>();
+//					// datasetAllInstances.addAll(subjectNamesSet);
+//					 System.out.println("subjectNamesSet:  "+subjectNamesSet.size());
+//					 for (String myPredObjPair : predicateObjectSet){
+//						 
+//						 datasetAllInstances.addAll(subjectNamesSet);
+//						 System.out.println("datasetAllInstances:"+datasetAllInstances.size());
+//						 
+//						 String []predObj =myPredObjPair.split("@");
+//						 instanceSet=getInstancesByPredObj(predObj[0],predObj[1]);
+//						 System.out.println("instances from KB:   "+instanceSet.size());
+//							
+//						 datasetAllInstances.retainAll(instanceSet);
+//						 System.out.println(predObj[0]+"@"+predObj[1]+"  Size common: "+ datasetAllInstances.size());
+//						 datasetAllInstances.clear();
+//					 }
+//
+////*****************************************************		 		
 
 
 					 
