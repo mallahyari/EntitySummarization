@@ -474,39 +474,40 @@ public class entityProcessingExt {
 //					 
 ////****** END OF Calculate the Object frequency *****\\
 					 
-////*****************************************************		 
-////****** Calculate the Subject Frequency based on Predicate-Object *****\\							 
-//					 Set<String> instanceSet = new HashSet<String>();
-//					 Set<String> datasetAllInstances = new HashSet<String>();
-//					// datasetAllInstances.addAll(subjectNamesSet);
-//					 System.out.println("subjectNamesSet:  "+subjectNamesSet.size());
-//					 for (String myPredObjPair : predicateObjectSet){
-//						 
-//						 datasetAllInstances.addAll(subjectNamesSet);
-//						 System.out.println("datasetAllInstances:"+datasetAllInstances.size());
-//						 
-//						 String []predObj =myPredObjPair.split("@");
-//						 instanceSet=getInstancesByPredObj(predObj[0],predObj[1]);
-//						 System.out.println("instanceSet:   "+instanceSet.size());
-//							
-//						 datasetAllInstances.retainAll(instanceSet);
-//						 System.out.println(predObj[0]+"@"+predObj[1]+"  Size: "+ datasetAllInstances.size());
-//						 datasetAllInstances.clear();
-//					 }
-//
-////*****************************************************		 		
+//*****************************************************		 
+//****** Calculate the Subject Frequency based on Predicate-Object *****\\							 
+					 Set<String> instanceSet = new HashSet<String>();
+					 Set<String> datasetAllInstances = new HashSet<String>();
+					// datasetAllInstances.addAll(subjectNamesSet);
+					 System.out.println("subjectNamesSet:  "+subjectNamesSet.size());
+					 for (String myPredObjPair : predicateObjectSet){
+						 
+						 datasetAllInstances.addAll(subjectNamesSet);
+						 System.out.println("datasetAllInstances:"+datasetAllInstances.size());
+						 
+						 String []predObj =myPredObjPair.split("@");
+						 instanceSet=getInstancesByPredObj(predObj[0],predObj[1]);
+						 System.out.println("instances from KB:   "+instanceSet.size());
+							
+						 datasetAllInstances.retainAll(instanceSet);
+						 System.out.println(predObj[0]+"@"+predObj[1]+"  Size common: "+ datasetAllInstances.size());
+						 datasetAllInstances.clear();
+					 }
 
-		
- int tf=0;
- 
- 
- for (String myPredObjPair : predicateObjectSet){
-	String []predObj =myPredObjPair.split("@");
-	 tf=termFreqByPredObj(predObj[0],predObj[1]);
-	 System.out.println(predObj[0]+"@"+predObj[1]+ ":" + tf);
-	
-	 }
-		
+//*****************************************************		 		
+
+
+					 
+//////*****************************************************	
+////Calculating term frequency (predicate-Object) from KB		
+// int tf=0;
+// for (String myPredObjPair : predicateObjectSet){
+//	String []predObj =myPredObjPair.split("@");
+//	 tf=termFreqByPredObj(predObj[0],predObj[1]);
+//	 System.out.println(predObj[0]+"@"+predObj[1]+ ":" + tf);
+//	
+//	 }
+//////*****************************************************			
 		
 		
 		
