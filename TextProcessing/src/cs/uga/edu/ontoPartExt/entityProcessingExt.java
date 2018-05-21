@@ -486,10 +486,10 @@ public class entityProcessingExt {
  
  
  for (String myPredObjPair : predicateObjectSet){
-	String []predObj =myPredObjPair.split("@");
-	 tf=termFreqByPredObj(predObj[0],predObj[1]);
-	 System.out.println(predObj[0]+"@"+predObj[1]+ ":" + tf);
-	 
+//	String []predObj =myPredObjPair.split("@");
+//	 tf=termFreqByPredObj(predObj[0],predObj[1]);
+//	 System.out.println(predObj[0]+"@"+predObj[1]+ ":" + tf);
+	 System.out.println(myPredObjPair);
 	 }
 		
 		
