@@ -236,6 +236,7 @@ public class entityProcessingExt {
 			 queryString.append("FILTER (?p NOT IN (<http://dbpedia.org/property/website> ) ) ");
 			 queryString.append("FILTER (?p NOT IN (<http://dbpedia.org/ontology/birthPlace> ) ) ");
 			 queryString.append("FILTER (?p NOT IN (<http://dbpedia.org/ontology/deathPlace> ) ) ");
+			 queryString.append("FILTER (?p NOT IN (<http://dbpedia.org/property/timezone> ) ) ");
 			 queryString.append("FILTER(!isLiteral(?o) ) ");
 			// queryString.append("FILTER(regex(?s, '^http://dbpedia.org/resource/','i'))  ");
 				
@@ -244,7 +245,7 @@ public class entityProcessingExt {
 			 queryString.append("    HAVING(COUNT(?p) > 30 ) ");
 				
 			 queryString.append("   Order By DESC (?pCount) ");
-			 queryString.append("   limit 200 ");
+			 queryString.append("   limit 150 ");
 			 
 		
 					
@@ -298,7 +299,8 @@ public class entityProcessingExt {
 					queryString2.append("FILTER (?p NOT IN (<http://dbpedia.org/property/website> ) ) ");
 					 queryString2.append("FILTER (?p NOT IN (<http://dbpedia.org/ontology/birthPlace> ) ) ");
 					 queryString2.append("FILTER (?p NOT IN (<http://dbpedia.org/ontology/deathPlace> ) ) ");
-
+					 queryString2.append("FILTER (?p NOT IN (<http://dbpedia.org/property/timezone> ) ) ");
+					 
 					queryString2.append("FILTER(!isLiteral(?o) ) ");
 				//	queryString2.append("FILTER regex(?s, \"http://dbpedia.org/resource/\")");
 					queryString2.append("}  ");
