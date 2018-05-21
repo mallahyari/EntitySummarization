@@ -396,6 +396,18 @@ public class entityProcessingExt {
 		
 		System.out.println("Predicate object Map"+predicateObjectIdMap.size());
 		System.out.println("Predicate object Set"+predicateObjectSet.size());
+		
+		br.close();
+		subjectToIdFile.close();
+		classToIdFile.close();
+		predicateObjectPair.close();
+		entNameOnlyFile.close();
+		
+		
+		
+		
+		
+		
 //		
 ////****** Calculate the predicate frequency *****\\		
 //		Map<String, Integer> predicateFrequency = new HashMap<String,Integer>();
@@ -480,26 +492,22 @@ public class entityProcessingExt {
 //					 }
 //
 ////*****************************************************		 		
-		
+
 		
  int tf=0;
  
  
  for (String myPredObjPair : predicateObjectSet){
-//	String []predObj =myPredObjPair.split("@");
-//	 tf=termFreqByPredObj(predObj[0],predObj[1]);
-//	 System.out.println(predObj[0]+"@"+predObj[1]+ ":" + tf);
-	 System.out.println(myPredObjPair);
+	String []predObj =myPredObjPair.split("@");
+	 tf=termFreqByPredObj(predObj[0],predObj[1]);
+	 System.out.println(predObj[0]+"@"+predObj[1]+ ":" + tf);
+	
 	 }
 		
 		
 		
 		
-		br.close();
-		subjectToIdFile.close();
-		classToIdFile.close();
-		predicateObjectPair.close();
-		entNameOnlyFile.close();
+		
 		
 //************* extract Category ***************\\
 		//entityNameOnly = "/home/mehdi/ontoPartExt/evaluation/entNameOnly.txt";
