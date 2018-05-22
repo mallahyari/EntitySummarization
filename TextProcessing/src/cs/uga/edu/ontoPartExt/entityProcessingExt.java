@@ -401,7 +401,7 @@ public class entityProcessingExt {
 			//	}// end if predicate number
 					
 			} // end of while
-			//System.out.println(className + "  :  "+ numberOfInstances);
+			System.out.println(className + "  :  "+ numberOfInstances);
 		}// end of while for READING from class list text file
 		
 		System.out.println("Predicate object Map"+predicateObjectIdMap.size());
