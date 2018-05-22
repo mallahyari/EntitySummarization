@@ -102,7 +102,7 @@ public class ontoPartExtMain {
 		//		2) Line  113
 		//		3) line 116-118-119
 		//		4) line 121
-		entityProcessingExt createMyEntityList = new entityProcessingExt();
+//		entityProcessingExt createMyEntityList = new entityProcessingExt();
 //		createMyEntityList.createEntityList();
 //		System.out.println("MyEntityList Done!"); 
 //	    createMyEntityList.corpusMaker();
@@ -110,13 +110,13 @@ public class ontoPartExtMain {
 //		ontoPartExtParameters myinitialization=new ontoPartExtParameters();
 		
 		//Matrix size : Topic X Vocab size 20X 158234 186387
-		createMyEntityList.createPredicateObjectPairTopicMatrix(20,136338);
+//		createMyEntityList.createPredicateObjectPairTopicMatrix(20,136338);
 ////		
-//		ontoPartExtModel myOnto = new ontoPartExtModel();
-//		myOnto.initializeMatrices();
-//		// Gibbs Sampling Initialization and Run //
-//		myOnto.initializeGibbsSampling();
-//		myOnto.run();
+		ontoPartExtModel myOnto = new ontoPartExtModel();
+		myOnto.initializeMatrices();
+		// Gibbs Sampling Initialization and Run //
+		myOnto.initializeGibbsSampling();
+		myOnto.run();
 		
 //		myOnto.writeToCSV();
 	}
