@@ -242,7 +242,7 @@ public class entityProcessingExt {
 				
 			 queryString.append(" }   GROUP BY ?s ");
 			 //queryString.append("    HAVING((COUNT(?p) > 30) AND (COUNT(?p) <60)) ");
-			 queryString.append("    HAVING(COUNT(?p) > 25 ) ");
+			 queryString.append("    HAVING(COUNT(?p) > 35 ) ");
 				
 			 queryString.append("   Order By DESC (?pCount) ");
 			 queryString.append("   limit 200 ");
