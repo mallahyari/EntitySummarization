@@ -110,7 +110,7 @@ public class ontoPartExtMain {
 //		ontoPartExtParameters myinitialization=new ontoPartExtParameters();
 		
 		//Matrix size : Topic X Vocab size 20X 158234 186387 166167
-		createMyEntityList.createPredicateObjectPairTopicMatrix(10,154050);
+		createMyEntityList.createPredicateObjectPairTopicMatrix(10,163035);
 ////		
 //		ontoPartExtModel myOnto = new ontoPartExtModel();
 //		myOnto.initializeMatrices();
