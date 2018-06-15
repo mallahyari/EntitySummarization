@@ -36,7 +36,7 @@ public class ontoPartExtParameters {
 	public int T = 0; //number of topics
 	public int T1 = 57;
 	public int T2 = 133;
-	public int P = 10; 
+	public int P = 20; 
 	public int C = 0;//Number of all classes 
 	public int N = 0; //numberOfAllObjects(Words)
 	public int nIterations = 1000;
