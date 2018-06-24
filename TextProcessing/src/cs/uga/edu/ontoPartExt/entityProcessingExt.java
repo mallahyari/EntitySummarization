@@ -689,7 +689,48 @@ return types.size();
 } // end of get instances
 
 ////////////////////////////////////////////////////////////////////////////////////////////
+public void extractCategory() throws IOException{
+	FileWriter SubjectCat = new FileWriter("/home/mehdi/ontoPartExt/evaluation/subjectCategory.txt"); //"/home/mehdi/ontoPartExt/evaluation/subjectIdCatId.txt";
 
+	//************* extract Category ***************\\
+			//entityNameOnly = "/home/mehdi/ontoPartExt/evaluation/entNameOnly.txt";
+	System.out.println("Connecting to Virtuoso ... ");
+	virtGraph = connectToVirtuoso();
+	System.out.println("Successfully Connected to Virtuoso!\n");
+	
+			String subjectName1 = "";
+			BufferedReader br1 = new BufferedReader(new FileReader(entityNameOnly));
+			//Read list of subjects from a text file  
+			while ((subjectName1 = br1.readLine()) != null) {
+			StringBuffer queryString4 = new StringBuffer();
+			queryString4.append("SELECT ?o FROM <" + GRAPH + "> WHERE { "); // uriPrefix = "http://dbpedia.org/resource/"
+			queryString4.append("<" + uriPrefix + subjectName1 + ">" + " <http://purl.org/dc/terms/subject> ?o . ");
+			queryString4.append("}  ");
+			
+			Query sparql4 = QueryFactory.create(queryString4.toString());
+			VirtuosoQueryExecution vqe4 = VirtuosoQueryExecutionFactory.create (sparql4, virtGraph);
+			ResultSet results4 = vqe4.execSelect();
+					
+			while (results4.hasNext()) {
+				    QuerySolution result4 = results4.nextSolution();
+				    RDFNode object4 = result4.get("o");
+					int index4 = object4.toString().lastIndexOf(":");
+					String objectCategoryName = object4.toString().substring(index4 + 1);
+//					if ( CategoryNameToIdMap.get(objectCategoryName) == null) {
+//						CategoryNameToIdMap.put(objectCategoryName, CategoryIdGenerator);
+//						CategoryIdFile.write(objectCategoryName + " " + CategoryIdGenerator + "\n");
+//						CategoryIdGenerator++;
+//						}
+					//System.out.println(subjectName1 + "&&&&&&&&&&&&&&&&&&& "+objectCategoryName+"\n");
+					SubjectCat.write(subjectName1+":"+objectCategoryName+"\n");
+					
+	             }//end while
+			}//end while
+			br1.close();
+			SubjectCat.close();
+	//************* END extract Category ***************\\
+	
+}
 	
 	
 	

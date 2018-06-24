@@ -112,13 +112,16 @@ public class ontoPartExtMain {
 		//Matrix size : Topic X Vocab size 20X 158234 186387 166167
 //	createMyEntityList.createPredicateObjectPairTopicMatrix(30,219512);
 ////		
-		ontoPartExtModel myOnto = new ontoPartExtModel();
+//		ontoPartExtModel myOnto = new ontoPartExtModel();
 //		myOnto.initializeMatrices();
 //		// Gibbs Sampling Initialization and Run //
 //		myOnto.initializeGibbsSampling();
 //		myOnto.run();
 		
-		myOnto.writeToCSV();
+//		myOnto.writeToCSV();
+		createMyEntityList.extractCategory();
+		
+		
 	}
 
 }
