@@ -735,6 +735,7 @@ public void extractCategory() throws IOException{
 					queryString5.append("SELECT ?catl FROM <" + GRAPH + "> WHERE { "); // uriPrefix = "http://dbpedia.org/resource/"
 					queryString5.append("<http://dbpedia.org/resource/Category:" + objectCategoryName + ">" + "  skos:broader{1,1} ?catl ");
 					queryString5.append("}  ");
+					System.out.println(queryString5);
 					
 					Query sparql5 = QueryFactory.create(queryString5.toString());
 					VirtuosoQueryExecution vqe5 = VirtuosoQueryExecutionFactory.create (sparql5, virtGraph);
