@@ -691,6 +691,8 @@ return types.size();
 ////////////////////////////////////////////////////////////////////////////////////////////
 public void extractCategory() throws IOException{
 	FileWriter SubjectCat = new FileWriter("/home/mehdi/ontoPartExt/evaluation/subjectCategory.txt"); //"/home/mehdi/ontoPartExt/evaluation/subjectIdCatId.txt";
+	FileWriter CatLevel1 = new FileWriter("/home/mehdi/ontoPartExt/evaluation/CatL1.txt"); //"/home/mehdi/ontoPartExt/evaluation/subjectIdCatId.txt";
+	FileWriter CatLevel2 = new FileWriter("/home/mehdi/ontoPartExt/evaluation/CatL2.txt"); //"/home/mehdi/ontoPartExt/evaluation/subjectIdCatId.txt";
 
 	//************* extract Category ***************\\
 			//entityNameOnly = "/home/mehdi/ontoPartExt/evaluation/entNameOnly.txt";
@@ -723,6 +725,30 @@ public void extractCategory() throws IOException{
 //						}
 					//System.out.println(subjectName1 + "&&&&&&&&&&&&&&&&&&& "+objectCategoryName+"\n");
 					SubjectCat.write(subjectName1+":"+objectCategoryName+"\n");
+					
+					///////////////////////////
+
+//select ?oo { <http://dbpedia.org/resource/Category:Oakland_Raiders> 
+//     skos:broader{1,2}  ?oo }
+					
+					StringBuffer queryString5 = new StringBuffer();
+					queryString5.append("SELECT ?catl FROM <" + GRAPH + "> WHERE { "); // uriPrefix = "http://dbpedia.org/resource/"
+					queryString5.append("<http://dbpedia.org/resource/Category:" + objectCategoryName + ">" + "  skos:broader{1,1} ?catl ");
+					queryString5.append("}  ");
+					
+					Query sparql5 = QueryFactory.create(queryString5.toString());
+					VirtuosoQueryExecution vqe5 = VirtuosoQueryExecutionFactory.create (sparql5, virtGraph);
+					ResultSet results5 = vqe5.execSelect();
+							
+					while (results5.hasNext()) {
+						    QuerySolution result5 = results5.nextSolution();
+						    RDFNode object5 = result5.get("catl");
+							int index5 = object5.toString().lastIndexOf(":");
+							String catL1 = object5.toString().substring(index5 + 1);
+							CatLevel1.write(objectCategoryName+":"+catL1+"\n");
+					}
+					
+					
 					
 	             }//end while
 			}//end while
