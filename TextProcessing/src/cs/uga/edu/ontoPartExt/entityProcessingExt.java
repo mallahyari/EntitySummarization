@@ -733,7 +733,7 @@ public void extractCategory() throws IOException{
 					
 					StringBuffer queryString5 = new StringBuffer();
 					queryString5.append("SELECT ?catl FROM <" + GRAPH + "> WHERE { "); // uriPrefix = "http://dbpedia.org/resource/"
-					queryString5.append("<http://dbpedia.org/resource/Category:" + objectCategoryName + ">" + "  skos:broader{1,1} ?catl ");
+					queryString5.append("<http://dbpedia.org/resource/Category:" + objectCategoryName + ">" + "  <http://www.w3.org/2004/02/skos/core#broader> ?catl ");
 					queryString5.append("}  ");
 					System.out.println(queryString5);
 					
