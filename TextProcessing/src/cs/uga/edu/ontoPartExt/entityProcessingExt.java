@@ -691,8 +691,8 @@ return types.size();
 ////////////////////////////////////////////////////////////////////////////////////////////
 public void extractCategory() throws IOException{
 	FileWriter SubjectCat = new FileWriter("/home/mehdi/ontoPartExt/evaluation/subjectCategory.txt"); //"/home/mehdi/ontoPartExt/evaluation/subjectIdCatId.txt";
-	FileWriter CatLevel1 = new FileWriter("/home/mehdi/ontoPartExt/evaluation/CatL1.txt"); //"/home/mehdi/ontoPartExt/evaluation/subjectIdCatId.txt";
-	FileWriter CatLevel2 = new FileWriter("/home/mehdi/ontoPartExt/evaluation/CatL2.txt"); //"/home/mehdi/ontoPartExt/evaluation/subjectIdCatId.txt";
+	FileWriter CatLevel1 = new FileWriter("/home/mehdi/ontoPartExt/evaluation/catL1.txt"); //"/home/mehdi/ontoPartExt/evaluation/subjectIdCatId.txt";
+	FileWriter CatLevel2 = new FileWriter("/home/mehdi/ontoPartExt/evaluation/catL2.txt"); //"/home/mehdi/ontoPartExt/evaluation/subjectIdCatId.txt";
 
 	//************* extract Category ***************\\
 			//entityNameOnly = "/home/mehdi/ontoPartExt/evaluation/entNameOnly.txt";
