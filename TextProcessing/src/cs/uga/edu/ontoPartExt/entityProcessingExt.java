@@ -693,6 +693,7 @@ public void extractCategory() throws IOException{
 	FileWriter SubjectCat = new FileWriter("/home/mehdi/ontoPartExt/evaluation/subjectCategory.txt"); //"/home/mehdi/ontoPartExt/evaluation/subjectIdCatId.txt";
 	FileWriter CatLevel1 = new FileWriter("/home/mehdi/ontoPartExt/evaluation/catL1.txt"); //"/home/mehdi/ontoPartExt/evaluation/subjectIdCatId.txt";
 	FileWriter CatLevel2 = new FileWriter("/home/mehdi/ontoPartExt/evaluation/catL2.txt"); //"/home/mehdi/ontoPartExt/evaluation/subjectIdCatId.txt";
+	FileWriter SCCC = new FileWriter("/home/mehdi/ontoPartExt/evaluation/SCCC.txt"); //"/home/mehdi/ontoPartExt/evaluation/subjectIdCatId.txt";
 
 	//************* extract Category ***************\\
 			//entityNameOnly = "/home/mehdi/ontoPartExt/evaluation/entNameOnly.txt";
@@ -747,6 +748,30 @@ public void extractCategory() throws IOException{
 							int index5 = object5.toString().lastIndexOf(":");
 							String catL1 = object5.toString().substring(index5 + 1);
 							CatLevel1.write(objectCategoryName+":"+catL1+"\n");
+							
+							StringBuffer queryString6 = new StringBuffer();
+							queryString6.append("SELECT ?catl2 FROM <" + GRAPH + "> WHERE { "); // uriPrefix = "http://dbpedia.org/resource/"
+							queryString6.append("<http://dbpedia.org/resource/Category:" + catL1 + ">" + "  <http://www.w3.org/2004/02/skos/core#broader> ?catl2 ");
+							queryString6.append("}  ");
+						//	System.out.println(queryString6);
+							
+							Query sparql6 = QueryFactory.create(queryString6.toString());
+							VirtuosoQueryExecution vqe6 = VirtuosoQueryExecutionFactory.create (sparql6, virtGraph);
+							ResultSet results6 = vqe6.execSelect();
+									
+							while (results6.hasNext()) {
+								    QuerySolution result6 = results6.nextSolution();
+								    RDFNode object6 = result6.get("catl2");
+									int index6 = object6.toString().lastIndexOf(":");
+									String catL22 = object6.toString().substring(index6 + 1);
+									CatLevel2.write(catL1+":"+catL22+"\n");
+									SCCC.write(subjectName1+":"+objectCategoryName+"::"+catL1+":::"+catL22+"\n");
+							}
+							
+							
+							
+							
+							
 					}
 					
 					
@@ -755,6 +780,9 @@ public void extractCategory() throws IOException{
 			}//end while
 			br1.close();
 			SubjectCat.close();
+			CatLevel1.close();
+			CatLevel2.close();
+			SCCC.close();
 	//************* END extract Category ***************\\
 	
 }
