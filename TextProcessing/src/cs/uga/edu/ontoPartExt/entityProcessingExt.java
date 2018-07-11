@@ -755,7 +755,7 @@ public void extractCategory() throws IOException{
 							queryString6.append("SELECT ?catl2 FROM <" + GRAPH + "> WHERE { "); // uriPrefix = "http://dbpedia.org/resource/"
 							queryString6.append("<http://dbpedia.org/resource/Category:" + catL1 + ">" + "  <http://www.w3.org/2004/02/skos/core#broader> ?catl2 ");
 							queryString6.append("}  ");
-							System.out.println(queryString6);
+							//System.out.println(queryString6);
 							
 							Query sparql6 = QueryFactory.create(queryString6.toString());
 							VirtuosoQueryExecution vqe6 = VirtuosoQueryExecutionFactory.create (sparql6, virtGraph);
@@ -772,7 +772,7 @@ public void extractCategory() throws IOException{
 									queryString7.append("SELECT ?catl3 FROM <" + GRAPH + "> WHERE { "); // uriPrefix = "http://dbpedia.org/resource/"
 									queryString7.append("<http://dbpedia.org/resource/Category:" + catL22 + ">" + "  <http://www.w3.org/2004/02/skos/core#broader> ?catl3 ");
 									queryString7.append("}  ");
-									System.out.println(queryString7);
+								//	System.out.println(queryString7);
 									
 									Query sparql7 = QueryFactory.create(queryString7.toString());
 									VirtuosoQueryExecution vqe7 = VirtuosoQueryExecutionFactory.create (sparql7, virtGraph);
@@ -780,7 +780,7 @@ public void extractCategory() throws IOException{
 											
 									while (results7.hasNext()) {
 										    QuerySolution result7 = results7.nextSolution();
-										    RDFNode object7 = result7.get("catl2");
+										    RDFNode object7 = result7.get("catl3");
 											int index7 = object7.toString().lastIndexOf(":");
 											String catL33 = object7.toString().substring(index7 + 1);
 											CatLevel3.write(catL22+":"+catL33+"\n");
